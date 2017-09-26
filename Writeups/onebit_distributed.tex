@@ -1,0 +1,349 @@
+%\documentclass[letterpaper]{IEEEtran}
+\documentclass[letterpaper, conference]{IEEEtran}      % Use this line for a4 paper
+%\IEEEoverridecommandlockouts                              %
+
+%\usepackage{mathcomSTEP}
+
+%\overrideIEEEmargins 
+%\IEEEoverridecommandlockouts                              % This command is only needed if 
+% you want to use the \thanks command
+
+%\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+\onecolumn
+
+\usepackage{mathptmx} 
+\usepackage{times} 
+\usepackage{amsmath} 
+\usepackage{amsbsy} 
+\usepackage{amssymb}
+%\usepackage{newtxtext, newtxmath}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{external,positioning,decorations.pathreplacing,shapes,arrows,patterns}
+
+%\tikzexternalize[mode=list and make]
+\usepackage{algorithmicx}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{pstool}
+\usepackage[latin1]{inputenc}
+\usetikzlibrary{arrows,shapes}
+\usepackage{xifthen}
+\usepackage{epic}
+\usepackage{caption}
+\usepackage{epstopdf}
+
+\newtheorem{thm}{\bf{Theorem}}
+\newtheorem{cor}[thm]{\bf {Corollary}}
+\newtheorem{lem}[thm]{\bf {Lemma}}
+\newtheorem{prop}[thm]{\bf {Proposition}}
+\newtheorem{example}{\bf {Example}}
+\newtheorem{definition}{\bf {Definition}}
+\newtheorem{rem}{\bf {Remark}}
+
+\newcommand{\mmse}{\mathsf{mmse}}
+\newcommand{\supp}{\mathrm{supp} }
+\renewcommand\vec[1]{\ensuremath\boldsymbol{#1}}
+\newenvironment{proof}{\paragraph*{Proof}}{\hfill$\square$ \newline}
+\newcommand{\sgn}{\mathrm{sgn} }
+\newcommand{\argmax}{\mathrm{argmax}}
+\newcommand*{\QEDA}{\hfill\ensuremath{\square}}
+
+
+\tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
+\tikzstyle{sint}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=0.8cm,thick ]
+\tikzstyle{sum}=[circle, fill=blue!10, draw=black,line width=1pt,minimum size = 0.5cm, thick ]
+\tikzstyle{ssum}=[circle, fill=blue!10,draw=black,line width=1pt,minimum size = 0.1cm]
+\tikzstyle{int1}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=1cm,thick ]
+\tikzstyle{enc}=[draw, fill=blue!10, minimum height = 2.7cm, minimum width=1cm,thick ]
+\tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
+
+
+\title{\LARGE \bf Mean Estimation from Single-bit Measurements}
+%
+%\author{
+%\IEEEauthorblockN{Alon Kipnis}
+%\IEEEauthorblockA{Department of Electrical Engineering \\
+%Stanford University\\
+%Stanford, CA\\}
+%\and
+%\IEEEauthorblockN{John C. Duchi}
+%\IEEEauthorblockA{Department of Statistics \\
+%and Department of Electrical Engineering \\
+%Stanford University\\
+%Stanford, CA\\}
+%\and
+%\IEEEauthorblockN{Andrea J. Goldsmith}
+%\IEEEauthorblockA{Department of Electrical Engineering \\
+%Stanford University\\
+%Stanford, CA\\}
+%}
+
+\begin{document}
+\graphicspath{{../Figures/}}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+\section{Distributed Estimation \label{sec:distributed}}
+
+In this setting each observer must transmit a single bit to the estimator and it cannot observe the messages obtained from other observers. As a result, each encoder can be seen as a binary detector whose output depends only on its private sample from the distribution. If we assume that each encoder is deterministic, then it is fully characterized by its \emph{detection region}, which is the subset of the real line on which the sample leads the encoder to output one. \\
+
+The design of the distributed encoding scheme is closely related to that of a multiple description scalar quantizer \cite{vaishampayan1993design}, since each encoder applies a scalar mapping. \\ 
+
+In this section we consider two possible forms of this detection region. In the first one, each detection region is half of the line, where the halving points varies among the different encoders. In the second setting the detection regions are chosen to minimize the correlation between the various samples. 
+
+\subsection{Lower Bound from Remote Multiterminal Source Coding}
+
+
+The remote multi-terminal lossy source coding problem (a.k.a the CEO problem) \cite{berger1996ceo}, $n$ encoders (agents), each has access to a corrupted version of a source signal, transmit at rates $R_1,\ldots,R_n$ to a central estimation unit. The distributed estimation scheme corresponds to a single round of communication in the CEO setting, where the $i$th agent observes 
+\begin{equation}
+\label{eq:Gaussian_channel}
+X_i = \theta + Z_i,
+\end{equation}
+and has $R_i=1$ bits to transmit this observation. Note, however, that in the CEO setting each encoder observes multiple number, say $k$, of independent samples $\theta \sim \pi(\theta)$ through the channel \eqref{eq:Gaussian_channel}, and not just one sample as in our setting. In general, in the CEO setting each encoder is allowed $kR_i$ bits to represent its $k$ samples. One possible strategy of the encoder is to send $k$ single bit messages, each of which is only a function of its $k$th observation.  
+%the minimal MSE distortion of the CEO provides a lower bound for the MSE in the distributed encoding scheme. 
+As a result, the quadratic distortion in the optimal source coding scheme for the CEO with $n$ terminals at rates $R_1 = \ldots = R_n = 1$ and Gaussian observation noise of variance $\sigma^2$ provides a lower bound on the MSE distortion in estimating $\theta$. Moreover, the difference between this lower bound and the actual MSE in our setting would indicate the importance of coding over blocks consisting of multiple independent realizations of  in our joint estimation and communication problem. \par
+%Note that when multiple realization of $\theta$ are involved, the prior distribution $P_\theta$ plays a significant role in the overall MSE, whereas in our case we expect the final distortion to be independent of the actual prior distribution as in the two schemes in the sequential case. \\
+A closed-form expression for CEO under quadratic distortion is known only for the case where the source sequence is taken from a Gaussian i.i.d distribution \cite{prabhakaran2004rate}. By using the characterization of the minimal CEO distortion as the number of terminals goes to infinity, we conclude the following result:
+\begin{prop} \label{prop:ceo_lower_bound}
+Assume that $\pi(\theta)$ is the normal distribution. Then any estimator $\widehat{\theta}_n$ of $\theta$ in the distributed setting satisfies
+\[
+ n\mathbb E \left( \theta - \theta_n \right)^2 \geq \frac{4\sigma^2}{3n} + o(1/n).
+\]
+\end{prop}
+\begin{proof}
+We consider the expression \cite[Eq. 10]{chen2004upper} that provides the minimal distortion $D^\star$ in the CEO with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots R_L$:
+\begin{equation} \label{eq:ceo_optimal_sumrate1}
+R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
+\end{equation}
+Assuming $R_\Sigma = n$ and $L=n$ we get
+\begin{equation} \label{eq:ceo_optimal_sumrate2}
+n = \frac{1}{2} \log \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
+\end{equation}
+The value of $D^\star$ that satisfies the equation above describes the MSE in the quadratic Gaussian CEO setting under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$ we conclude that 
+\[
+D^\star = \frac{ \frac{4\sigma^2}{3} }{n + \frac{4 \sigma^2}{3 \sigma_\theta^2} } + O(e^{-n}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
+\]
+\end{proof}
+Note that although the expression \eqref{eq:ceo_optimal_sumrate1} in the proof above assumes an optimal allocation of $n$ bits among the encoders, rather than a single bit to each one. Nevertheless, the same expression is obtained by considering an upper bound to the CEO distortion derived in \cite[Prop. 5.2]{KipnisRini2017}, in which $R_1=\ldots,R_n = 1$. %\[
+%D_{CEO} / \sigma_\theta^2 \leq \left( 1 + \sum_{i=1}^n \frac{\sigma_\theta^2}{\sigma^2} \frac{1 - 2^{-2R_i}} {1+ \frac{\sigma_\theta^2}{\sigma^2}  2^{-2 R_i}  } \right)^{-1}
+%\]
+%where $\sigma_\theta^2$ is the variance of the distribution $\pi(\theta)$. Using $R_1=\ldots=R_n=1$ we get
+%\[
+%D_{CEO} \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
+%\frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + o(n^{-1}). 
+%\]
+
+The bound provided by the CEO in Prop.~\ref{prop:ceo_lower_bound} implies that the relative efficiency in the distributed scheme is at most $4/3$. Since this number is smaller than the relative efficiency of the adaptive scheme, this proposition does not provide new information on the relative efficiency. It does, however, provides the intuition that the limiting factor in estimating $\theta$ is the strict bit-constraint and or the lack of concentration of probability distributions over blocks, rather than distributed estimation. \\
+
+%Comnet on appearance of $\sigma_\theta^2$ as a second order term. 
+
+
+\subsection{Estimation from Threshold Detection}
+In this setting we assume that the one-bit message reported by the $i$th encoder is given by 
+\[
+M_i = \sgn(t_i - X_i) = \begin{cases} 1 & X_i< t_i, \\
+-1 & X_i > t_i,
+\end{cases}  
+\]
+where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th detector.  In order to characterize the asymptotic behavior of estimation in from these sequence of messages, we consider the \emph{density} of $n$ threshold values defined as:
+\[
+\lambda_n([a,b]) = \frac{1}{n} \left| \mathcal T \cap [a,b] \right|.
+\]
+We assume that $\lambda_n$ converges (weakly) to a probability measure $\lambda(t)$ on $\mathbb R$. We first prove a lower bound for estimation in this setting.
+\begin{thm} \label{thm:LAN}
+For any estimator $\widehat{\theta}_n$ of $\theta_0$ which is a function of $M^n$ we have
+\[
+\liminf_{c\rightarrow \infty}\, \liminf_{n\rightarrow \infty} \sup_{\tau\,:\,| \tau - \theta| \leq \frac{c}{\sqrt{n}} }  n \mathbb E \left(\widehat{\theta}_n - \tau \right)^2 \geq 1/K(\theta),
+\]
+where 
+\[
+K(\theta) \triangleq  \frac{1}{\sigma^2}\int \frac{ \phi^2\left( \frac{t - \theta }{\sigma} \right)}{ \Phi\left(\frac{t- \theta}{\sigma}\right) \left(1-\Phi\left( \frac{t-\theta}{\sigma} \right) \right)} \lambda(dt).
+\]
+\end{thm}
+
+\begin{proof}
+We will prove that the distribution of $M^n$ defines a local asymptotic normal (LAN) family of probability distributions with \emph{precision} parameter $K(\theta)$. The statement in the theorem then follows from the local asymptotic minimax theorem of LAN families \cite{van2000asymptotic}. \\
+
+The likelihood function of $\theta$ with respect to $M^n$ is given by
+\[
+P_\theta(M^n) =  \prod_{i=1}^n  \Phi \left( M_i \frac{t_i - \theta}{\sigma} \right). 
+\]
+Consider the log-likelihood ratio under a sequence of local alternatives $\theta' = \theta + h/\sqrt{n}$ for some $h\in \mathbb R$:
+\begin{align}
+\log \frac{ P_{\theta + \frac{h}{\sqrt{n}}}(M^n)} { P_\theta (M^n) }& =  \sum_{i=1}^n \log \left(  \Phi \left( \frac{M_i}{\sigma} (t_i - \theta - h/\sqrt{n} ) \right)\right)  - \sum_{i=1}^n \log \left( \Phi \left( M_i \frac{t_i - \theta}{\sigma} \right) \right). \label{eq:LAN_proof1}
+\end{align}
+Using the Taylor expansion of $\log \Phi(x)$, \eqref{eq:LAN_proof1} can be written as
+\[
+- h \sum_{i=1}^n  \frac{M_i}{\sqrt{n} \sigma }  \frac{ \phi \left(M_i\frac{t_i-\theta}{\sigma} \right)} {\Phi \left( M_i \frac{t_i-\theta}{\sigma} \right) }  - \frac{h^2}{2 \sigma^2 n} \sum_{i=1}^n   \left( \frac{\phi' \left(M_i \frac{t_i-\theta}{\sigma} \right) }{\Phi\left(M_i \frac{t_i-\theta}{\sigma}\right) }- \frac{ \phi^2\left(M_i \frac{t_i-\theta}{\sigma} \right)}{\Phi^2\left(M_i \frac{t_i-\theta}{\sigma} \right)}   \right) + o(1)
+\] 
+\end{proof}
+The proof is completed by proving the following two lemmas:
+\begin{lem} \label{lem:LAN1}
+For $i=1,\ldots,n$ denote 
+\[
+U_i = -M_i \frac{ \phi \left( M_i \frac{t_i - \theta}{\sigma} \right)}{ \sigma \Phi \left( M_i \frac{t_i - \theta}{\sigma}\right) }. 
+\]
+Then 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0, K(\theta) \right). 
+\]
+\end{lem}
+\begin{lem} \label{lem:LAN2}
+For $i=1,\ldots,n$ denote
+\[
+V_i = \frac{1}{\sigma^2} \left[ \frac{\phi' \left(M_i \frac{t_i-\theta}{\sigma} \right) }{\Phi\left(M_i \frac{t_i-\theta}{\sigma}\right) }- \frac{ \phi^2\left(M_i \frac{t_i-\theta}{\sigma} \right)}{\Phi^2\left(M_i \frac{t_i-\theta}{\sigma} \right)} \right] .
+\]
+Then 
+\[
+\frac{1}{n} \sum_{i=1}^n V_i \overset{a.s.}{\rightarrow} K(\theta). 
+\]
+\end{lem}
+
+\subsubsection*{Proof of Lemma~\ref{lem:LAN1}} 
+We have that $\mathbb E  U_i= 0$. In addition,
+\[
+\mathbb E U_i^2 = \frac{ \phi^2 \left( \frac{t_i-\theta}{\sigma} \right) } { \Phi \left( \frac{t_i-\theta}{\sigma} \right) \left(1- \Phi \left( \frac{t_i-\theta}{\sigma} \right) \right)},
+\]
+and therefore
+\[
+\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2 \rightarrow K(\theta).
+\]
+
+We now verify that the sequence $\{ U_i,\,i=1,2,\ldots \}$ satisfies Lyaponov's condition: for any $\delta>0$ we have that 
+\[
+\mathbb E \left| U_i \right|^{2+\delta} = \phi^{2+\delta} \left(\frac{t_i-\theta} {\sigma } \right)   \left( \frac{1}{\Phi^{2+\delta} \left(\frac{t_i-\theta}{\sigma }\right)} + \frac{1}{1-\Phi^{2+\delta} \left(\frac{t_i-\theta}{\sigma }\right)} \right),
+\]
+and
+\begin{equation}
+\frac{\sum_{i=1}^n \mathbb E \left| U_i \right|^{2+\delta} }{ \left( \sqrt{\sum_{i=1}^n \mathbb E U_i^2 } \right)^{2+\delta}} = 
+\frac{ \frac{1}{n^{1+\delta}} \sum_{i=1}^n \mathbb E U_i^{2+\delta} }{ \left(\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2  \right) \left(\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta}. 
+\label{eq:Lyaponov}
+\end{equation}
+As $n$ goes to infinity, we have
+\[
+\frac{1}{n}\sum_{i=1}^n \mathbb E \left| U_i \right|^{2+\delta}  \rightarrow \int \phi^{2+\delta} \left(\frac{t-\theta}{\sigma }\right) \left( \frac{1}{\Phi^{2+\delta}\left(\frac{t-\theta}{\sigma }\right)} + \frac{1}{1-\Phi^{2+\delta} \left(\frac{t-\theta}{\sigma }\right)} \right) \lambda(dt),
+\]
+so the numerator in \eqref{eq:Lyaponov} goes to zero. Since the denumerator in \eqref{eq:Lyaponov} goes to $(K(\theta))^{1+\delta})$, the entire expression goes to zero and hence Lyaponov's condition is satisfied. From Lyaponov's central limit theorem we conclude that 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0,K(\theta) \right). 
+\]
+\QEDA
+
+\subsubsection*{Proof of Lemma~\ref{lem:LAN2}} 
+
+Since $\phi'(x) = -x \phi(x)$, we have that
+\[
+\mathbb E V_i =  \frac{\phi^2 \left(\frac{ t_i-\theta}{\sigma} \right) } { \Phi \left(\frac{ t_i-\theta}{\sigma} \right)  \left(1-\Phi \left(\frac{ t_i-\theta}{\sigma} \right)  \right)},
+\]
+and thus
+\[
+\frac{1}{n} \sum_{i=1}^n \mathbb E V_i =  \frac{1}{n} \sum_{i=1}^n  \frac{\phi^2\left( \frac{t_i-\theta}{\sigma} \right)} {\sigma^2 \Phi \left( \frac{t_i - \theta}{\sigma} \right)\left(1-\Phi \left( \frac{t_i - \theta}{\sigma} \right) \right)} \rightarrow K(\theta).  
+\]
+It follows from Kolmogorov's law of large numbers (e.g. \cite[Thm. 10.2.3]{sen1994large}) that
+\[
+\frac{1}{n} \sum_{i=1}^n \mathbb E V_i \overset{a.s.}{\rightarrow} K(\theta). 
+\]
+\QEDA
+
+
+Next, we show that the maximum likelihood estimator of $\theta$ given $M^n$ attains the minmax local asymptotic lower bound of Thm.~\ref{thm:LAN}. The log-likelihood function of $\theta$ is given by
+\[
+l(M^n  |\theta ) =  \sum_{i=1}^n \log\left[ \Phi \left( M_i \frac{t_i - \theta}{\sigma} \right) \right]
+\]
+Since $\Phi(x)$ is a log concave function, the log-likelihood function has a unique maximizer $\theta_n$, and we use this maximizer as our $n$th estimate of $\theta$. The asymptotic distribution of $\theta_n$ is given by the following theorem:
+\begin{thm} \label{thm:dist_thresholds}
+Let $\theta_n$ be the maximizer of $l(M^n|\theta)$. Then 
+\[
+\sqrt{n}(\theta_n - \theta) \overset{D}{\rightarrow} \mathcal N\left(0,1/K(\theta) \right).
+\]
+\end{thm}
+
+\begin{proof}
+Since all the derivatives of $l(M^n|\theta)$ with respect to $\theta$ exist, we can expand $l'(M^n|\theta_n) = l'(\theta_n)$ about $\theta$ as follows:
+\[
+l'(\theta_n) = l'(\theta) + \left( \theta_n - \theta \right) l''(\theta) + \frac{1}{2} \left( \theta_n - \theta\right)^2 l'''(\theta_n^*),
+\]
+where $\theta_n^*$ lies between $\theta$ and $\theta_n$. Since $\theta_n$ is the root of $l'(\theta)$, we have
+\begin{equation}
+\sqrt{n}(\theta_n - \theta) = \frac{(1/\sqrt{n}) l'(\theta)}{ -(1/n)l''(\theta) - (1/2n)(\theta_n - \theta)l'''(\theta_n^*)}.
+\label{eq:ML_expansion}
+\end{equation}
+%(remember that $l'(\theta)$ and $l''(\theta)$ are function of $M^n$.)
+Denote
+\[
+l_i(\theta) = \log( \mathbb P(M_i | \theta) ) = \log\left( \Phi \left(M_i \frac {t_i -  \theta} {\sigma}\right) \right).
+\]
+We have
+\[
+l'_i(\theta) = -M_i \frac{\phi \left(M_i\left( \frac{t_i - \theta}{\sigma} \right) \right)}{\sigma \Phi \left(M_i \left( \frac{t_i - \theta}{\sigma} \right) \right)} = U_i. 
+\]
+From Lemma~\ref{lem:LAN1} we conclude that the numerator in \eqref{eq:ML_expansion} converges in distribution to $\mathcal N\left(0,K(\theta) \right)$. \\
+
+Next, we consider the term
+\[
+\frac{1}{n} l''(\theta) = \frac{1}{n} \sum_{i=1}^n l_i''(\theta) = \frac{1}{n} \sum_{i=1}^n \left(\frac{ -\phi' \left(M_i \frac{t_i-\theta}{\sigma } \right) }{\sigma^2 \Phi \left( M_i \frac{t_i-\theta}{\sigma } \right)} + \frac{\phi^2\left(M_i \frac{t-\theta}{\sigma } \right)} {\sigma^2 \Phi^2 \left(M_i \frac{t_i-\theta}{\sigma } \right)}  \right).
+\]
+We see that $l_i''(\theta) = -V_i$ in Lemma~\ref{lem:LAN2}, and therefore
+\[
+-\frac{1}{n} l''(\theta) \rightarrow K(\theta). 
+\]
+Finally, since the third derivative of $l(\theta)$ is bounded in $\theta$, the dominated convergence theorem implies that the last term in \eqref{eq:ML_expansion} goes to zero as $n$ goes to infinity.
+\end{proof}
+
+Theorem~\ref{thm:dist_thresholds} shows that the maximum likelihood estimator of $\theta$ given the $n$ single-bit messages is asymptotically normal and attains the local asymptotic minimax variance $1/K(\theta)$. Since the thresholds density integrates to $1$ and from the bound on $K(\theta)$ obtained in the proof of Lemma~\ref{lem:bound_intervals}, it follows that
+\[
+K(\theta) \leq  \sup_{t\in \mathbb R}  \frac{1}{\sigma^2} \frac{\phi^2\left( \frac{t-\theta}{\sigma} \right)} {\Phi \left( \frac{t - \theta}{\sigma} \right)\left(1-\Phi \left(\frac{ t - \theta}{\sigma }\right) \right) }  \int  \lambda(dt)  \leq \frac{2}{\pi \sigma^2}.
+\]
+This upper bound implies that the relative efficiency of any distributed estimator is at least $\pi/2$, a fact that agrees with our in the adaptive estimation setting. Unfortunately, this upper bound on $K(\theta)$ is attained whenever the density $\lambda$ is the mass distribution at $\theta$, which is unknown. Therefore, we turn to choose the density $\lambda$ such that the average MSE over the distribution $\pi(\theta)$, namely, such that 
+\begin{equation} \label{eq:to_minimize}
+\mathbb E \frac{1}{K(\theta)} = \int \frac{ \pi(d\theta) }{ \int \frac{ \phi^2 \left(\frac{t-\theta}{\sigma}\right)  } { \sigma^2 \Phi \left(\frac{t-\theta}{\sigma}\right) \left(1 - \Phi \left(\frac{t-\theta}{\sigma}\right) \right)} \lambda(dt) },
+\end{equation}
+is minimal. 
+
+\subsubsection{An upper bound} 
+Since the function $x\rightarrow 1/x$ is convex for $x>0$, Jensen's inequality applied to the denominator in \eqref{eq:to_minimize} leads to
+\[
+\mathbb E \frac{1}{K(\theta)} \leq  \sigma^2 \int \int  \frac{ { \Phi \left(\frac{t-\theta}{\sigma}\right) \left(1 - \Phi \left(\frac{t-\theta}{\sigma}\right) \right)}  }{  \phi^2 \left(\frac{t-\theta}{\sigma}\right) }  \pi(d\theta) \lambda(dt). 
+\]
+
+\begin{example}
+Taking $\lambda$ to be the mass distribution at $\theta_0 = \mathbb E[\theta]$ in the expression above implies to following upper bound for the average distortion: 
+\begin{equation} \label{eq:dist_upper bound}
+\mathbb E \frac{1}{K(\theta)} \leq \sigma^2 \int   \frac{ { \Phi \left(\frac{\theta_0-\theta}{\sigma}\right) \left(1 - \Phi \left(\frac{\theta_0-\theta}{\sigma}\right) \right)}  }{  \phi^2 \left(\frac{\theta_0-\theta}{\sigma}\right) }  \pi(d\theta). 
+\end{equation}
+For example, with a prior $\phi$ standard normal and $\sigma=1$, the above expression is evaluated to $3.8328$. For large $\sigma$ it converges to $\sigma^2 \pi/2$. For small $\sigma$ the expression above can be very large, but, as explained below, in this case the bound is not tight. 
+\end{example}
+
+
+\subsubsection{Optimal thresholds density}
+We now consider the exact minimization of \eqref{eq:to_minimize} over asymptotic density $\lambda$ of the threshold values. The expression on the RHS of \eqref{eq:to_minimize} is convex in $\lambda$ (sum of compositions of linear and one over inverse positive), and we minimize it subject to the constraints: $\int \lambda(dt) = 1$ and $\lambda(dt)\geq0$. \\
+
+The finite dimensional approximation of the problem above can be written as
+\begin{align}
+\mathrm{minimize}\, & f(\lambda) = \sum_{i=1}^k \frac{1}{ \sum_{j=1}^n g_{i,j} \lambda_j }  \label{eq:cvx_problem}\\
+\mathrm{subject to:} & \sum_{j=1}^n {\lambda_j} =1   \nonumber 
+\\ & \lambda_j \geq 0, \nonumber 
+\end{align}
+where $\lambda_j = \lambda(t_j)$ and
+\[
+g_{i,j} = \frac {\phi^2( \frac{t_j - \theta_i}{\sigma}) \phi(\theta_i)} { \sigma^2 \Phi( \frac{t_j - \theta_i}{\sigma} ) \left( 1-\Phi( \frac{t_j - \theta_i}{\sigma}) \right)}.
+\]
+The solution to \eqref{eq:cvx_problem} is sparse: when $\sigma$ is large, $\lambda^\star$ is the mass distribution at $0$, and the upper bound \eqref{eq:dist_upper bound} is tight. When $\sigma$ is small, a few other non-zero values of $\lambda^\star$ exists. This behavior of $\lambda^\star$ is pleasing since for small $\sigma$ it is too risky to use all threshold detector at a single value. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,/Users/Alon1/LaTex/bibtex/sampling}
+
+
+\end{document}

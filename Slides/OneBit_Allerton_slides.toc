@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Motivation}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{Preliminary}{11}{0}{1}
+\beamer@sectionintoc {2}{Adaptive Encoding}{17}{0}{2}
+\beamer@sectionintoc {3}{Distributed Encoding}{25}{0}{3}
+\beamer@sectionintoc {4}{Summary}{32}{0}{4}

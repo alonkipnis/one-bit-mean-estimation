@@ -1,0 +1,443 @@
+\documentclass{beamer}
+\usetheme{Singapore}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{tikz}
+\tikzstyle{sum}=[circle, fill=blue!10, draw=black,line width=1pt,minimum size = 0.5cm, thick ]
+\tikzstyle{ssum}=[circle, fill=blue!10,draw=black,line width=1pt,minimum size = 0.1cm]
+\tikzstyle{int1}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=0.5cm,thick ]
+\tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
+
+\newcommand{\mmse}{\mathsf{mmse}}
+\newcommand{\Xc}{{\color{black} X}}
+
+\newcommand{\rhoc}{{\color{orange} \rho}}
+\newcommand{\pc}{{\color{orange} p}}
+\newcommand{\Rc}{{\color{orange} R}}
+\newcommand{\gammac}{{\color{orange} \gamma}}
+\newcommand{\deltac}{{\color{orange} \delta}}
+\newcommand{\enc}{\mathsf{enc}}
+\newcommand{\qnt}{\mathsf{qnt}}
+
+%% Use any fonts you like.
+\usepackage{helvet}
+
+\title{Compressed-Sensing under \\ Optimal Quantization}
+%\subtitle{ISIT 2017}
+\author{Alon Kipnis (Stanford) \\
+{Galen Reeves} (Duke)\\
+Yonina Eldar (Technion) \\
+Andrea Goldsmith (Stanford) }
+%\institute{$*$Stanford ~~~~$+$Duke ~~~~~$\dagger$Technion}
+\date{ISIT \\
+\vspace{20pt}
+\today 
+} 
+%\institute{\url{miesparza@hotmail.com}}
+
+\beamertemplatenavigationsymbolsempty
+
+\begin{document}
+
+\begin{frame}[plain,t]
+\titlepage
+\end{frame}
+
+
+\section{Introduction}
+
+\subsection{Motivation}
+\begin{frame}
+\frametitle{Motivation}
+\begin{center}
+\begin{tikzpicture}
+\node [yshift = -2cm] (source) at (0,0) {\includegraphics[scale = 0.25]
+{sparse_vector}};
+\node[left of = source, node distance = 2cm] (mat)  {\includegraphics[scale = 0.25]{Dense_matrix}};
+\node[right of = source, node distance = 1.1cm] (noise) {\includegraphics[scale = 0.25]
+{Dense_vector1}};
+\node[right of = noise, node distance = 1.5cm] (observations) {\includegraphics[scale = 0.25]
+{Dense_vector2}};
+\node[right of = observations, node distance = 4cm] (recon1) {\includegraphics[scale = 0.25]
+{sparse_reconstruction}};
+
+\node[above of = source, yshift = 1.2cm, align = center, scale = 0.5] { sparse \\source};
+\node[above of = recon1, yshift = 1.2cm, align = center, scale = 0.5] {source \\ estimate};
+\node[above of = observations, yshift = 0.5cm,align = center, scale = 0.5] { observed \\signal};
+\node[above of = noise, yshift = 0.5cm,align = center, scale = 0.5] {noise};
+\node[above of = mat, yshift = 0.5cm, align = center, scale = 0.5] {sampling matrix};
+
+\node[right of = source, node distance = 0.5cm] {$+$};
+\node[right of = noise, node distance = 0.75cm] {$=$};
+
+%\draw[->, line width = 3pt] (observations) -- (recon1);
+\node[right of = observations, node distance = 2cm] (code) {$\left\{1,\ldots,2^{n \Rc} \right\}$};
+\draw[->, line width = 3pt] (observations) -- (code);
+\draw[->, line width = 3pt] (code) -- (recon1);
+
+\end{tikzpicture}
+\end{center}
+Questions:
+\begin{itemize}
+\item In what sense observed signal is a {\color{red} compressed} representation of the sparse source?
+\item What is the optimal tradeoff between reconstruction error / noise / sparsity / no. of samples and  {no. of \color{red}bits} ?
+\end{itemize}
+\end{frame}
+
+\subsection{Problem Formulation}
+\begin{frame}
+\frametitle{Quantized Compressed-Sensing}
+\begin{itemize}
+\item Standard compressed sensing (CS):
+\[
+\Xc^n \longrightarrow \mathbf H {\Xc^n} + N^m = {Y^m}  \overset{\mathsf{est}}{\longrightarrow} {\widehat{X}^n}
+\]
+\item Quantized CS -- measurements vector $Y^m$ is quantized
+\[
+Y^m \longrightarrow Qnt(Y^m) \overset{\mathsf{est}}{\longrightarrow} {\widehat{X}^n}
+\]
+
+Previous works:
+\begin{itemize} 
+\item Scaler quantization -- [Goyal,\,Fletcher,\,Rangan\,'08]
+\item Lasso recovery --  [Sue\,\&\,Goyal '09]
+\item Optimal high-bit asymptotic -- [Wu\,\&\,Verdu\,'12]
+[Dai\,\&\,Milenkovic\,'11] ({\color{red} scalar quantization with wrong proofs})
+\item 1-bit quantization -- [Boufounos\,\&\,Baraniuk '08],  [Plan\,\&\,Vershynin '13]
+%more precisely -- threshold detections
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{alertblock}{This work:} 
+\[
+Y^m \overset{\enc}{\longrightarrow} i \in \left\{1,\ldots, 2^{n\Rc}\right\} \overset{\mathsf{est/dec}}{\longrightarrow} {\widehat{X}^n}
+\]
+Minimal MSE distortion as a function of $\Rc$ (bits), noise, sparsity, and sampling ratio $m/n$ 
+\end{alertblock}
+
+\begin{alertblock}{Goal:}
+Distortion lower bound under {\color{red}{any}} rate-$\Rc$ quantization and reconstruction techniques
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\renewcommand{\Xc}{{\color{red} X}}
+\frametitle{Setting}
+\[
+\sqrt{\gammac} \mathbf H {\Xc^n} + N^m = { Y^m} \overset{\enc}{\longrightarrow} \left\{1,\ldots,2^{n \Rc}  \right\} \overset{\mathsf{est}}{\longrightarrow} \widehat{X}^n
+\]
+\begin{itemize}
+\item Bernoulli-Gauss source with $\pc$ nonzeros: 
+\[
+{\color{red}X}_i \sim (1-\pc)\delta_0+ \pc \mathcal N(0,1)
+\]
+\item Random sampling i.i.d matrix: $H_{i,j} \sim N\left(0,1/\sqrt{n} \right)$ 
+\item White Gaussian noise: $N^m \sim N\left(0,\mathbf I_m \right)$ 
+%\item $\color{orange} R$ bits per source symbol: $g: \mathbb R^m \rightarrow \left\{1,\ldots,2^{n {\color{orange} R}} \right\}$
+\end{itemize}
+\begin{alertblock}{Goal:}
+Characterize MSE distortion in the large system limit:
+\[
+D\left(\pc, \deltac, \gammac, \Rc \right) =  \lim_{m/n \overset{\infty}{\longrightarrow} \deltac}  \mathbb E \left\| {\Xc^n} - \widehat{X}^n\left(\enc({Y^m}),\mathbf H)\right) \right\|^2
+\]
+\end{alertblock}
+\end{frame}
+
+\subsection{Background}
+\begin{frame}
+\renewcommand{\Xc}{{\color{black} X}}
+\frametitle{Properties of Posterior $P_{X^n|Y^m}$ in the Large System Limit}
+\[
+{Y^m} = \sqrt{ \gammac} \mathbf H {\Xc^n} + N^m
+\]
+Assumptions:
+\begin{itemize}
+\item[(A1)] Single-letter posterior:
+\[
+P_{ {\Xc}_i| Y^m } \rightarrow P_{\Xc|\sqrt{\gammac {\color{red} \eta} }{\Xc}+N}
+\]
+\begin{tikzpicture}
+
+\end{tikzpicture}
+${\color{red} \eta}$ satisfies the fixed-point replica equation 
+\[
+\frac{ \deltac}{\color{red} \eta} = 1 + { \gammac} \mathsf{mmse}\left(\Xc | \sqrt{ \gammac {\color{red} \eta}} \Xc+N \right)
+\]
+\item[(A2)] Decoupling:
+\[
+P_{\Xc^L| { Y^m} } \rightarrow  \prod_{i=1}^L P_{ \Xc_i|Y^m} 
+%\rightarrow  \prod_{i=1}^L P_{{\color{red}X_i}|\sqrt{{\color{orange} \gamma} \eta}{\color{red}X_i}+N_i }
+\]
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Assumptions - Discussion}
+\begin{itemize}
+\item {\color{red} Hold for $\mathbf H$ with Gaussian entries }?
+\item Predicted by the replica method [Guo\,\&\,Verdu'05] for a general i.i.d. $\mathbf H$
+\item (A1) implies
+\[
+\lim_{n,m\rightarrow \infty} \mathsf{mmse}\left(\Xc^n | {Y^m} \right) = \mathsf{mmse}\left(\Xc|\sqrt{\gammac \eta} \Xc+N \right)
+\]
+Holds for a Gaussian $\mathbf H$ [Reeves\,\&\,Pfister '16]
+\end{itemize}
+\begin{alertblock}{Observation:}
+Characterizing the MSE under quantization requires asymptotic posterior and not just its second moment
+\end{alertblock}
+\end{frame}
+
+\section{Main Results}
+\subsection{Blocks}
+\begin{frame}
+\frametitle{Result I: Achievability}
+
+\begin{definition}
+\[
+D_{\Xc|\sqrt{\gammac \eta} \Xc +N }(\Rc) \triangleq  \min_{I\left(\widehat{X} ; \sqrt{ \gammac \eta} \Xc+N \right) \leq R } \mathbb E \left(\Xc - \widehat{X} \right)^2
+\]
+(indirect distortion-rate of $X$ given $\sqrt{ \gammac \eta} \Xc+N$)
+\end{definition}
+
+\begin{theorem} 
+For every $\epsilon>0$, there exists $n$ large enough and an encoder $\enc : \mathbb R^m \rightarrow \left\{1,\ldots,2^{\lfloor n R \rfloor} \right\}$ such that
+\[
+\mathbb E \left\| \Xc^n - \widehat{X}^n \left( \enc(Y^m,\mathbf H) ,\mathbf H \right) \right\|^2 < D_{X| \sqrt{ \gammac \eta}\Xc+N} (\Rc) +\epsilon
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Result II: Converse(ish)}
+\begin{theorem}
+Fix $L \in \mathbb R$ and $\epsilon>0$. There exists $n_0$ large enough such that for any $n\geq n_0$ and any encoder $g : \mathbb R^m \rightarrow \left\{1,\ldots,2^{\lfloor L R \rfloor} \right\}$, 
+\[
+\inf_{\widehat{X}^L(g(Y^m),\mathbf H)} \mathbb E \left\|X^L - \widehat{X}^L\right\|^2 > D_{\Xc |\sqrt{\gammac \eta}\Xc+N }(\Rc) - \epsilon,
+\]
+\end{theorem}
+\begin{center}
+\begin{tikzpicture}
+\node [yshift = -2cm] (source) at (0,0) {\includegraphics[scale = 0.2]
+{sparse_vector}};
+\node[right of = source, node distance = 2cm] (observations) {\includegraphics[scale = 0.2]
+{Dense_vector2}};
+\node[right of = observations, node distance = 2cm] (code) {$\left\{1,\ldots,2^{ {\color{red} L}\Rc} \right\}$};
+ \node[right of = code, node distance = 2cm] (recon) {\includegraphics[scale = 0.2]
+{sparse_reconstruction}};
+
+\node[above of = source, yshift = 0.9cm, align = center] { $X^n$};
+\node[above of = observations, yshift = 0.25cm,align = center] { $Y^m$};
+\node[above of = recon, yshift = 0.9cm,align = center] { $\widehat{X}^n$};
+
+\draw[dashed] (source)+(-0.15,0.7) -- node[left] {$X^{\color{red} L}$} +(-0.15,-1.25) -- +(0.15,-1.25) --+(0.15,0.7);
+\draw[dashed] (recon)+(-0.15,0.7) -- node[right,xshift = 0.3cm] {$\widehat{X}^{\color{red} L}$} +(-0.15,-1.25) -- +(0.15,-1.25) --+(0.15,0.7);
+
+\draw[->, line width = 3pt] (observations) -- (code);
+\draw[->, line width = 3pt] (code) -- (recon);
+\draw[->, line width = 3pt] (source) -- (observations);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Discussion}
+%\includegraphics{} figure D(R).
+\begin{itemize}
+\item Is $D_{\Xc |\sqrt{\gammac \eta}\Xc+N }(\Rc) $ optimal? 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Encoding with unknown Sampling Matrix}
+\begin{itemize}
+
+\item Assume that $\mathbf H$ is unknown at the encoder
+\item Encoder compresses (dense) observations vector $Y^m$ to minimize $\mathbb E\left\|Y^m - \widehat{Y}^m \right\|^2$
+\[
+Y^m \overset{\enc}{\longrightarrow} I \in \left\{1,\ldots,2^{{\color{red} n}\Rc} \right\} \overset{\mathsf{dec}}{\longrightarrow} \widehat{Y}^m
+\]
+\item Sparse source $X^n$ is estimated from the output of this encoder 
+\[
+D_{CE}(R) = \lim_{n,m\rightarrow \infty} \inf_{\widehat{X}} \mathbb E \left\|X^n - \widehat{X}^n \left(I,\mathbf H\right) \right\|^2
+\]
+\item Leads to the {\color{red} compress-and-estimate} source coding setting [Kipnis, Rini, Goldsmith '16]
+
+\end{itemize}
+
+\begin{exampleblock}{Remark:}
+Previous scheme can be seen as \emph{estimate-and-compress} 
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Result III: Compress-and-estimate Distortion-Rate}
+\begin{center}
+\begin{tikzpicture}
+\node at (0,0) (source) {$X^n \rightarrow \sqrt{\gammac} \mathbf H X^n + N^m = Y^m$};
+\node[right of = source, node distance = 4cm] (code) { $\left\{1,\ldots,2^{n\Rc} \right\}$};
+\node[right of = code, node distance = 2.5cm] (dest1) { $\widehat{Y}^m$};
+\node[below of = code, node distance = 1.5cm] (dest2) { $\widehat{X}^n$};
+\draw[->] (source) -- node[above]{\scriptsize $\enc$} (code);
+\draw[->,dashed] (code) -- node[above]{\scriptsize $\mathsf{dec}$} (dest1);
+\draw[->] (code) -- node[right]{\scriptsize $\mathsf{est}$} (dest2);
+\end{tikzpicture}
+\end{center}
+\begin{theorem}
+\[
+D_{CE}(\Rc) = \mmse\left(\Xc | \sqrt{\color{red} \gamma' {\color{red} \eta'}}\Xc + N \right)
+\]
+where
+\[
+{\color{red}\gamma'} \triangleq \gammac \frac{1- 2^{-2{ \Rc / \rhoc} } }{1 + \gammac \pc 2^{-2 \Rc / \rhoc} },
+\]
+and ${\color{red} \eta'}$ is determined by replica fixed point equation with SNR ${\color{red}\gamma'}$
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example I: distortion vs code rate}
+\framesubtitle{(high sampling rate)}
+\vspace{-30pt}
+\begin{center}
+\begin{tikzpicture}
+\node[coordinate] (figure) at (0,0) {};
+\node (title) [above of = figure, node distance = 2.7cm, scale = 0.5]{($\deltac = 0.5$, $\pc=0.3$, $\gammac = 100$)};
+\node (xlabel) [below of = figure, node distance = 3.3cm] {$\Rc$ };
+\node (ylabel) [left of = figure, node distance = 3.5cm] {$D/\pc$};
+\node at (0,0) (img1) {\includegraphics[scale = 0.2]{DR_wo_p0_3_rho0_5_gm100}};
+\node (mmse) [left of = figure, node distance = 2.1cm, yshift = -1.1cm, scale = 0.7] {$\mmse$};
+\node (Dx) [below of = figure, node distance = 2cm, yshift = 0cm, rotate = -20, scale = 0.7] {$D_X$};
+\pause
+\node at (0,0) (img2) {\includegraphics[scale = 0.2]{DR_w1_p0_3_rho0_5_gm100}};
+\node (Dxz) [right of = figure, node distance = -0.5cm, yshift = -0.4cm, rotate = -25] {$D_{X|\sqrt{\eta \gammac}X+N}$};
+\pause
+\node at (0,0) (img3) {\includegraphics[scale = 0.2]{DR_p0_3_rho0_5_gm100}};
+\node (Dce) [right of = figure, node distance = -0.6cm, yshift = 0.5cm, rotate = -25] {$D_{CE}$};
+\pause
+
+%With 
+\node at (0,0) (img3) {\includegraphics[scale = 0.2]{DR_p0_3_G_rho0_5_gm100}};
+\node (Dg) [right of = figure, node distance = 0cm, yshift = 1.5cm, rotate = -12] {$D_{\mathsf{Gauss}}$};
+\end{tikzpicture}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Both schemes are optimal as $R\rightarrow \infty$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example II: distortion vs code rate}
+\framesubtitle{(low sampling rate)}
+\vspace{-30pt}
+\begin{center}
+\begin{tikzpicture}
+\node[coordinate] (figure) at (0,0) {};
+\node (title) [above of = figure, node distance = 2.7cm, scale = 0.5]{($\deltac = {\color{red} 0.3}$, $\pc= {\color{red} 0.5}$, $\gammac = 100$)};
+\node (xlabel) [below of = figure, node distance = 3.3cm] {$\Rc$ };
+\node (ylabel) [left of = figure, node distance = 3.5cm] {$D/\pc$};
+\node at (0,0) (img1) {\includegraphics[scale = 0.2]{DR_p0_5_rho0_3_gm100_2}};
+\node (mmse) [left of = figure, node distance = 1.6cm, yshift = -0.4cm, scale = 0.7] {$\mmse$};
+\node (Dx) [left of = figure, node distance = 1.7cm, yshift = -1.5cm, rotate = -60, scale = 0.7] {$D_X$};
+\node (Dxz) [right of = figure, node distance = -0.5cm, yshift = 0.9cm, rotate = -25] {$D_{X|\sqrt{\eta \gammac}X+N}$};
+\node (Dce) [right of = figure, node distance = -0.6cm, yshift = 0cm, rotate = -20] {$D_{CE}$};
+\end{tikzpicture}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Asymptotic posterior distortion-rate is sub-optimal !
+\end{itemize}
+\end{frame}
+% \begin{frame}
+% \frametitle{Example: distortion vs code rate}
+% \begin{center}
+% \begin{tikzpicture}
+% \node at (0,0) (figure) {\includegraphics[scale = 0.5]{DR_p0_3_gm100_rho0_5}};
+% \node (title) [above of = figure, node distance = 3cm, scale = 0.5]{($\deltac = 0.5$, $\pc=0.3$, $\gammac = 100$)};
+% \node (xlabel) [below of = figure, node distance = 3cm] {$\Rc$ };
+% \node (ylabel) [left of = figure, node distance = 3cm] {$D/\pc$};
+% \node (Dce) [right of = figure, node distance = -0.6cm, yshift = 0.7cm] {$D_{CE}$};
+% \node (Dxz) [right of = figure, node distance = -0.5cm, yshift = -0.4cm, rotate = -25] {$D_{X|\sqrt{\eta \gammac}X+N}$};
+% \node (mmse) [left of = figure, node distance = 1.8cm, yshift = -0.9cm, scale = 0.7] {$\mmse$};
+% \node (Dx) [left of = figure, node distance = 1.8cm, yshift = 0cm, rotate = -60, scale = 0.7] {$D_X$};
+% \end{tikzpicture}
+% \end{center}
+% \begin{itemize}
+% \item Both schemes are optimal as $R\rightarrow \infty$
+% \end{itemize}
+% \end{frame}
+
+\begin{frame}
+\frametitle{Example III: distortion vs sampling rate}
+\begin{center}
+\begin{tikzpicture}
+\node[coordinate] at (0,0) (figure) {};
+\node (title) [above of = figure, node distance = 2.8cm, scale = 0.5]{($\Rc=2p$, $\pc=0.2$, $\gammac = 100$)};
+\node (xlabel) [below of = figure, node distance = 3.4cm] {$\deltac$ };
+\node (ylabel) [left of = figure, node distance = 3.5cm] {$D/\pc$};
+\node at (0,0) (figure) {\includegraphics[scale = 0.2]{D_vs_delta_wo_R0_4_p0_2_gm100}};
+\node (mmse) [left of = figure, node distance = 1.6cm, yshift = 0cm, rotate = -60, scale = 0.7] {$\mmse$};
+\node (Dx) [left of = figure, node distance = 1.7cm, yshift = -1.1cm, scale = 0.7] {$D_X$};
+\pause
+\node at (0,0) (figure) {\includegraphics[scale = 0.2]{D_vs_delta_R0_4_p0_2_gm100}};
+\node (Dce) [right of = figure, node distance = 0.3cm, yshift = 0.7cm] {$D_{CE}$};
+\node (Dxz) [right of = figure, node distance = 0.6cm, yshift = -0.8cm, rotate = -10] {$D_{X|\sqrt{\eta \gammac}X+N}$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Example IV: distortion vs SNR}
+\begin{center}
+\vspace{-25pt}
+\begin{tikzpicture}
+\node[coordinate] (figure) at (0,0) {};
+\node (title) [above of = figure, node distance = 2.7cm, scale = 0.5]{($\deltac = 0.5$, $\pc=0.2$, $\Rc = 2\pc$)};
+\node (xlabel) [below of = figure, node distance = 3.3cm] {$\gammac$ };
+\node (ylabel) [left of = figure, node distance = 3.5cm] {$D/\pc$};
+\node at (0,0) (img1) {\includegraphics[scale = 0.2]{D_vs_gm_wo_rho0_5_p0_2_R2}};
+\node (mmse) [left of = figure, node distance = 2cm, yshift = 0.3cm, rotate = -45, scale = 0.7] {$\mmse$};
+\node [left of = figure, node distance = 1.5cm, yshift = -1.1cm, scale = 0.7] (Dx)  {$D_X$};
+\pause
+\node at (0,0) (img2) {\includegraphics[scale = 0.2]{D_vs_gm_w1_rho0_5_p0_2_R2}};
+\node (Dxz) [right of = figure, node distance = -0.5cm, yshift = 0cm, rotate = -35] {$D_{X|\sqrt{\eta \gammac}X+N}$};
+\pause
+\node at (0,0) (img3) {\includegraphics[scale = 0.2]{D_vs_gm_w2_rho0_5_p0_2_R2}};
+\node (Dce) [right of = figure, node distance = -0.6cm, yshift = 1.1cm, rotate = -20] {$D_{CE}$};
+\end{tikzpicture}
+\end{center}
+\vspace{-20pt}
+\begin{itemize}
+\item Compress-and-estimate suffers an ``SNR floor''
+%\[
+%\gamma' \overset{\gammac \rightarrow \infty}{\longrightarrow} \tilde{\gamma} \triangleq 2^{2\Rc / \deltac} / \pc
+%\]
+\end{itemize}
+\end{frame}
+
+
+\section{Summary}
+
+\begin{frame}
+\frametitle{Summary}
+\begin{itemize}
+\item Quantized compressed sensing -- optimal tradeoff between MMSE, sparsity, sampling rate, noise intensity and bitrate in the linear measurements model
+\item Characterization using the replica posterior: 
+\begin{itemize}
+\item Single-letter replica distortion-rate function is achievable
+\item Not optimal when source is dense since it ignores correlation
+\end{itemize}
+\item Compress-and-estimate is used when sampling matrix is not available at the encoder 
+\end{itemize}
+
+\end{frame}
+
+
+\end{document}
