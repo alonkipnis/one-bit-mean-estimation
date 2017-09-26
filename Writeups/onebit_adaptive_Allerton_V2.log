@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  26 SEP 2017 13:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  26 SEP 2017 13:32
 entering extended mode
- \write18 enabled.
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **onebit_adpative_Allerton_V2.tex
 (./onebit_adpative_Allerton_V2.tex
@@ -827,14 +827,12 @@ Package etexcmds Info: Could not find \expanded.
 ))
 (/usr/local/texlive/2014/texmf-dist/tex/latex/ifplatform/ifplatform.sty
 Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
-runsystem(uname -s > "onebit_adpative_Allerton_V2.w18")...executed.
 
 
-(./onebit_adpative_Allerton_V2.w18)
-runsystem(rm -- "onebit_adpative_Allerton_V2.w18")...executed.
+Package ifplatform Warning: 
+    shell escape is disabled, so I can only detect \ifwindows.
 
-)
-(/usr/local/texlive/2014/texmf-dist/tex/latex/filemod/filemod.sty
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/filemod/filemod.sty
 Package: filemod 2011/09/19 v1.2 Get and compare file modification times
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/filemod/filemod-expmin.sty
@@ -972,8 +970,17 @@ L3 Module: l3candidates 2014/05/04 v4734 L3 Experimental additions to l3kernel
 \pstool@out=\write6
 \pstool@mainfile@ior=\read2
 \pstool@auxfile@ior=\read3
-)
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/inputenc.sty
+
+
+Package pstool Warning: 
+  Package option [process=none] activated
+  because -shell-escape is not enabled.
+This warning occurred on input line 137.
+
+runsystem(cd ""; cp -- "onebit_adpative_Allerton_V2.aux" "onebit_adpative_Aller
+ton_V2.oldaux" )...disabled (restricted).
+
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2014/04/30 v1.2b Input encoding file
 \inpenc@prehook=\toks38
 \inpenc@posthook=\toks39
@@ -1083,7 +1090,11 @@ e
 \c@definition=\count182
 \c@rem=\count183
 
-No file onebit_adpative_Allerton_V2.aux.
+(./onebit_adpative_Allerton_V2.aux
+
+LaTeX Warning: Label `eq:ceo_optimal_sumrate' multiply defined.
+
+)
 \openout1 = `onebit_adpative_Allerton_V2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 81.
@@ -1098,7 +1109,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 81.
 LaTeX Font Info:    ... okay on input line 81.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 81.
 LaTeX Font Info:    ... okay on input line 81.
-(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count184
 \scratchdimen=\dimen299
@@ -1120,73 +1131,56 @@ your preamble.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 91
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 90
 .
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 91
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 90
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 91
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 90
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 91
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 90
 .
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 91.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 90.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 104.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 103.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 104.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 103.
 
-Underfull \hbox (badness 10000) in paragraph at lines 110--111
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 112--113
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
 
  []
 
 
-LaTeX Warning: Citation `cicalese2002least' on page 1 undefined on input line 1
-14.
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+
+ []
 
 
-LaTeX Warning: Citation `Karp:2007:NBS:1283383.1283478' on page 1 undefined on 
-input line 114.
-
-
-LaTeX Warning: Citation `1092194' on page 1 undefined on input line 114.
-
-
-LaTeX Warning: Citation `53738' on page 1 undefined on input line 114.
-
-
-LaTeX Warning: Citation `53738' on page 1 undefined on input line 114.
-
-
-Underfull \hbox (badness 1975) in paragraph at lines 114--115
+Underfull \hbox (badness 1975) in paragraph at lines 113--114
 \OT1/ptm/m/n/10 to-digital con-ver-sion [[]] uses one-bit thresh-old de-tec-tor
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
 
  []
 
@@ -1196,334 +1190,75 @@ map/pdftex.map}
 
 
 ]
-
-LaTeX Warning: Citation `gray1998quantization' on page 2 undefined on input lin
-e 116.
-
-
-LaTeX Warning: Citation `gill1995applications' on page 2 undefined on input lin
-e 116.
-
-
-LaTeX Warning: Citation `polyak1992acceleration' on page 2 undefined on input l
-ine 116.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 116--117
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
 
  []
 
 
-LaTeX Warning: Citation `berger1996ceo' on page 2 undefined on input line 118.
-
-
-LaTeX Warning: Citation `viswanathan1997quadratic' on page 2 undefined on input
- line 118.
-
-
-LaTeX Warning: Citation `oohama1998rate' on page 2 undefined on input line 118.
-
-
-
-LaTeX Warning: Citation `prabhakaran2004rate' on page 2 undefined on input line
- 118.
-
-
-LaTeX Warning: Reference `sec:ceo' on page 2 undefined on input line 118.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 117--118
 
  []
 
 
-LaTeX Warning: Citation `zhang2013information' on page 2 undefined on input lin
-e 122.
-
-
-LaTeX Warning: Citation `zhang2013information' on page 2 undefined on input lin
-e 122.
-
-
-LaTeX Warning: Citation `han1987hypothesis' on page 2 undefined on input line 1
-23.
-
-
-LaTeX Warning: Citation `zhang1988estimation' on page 2 undefined on input line
- 123.
-
-
-LaTeX Warning: Citation `52470' on page 2 undefined on input line 123.
-
-
-LaTeX Warning: Citation `boufounos20081' on page 2 undefined on input line 125.
-
-
-
-LaTeX Warning: Citation `baraniuk2017exponential' on page 2 undefined on input 
-line 125.
-
-
-LaTeX Warning: Citation `singh2009limits' on page 2 undefined on input line 125
-.
-
-
-Underfull \hbox (badness 1590) in paragraph at lines 121--126
-\OT1/ptm/m/n/10 sub-ject to the one-bit quan-ti-za-tion con-straint were also
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 121--126
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
 
  []
 
 
-LaTeX Warning: Reference `sec:problem' on page 2 undefined on input line 127.
-
-
-LaTeX Warning: Reference `sec:ceo' on page 2 undefined on input line 127.
-
-
-LaTeX Warning: Reference `sec:sequential' on page 2 undefined on input line 127
-.
-
-
-LaTeX Warning: Reference `sec:conclusions' on page 2 undefined on input line 12
-7.
-
-
-LaTeX Warning: Reference `fig:sequential' on page 2 undefined on input line 180
-.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 186--193
+Underfull \hbox (badness 10000) in paragraph at lines 185--192
 
  []
 
 
-LaTeX Warning: Reference `eq:error_def' on page 3 undefined on input line 194.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
+Underfull \hbox (badness 10000) in paragraph at lines 200--201
 
  []
 
 
-LaTeX Warning: Citation `berger1996ceo' on page 3 undefined on input line 207.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 214--217
+Underfull \hbox (badness 10000) in paragraph at lines 213--216
 
  []
-
-
-LaTeX Warning: Citation `prabhakaran2004rate' on page 3 undefined on input line
- 218.
-
-
-LaTeX Warning: Citation `chen2004upper' on page 3 undefined on input line 228.
-
-
-LaTeX Warning: Reference `eq:ceo_optimal_sumrate' on page 3 undefined on input 
-line 236.
-
-
-LaTeX Warning: Reference `eq:ceo_bound' on page 3 undefined on input line 241.
-
-
-LaTeX Warning: Citation `KipnisRini2017' on page 3 undefined on input line 241.
-
-
-
-LaTeX Warning: Reference `eq:ceo_bound' on page 3 undefined on input line 246.
-
-
-LaTeX Warning: Reference `eq:ceo_bound' on page 3 undefined on input line 247.
-
-
-LaTeX Warning: Reference `eq:ceo_bound' on page 3 undefined on input line 248.
-
-
-LaTeX Warning: Reference `thm:adpative_lower_bound' on page 3 undefined on inpu
-t line 251.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 3 undefined on input line 251.
-
-
-LaTeX Warning: Reference `thm:opt_one_step' on page 3 undefined on input line 2
-51.
 
 [3]
-
-LaTeX Warning: Reference `eq:relative_efficiency' on page 4 undefined on input 
-line 289.
-
-
-LaTeX Warning: Reference `fig:sequential' on page 4 undefined on input line 291
-.
-
-
-LaTeX Warning: Citation `tsybakov2008introduction' on page 4 undefined on input
- line 305.
-
-
-LaTeX Warning: Citation `gill1995applications' on page 4 undefined on input lin
-e 305.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 305--306
+Underfull \hbox (badness 10000) in paragraph at lines 304--305
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 316--317
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
 
-LaTeX Warning: Reference `eq:sgd_est' on page 4 undefined on input line 325.
-
-
-LaTeX Warning: Reference `eq:sgd_alg' on page 4 undefined on input line 325.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 4 undefined on input line 328.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 4 undefined on input line 335.
-
-
-LaTeX Warning: Citation `polyak1992acceleration' on page 4 undefined on input l
-ine 335.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 335--336
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 
  []
 
 
-LaTeX Warning: Reference `thm:sgd' on page 4 undefined on input line 337.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 4 undefined on input line 337.
-
-
-LaTeX Warning: Reference `eq:sgd_alg' on page 4 undefined on input line 337.
-
-
-LaTeX Warning: Reference `thm:adpative_lower_bound' on page 4 undefined on inpu
-t line 337.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 4 undefined on input line 339.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 4 undefined on input line 339.
-
-
-LaTeX Warning: Reference `thm:adpative_lower_bound' on page 4 undefined on inpu
-t line 339.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 342--343
+Underfull \hbox (badness 10000) in paragraph at lines 341--342
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 393--394
+Underfull \hbox (badness 10000) in paragraph at lines 392--393
 
  []
-
-
-LaTeX Warning: Reference `thm:opt_one_step' on page 5 undefined on input line 3
-95.
-
-
-LaTeX Warning: Reference `eq:fixed_point' on page 5 undefined on input line 414
-.
-
-
-LaTeX Warning: Reference `eq:fixed_point' on page 5 undefined on input line 414
-.
-
-
-LaTeX Warning: Reference `lem:unique' on page 5 undefined on input line 414.
-
-
-LaTeX Warning: Reference `eq:fixed_point' on page 5 undefined on input line 421
-.
-
-
-LaTeX Warning: Reference `eq:estimator_update' on page 5 undefined on input lin
-e 421.
-
-
-LaTeX Warning: Reference `eq:message_update' on page 5 undefined on input line 
-421.
-
-
-LaTeX Warning: Reference `fig:adaptive_error' on page 5 undefined on input line
- 421.
-
-
-LaTeX Warning: Reference `fig:adaptive_error' on page 5 undefined on input line
- 421.
-
-
-LaTeX Warning: Reference `eq:sgd_alg' on page 5 undefined on input line 421.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 5 undefined on input line 421.
 
 <../Figs/one_bit_adpative.png, id=31, 578.16pt x 361.35pt>
 File: ../Figs/one_bit_adpative.png Graphic file (type png)
 
 <use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 426.
+Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 425.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
 
-** WARNING: Ignoring useless \section in Appendix (line 450).
-
-LaTeX Warning: Reference `sec:sequential' on page 5 undefined on input line 451
-.
-
-
-LaTeX Warning: Reference `thm:adpative_lower_bound' on page 5 undefined on inpu
-t line 453.
-
+** WARNING: Ignoring useless \section in Appendix (line 449).
 [5 <../Figs/one_bit_adpative.png>]
-
-LaTeX Warning: Reference `lem:bound_intervals' on page 6 undefined on input lin
-e 474.
-
-
-LaTeX Warning: Reference `eq:induction_base' on page 6 undefined on input line 
-479.
-
-
-LaTeX Warning: Reference `eq:induction_base' on page 6 undefined on input line 
-479.
-
-
-LaTeX Warning: Reference `eq:induction_base' on page 6 undefined on input line 
-483.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 484.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 484.
-
-
-Underfull \hbox (badness 2818) in paragraph at lines 491--493
+Underfull \hbox (badness 2818) in paragraph at lines 490--492
 \OT1/ptm/m/n/10 where we de-noted $\OML/ztmcm/m/it/10 ^^N[] \U/msa/m/n/10 , [][
 ]\OT1/ztmcm/m/n/10 (\OMS/ztmcm/m/n/10 ^^@\OT1/ztmcm/m/n/10 1)[]\OML/ztmcm/m/it/
 10 ^^^\OT1/ztmcm/m/n/10 (\OML/ztmcm/m/it/10 x[]\OT1/ztmcm/m/n/10 )$ \OT1/ptm/m/
@@ -1531,180 +1266,23 @@ n/10 and $\OT1/ztmcm/m/n/10 ^^A[] =
  []
 
 
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 500.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 504.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 504.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 504.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 504.
-
-
-LaTeX Warning: Reference `eq:bound_intervals' on page 6 undefined on input line
- 510.
-
-
-LaTeX Warning: Reference `lem:bound_intervals' on page 6 undefined on input lin
-e 517.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 516--518
+Underfull \hbox (badness 10000) in paragraph at lines 515--517
 
  []
-
-
-LaTeX Warning: Reference `lem:fisher_bound' on page 6 undefined on input line 5
-20.
-
-
-LaTeX Warning: Reference `eq:lem_fisher_bound_proof1' on page 6 undefined on in
-put line 532.
-
-
-LaTeX Warning: Reference `eq:lem_fisher_bound_proof1' on page 6 undefined on in
-put line 541.
 
 [6]
-
-LaTeX Warning: Reference `lem:fisher_bound' on page 7 undefined on input line 5
-49.
-
-
-LaTeX Warning: Reference `lem:bound_intervals' on page 7 undefined on input lin
-e 549.
-
-
-LaTeX Warning: Reference `eq:lemma_J' on page 7 undefined on input line 549.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 548--550
+Underfull \hbox (badness 10000) in paragraph at lines 547--549
 
  []
 
-
-LaTeX Warning: Reference `thm:adpative_lower_bound' on page 7 undefined on inpu
-t line 551.
-
-
-LaTeX Warning: Reference `eq:general_messages' on page 7 undefined on input lin
-e 559.
-
-
-LaTeX Warning: Reference `lem:fisher_bound' on page 7 undefined on input line 5
-68.
-
-
-LaTeX Warning: Citation `tsybakov2008introduction' on page 7 undefined on input
- line 568.
-
-
-LaTeX Warning: Citation `van2004detection' on page 7 undefined on input line 56
-8.
-
-
-LaTeX Warning: Citation `gill1995applications' on page 7 undefined on input lin
-e 568.
-
-
-LaTeX Warning: Citation `tsybakov2008introduction' on page 7 undefined on input
- line 570.
-
-
-LaTeX Warning: Reference `thm:vanTrees' on page 7 undefined on input line 583.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 7 undefined on input line 592.
-
-
-LaTeX Warning: Reference `eq:sgd_alg' on page 7 undefined on input line 593.
-
-
-LaTeX Warning: Reference `eq:sgd_est' on page 7 undefined on input line 593.
-
-
-LaTeX Warning: Citation `polyak1992acceleration' on page 7 undefined on input l
-ine 593.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 7 undefined on input line 593.
-
-
-LaTeX Warning: Citation `polyak1992acceleration' on page 7 undefined on input l
-ine 593.
-
-
-LaTeX Warning: Citation `polyak1992acceleration' on page 7 undefined on input l
-ine 594.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 7 undefined on input line 604.
-
-
-LaTeX Warning: Reference `thm:polyak_juditsky' on page 7 undefined on input lin
-e 615.
-
-
-LaTeX Warning: Reference `thm:polyak_juditsky' on page 7 undefined on input lin
-e 628.
-
-
-LaTeX Warning: Reference `thm:sgd' on page 7 undefined on input line 632.
-
-
-LaTeX Warning: Reference `thm:polyak_juditsky' on page 7 undefined on input lin
-e 632.
-
-
-LaTeX Warning: Reference `thm:opt_one_step' on page 7 undefined on input line 6
-35.
-
-
-LaTeX Warning: Reference `lem:adaptive' on page 7 undefined on input line 636.
-
-
-LaTeX Warning: Reference `lem:unique' on page 7 undefined on input line 636.
-
-
-LaTeX Warning: Reference `thm:opt_one_step' on page 7 undefined on input line 6
-36.
-
 [7]
-
-LaTeX Warning: Reference `lem:adaptive' on page 8 undefined on input line 639.
-
-
-Underfull \hbox (badness 2237) in paragraph at lines 639--640
+Underfull \hbox (badness 2237) in paragraph at lines 638--639
 \OMS/ztmcm/m/n/10 f^^@\OT1/ztmcm/m/n/10 1\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10
  1\OMS/ztmcm/m/n/10 g$ \OT1/ptm/m/n/10 is char-ac-ter-ized by two de-ci-sion re
 -gion $\OML/ztmcm/m/it/10 A[] \OT1/ztmcm/m/n/10 =
  []
 
-
-LaTeX Warning: Citation `1056489' on page 8 undefined on input line 648.
-
-
-LaTeX Warning: Reference `lem:unique' on page 8 undefined on input line 655.
-
-
-LaTeX Warning: Reference `eq:lem_fixed_point' on page 8 undefined on input line
- 655.
-
-
-LaTeX Warning: Reference `eq:one_step_proof_derivative' on page 8 undefined on 
-input line 681.
-
-** WARNING: Ignoring useless \section in Appendix (line 692).
+** WARNING: Ignoring useless \section in Appendix (line 691).
 (./onebit_adpative_Allerton_V2.bbl [8])
 
 ** Conference Paper **
@@ -1721,16 +1299,13 @@ Before submitting the final camera ready copy, remember to:
 
 ] (./onebit_adpative_Allerton_V2.aux)
 
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 32246 strings out of 493117
- 775310 string characters out of 6135434
- 908211 words of memory out of 5000000
+ 32245 strings out of 493117
+ 775306 string characters out of 6135434
+ 908500 words of memory out of 5000000
  35111 multiletter control sequences out of 15000+600000
  63613 words of font info for 136 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1749,7 +1324,7 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adpative_Allerton_V2.pdf (9 pages, 193520 bytes).
+Output written on onebit_adpative_Allerton_V2.pdf (9 pages, 192612 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream
