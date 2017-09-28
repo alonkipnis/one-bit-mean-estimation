@@ -477,9 +477,13 @@ We use induction on $n \in \mathbb N$. For the base case $n=1$ we have
 \end{equation}
 Taking the logarithm of \eqref{eq:induction_base} and differentiating, we conclude that any point $x$ that maximizes \eqref{eq:induction_base} also satisfies
 \[
-x = \phi(x) \left( \Phi(x) -\frac{1}{2} \right).
+x = \phi(x) \frac{\Phi(x) -\frac{1}{2}}{\Phi(x)(1-\Phi(x))} .
 \]
-However, since $x > \phi(x) \left( \Phi(x) -\frac{1}{2} \right)$ for all $x > 0$, the only point that satisfies the last condition is $x=0$, in which \eqref{eq:induction_base} equals $2/\pi$. \par
+However, since 
+\[
+x > \phi(x) \frac{\Phi(x) -\frac{1}{2}}{\Phi(x)(1-\Phi(x))}
+\]
+for all $x > 0$, the only point that satisfies the last condition is $x=0$, in which \eqref{eq:induction_base} equals $2/\pi$. \par
 Assume now that \eqref{eq:bound_intervals} holds for all integers up to some $n = N-1$ and consider the case $n = N$. The maximal value of \eqref{eq:bound_intervals} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
 \begin{align*}
 & g(x_1,\ldots, x_N) \triangleq 2 \log \left(  \sum_{k=1}^{N} (-1)^{k+1} \phi(x_k) \right) - \\
@@ -596,7 +600,7 @@ Let
 \[
 X_i = \theta + Z_i,\quad i=1,\ldots,n,
 \]
-where the $Z_i$s are i.i.d. from $\mathcal N(0,\sigma^2)$ and independent of each other. Define 
+where the $Z_i$s are i.i.d. with zero mean. Define 
 \begin{align*}
 \theta_i & = \theta_{i-1} + \gamma_i \varphi(X_i - \theta_{i-1}), \\
 \widehat{\theta}_n & = \frac{1}{n} \sum_{i=0}^{n-1} \theta_i,
@@ -618,12 +622,12 @@ Using the notation in Thm.~\ref{thm:polyak_juditsky}, we set $\varphi(x) = \sgn(
 \]
 so $\chi(0) = 1$. In addition,
 \begin{align*}
-\psi(x) & = \mathbb E \sgn(x+ Z_1) = \int_{-\infty}^\infty \sgn(x+z) \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{\sigma^2}} dz \\
-& = \int_{-x}^\infty \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{\sigma^2}} dz -\int_{-\infty}^{-x} \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{\sigma^2}} dz.
+\psi(x) & = \mathbb E \sgn(x+ Z_1) = \int_{-\infty}^\infty \sgn(x+z) \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{2\sigma^2}} dz \\
+& = \int_{-x}^\infty \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{2\sigma^2}} dz -\int_{-\infty}^{-x} \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{2\sigma^2}} dz.
 \end{align*}
 This leads to 
 \begin{align*}
-\psi'(x) & = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{x^2}{\sigma^2}} dz +\frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{\sigma^2}} dz,
+\psi'(x) & = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{x^2}{2\sigma^2}} dz +\frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{z^2}{2\sigma^2}} dz,
 \end{align*}
 so $\psi'(0) = \frac{2}{\sqrt{2\pi}\sigma}$. It is now easy to verify that the rest of the conditions in Thm.~\ref{thm:polyak_juditsky} are fulfilled for any $\lambda > 0$. Since 
 \[
