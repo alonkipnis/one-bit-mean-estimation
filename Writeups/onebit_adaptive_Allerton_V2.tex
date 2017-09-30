@@ -87,7 +87,12 @@ Stanford, CA\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-We consider the problem of estimating the mean of a normal distribution under the following constraint: the estimator can access only a single bit of each sample from this distribution. We study the squared error risk in this estimation as a function of the number of samples and one-bit measurements $n$. We show that, if at step $n$ the single bit is a function of both the new sample and the previous $n-1$ acquired bits, no estimator can attain asymptotic mean squared error smaller than $\pi/(2n)$ times the variance. In other words, one-bit restriction increases the number of samples required for a prescribed accuracy of estimation by a factor of at least $\pi/2$ compared to the unrestricted case. In addition, we provide an explicit estimator that attains this asymptotic error, showing that, rather surprisingly, only $\pi/2<1.571$ times more samples are required in order to attain estimation performance equivalent to the unrestricted case. 
+We consider the problem of estimating the mean of a normal distribution under the following constraint: the estimator can access only a single bit of each sample from this distribution. We study the squared error risk in this estimation as a function of the number of samples and one-bit measurements $n$. We consider an adaptive estimation setting where the single-bit sent at step $n$ is a function of both the new sample and the previous $n-1$ acquired bits. For this setting, we show that no estimator can attain asymptotic mean squared error smaller than $\pi/(2n)$ times the variance. 
+%
+In other words, one-bit restriction increases the number of samples required for a prescribed accuracy of estimation by a factor of at least $\pi/2$ compared to the unrestricted case.
+{\color{red} This fundamental restriction on estimation in the adaptive setting implies a lower bound any distributed estimation setting from one-bit samples. }
+%
+In addition, we provide an explicit estimator that attains this asymptotic error, showing that, rather surprisingly, only $\pi/2<1.571$ times more samples are required in order to attain estimation performance equivalent to the unrestricted case. 
 \end{abstract}
 
 %{\color{red}  The $\mu$-sum problem (Kim-ElGamal Ch. 21) gives a lower bound. Can be reduced to the CEO.}
@@ -98,9 +103,9 @@ We consider the problem of estimating the mean of a normal distribution under th
 \section{Introduction}
 \label{sec:Intro}
 
-Processing and estimating information from data collected at multiple sensors and physical locations is subject to communication constraints. 
+Processing and estimating information from data collected at multiple physical locations is subject to communication constraints. 
 %For example, emerging sensor network technologies in medicine and ``smart cities" use many low-cost sensors to collect large amounts of data and transmit it to remote locations. These sensors must operate under severe power restrictions, hence they are limited by their communication bandwidth. 
-For example, consider large-scale sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In this scenario, the ability to estimate a particular parameter from data collected by the sensors is dictated not only by quality of observations and their numbers, but also by limited communication rates between the sensors and the central estimator. The question that we ask is to what extend a parametric estimation task is affected by communication constraints, and what are the fundamental performance limits in estimating a parameter subject to these restrictions. In this paper we answer this question in a particular simple setting: the estimation of the mean $\theta$ of a normal distribution with a known variance $\sigma^2$, under the constraint that only a single bit can be communicated on each sample $X_n$ from this distribution. As it turns out, the ability to share information among different samples before sending each single-bit message dramatically affects the performance in estimating $\theta$. We distinguish in particular among three different settings:
+For example, consider large-scale sensor arrays where information is collected through multiple sensors and transmitted to a central estimation unit. In this scenario, the ability to estimate a particular parameter from data collected by the sensors is dictated not only by quality of observations and their numbers, but also by the available communication rate between the sensors and the central estimator. The question that we ask is to what extend a parametric estimation task is affected by communication constraints, and what are the fundamental performance limits in estimating a parameter subject to these restrictions. In this paper we answer this question in a particular simple setting: the estimation of the mean $\theta$ of a normal distribution with a known variance $\sigma^2$, under the constraint that only a single bit can be communicated on each sample $X_n$ from this distribution. As it turns out, the ability to share information among different samples before sending each single-bit message dramatically affects the performance in estimating $\theta$. We distinguish in particular among three different settings:
  \begin{itemize}
  \item[(i)] \emph{Centralized} encoding: all $n$ encoders confer and produce a single $n$ bit message which is a function of $X_1,\ldots,X_n$. 
  \item[(ii)] \emph{Adaptive} or \emph{sequential} encoding: the $n$th encoder observes $X_n$ and the $n-1$ previous single bit messages.
@@ -138,7 +143,7 @@ The rest of this paper is organized as follows: the main problem and notation ar
 \node[int1, right of = source2, node distance = 1.5cm] (enc2) {Enc 2};  
 \draw[->,line width = 2pt] (source2) -- (enc2); 
 
-\node[below of = source2, node distance = 2.5cm] (source3) {$X_n$};
+\node[below of = source2, node distance = 3cm] (source3) {$X_n$};
 \node[int1, right of = source3, node distance = 1.5cm] (enc3) {Enc n};  
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
@@ -147,14 +152,15 @@ The rest of this paper is organized as follows: the main problem and notation ar
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
 
 \node[int1, right of = enc2, node distance = 4cm ] (est) {Est};
-\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -2cm] (mes1) {$M_1 \in \left\{-1,1\right\}$} (est);   
-\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$M_2 \in \left\{-1,1\right\}$} (est);   
+\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1.5cm] (mes1) { $M_1 \in \left\{-1,1\right\}$} (est);   
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0.5cm] (mes2) { $M_2 \in \left\{-1,1\right\}$} (est);   
 \draw[->] (mes1) -- +(0,-0.7) -| (enc2);
 
-\draw[dashed,->] (mes2) -- +(0,-0.7) -| +(-2,-1.2);
+\draw[->] (mes2) -- +(0,-0.7) -| +(-2.5,-1.2);
+\draw[->] (mes2)+(-1.5,0.8) -- +(-1.5,-0.7);
 \draw[->,line width = 2pt] (enc3) -| (est);   
 
-\node[below of = mes2, node distance = 1.5cm] (mes3) {$M_1,\ldots,M_{n-1} $};
+\node[below of = mes2, node distance = 2cm] (mes3) {$M_1,\ldots,M_{n-1} $};
 
 \draw[->,line width = 2pt] (enc3) -| node[above, xshift = -2cm]  {$M_n \in \left\{-1,1\right\}$} (est);   
 
@@ -190,9 +196,9 @@ where the expectation is taken with respect to the distribution of $X^n$ and the
 %\end{equation}
 %can be obtained from $\epsilon_n$ by assuming a particular least favorable prior distribution on the parameter space $\Theta$ \cite{casella1981}. 
 
-The main problem we consider is the minimization of \eqref{eq:error_def} over all encoding and estimation strategies, and the characterization of its minimal value as a function of  $n$. This minimization is the combination of the following two procedures: (1) selecting the $i$th message $M_i$ based on past messages and current observation $X_i$, and (2) estimating $\theta$ given messages $M^n$. We are interested in particular in the ARE of estimators of $\theta$ compared to the sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$. Since the MSE attained by the latter is $\sigma^2/n$, this ARE is defined as
+The main problem we consider is the minimization of \eqref{eq:error_def} over all encoding and estimation strategies, and the characterization of its minimal value as a function of  $n$. This minimization is the combination of the following two procedures: (1) selecting the $i$th message $M_i$ based on past messages and current observation $X_i$, and (2) estimating $\theta$ given messages $M^n$. We are interested in particular in the ARE of estimators of $\theta$ compared to the sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$. Since $\sqrt{n}(\bar{X}_n-\theta)$ converges to $\mathcal N(0,\sigma^2)$, this ARE is defined as
 \begin{equation}
- \lim_{n \rightarrow \infty} \frac{n}{\sigma^2}  \mathbb E\left(\widehat{\theta}_n - \theta \right)^2. 
+{\sigma^2}  \mathbb E\left(\widehat{\theta}_n - \theta \right)^2. 
 \label{eq:relative_efficiency}
 \end{equation}
 %{\color{red} Since the conditional expectation of $\theta$ with respect to $\bar{X}_n$ (and not $\bar{X}_n$) minimizes \eqref{eq:error_def}, we need to justify the fact that we use the sample mean as the reference estimator.}
@@ -247,7 +253,7 @@ We conclude therefore that the difference between the MSE lower bound \eqref{eq:
 In the next section we show that the ARE in adaptive encoding setting does not exceeds $\pi/2$, and thus provides a tighter lower bound for the distributed encoding setting than $4/3$ of  \eqref{eq:ceo_bound}. 
 
 \section{Results \label{sec:sequential}}
-The first main results of this paper, as described in Thm.~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be lower than $\pi/2$. Next, we provide a particular adaptive estimation scheme and show in Thm.~\ref{thm:sgd} that its efficiency is $\pi/2$. Finally, in Thm.~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $M^{i-1}$ messages is chosen. While it is not clear whether the efficiency of this last scheme is $\pi/2$, numerical simulations suggests that the MSE of this scheme times $n$ also converges to $\pi/2$.
+The first main result of this paper, as described in Thm.~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be lower than $\pi/2$. Next, we provide a particular adaptive estimation scheme and show in Thm.~\ref{thm:sgd} that its efficiency is $\pi/2$. Finally, in Thm.~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $M^{i-1}$ messages is chosen. While it is not clear whether the efficiency of this last scheme is $\pi/2$, numerical simulations suggests that the MSE of this scheme times $n$ also converges to $\pi/2$.
 
 %\begin{figure}
 %\begin{center}
@@ -303,7 +309,7 @@ is the Fisher information with respect to a location model in $\theta$.
 \subsubsection*{Sketch of Proof}
 The main idea in the proof is to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality \cite[Thm. 2.13]{tsybakov2008introduction},\cite{gill1995applications} which bounds from below the MSE of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are given in the Appendix.\\
 
-Next, we present an adaptive estimation scheme which attains ARE of $\pi/2$. 
+Next, we present an adaptive estimation scheme that attains ARE of $\pi/2$. 
 \subsection{Asymptotically optimal estimator}
 Consider the following estimator $\widehat{\theta}_n$ for $\theta$:  set 
 \begin{equation}
@@ -504,7 +510,7 @@ In particular, the condition above implies $x_1 = \ldots = x_N$. If $N$ is odd t
 \[
 \frac{\phi(x_1)^2}{ \Phi(x_1) (1 - \Phi(x_1))},
 \]
-which was shown to be smaller than $\pi/2$. If $N$ is even, then for any constant $c$ the limit of the LHS of \eqref{eq:bound_intervals} exits as $(x_1,\ldots,x_N)\rightarrow (c,\ldots,c)$ and equals zero. Therefore, the maximum of the LHS of \eqref{eq:bound_intervals} is not attained at this line. We now consider the possibility that the LHS of \eqref{eq:bound_intervals} is maximized at the borders, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches plus or minus infinity. For simplicity we only consider the cases where $x_N$ goes to minus infinity or $x_1$ goes to plus infinity (the general case where the first $m$ coordinates goes to infinity or the last $m$ to minus infinity is obtained using similar arguments). Assume first $x_N \rightarrow -\infty$. Then the LHS of \eqref{eq:bound_intervals} equals
+which was shown to be smaller than $\pi/2$. If $N$ is even, then for any constant $c$ the limit of the LHS of \eqref{eq:bound_intervals} as $(x_1,\ldots,x_N)\rightarrow (c,\ldots,c)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:bound_intervals} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:bound_intervals} is maximized at the borders, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches plus or minus infinity. For simplicity we only consider the cases where $x_N$ goes to minus infinity or $x_1$ goes to plus infinity (the general case where the first $m$ coordinates goes to infinity or the last $m$ to minus infinity is obtained using similar arguments). Assume first $x_N \rightarrow -\infty$. Then the LHS of \eqref{eq:bound_intervals} equals
 \begin{align*}
 \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}\phi(x_k) \right)^2} 
 {\left( \sum_{k=1}^{N-1} (-1)^{k+1} \Phi(x_k) \right)\left(1- \sum_{k=1}^{N-1} (-1)^{k+1} \Phi(x_k)  \right) } ,
@@ -524,7 +530,8 @@ The Fisher information of $M$ with respect to $\theta$ is given by
 \begin{align}
 I_\theta & =  \mathbb E \left[ \left( \frac{d}{d\theta} \log P\left( M | \theta \right) \right)^2 |\theta \right] \nonumber \\
 & = \frac{ \left(\frac{d}{d\theta} P(M=1|\theta) \right)^2}{P(M=1| \theta)} + \frac{ \left(\frac{d}{d\theta} P(M=-1|\theta) \right)^2} {P(M=-1| \theta)} \nonumber \\
-& \overset{(a)}{=} \frac{ \left( - \int_A \phi' \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} {\sigma^2 P(M=1| \theta) } + \frac{ \left( \int_A \phi' \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} { \sigma^2P(M=-1| \theta) } \nonumber \\ 
+& =  \frac{ \left( \frac{d}{d\theta} \int_A \phi \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} { P(M=1| \theta) } + \frac{ \left( \frac{d}{d\theta}\int_A \phi \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} { P(M=-1| \theta) } \nonumber \\ 
+& \overset{(a)}{=} \frac{ \left( - \int_A \phi' \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} {\sigma^2 P(M=1| \theta) } + \frac{ \left(- \int_A \phi' \left( \frac{x-\theta}{\sigma} \right)dx \right)^2} { \sigma^2P(M=-1| \theta) } \nonumber \\ 
 & = \frac{\left( \int_A \phi'\left( \frac{x-\theta}{\sigma} \right) dx \right)^2 }{  \sigma^2 P(M=1 | \theta) \left(1-P(M=1|\theta) \right)  }, \nonumber \\
 & = \frac{\left( \int_A \phi'\left( \frac{x-\theta}{\sigma} \right) dx \right) \left( \int_A \phi'\left( \frac{x-\theta}{\sigma} \right) dx \right)}{  \sigma^2 \left( \int_A \phi \left( \frac{x-\theta}{\sigma} \right) dx \right)  \left(1- \int_A \phi \left( \frac{x-\theta}{\sigma} \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
 \end{align}
@@ -538,7 +545,7 @@ A = \cup_{j=1}^k (a_j,b_j),
 \]
 with $\infty \leq a_1 \leq \ldots a_k$, $b_1 \leq b_k \leq \infty$ and $a_j \leq b_j$ for $j=1,\ldots,k$. Under this assumption we have
 \begin{align*}
-\mathbb P(M_n=1) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
+\mathbb P(M_n=1| \theta) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
 & = \sum_{j=1}^k \left( \Phi \left(\frac{b_j-\theta}{\sigma} \right) -  \Phi \left(\frac{a_j-\theta}{\sigma} \right)  \right),
 \end{align*}
 so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as

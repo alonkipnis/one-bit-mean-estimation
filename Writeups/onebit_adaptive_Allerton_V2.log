@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  26 SEP 2017 22:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  29 SEP 2017 14:42
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1156,27 +1156,27 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 90.
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 103.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 108.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 103.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 108.
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--110
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
 
  []
 
 
-Underfull \hbox (badness 1975) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
+
+ []
+
+
+Underfull \hbox (badness 1975) in paragraph at lines 118--119
 \OT1/ptm/m/n/10 to-digital con-ver-sion [[]] uses one-bit thresh-old de-tec-tor
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
@@ -1186,62 +1186,60 @@ map/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 117--118
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--125
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 179--180
+Underfull \hbox (badness 10000) in paragraph at lines 125--130
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 185--192
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
+Underfull \hbox (badness 10000) in paragraph at lines 191--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--216
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 219--222
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 304--305
+Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--316
+LaTeX Warning: Citation `polyak1990new' on page 4 undefined on input line 350.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--351
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--335
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 341--342
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 392--393
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
 
  []
 
@@ -1249,12 +1247,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 392--393
 File: ../Figs/one_bit_adpative.png Graphic file (type png)
 
 <use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 425.
+Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 441.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
 
-** WARNING: Ignoring useless \section in Appendix (line 449).
+** WARNING: Ignoring useless \section in Appendix (line 465).
 [5 <../Figs/one_bit_adpative.png>]
-Underfull \hbox (badness 2818) in paragraph at lines 490--492
+Underfull \hbox (badness 2818) in paragraph at lines 510--512
 \OT1/ptm/m/n/10 where we de-noted $\OML/ztmcm/m/it/10 ^^N[] \U/msa/m/n/10 , [][
 ]\OT1/ztmcm/m/n/10 (\OMS/ztmcm/m/n/10 ^^@\OT1/ztmcm/m/n/10 1)[]\OML/ztmcm/m/it/
 10 ^^^\OT1/ztmcm/m/n/10 (\OML/ztmcm/m/it/10 x[]\OT1/ztmcm/m/n/10 )$ \OT1/ptm/m/
@@ -1262,23 +1260,26 @@ n/10 and $\OT1/ztmcm/m/n/10 ^^A[] =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--517
+Underfull \hbox (badness 10000) in paragraph at lines 535--537
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 547--550
+Underfull \hbox (badness 10000) in paragraph at lines 568--571
 
  []
 
+
+LaTeX Warning: Citation `polyak1990new' on page 7 undefined on input line 614.
+
 [7]
-Underfull \hbox (badness 2237) in paragraph at lines 639--640
+Underfull \hbox (badness 2237) in paragraph at lines 660--661
 \OMS/ztmcm/m/n/10 f^^@\OT1/ztmcm/m/n/10 1\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10
  1\OMS/ztmcm/m/n/10 g$ \OT1/ptm/m/n/10 is char-ac-ter-ized by two de-ci-sion re
 -gion $\OML/ztmcm/m/it/10 A[] \OT1/ztmcm/m/n/10 =
  []
 
-** WARNING: Ignoring useless \section in Appendix (line 692).
+** WARNING: Ignoring useless \section in Appendix (line 713).
 (./onebit_adaptive_Allerton_V2.bbl [8])
 
 ** Conference Paper **
@@ -1297,14 +1298,17 @@ runsystem(cd ""; rm -- "onebit_adaptive_Allerton_V2.oldaux" )...executed.
 
 ] (./onebit_adaptive_Allerton_V2.aux)
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 32248 strings out of 493117
- 775374 string characters out of 6135434
- 908671 words of memory out of 5000000
- 35111 multiletter control sequences out of 15000+600000
+ 32252 strings out of 493117
+ 775440 string characters out of 6135434
+ 908680 words of memory out of 5000000
+ 35115 multiletter control sequences out of 15000+600000
  63613 words of font info for 136 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,13n,92p,10373b,794s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1322,7 +1326,7 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adaptive_Allerton_V2.pdf (9 pages, 192539 bytes).
+Output written on onebit_adaptive_Allerton_V2.pdf (9 pages, 193544 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream
