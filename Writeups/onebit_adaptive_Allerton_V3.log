@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  1 OCT 2017 13:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  1 OCT 2017 14:06
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1215,32 +1215,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 212--213
  []
 
 
-Underfull \hbox (badness 2142) in paragraph at lines 224--227
-\OT1/ptm/m/n/10 en-cod-ing set-ting. Note that the dif-fer-ence be-tween the
+Underfull \hbox (badness 5374) in paragraph at lines 220--222
+\OT1/ptm/m/n/10 dis-tributed en-cod-ing (set-ting (iii) in the In-tro-duc-tion)
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--227
+Underfull \hbox (badness 10000) in paragraph at lines 220--222
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 313--314
+Underfull \hbox (badness 10000) in paragraph at lines 308--309
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 353--354
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 361--362
+Underfull \hbox (badness 10000) in paragraph at lines 356--357
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 412--413
+Underfull \hbox (badness 10000) in paragraph at lines 407--408
 
  []
 
@@ -1248,12 +1249,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 412--413
 File: ../Figs/one_bit_adpative.png Graphic file (type png)
 
 <use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 445.
+Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 440.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
  [5 <../Figs/one_bit_adpative.png>]
-** WARNING: Ignoring useless \section in Appendix (line 474).
+** WARNING: Ignoring useless \section in Appendix (line 469).
 
-Underfull \hbox (badness 2818) in paragraph at lines 511--513
+Underfull \hbox (badness 2818) in paragraph at lines 506--508
 \OT1/ptm/m/n/10 where we de-noted $\OML/ztmcm/m/it/10 ^^N[] \U/msa/m/n/10 , [][
 ]\OT1/ztmcm/m/n/10 (\OMS/ztmcm/m/n/10 ^^@\OT1/ztmcm/m/n/10 1)[]\OML/ztmcm/m/it/
 10 ^^^\OT1/ztmcm/m/n/10 (\OML/ztmcm/m/it/10 x[]\OT1/ztmcm/m/n/10 )$ \OT1/ptm/m/
@@ -1261,24 +1262,24 @@ n/10 and $\OT1/ztmcm/m/n/10 ^^A[] =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 536--538
+Underfull \hbox (badness 10000) in paragraph at lines 531--533
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 569--572
+Underfull \hbox (badness 10000) in paragraph at lines 564--567
 
  []
 
 [7]
-Underfull \hbox (badness 2237) in paragraph at lines 705--706
+Underfull \hbox (badness 2237) in paragraph at lines 700--701
 \OMS/ztmcm/m/n/10 f^^@\OT1/ztmcm/m/n/10 1\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10
  1\OMS/ztmcm/m/n/10 g$ \OT1/ptm/m/n/10 is char-ac-ter-ized by two de-ci-sion re
 -gion $\OML/ztmcm/m/it/10 A[] \OT1/ztmcm/m/n/10 =
  []
 
 [8]
-** WARNING: Ignoring useless \section in Appendix (line 758).
+** WARNING: Ignoring useless \section in Appendix (line 753).
 (./onebit_adaptive_Allerton_V3.bbl)
 
 ** Conference Paper **
@@ -1299,10 +1300,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 32261 strings out of 493117
- 775550 string characters out of 6135434
- 906715 words of memory out of 5000000
- 35119 multiletter control sequences out of 15000+600000
+ 32260 strings out of 493117
+ 775529 string characters out of 6135434
+ 906694 words of memory out of 5000000
+ 35118 multiletter control sequences out of 15000+600000
  65743 words of font info for 141 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,15n,92p,10373b,794s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1320,7 +1321,7 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adaptive_Allerton_V3.pdf (9 pages, 197057 bytes).
+Output written on onebit_adaptive_Allerton_V3.pdf (9 pages, 197050 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream

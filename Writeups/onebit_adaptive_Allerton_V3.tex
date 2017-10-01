@@ -67,7 +67,7 @@
 %
 \author{
 \IEEEauthorblockN{Alon Kipnis}
-\IEEEauthorblockA{Department of Electrical Engineering \\
+\IEEEauthorblockA{Department of Statistics \\
 Stanford University\\
 Stanford, CA\\}
 \and
@@ -217,12 +217,7 @@ Before deriving our main results, we comment on the relation between our setting
 In this section we draw a connection between our general problem of mean estimation from one-bit samples and the remote multiterminal source coding problem \cite{berger1996ceo}, also known as the CEO problem. The setting of the CEO includes $n$ encoders, each has access to a noisy version of a random source sequence. 
 % $\left\{ U_j,\,j=1,2,\ldots \right\}$. 
 The $i$th encoder observes $k$ noisy source symbols and transmit $R_i k$ bits to a central estimator. \par
-Assuming that $\theta$ is drawn once from the prior $\pi(\theta)$, mean estimation from one-bit under distributed encoding (setting (iii) in the Introduction) corresponds to the Gaussian CEO setting with block length $k=1$, where the $i$th encoder observes
-\begin{equation}
-\label{eq:Gaussian_channel}
-X_i = \theta + \sigma Z_i,
-\end{equation}
-with $Z_1,\ldots,Z_n$ i.i.d. standard normal, and uses $R_i=1$ bits to transmit its observation. As a result, the quadratic distortion in the optimal source coding scheme for the CEO with $n$ terminals at rates $R_1 = \ldots = R_n = 1$ and Gaussian observation noise at each estimate of variance $\sigma^2$, provides a lower bound on the MSE distortion in estimating $\theta$ in the distributed encoding setting. Note that the difference between the Gaussian CEO and our setting is in the fact that each encoder may use an arbitrarily large blocklength $k$, thus describing $k$ realizations of $\theta$ using $k$ bits, whereas our setting only allows $k=1$. 
+Assuming that $\theta$ is drawn once from the prior $\pi(\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the Gaussian CEO setting with $k=1$ source realization: the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. As a result, the MSE in the optimal source coding scheme for the CEO with $n$ terminals at rates $R_1 = \ldots = R_n = 1$, a Gaussian observation noise at each estimate of variance $\sigma^2$, and an arbitrary number of $k$ independent draws of $\theta$, provides a lower bound on the MSE distortion in estimating $\theta$ in the distributed encoding setting. Note that the difference between the CEO and ours is in the fact encoders in the CEO describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, whereas our setting only allows $k=1$. 
  \\
 
 By using an expression for the minimal MSE in the Gaussian CEO as the number of terminals goes to infinity, we conclude the following:
