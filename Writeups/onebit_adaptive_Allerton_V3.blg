@@ -14,44 +14,44 @@ Database file #2: /Users/Alon1/LaTex/bibtex/sampling.bib
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 24 entries,
+You've used 25 entries,
             4039 wiz_defined-function locations,
-            1361 strings with 18713 characters,
-and the built_in function-call counts, 19218 in all, are:
-= -- 1643
-> -- 377
-< -- 196
-+ -- 222
-- -- 54
-* -- 934
-:= -- 2917
-add.period$ -- 51
-call.type$ -- 24
-change.case$ -- 23
-chr.to.int$ -- 432
-cite$ -- 24
-duplicate$ -- 1357
-empty$ -- 1466
-format.name$ -- 71
-if$ -- 4439
+            1370 strings with 18890 characters,
+and the built_in function-call counts, 20037 in all, are:
+= -- 1717
+> -- 388
+< -- 206
++ -- 230
+- -- 55
+* -- 972
+:= -- 3045
+add.period$ -- 53
+call.type$ -- 25
+change.case$ -- 24
+chr.to.int$ -- 453
+cite$ -- 25
+duplicate$ -- 1415
+empty$ -- 1525
+format.name$ -- 72
+if$ -- 4630
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 213
-newline$ -- 97
-num.names$ -- 24
-pop$ -- 409
+int.to.str$ -- 25
+missing$ -- 221
+newline$ -- 100
+num.names$ -- 25
+pop$ -- 420
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1516
+skip$ -- 1583
 stack$ -- 0
-substring$ -- 1040
-swap$ -- 1194
-text.length$ -- 52
+substring$ -- 1090
+swap$ -- 1247
+text.length$ -- 55
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 24
+type$ -- 25
 warning$ -- 0
-while$ -- 92
-width$ -- 26
-write$ -- 269
+while$ -- 96
+width$ -- 27
+write$ -- 280
