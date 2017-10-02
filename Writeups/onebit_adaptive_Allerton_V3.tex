@@ -425,19 +425,19 @@ where $\alpha_n$ is a normalization coefficient that equals to
 \begin{equation}
 \theta_n = \mathbb E \left[ \theta| M^n\right] = \int_{-\infty}^\infty t P_n(t) dt. \label{eq:estimator_update}
 \end{equation}
-\item Solve equation \eqref{eq:fixed_point} with the updated prior $P_n(t)$ instead of $P(d\theta)$. Note that since the standard normal cdf $\Phi(x)$ is log-concave, the updated prior $P_n(t)$ remains log-concave and thus a unique solution to \eqref{eq:fixed_point} is guaranteed by Lem.~\ref{lem:unique}. 
+\item Solve equation \eqref{eq:fixed_point} with the updated prior $P_n(t)$ instead of $\pi(d\theta)$. Note that since the standard normal cdf $\Phi(x)$ is log-concave, the updated prior $P_n(t)$ remains log-concave and thus a unique solution to \eqref{eq:fixed_point} is guaranteed by Lem.~\ref{lem:unique}. 
 \item Update the $(n+1)$th message as
 \begin{equation}\label{eq:message_update}
 M_{n+1} = \sgn(X_{n+1}-\tau_n)
 \end{equation}
 \end{enumerate}
 \end{itemize}
-Since equation \eqref{eq:fixed_point} has no analytic solution in general, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture, however, that it attains the asymptotic relative efficiency of $\sigma^2\pi/2$, as can be observed from the numerical simulation illustrated in Fig.~\ref{fig:adaptive_error}. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the sample mean for the same sample realization. 
+Since equation \eqref{eq:fixed_point} has no analytic solution, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture that it attains the asymptotic relative efficiency of $\sigma^2\pi/2$ as can be observed from the numerical simulation illustrated in Fig.~\ref{fig:adaptive_error}. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the sample mean for the same sample realization.
 
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}
-\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
+\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adaptive}};
 %\node[color = blue,  minimum width=1cm, align = left] at (1.5,1.5) {assymptotically optimal \eqref{eq:sgd_est}};
 %\node[color = red, minimum width=1cm, align = left] at (1.5,0.55) {one-step optimal \eqref{eq:message_update}} ;
 \node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left(\widehat{\theta}_n - \theta \right)^2$};
@@ -516,7 +516,7 @@ In particular, the condition above implies $x_1 = \ldots = x_N$. If $N$ is odd t
 \[
 \frac{\phi(x_1)^2}{ \Phi(x_1) (1 - \Phi(x_1))},
 \]
-which was shown to be smaller than $\pi/2$. If $N$ is even, then for any constant $c$ the limit of the LHS of \eqref{eq:bound_intervals} as $(x_1,\ldots,x_N)\rightarrow (c,\ldots,c)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:bound_intervals} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:bound_intervals} is maximized at the borders, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches plus or minus infinity. For simplicity we only consider the cases where $x_N$ goes to minus infinity or $x_1$ goes to plus infinity (the general case where the first $m$ coordinates goes to infinity or the last $m$ to minus infinity is obtained using similar arguments). Assume first $x_N \rightarrow -\infty$. Then the LHS of \eqref{eq:bound_intervals} equals
+which was shown to be not larger than $2/pi$. If $N$ is even, then for any constant $c$ the limit of the LHS of \eqref{eq:bound_intervals} as $(x_1,\ldots,x_N)\rightarrow (c,\ldots,c)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:bound_intervals} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:bound_intervals} is maximized at the borders, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches plus or minus infinity. For simplicity we only consider the cases where $x_N$ goes to minus infinity or $x_1$ goes to plus infinity (the general case where the first $m$ coordinates goes to infinity or the last $m$ to minus infinity is obtained using similar arguments). Assume first $x_N \rightarrow -\infty$. Then the LHS of \eqref{eq:bound_intervals} equals
 \begin{align*}
 \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}\phi(x_k) \right)^2} 
 {\left( \sum_{k=1}^{N-1} (-1)^{k+1} \Phi(x_k) \right)\left(1- \sum_{k=1}^{N-1} (-1)^{k+1} \Phi(x_k)  \right) } ,

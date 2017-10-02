@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  1 OCT 2017 14:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  2 OCT 2017 10:31
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1245,13 +1245,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 407--408
 
  []
 
-<../Figs/one_bit_adpative.png, id=31, 578.16pt x 361.35pt>
-File: ../Figs/one_bit_adpative.png Graphic file (type png)
+<../Figs/one_bit_adaptive.png, id=31, 578.16pt x 361.35pt>
+File: ../Figs/one_bit_adaptive.png Graphic file (type png)
 
-<use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 440.
+<use ../Figs/one_bit_adaptive.png>
+Package pdftex.def Info: ../Figs/one_bit_adaptive.png used on input line 440.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
- [5 <../Figs/one_bit_adpative.png>]
+ [5 <../Figs/one_bit_adaptive.png>]
 ** WARNING: Ignoring useless \section in Appendix (line 469).
 
 Underfull \hbox (badness 2818) in paragraph at lines 506--508
@@ -1321,7 +1321,7 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adaptive_Allerton_V3.pdf (9 pages, 197050 bytes).
+Output written on onebit_adaptive_Allerton_V3.pdf (9 pages, 197371 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  66 compressed objects within 1 object stream
