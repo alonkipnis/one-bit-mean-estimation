@@ -7,6 +7,8 @@
 \usepackage{pgfplots}
 \usepackage{graphicx}
 \usepackage{pstool}
+%\usepackage{beamerthemesplit}
+\usepackage{stmaryrd}
 
 \usepackage[miktex]{gnuplottex}
 
@@ -30,6 +32,7 @@
 \newcommand{\qnt}{\mathsf{qnt}}
 \newcommand{\sgn}{\mathsf{sign}}
 \newcommand{\unif}{\mathsf{unif}}
+\newcommand{\iid}{\mathrm{i.i.d.}}
 
 \newtheorem{prop}{Proposition}
 \newtheorem{lem}{Lemma}
@@ -152,18 +155,22 @@ Point estimation under communication constraints:\\
 \draw[->, thick] (pm) -- (th_hat);
 \end{tikzpicture}
 \end{center}
+\pause
 Estimation error is due to:
 \begin{itemize}
 \item[(i)] limited data 
 \item[(ii)] limited bits
 \end{itemize}
 \bigskip
-
+\pause
 Relevant scenarios:
 \begin{itemize}
+\pause
 \item big data
+\pause
 \item low-power sensors 
-\item distributed computing / optimization (bottleneck is due to communication between processing units)
+\pause
+\item distributed computing / optimization % (bottleneck is due to communication between processing units)
 
 \end{itemize}
 
@@ -191,17 +198,17 @@ Estimating the mean $\thetac$ of a normal distribution $\mathcal N(\thetac,\sigm
 \node[int1, right of = source2, node distance = 2cm, scale = 0.75] (enc2) {Enc 2};  
 \draw[->,line width = 2pt] (source2) -- (enc2); 
 
-\node[below of = source2, node distance = 2.5cm] (source3) {$X_n$};
+\node[below of = source2, node distance = 2cm] (source3) {$X_n$};
 \node[int1, right of = source3, node distance = 2cm, scale = 0.75] (enc3) {Enc n};  
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
-%\node[above of = source, node distance = 1cm] (dist) {${\mathcal N} \left(\theta, \sigma^2 \right)$};
+\node[above of = source, node distance = 0.75cm] (dist) {$X_i \sim {\mathcal N} \left(\theta, \sigma^2 \right)$};
 
-\node[Est, right of = enc2, node distance = 5cm] (est) {Est};
+\node[Est, right of = enc2, node distance = 4.5cm] (est) {Est};
 \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -2.5cm] (mes1) {$M_1 \in \left\{-1,1\right\}$} (est);   
 \draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$M_2 \in \left\{-1,1\right\}$} (est);   
 \draw[->,line width = 2pt] (enc3) -| node[above, xshift = -2.5cm]  {$M_n \in \left\{-1,1\right\}$} (est);   
-\node[right of = est, node distance = 2.5cm] (dest) {$\widehat{\theta}(M^n)$};
+\node[right of = est, node distance = 2cm] (dest) {$\widehat{\theta}(M^n)$};
 \draw[->, line width=2pt] (est) -- (dest);
 
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
@@ -209,14 +216,16 @@ Estimating the mean $\thetac$ of a normal distribution $\mathcal N(\thetac,\sigm
 \node[below of = mes2, node distance = 0.7cm] {$\vdots$};
 
 \visible<2>{
-\draw[<->,line width = 2pt, color = red] (enc1) -- (enc2);   
-\draw[<->,line width = 2pt, color = red] (enc2) -- (enc3);
+\draw[<->,line width = 2pt, color = blue] (enc1) -- (enc2);   
+\draw[<->,line width = 2pt, color = blue] (enc2) -- (enc3);
 \draw[dashed,line width = 2pt, color = white] (enc2)+(0,-0.5) -- +(0,-1.5);}
 
 \visible<3->{
-\draw[->,line width = 2pt, color = blue] (enc1) -- (enc2);   
-\draw[->,line width = 2pt, color = blue] (enc2) -- (enc3);
-\draw[dashed,line width = 2pt, color = white] (enc2)+(0,-0.7) -- +(0,-1.7);}
+\draw[->,line width = 2pt, color = red] (enc1)+(1,0) -- (enc2);   
+\draw[->,line width = 2pt, color = red] (enc2)+(1,0) -- (enc3);
+\draw[line width = 2pt, color = red] (enc1)+(1,0) -- +(1,-1.5);
+
+\draw[dashed,line width = 2pt, color = white] (enc2)+(0.66,-0.7) -- +(0.25,-1.5);}
 
 \end{tikzpicture}
 \end{center}
@@ -224,19 +233,23 @@ Estimating the mean $\thetac$ of a normal distribution $\mathcal N(\thetac,\sigm
 \begin{itemize}
 \item Distributed: $M_i = f_i(X_i)$
 \visible<2->{
-\item {\color{red} Centralized}: $M^n = (M_1,\ldots,M_n) = f(X_1,\ldots,X_n)$ }
+\item {\color{blue} Centralized}: $M^n = (M_1,\ldots,M_n) = f(X_1,\ldots,X_n)$ }
 \visible<3->{
-\item {\color{blue} Adaptive / Sequential}: $M_i = f_i(X_i,M^{i-1})$ }
+\item {\color{red} Adaptive / Sequential}: $M_i = f_i(X_i,M^{i-1})$ }
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Related Work}
 \begin{itemize} 
-\item Estimation via compressed information [Han '87], [Zhang \& Berger '88]
-\item Distributed hypothesis testing under quantization [Tsitsiklis '88]
-\item Estimation from multiple machines subject to a bit constraint [Zhang, Duchi, Jordan, Wainwright '13]
-\item Remote multiterminal source coding (CEO) [Berger, Zhang, Wiswanathan '96], [Oohama '97]
+\pause
+\item Estimation via compressed information [Han '87], [Zhang \& Berger '88] (centralized)
+\pause
+\item Estimation from multiple machines subject to a bit constraint [Zhang, Duchi, Jordan, Wainwright '13] (distributed / adaptive)
+\pause
+\item Distributed hypothesis testing under quantization [Tsitsiklis '88] (distributed)
+\pause
+\item Remote multiterminal source coding (CEO) [Berger, Zhang, Wiswanathan '96], [Oohama '97] (distributed)
 \end{itemize}
 \end{frame}
 
@@ -245,72 +258,73 @@ Estimating the mean $\thetac$ of a normal distribution $\mathcal N(\thetac,\sigm
 Q: in what setting consistent estimation is possible? \\
 \bigskip
 \pause
-A: all !
+A: all ! 
+\pause
+\bigskip
+\textbf{Proof:}
 \[
 M_i = \mathbf 1(X_i>0),\quad i=1,\ldots,n
 \]
-(as in the distributed setting)
+(distributed setting)
+\pause
 \[
-\frac{1}{n}\sum_{i=1}^n M_i \rightarrow \Prob\left(X<0 \right) = \Phi\left(X/\sigma<\thetac\right)
+\frac{1}{n}\sum_{i=1}^n M_i \rightarrow \Prob\left(X>0 \right) = \Phi\left(\thetac / \sigma \right)
 \]
 \end{frame}
+
+%SAY: supper slow, of course. Can we do better? what is the best possible? 
 
 \subsection{Preliminary}
 
 \begin{frame}
 \frametitle{Efficiency}
-\textbf{Definition:} \emph{asymptotic relative efficiency (ARE)} of an estimator:
+\textbf{Definition:} \emph{asymptotic relative efficiency (ARE)}:
 \[
-\mathrm{ARE}(\widehat{\theta}) \triangleq \lim_{n\rightarrow \infty} \frac{\mathbb E \left[ \left(\widehat{\theta}-\theta \right)^2 \right]}{\sigma^2 / n}
+\mathrm{ARE}(\widehat{\theta}_n) \triangleq \lim_{n\rightarrow \infty} \mathbb E \left[ \left(\widehat{\theta}_n-\theta \right)^2 \right] / \left(\sigma^2 / n \right)
 \]
-($\sigma^2/n$ is the minimax risk without communication constraints)
-%MSE of sample mean $\bar{\theta}$: 
-%\[
-%\mathbb E \left[ \left(\bar{\theta}-\theta \right)^2 \right] = \frac{\sigma^2}{n}
-%\]
-%(minimax estimator without communication constraint) 
+(relative to minimax risk without bit constraint)
 
-\bigskip
-\pause
-Q: in what scenarios the ARE is finite? \\
-\bigskip
-\pause
-This talk: all three scenarios
+%SAY: many definitions for ARE are possible, we use this one becasue our results apply to all of them
 
 \end{frame}
 
 \begin{frame}
 \frametitle{ARE under Centralized Encoding}
 
-\begin{prop} If the parameter space $\Theta$ is bounded, then the ARE under centralized encoding is $1$
+\begin{prop} ARE under centralized encoding is $1$
 \end{prop}
+\pause
+
 \textbf{Proof:}
 \[
-\mathbb E \left( \theta- \widehat{\theta} \right)^2 = \overbrace{\mathbb E \left( \theta- \bar{\theta} \right)^2}^{\sigma^2/n} + \mathbb E \left( \bar{\theta}- \widehat{\theta} \right)^2 
+\mathbb E \left( \theta- \widehat{\theta} \right)^2 = \overbrace{\mathbb E \left( \theta- \bar{\theta} \right)^2}^{\sigma^2/n} + \underbrace{\mathbb E \left( \bar{\theta}- \widehat{\theta} \right)^2}_{O(2^{-2n})}
 \]
+\pause
 \begin{itemize}
 \item Encoder is required to describe $\bar{\theta}$ using $n$ bits
 \begin{itemize}
 \item divide parameter space $\Theta$ into $2^n$ regions of equal size
 \item send region index where $\bar{\theta}$ falls
 \end{itemize}
-\item MSE in estimating $\bar{\theta}$ decreases exponentially in $n$ 
 \end{itemize}
 \bigskip
-Note: globally optimal strategy for a finite $n$ is hard to derive since mean of $\bar{\theta}$ is unknown 
+\pause
+Note: mean of $\bar{\theta}$ is unknown -- hard to derive a globally optimal strategy
+%SAY: exploration -- exploitation even in this simple setting
 \end{frame}
 
 \begin{frame}
 \frametitle{Relation to CEO}
 
 \begin{center}
+\vspace{-20pt}
 \begin{tikzpicture}[node distance=2cm,auto,>=latex]
-  \node at (0,0) (source) {$\thetac$} ;
+  \node at (0,0) (source) {$\thetac_j$} ;
   \node[ssum, right of = source, scale = 0.75] (sum1) {+};
-  \node[above of = sum1, node distance = 1.2cm] (z1) {$Z_1$};
+  \node[above of = sum1, node distance = 1cm] (z1) {$Z_{1}$};
   \node[int1, right of = sum1, node distance = 2cm, scale = 0.75] (enc1) {Enc 1};  
 \draw[->,line width = 2pt] (source) -- (sum1); 
-\draw[->,line width = 2pt] (sum1) -- node[above] {$X_1$} (enc1); 
+\draw[->,line width = 2pt] (sum1) -- node[above] {$X_{1}$} (enc1); 
 \draw[->,line width = 2pt] (z1) -- (sum1); 
 
 \node[below of = sum1, node distance = 0.5cm] (vdts) {$\vdots$};
@@ -318,7 +332,7 @@ Note: globally optimal strategy for a finite $n$ is hard to derive since mean of
 
  \node[coordinate,below of = source, node distance = 2.5cm] (source2) {};
  \node[ssum, right of = source2, scale = 0.75] (sum2) {+};
-  \node[above of = sum2, node distance = 1.2cm] (z2) {$Z_n$};
+  \node[above of = sum2, node distance = 1.2cm] (z2) {$Z_{n}$};
 \node[int1, right of = sum2, node distance = 2cm, scale = 0.75] (enc2) {Enc n};  
 
 \node[Est, right of = enc2, node distance = 5cm, yshift = 1cm] (est) {Est};
@@ -328,170 +342,268 @@ Note: globally optimal strategy for a finite $n$ is hard to derive since mean of
 %\draw[->,line width = 1pt, dashed] (vdts)--(vdts2);
 %\draw[->,line width = 1pt, dashed] (vdts2) -- (est);
 
-\draw[->,line width = 2pt] (sum2) -- node[above] {$X_n$} (enc2); 
+\draw[->,line width = 2pt] (sum2) -- node[above] {$X_{n}$} (enc2); 
 \draw[->,line width = 2pt] (z2) -- (sum2); 
 
 %\draw[fill=blue!10] (enc1)+(5,0.5) rectangle (enc2)+(2,-0.5); 
 
 %\node[int1, right of = enc2, node distance = 6cm, scale = 0.75] (est) {Est};
-\draw[->,line width = 2pt] (enc1) -- node[above, xshift = 0cm] (mes1) {$R_1$} (est);   
-\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$R_n$} (est);   
-\node[right of = est, node distance = 2cm] (dest) {$\widehat{\theta}$};
+\draw[->,line width = 2pt] (enc1) -- node[above, xshift = 0cm, rotate = -15] (mes1) {one bit} (est);   
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm, rotate = 12] (mes2) {one bit} (est);   
+\node[right of = est, node distance = 1.5cm] (dest) {$\widehat{\thetac}_j$};
 \draw[->, line width=2pt] (est) -- (dest);
 \end{tikzpicture}
 \end{center}
-
+\pause
 Assume:
 \begin{itemize}
-\item $\theta \sim \mathcal N(0,\sigma_\theta^2)$, ~~~ 
-\item $Z_1,\ldots,Z_n \overset{\mathrm{i.i.d}}{\sim}\mathcal N(0,\sigma^2)$
+\item $Z_{1},\ldots,Z_{n} \overset{\mathrm{i.i.d}}{\sim}\mathcal N(0,\sigma^2)$
+\pause
+\item Replicate $k$ times: $\thetac_1,\ldots,\thetac_k \overset{\iid}{\sim} \mathcal N(0,\sigma_0^2)$ 
+\pause
+\item Block encode $X_{j,1},\ldots,X_{j,n}$ using $k$ bits, $j=1,\ldots,k$
+\pause
+\item $D_{CEO} = \inf_{k,\widehat{\theta}} \frac{1}{k} \sum_{j=1}^k \mathbb E \left( \theta_j - \widehat{\theta}_j\right)^2$
 \end{itemize}
-Encode $k$ instances:
-\begin{itemize}
-\item $R_1 = \ldots = R_n =1 $
-\item $D_{CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left(\theta_j-\widehat{\theta}_j \right)^2$
-\end{itemize}
+%SAY: lower bound to our setting
 \end{frame}
 
 \begin{frame}
-
-From [K., Rini, Goldsmith '17]: 
+Quadratic Gaussian CEO under optimal rate allocation [Chen, Zhang, Berger, Wicker '04] :
 \[
-D_{CEO} \leq \frac{4}{3} \frac{\sigma^2}{n} + o(1)
+ D_{CEO}  \geq \frac{4}{3} \frac{\sigma^2}{n} + o(1/n) 
 \]
 %\begin{itemize}
 %\item[] CEO distortion satisfies [Chen, Zhang, Berger, Wicker '04]:
 %\[ D^\star = \frac{4}{3} %\frac{\sigma^2}{n} + o(n^{-1}) \]
 %\end{itemize}
-ARE of $4/3$ can be attained in a fully distributed encoding (with encoding over blocks of multiple problem instances)
-\bigskip
+\pause
 \begin{alertblock}{Conclusion}
-Distributed encoding is almost not a limiting factor 
-(although inability to exploit concentration of measure in high dimension -- might!)
+Distributed encoding will hurt you (even if you can repeat experiment and encode over blocks)
 \end{alertblock}
+\bigskip
+\pause
+\begin{itemize}
+\item In fact [K., Rini, Goldsmith '17]:
+\end{itemize} 
+\[
+ D_{CEO} \leq \frac{4}{3} \frac{\sigma^2}{n} + \frac{\sigma_0^2}{3n} + o(1/n) 
+\]
+(ARE of $4/3$ is achievable with coding over blocks)
+%SAY: depending on how large our bound from $k=1$, it tells us that distributed setting is not the limitng factor
 \end{frame}
 
 \section{Adaptive Encoding} 
 
 \begin{frame}
+\frametitle{Three Encoding Scenarios}
+
+\begin{center}
+\begin{tikzpicture}[node distance=2cm,auto,>=latex]
+  \node at (0,0) (source) {$X_1$} ;
+  \node[int1, right of = source, node distance = 2cm, scale = 0.75] (enc1) {Enc 1};  
+\draw[->,line width = 2pt] (source) -- (enc1); 
+
+ \node[below of = source, node distance = 1.5cm] (source2) {$X_2$};
+\node[int1, right of = source2, node distance = 2cm, scale = 0.75] (enc2) {Enc 2};  
+\draw[->,line width = 2pt] (source2) -- (enc2); 
+
+\node[below of = source2, node distance = 2cm] (source3) {$X_n$};
+\node[int1, right of = source3, node distance = 2cm, scale = 0.75] (enc3) {Enc n};  
+\draw[->,line width = 2pt] (source3) -- (enc3); 
+
+%\node[above of = source3, node distance = 1cm, xshift = -0.5cm] (source3) {$X_i \sim \mathcal N(\theta,\sigma^2)$};
+
+\node[above of = source, node distance = 0.75cm] (dist) {$X_i \sim {\mathcal N} \left(\theta, \sigma^2 \right)$};
+
+\node[Est, right of = enc2, node distance = 4.5cm] (est) {Est};
+\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -2.5cm] (mes1) {$M_1 \in \left\{-1,1\right\}$} (est);   
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$M_2 \in \left\{-1,1\right\}$} (est);   
+\draw[->,line width = 2pt] (enc3) -| node[above, xshift = -2.5cm]  {$M_n \in \left\{-1,1\right\}$} (est);   
+\node[right of = est, node distance = 2cm] (dest) {$\widehat{\theta}(M^n)$};
+\draw[->, line width=2pt] (est) -- (dest);
+
+\node[below of = source2, node distance = 0.5cm] {$\vdots$};
+\node[below of = enc2, node distance = 0.5cm] {$\vdots$};
+\node[below of = mes2, node distance = 0.7cm] {$\vdots$};
+
+\visible<2>{
+\draw[<->,line width = 2pt] (enc1) -- (enc2);   
+\draw[<->,line width = 2pt] (enc2) -- (enc3);
+\draw[dashed,line width = 2pt, color = white] (enc2)+(0,-0.5) -- +(0,-1.5);}
+
+\visible<3->{
+\draw[->,line width = 2pt, color = red] (enc1)+(1,0) -- (enc2);   
+\draw[->,line width = 2pt, color = red] (enc2)+(1,0) -- (enc3);
+\draw[line width = 2pt, color = red] (enc1)+(1,0) -- +(1,-1.5);
+
+\draw[dashed,line width = 2pt, color = white] (enc2)+(0.66,-0.7) -- +(0.25,-1.5);}
+
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Distributed: $M_i = f_i(X_i)$  \hfill{ARE $\geq 4/3$}
+\visible<2->{
+\item {Centralized}: $M^n = f(X_1,\ldots,X_n)$ \hfill{ARE $=1$} }
+\visible<3->{
+\item {\color{red} Adaptive / Sequential: $M_i = f_i(X_i,M^{i-1})$ \hfill{ARE$=\pi/2$} }  }
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Main Results (adaptive encoding)}
+
+\begin{theorem}[achievability]
+There exists an estimator with ARE $\pi/2$
+\end{theorem}
 
 \begin{theorem}[converse]
 No estimator have ARE lower than $\pi/2$
 \end{theorem}
 
-\begin{theorem}[achievability]
-Assume that $\Theta$ is a bounded interval. There exists an estimator with ARE equals to $\pi/2$
-\end{theorem}
-
-\begin{theorem}[one-step optimal strategy]
-The next step one-bit message that minimizes the MSE is of the form $M = \sgn (X-\tau)$ where $\tau$ satisfies the fixed-point equation 
-\[
-\tau = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau \theta \pi(d\theta) }{\int_{-\infty}^\tau \pi(d\theta)}  + \frac{ \int_{\tau}^\infty \theta \pi(d\theta)}{\int_{\tau}^\infty \pi(d\theta)} \right)
-\]
-\end{theorem}
+%\begin{theorem}[one-step optimal strategy]
+%The next step one-bit message that minimizes the MSE is of the form $M = \sgn (X-\tau)$ where $\tau$ satisfies the fixed-point equation 
+%\[
+%\tau = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau \theta \pi(d\theta) }{\int_{-\infty}^\tau \pi(d\theta)}  + \frac{ \int_{\tau}^\infty \theta \pi(d\theta)}{\int_{\tau}^\infty \pi(d\theta)} \right)
+%\]
+%\end{theorem}
 \end{frame}
 
-\begin{frame}
-\frametitle{Proof}
-\framesubtitle{converse (ARE $\geq \pi/2$)}
-Assume a prior $\pi(d\theta)$ on $\Theta$ with location Fisher information $I_\pi$. \\
 
+\begin{frame}
+\frametitle{Achievability}
+\framesubtitle{existence of an estimator with ARE $= \pi/2$}
+
+\begin{itemize}
+\item[(i)] For $X \sim \mathcal{N}(\theta,\sigma^2)$, $\mathsf{med}(X) = \theta$ 
+\pause
+\item[(ii)] $\mathsf{med}(X) = \underset{m}{ \mathrm{argmin~}} \mathbb E \left|X-m \right|$
+\pause
+\item[(iii)] Stochastic gradient descent on $\mathbb E \left| X-\theta \right|$:
+\[
+\theta_n = \theta_{n-1} + \gamma_n \sgn(X_n - \theta_n)
+\]
+\[
+\widehat{\theta}_n = \frac{1}{n} \sum_{i=1}^n \theta_i 
+\]
+\end{itemize}
+\bigskip
+\pause
+From [Polyak \& Juditsky '92] (under conditions on $(\gamma_n)$): 
+\[
+\sqrt{n}(\theta- \widehat{\theta}_n) \rightarrow \mathcal N\left(0, \sigma^2 \pi /2 \right)
+\]
+\end{frame}
+%picture
+
+%\begin{frame}
+%\frametitle{Achievability} 
+%
+%[Polyak \& Juditsky '92]: \\
+%
+%
+%where:
+%\begin{itemize}
+%\item[(i)] $\gamma_n \rightarrow 0^+$ ``not too slow'' 
+%\item[(ii)] $\psi(x) = \mathbb E \varphi(x+Z)$ 
+%\item [(iii)] $\chi(x) = \mathbb E \varphi^2(x+Z)$ 
+%\item[(iv)] some regularity  conditions on $\varphi$, $\chi$, $\psi$
+%\end{itemize}
+%Then 
+%\[
+%\sqrt{n}(\theta- \widehat{\theta}) \rightarrow \mathcal N\left(0,V\right)
+%\]
+%where $V = \chi(0)/\psi'^2(0)$.  \\
+%\medskip
+%\pause
+%Proof of theorem: take $\varphi(x) = \sgn(x)$
+%\end{frame}
+
+\begin{frame}
+\frametitle{Converse}
+\framesubtitle{ARE $\geq \pi/2$}
 The van-Trees inequality (e.g. [Tsybakov '08]) implies
 \[
 \mathbb E \left(\theta - \widehat{\theta} \right)^2 \geq \frac{1}{\mathbb E I_\theta(M^n) + I_\pi} \geq \frac{1}{\sum_{i=1}^n I_\theta(M_i|M^{i-1}) + I_\pi} 
 \]
-\begin{lem}
+$I_\pi$ is the location Fisher information with w.r.t. some prior $\pi(d\theta)$ on $\Theta$\\
+
+\begin{lem}[K. \& Duchi '17]
 \[
-I_\theta(M_i|M^{i-1}) \leq 2/(\pi\sigma^2)
+I_\theta(M_i|M^{i-1}) \leq \frac{2}{\pi\sigma^2}
 \]
 \end{lem}
-(proof by induction over a finite set of intervals approximating $M_i^{-1}(1)$ given $M^{i-1}$)
+\textbf{Proof}: \\
+Stein identity implies that portion maximizing the information is a threshold: $M_i^{-1}(1) = (\theta,\infty)$  \\
+The rest follows by induction over number of portions
+%SAY: the rest follows by induction over number 
 \end{frame}
 
-\begin{frame}
-\frametitle{Proof}
-\framesubtitle{achievability (existence of an estimator with ARE $= \pi/2$)}
-[Polyak \& Juditsky '92]: \\
-\[
-\begin{cases}
-\theta_i = \theta_{i-1} + \gamma_i \varphi(X_i - \theta_i)& i=1,\ldots,n\\
-\widehat{\theta} = \frac{1}{n} \sum_{i=1}^n \theta_i &
-\end{cases}
-\]
-where:
-\begin{itemize}
-\item[(i)] $\gamma_n \rightarrow 0^+$ ``not too slow'' 
-\item[(ii)] $\psi(x) = \mathbb E \varphi(x+Z)$ 
-\item [(iii)] $\chi(x) = \mathbb E \varphi^2(x+Z)$ 
-\item[(iv)] some regularity  conditions on $\varphi$, $\chi$, $\psi$
-\end{itemize}
-Then 
-\[
-\sqrt{n}(\theta- \widehat{\theta}) \rightarrow \mathcal N\left(0,V\right)
-\]
-where $V = \chi(0)/\psi'^2(0)$.  \\
-\medskip
-\pause
-Proof of theorem: take $\varphi(x) = \sgn(x)$
-\end{frame}
-
-\begin{frame}
-\frametitle{One-step optimality}
-%Upon observing $M^{i-1}$, what is the optimal detection region $M_i^{-1}(1)$ that minimizes the MSE ? \\
-\begin{theorem}
-Let $\pi(\theta)$ be an absolutely continuous log-concave distribution. For $X\sim \mathcal N(\theta,\sigma^2)$ let
-\[
-M = \sgn(X-\tau)
-\]
-where $\tau$ is the unique solution to
-\[
-\tau = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau \theta \pi(d\theta) }{\int_{-\infty}^\tau \pi(d\theta)}  + \frac{ \int_{\tau}^\infty \theta \pi(d\theta)}{\int_{\tau}^\infty \pi(d\theta)} \right)
-\]
-Then for any $M'(X) \in \{-1,1\}$ and $\widehat{\theta}(M')$:
-\[
-\mathbb E \left(\theta- \widehat{\theta}(M') \right)^2 \geq \mathbb E \left(\theta - \mathbb E[\theta|M] \right)^2
-\]
-\end{theorem}
-\vspace{-20pt}
-\begin{alertblock}{Interpertation:}
-The optimal one-bit message is a threshold detector. The threshold is the fixed-point that balances conditional center of masses given the message
-\end{alertblock}
-
-\end{frame}
+%\begin{frame}
+%\frametitle{One-step Optimal Bit}
+%% SAY: previously we bound the inforamtion under any scheme. In addition, it is interesting to understand what is the one-step optimal scheme
+%%Q: upon observing $M^{n-1}$, what is the optimal detection region $M_n^{-1}(1)$ that minimizes the MSE ? \\ \pause
+%\begin{theorem}
+%Let $\pi(\theta)$ be an absolutely continuous log-concave distribution. For $X\sim \mathcal N(\theta,\sigma^2)$ let
+%\[
+%M = \sgn(X-\tau)
+%\]
+%where $\tau$ is the unique solution to
+%\[
+%\tau = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau \theta \pi(d\theta) }{\int_{-\infty}^\tau \pi(d\theta)}  + \frac{ \int_{\tau}^\infty \theta \pi(d\theta)}{\int_{\tau}^\infty \pi(d\theta)} \right)
+%\]
+%Then for any $M'(X) \in \{-1,1\}$ and $\widehat{\theta}(M')$:
+%\[
+%\mathbb E \left(\theta- \widehat{\theta}(M') \right)^2 \geq \mathbb E \left(\theta - \mathbb E[\theta|M] \right)^2
+%\]
+%\end{theorem}
+%\vspace{-20pt}
+%\pause
+%\begin{alertblock}{Interpertation:}
+%\begin{itemize}
+%\item One-bit message that minimizes MSE is a threshold detector
+%\pause
+%\item Leads to a Bayes procedure $\mathbb E \left[\theta | M\right]$
+%\end{itemize}
+%\end{alertblock}
+%
+%%SAY: we don't know if this procedure is optimal, what we conjecture that it is
+%\end{frame}
 
 
-\begin{frame}
-\frametitle{One-step Optimal Scheme}
-Initialization: $P_0(t) = \pi(\theta)$ \\
-Repeat for $n \geq 1$:
-\begin{itemize}
-\item[(i)] $P_n(t) = \Prob(\theta = t|M^n) = \alpha_n P_{n-1}(t) \Phi \left(M_n \frac{t-\tau_{n-1}}{\sigma} \right)$ 
-\item[(ii)] $\widehat{\theta} = \mathbb E[\theta | M^n] = \int t P_n(t)dt $ 
-\item[(iii)] Find $\tau_n$ from 
-\[
-\tau_n = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau t P_n(t)dt }{\int_{-\infty}^\tau P_n(t)dt}  + \frac{ \int_{\tau}^\infty t P_n(t)dt}{\int_{\tau}^\infty P_n(t)dt} \right)
-\]
-\item[(iv)] $M_{n+1} = \sgn(X_{n+1}-\tau_n)$
-\end{itemize}
-\end{frame}
+%\begin{frame}
+%\frametitle{One-step Optimal Scheme}
+%Initialization: $P_0(t) = \pi(\theta)$ \\
+%Repeat for $n \geq 1$:
+%\begin{itemize}
+%\item[(i)] $P_n(t) = \Prob(\theta = t|M^n) = \alpha_n P_{n-1}(t) \Phi \left(M_n \frac{t-\tau_{n-1}}{\sigma} \right)$ 
+%\item[(ii)] $\widehat{\theta} = \mathbb E[\theta | M^n] = \int t P_n(t)dt $ 
+%\item[(iii)] Find $\tau_n$ from 
+%\[
+%\tau_n = \frac{1}{2} \left( \frac{ \int_{-\infty}^\tau t P_n(t)dt }{\int_{-\infty}^\tau P_n(t)dt}  + \frac{ \int_{\tau}^\infty t P_n(t)dt}{\int_{\tau}^\infty P_n(t)dt} \right)
+%\]
+%\item[(iv)] $M_{n+1} = \sgn(X_{n+1}-\tau_n)$
+%\end{itemize}
+%\end{frame}
 
-\begin{frame}
-\frametitle{Numerical Example}
-\begin{center}
-Normalized empirical risk versus number of samples $n$ \\
-(500 Monte Carlo experiments)
-\begin{tikzpicture}
-\node at (0,0) {\includegraphics[scale=0.5]{one_bit_adpative}};
-%\node[color = blue,  minimum width=1cm, align = left] at (1.5,1.5) {assymptotically optimal \eqref{eq:sgd_est}};
-%\node[color = red, minimum width=1cm, align = left] at (1.5,0.55) {one-step optimal \eqref{eq:message_update}} ;
-\node[rotate = 90, scale = 1] at (-5,0) {$n \mathbb E \left(\widehat{\theta}_n - \theta \right)^2$};
-\node[scale = 1] at (0,-3) {$n$};
-%\draw[dashed] (-3.5,1.18) node[left, scale = 0.7] {$\frac{\pi}{2}$}-- (-3,1.18);
-\end{tikzpicture}
-$\theta \sim \unif(-3,3)$
-\end{center}
-\end{frame}
+%\begin{frame}
+%\frametitle{Numerical Example}
+%\begin{center}
+%Normalized empirical risk versus number of samples $n$ \\
+%(1000 Monte Carlo experiments)
+%\begin{tikzpicture}
+%\node at (0,0) {\includegraphics[scale=0.5]{one_bit_adaptive}};
+%%\node[color = blue,  minimum width=1cm, align = left] at (1.5,1.5) {assymptotically optimal \eqref{eq:sgd_est}};
+%%\node[color = red, minimum width=1cm, align = left] at (1.5,0.55) {one-step optimal \eqref{eq:message_update}} ;
+%\node[rotate = 90, scale = 1] at (-5,0) {$n \mathbb E \left(\widehat{\theta}_n - \theta \right)^2$};
+%\node[scale = 1] at (0,-3) {$n$};
+%%\draw[dashed] (-3.5,1.18) node[left, scale = 0.7] {$\frac{\pi}{2}$}-- (-3,1.18);
+%\end{tikzpicture}
+%$\theta \sim \unif(-3,3)$
+%\end{center}
+%\end{frame}
 
 \section{Distributed Encoding}
 
@@ -503,6 +615,7 @@ We consider only messages of the form
 M_i = \sgn(X_i - t_i),\quad i=1,\ldots,n
 \]
 \begin{center}
+\pause
 \begin{tikzpicture}
 \node[coordinate] at(0,0) (ti) {};
 \draw[color = red, line width = 1.5pt] (ti)+(0,0.2) -- node[above, yshift = 0.07cm] {\color{black} $t_i$} +(0,-0.2);
@@ -512,13 +625,13 @@ M_i = \sgn(X_i - t_i),\quad i=1,\ldots,n
 \end{center}
 Assume:
 \[
-\lambda_n([a,b]) = \frac{1}{n} \left| [a,b] \cap \left\{t_i \right\}\right|
+\lambda_n([a,b]) = \frac{1}{n} \mathsf{card}\left( [a,b]  \cap \left\{t_i \right\} \right)
 \]
 converges weakly to a probability distribution $\lambda$
 \\
 \bigskip
 \pause
-\textbf{Example:} $t_1,\ldots,t_n$ are drawn independently from a probability distribution $\lambda$ on $\mathbb R$ 
+\textbf{Example:} $t_1,\ldots,t_n$ drawn i.i.d. from a distribution $\lambda$ on $\mathbb R$ 
 
 \end{frame}
 
@@ -527,19 +640,22 @@ converges weakly to a probability distribution $\lambda$
 
 \begin{theorem}
 \begin{itemize}
-\item[(i)] For any estimator $\widehat{\theta}$:
+\item[(i)] The Maximum likelihood estimator $\widehat{\theta}_{ML}$  satisfies
 \[
-\liminf_{c\rightarrow \infty}\, \liminf_{n\rightarrow \infty} \sup_{\tau\,:\,| \tau - \theta| \leq \frac{c}{\sqrt{n}} }  n \mathbb E \left(\widehat{\theta} - \tau \right)^2 \geq \sigma^2/K(\theta),
+\sqrt{n}(\theta - \widehat{\theta}_{ML}) \rightarrow \mathcal N\left(0,\sigma^2/K_\lambda(\theta) \right)
 \]
 where:
 \begin{align*}
-K(\theta) & = \int_{\mathbb R} \eta\left( \frac{t-\theta}{\sigma}\right) \lambda(dt) \\
+K_\lambda(\theta) & = \int_{\mathbb R} \eta\left( \frac{t-\theta}{\sigma}\right) \lambda(dt) \\
 \eta(x) & = \frac{\phi^2(x)}{\Phi(x)\Phi(-x)}
 \end{align*}
-\item[(ii)] The Maximum likelihood estimator $\widehat{\theta}_{ML}$  satisfies
+% The weight function in the probit analysis
+\pause
+\item[(ii)] For any estimator $\widehat{\theta}(M_1,\ldots,M_n)$:
 \[
-\sqrt{n}(\theta - \widehat{\theta}_{ML}) \rightarrow \mathcal N\left(0,\sigma^2/K(\theta) \right)
+\liminf_{c\rightarrow \infty}\, \liminf_{n\rightarrow \infty} \sup_{\tau\,:\,| \tau - \theta| \leq \frac{c}{\sqrt{n}} }  n \mathbb E \left(\widehat{\theta} - \tau \right)^2 \geq \sigma^2/K_\lambda(\theta),
 \]
+
 \end{itemize}
 \end{theorem}
 %{\color{blue} Proof:} $P(M^n|\theta)$ is LAN
@@ -549,24 +665,86 @@ K(\theta) & = \int_{\mathbb R} \eta\left( \frac{t-\theta}{\sigma}\right) \lambda
 \begin{frame}
 \frametitle{Interpretations}
 \begin{itemize}
+\pause
 \item ML estimator is local asymptotically minimax 
-\item ARE of ML is $1/K(\theta)$ --  depends only in the asymptotic threshold density $\lambda$
+\pause
+\item ARE of ML is $1/K_{\lambda}(\theta)$ -- 
+only depends on asymptotic threshold density $\lambda$
+\pause
+\item  
+\[
+\mathrm{ARE} = \frac{1}{K_{\lambda}(\theta)}  = \frac{\sigma^2}{\int \eta \left( \frac{t-\theta}{\sigma}\right) \lambda(dt)}
+> \pi / 2
+\]
+(equality iff $\lambda = \delta_{\theta}$)
+%SAY: cannot be as good as sequential thresholds
+%\item Threshold density $\lambda$ that maximizes
+\pause
+\item Minimax $\lambda$ can be found using a convex program -- minimax ARE  depends on radius of $\Theta$
+%ARE depends on size of parameter space $\Theta$ 
+%\begin{center}
+%\begin{tikzpicture}
+%\node at (0,0)  {\includegraphics[scale=0.3]{k_vs_b2}};
+%\node at (0,-1.7) {$r$};
+%\node[rotate = 90] at (-2.3,0) {$1/K_{\lambda^\star}$};
+%\end{tikzpicture}
+%
+%Minimax ARE vs radius $r$ of parameter space
+%\end{center}
+
 \end{itemize}
 
+\end{frame}
+
+
+
+\section{Summary}
+
+\begin{frame}
+\frametitle{Summary}
 \begin{itemize}
-\item \[
-1/K(\theta) = \frac{1}{\int \eta \left( \frac{t-\theta}{\sigma}\right) \lambda(dt)}
-\geq \frac{1}{\int \eta \left(0\right) \lambda(dt)} = \pi / 2
-\]
-(attained by $\lambda(dt) = \delta_{\theta}$)
-\item Minimax $\lambda$ for $\theta \in (-b\sigma,b\sigma)$:
+\pause
+\item Centralized encoding: ARE$=1$
+\pause
+\item Adaptive:
+\begin{itemize}
+\item ARE is $\pi/2$ (regardless of radius of $\Theta$)
+\pause
+\item $\sim 1.57$ more samples are required due to 1-bit constraints
+\end{itemize}
+\pause
+%\pause
+%\item One-step optimal one-bit message is a threshold detector
+\bigskip
+\item Distributed threshold detection:
+\begin{itemize}
+\item ARE of MLE characterized by density of threshold values 
+\item MLE is local asymptotically optimal 
+\item minimax ARE depends on radius of $\Theta$
+\end{itemize}
+%\item Minimax ARE of MLE depends on size of parameter space
+\end{itemize}
+
+\bigskip
+\pause
+\begin{alertblock}{Open question}
+Is there a distributed encoding scheme with ARE that is both finite and independent of radius of $\Theta$ ?
+\end{alertblock}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Minimax threshold density}
+
+Minimax $\lambda$ for $\theta \in (-b\sigma,b\sigma)$:
 \begin{align*}
 \mathrm{maximize} \quad &  \inf_{\tau \in (-b,b)} \int \eta(t-\tau) \lambda(dt)
 \\ \nonumber
 \mathrm{subject~to} 
 \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
 \end{align*}
-\end{itemize}
 
 \end{frame}
 
@@ -609,30 +787,6 @@ Minimax ARE vs size of parameter space %$\Theta= (-\sigma b, \sigma,b)$
 \begin{itemize}
 \item ARE increases with size of parameter space
 \end{itemize}
-
-\end{frame}
-
-
-
-\section{Summary}
-
-\begin{frame}
-\frametitle{Summary}
-\begin{itemize}
-\item Asymptotic relative efficiency in adaptive setting is $\pi/2$ regardless of size of parameter space -- only $\sim 1.57$ more samples are required due to 1-bit constraints
-\item One-step optimal one-bit message is a threshold detector
-\item ARE in distributed setting is finite
-\item 
-ML estimator is local asymptotically optimal for threshold detection
-\item ARE of ML is characterized by asymptotic density of threshold values
-\item Minimax ARE of ML depends on size of parameter space
-\end{itemize}
-
-\bigskip
-\begin{alertblock}{Open question}
-Is there a distributed encoding scheme with ARE that is both finite and independent of size of parameter space ?
-\end{alertblock}
-
 
 \end{frame}
 

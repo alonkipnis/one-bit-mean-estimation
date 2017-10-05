@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  28 SEP 2017 19:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  2 OCT 2017 23:13
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1211,17 +1211,7 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 84.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-! Extra }, or forgotten $.
-l.85 $ f(x) = e^{g(x}}
-                      $ where $g(x)$ is concave and twice differentiable suc...
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-Underfull \hbox (badness 2990) in paragraph at lines 114--116
+Underfull \hbox (badness 2990) in paragraph at lines 121--123
 \OT1/ptm/m/n/10 where we de-noted $\OML/ztmcm/m/it/10 ^^N[] \U/msa/m/n/10 , [][
 ]\OT1/ztmcm/m/n/10 (\OMS/ztmcm/m/n/10 ^^@\OT1/ztmcm/m/n/10 1)[]\OML/ztmcm/m/it/
 10 f\OT1/ztmcm/m/n/10 (\OML/ztmcm/m/it/10 x[]\OT1/ztmcm/m/n/10 )$ \OT1/ptm/m/n/
@@ -1229,13 +1219,13 @@ Underfull \hbox (badness 2990) in paragraph at lines 114--116
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--141
+Underfull \hbox (badness 10000) in paragraph at lines 146--148
 
  []
 
 
 LaTeX Warning: Reference `lem:fisher_bound' on page 1 undefined on input line 1
-43.
+50.
 
 [1
 Non-PDF special ignored!
@@ -1243,7 +1233,7 @@ Non-PDF special ignored!
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 LaTeX Warning: Reference `lem:fisher_bound' on page 2 undefined on input line 1
-73.
+80.
 
 (./proof of Lemma 7 for log-concave distributions.bbl
 
@@ -1280,7 +1270,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  32015 strings out of 493117
  771580 string characters out of 6135434
- 909180 words of memory out of 5000000
+ 907180 words of memory out of 5000000
  34897 multiletter control sequences out of 15000+600000
  47356 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1298,7 +1288,7 @@ ist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
 Output written on "proof of Lemma 7 for log-concave distributions.pdf" (2 pages
-, 94862 bytes).
+, 95973 bytes).
 PDF statistics:
  59 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream

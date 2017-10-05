@@ -81,8 +81,7 @@ Stanford, CA\\}
 \begin{document}
 
 \begin{lem} \label{lem:bound_intervals}
-Assume that $X_1,\ldots,X_n$ are distributed with CDF $F(x)$ and PDF $f(x)$ such that $F(-x) = 1-F(x)$ (and $f(-x)=f(x)$). Assume moreover that 
-$ f(x) = e^{g(x}}$ where $g(x)$ is concave and twice differentiable such that $g''(x)<0$. Then for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, we have 
+Let $f(x)$ be a log-concave, symmetric, and twice differentiable pdf. Denote by $F(x)$ the corresponding CDF. Then for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, we have 
 \begin{equation}
 \frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
 {\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)  } \leq \frac{2} {\pi}. \label{eq:bound_intervals}
@@ -91,16 +90,24 @@ $ f(x) = e^{g(x}}$ where $g(x)$ is concave and twice differentiable such that $g
 
 \subsubsection*{Proof of Lem.~\ref{lem:bound_intervals}}We use induction on $n \in \mathbb N$. For the base case $n=1$ we have 
 \begin{equation} \label{eq:induction_base}
-\frac{  f^2(x)} 
+\eta(x) \triangleq \frac{  f^2(x)} 
 {F(x) \left(1 - F(x) \right) }.
 \end{equation}
-Since $f(x)$ is log-concave, so does $F(x)$. We now write $F(x) = e^{h(x)}$ with $h(x)$ concave. Note that $f(x) = h'(x) e^{h(x)}$, $h'(x)\geq 0$, $f(x) = f(-x) = h'(-x)e^{h(-x)} $, and $h''(x)\leq 0$ ($h(x)$ is twice differentiable since $F(x)$ is twice differentiable). 
+Since $f(x)$ is log-concave, positive, and twice differentiable, we may write $f(x) = e^{g(x)}$ with $g(x)$ concave and twice differentiable. Moreover, since symmetry of $f(x)$ implies symmetry of $g(x)$, and, since the latter is concave, it attains a single maximum at the symmetry point $x=0$. Therefore, $x=0$ is the only point for which $g'(x)=0$. We now show that $x=0$ is the point where $\eta(x)$ attains its maximum value. Since $\eta(x)$ is positive and  goes to zero as $x\rightarrow \pm \infty$, the maximum of $\eta(x)$ cannot be attained as $x\rightarrow \pm \infty$. We therefore consider the derivative of $\eta(x)$, given as
+\[
+\eta'(x) = 2 \eta(x) e^{g(x)} \left(\frac{F(x)-1/2}{F(x)(1-F(x))} + g'(x) \right). 
+\]
+Since $f(x)$ is symmetric and integrates to $1$, we 
+have that $F(0)=0.5$ and hence $\eta'(0) = 0$.  It is left to verify that $\eta'(x)\neq 0$ for $x \neq 0$. 
+
+
 Taking the logarithm of \eqref{eq:induction_base} leads to 
 \begin{align*}
-& 2 \log f(x) - \log F(x) + \log F(-x) \\
-& = 2 \log h'(x) + h(x) + h(-x).
+& 2 \log f(x) - \log F(x) - \log F(-x) \\
+& = 2 \log h'(x) + h(x) - h(-x).
 \end{align*}
-Since $h'(x)$ is non-increasing, the maximal value of \eqref{eq:induction_base} is obtained as 
+Note that since $F(x)$ is non-decreasing, so is $h(x)$. In addition, $h'(x)$ is non-increasing since $h(x)$ 
+, the maximal value of \eqref{eq:induction_base} is obtained as 
 {HERE!! \color{red} finish proof by showing that \eqref{eq:induction_base} is smaller than $4f(0)$.\\
 }
 \\
