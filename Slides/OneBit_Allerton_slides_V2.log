@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  4 OCT 2017 10:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  5 OCT 2017 13:41
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1098,9 +1098,9 @@ Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \verbatim@out=\write7
-runsystem(echo t > "w18-test-2017104650.tex")...executed.
+runsystem(echo t > "w18-test-2017105821.tex")...executed.
 
-runsystem(del "w18-test-2017104650.tex")...executed.
+runsystem(del "w18-test-2017105821.tex")...executed.
 
 
 
@@ -1274,25 +1274,25 @@ Non-PDF special ignored!
 it_Allerton_slides_V2.toc)
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 137.
+(Font)              size <5> substituted on input line 136.
 
 [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 177.
+LaTeX Font Info:    Try loading font information for U+msa on input line 176.
  (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 177.
+LaTeX Font Info:    Try loading font information for U+msb on input line 176.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+stmry on input line 177.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 176.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
-LaTeX Font Info:    Try loading font information for U+lasy on input line 177.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 176.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
@@ -1342,41 +1342,41 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 
 ] [24
 
-]
-Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
- [] 
- []
-
-[25
+] [25
 
 ]
-Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
+Overfull \hbox (8.60643pt too wide) in paragraph at lines 400--400
  [] 
  []
 
 [26
 
 ]
-Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
+Overfull \hbox (8.60643pt too wide) in paragraph at lines 400--400
  [] 
  []
 
 [27
 
 ]
-Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
+Overfull \hbox (8.60643pt too wide) in paragraph at lines 400--400
  [] 
  []
 
 [28
 
-] [29
+]
+Overfull \hbox (8.60643pt too wide) in paragraph at lines 400--400
+ [] 
+ []
+
+[29
 
 ] [30
 
-] (./OneBit_Allerton_slides_V2.toc) [31
+] [31
 
-] [32
+] (./OneBit_Allerton_slides_V2.toc) [32
 
 ] [33
 
@@ -1384,10 +1384,10 @@ Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
 
 ] [35
 
-]
-[36
+] [36
 
-] [37
+]
+[37
 
 ] [38
 
@@ -1395,26 +1395,18 @@ Overfull \hbox (8.60643pt too wide) in paragraph at lines 378--378
 
 ] [40
 
-] (./OneBit_Allerton_slides_V2.toc) [41
+] [41
 
 ] [42
 
 ] [43
 
-]
-[44
+] [44
 
-]
-Overfull \vbox (6.14561pt too high) detected at line 671
- []
-
+] (./OneBit_Allerton_slides_V2.toc)
 [45
 
-]
-Overfull \vbox (6.14561pt too high) detected at line 671
- []
-
-[46
+] [46
 
 ] [47
 
@@ -1426,11 +1418,22 @@ Overfull \vbox (6.14561pt too high) detected at line 671
 
 ] [51
 
-] (./OneBit_Allerton_slides_V2.toc) [52
+]
+Overfull \vbox (6.14561pt too high) detected at line 745
+ []
 
-] [53
+[52
 
 ]
+Overfull \vbox (6.14561pt too high) detected at line 745
+ []
+
+[53
+
+]
+Overfull \vbox (6.14561pt too high) detected at line 745
+ []
+
 [54
 
 ] [55
@@ -1441,177 +1444,207 @@ Overfull \vbox (6.14561pt too high) detected at line 671
 
 ] [58
 
-] [59
+] (./OneBit_Allerton_slides_V2.toc) [59
 
 ] [60
 
 ] [61
 
 ]
+[62
+
+] [63
+
+] [64
+
+] [65
+
+] [66
+
+] [67
+
+] [68
+
+]
 Package epstopdf Info: Source file: <../Figs/minimax_b_only1.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 74677 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only1-eps-converted-to.p
 df>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 66023 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only1-eps
 -converted-to.pdf ../Figs/minimax_b_only1.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only1-eps-converted-to.pdf, id=403, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only1-eps-converted-to.pdf, id=457, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only1-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only1-eps-converted-to.pdf used on i
-nput line 780.
+nput line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b_only2.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 73733 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only2-eps-converted-to.p
 df>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 65218 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only2-eps
 -converted-to.pdf ../Figs/minimax_b_only2.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only2-eps-converted-to.pdf, id=404, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only2-eps-converted-to.pdf, id=458, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only2-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only2-eps-converted-to.pdf used on i
-nput line 780.
+nput line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b_only5.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 70526 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only5-eps-converted-to.p
 df>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 64492 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only5-eps
 -converted-to.pdf ../Figs/minimax_b_only5.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only5-eps-converted-to.pdf, id=405, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only5-eps-converted-to.pdf, id=459, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only5-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only5-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only5-eps-converted-to.pdf used on i
-nput line 780.
+nput line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b_only10.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 76968 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only10-eps-converted-to.
 pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 66848 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only10-ep
 s-converted-to.pdf ../Figs/minimax_b_only10.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only10-eps-converted-to.pdf, id=406, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only10-eps-converted-to.pdf, id=460, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only10-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only10-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only10-eps-converted-to.pdf used on 
-input line 780.
+input line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b_only50.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 72796 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only50-eps-converted-to.
 pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 67183 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only50-ep
 s-converted-to.pdf ../Figs/minimax_b_only50.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only50-eps-converted-to.pdf, id=407, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only50-eps-converted-to.pdf, id=461, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only50-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only50-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only50-eps-converted-to.pdf used on 
-input line 780.
+input line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b_only100.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 75762 bytes
 (epstopdf)             Output file: <../Figs/minimax_b_only100-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 69648 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b_only100-e
 ps-converted-to.pdf ../Figs/minimax_b_only100.eps>
-(epstopdf)             \includegraphics on input line 780.
+(epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/minimax_b_only100-eps-converted-to.pdf, id=408, 433.62pt x 289.08pt>
+<../Figs/minimax_b_only100-eps-converted-to.pdf, id=462, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b_only100-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b_only100-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b_only100-eps-converted-to.pdf used on
- input line 780.
+ input line 854.
 (pdftex.def)             Requested size: 99.7305pt x 66.487pt.
- [62
+ [69
 
  <../Figs/minimax_b_only1-eps-converted-to.pdf> <../Figs/minimax_b_only2-eps-co
 nverted-to.pdf> <../Figs/minimax_b_only5-eps-converted-to.pdf> <../Figs/minimax
 _b_only10-eps-converted-to.pdf> <../Figs/minimax_b_only50-eps-converted-to.pdf>
  <../Figs/minimax_b_only100-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <../Figs/k_vs_b2.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 13226 bytes
 (epstopdf)             Output file: <../Figs/k_vs_b2-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 7377 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/k_vs_b2-eps-convert
 ed-to.pdf ../Figs/k_vs_b2.eps>
-(epstopdf)             \includegraphics on input line 802.
+(epstopdf)             \includegraphics on input line 875.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/k_vs_b2-eps-converted-to.pdf, id=523, 433.62pt x 289.08pt>
+<../Figs/k_vs_b2-eps-converted-to.pdf, id=576, 433.62pt x 289.08pt>
 File: ../Figs/k_vs_b2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/k_vs_b2-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/k_vs_b2-eps-converted-to.pdf used on input lin
-e 802.
+e 875.
 (pdftex.def)             Requested size: 151.76927pt x 101.1795pt.
 Package epstopdf Info: Source file: <../Figs/K_vs_b.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 15195 bytes
 (epstopdf)             Output file: <../Figs/K_vs_b-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 8119 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/K_vs_b-eps-converte
 d-to.pdf ../Figs/K_vs_b.eps>
-(epstopdf)             \includegraphics on input line 802.
+(epstopdf)             \includegraphics on input line 875.
 Package epstopdf Info: Output file is already uptodate.
 
-<../Figs/K_vs_b-eps-converted-to.pdf, id=524, 433.62pt x 289.08pt>
+<../Figs/K_vs_b-eps-converted-to.pdf, id=577, 433.62pt x 289.08pt>
 File: ../Figs/K_vs_b-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/K_vs_b-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/K_vs_b-eps-converted-to.pdf used on input line
- 802.
+ 875.
 (pdftex.def)             Requested size: 151.76927pt x 101.1795pt.
 
-Overfull \hbox (23.21729pt too wide) in paragraph at lines 802--802
+Overfull \hbox (23.21729pt too wide) in paragraph at lines 875--875
  [][] 
  []
 
-[63
+[70
 
- <../Figs/k_vs_b2-eps-converted-to.pdf> <../Figs/K_vs_b-eps-converted-to.pdf>]
+ <../Figs/k_vs_b2-eps-converted-to.pdf> <../Figs/K_vs_b-eps-converted-to.pdf>] 
+[71
+
+] <../Figs/one_bit_adaptive.png, id=613, 578.16pt x 361.35pt>
+File: ../Figs/one_bit_adaptive.png Graphic file (type png)
+
+<use ../Figs/one_bit_adaptive.png>
+Package pdftex.def Info: ../Figs/one_bit_adaptive.png used on input line 908.
+(pdftex.def)             Requested size: 289.07928pt x 180.67456pt.
+
+Overfull \vbox (8.97566pt too high) detected at line 908
+ []
+
+[72
+
+ <../Figs/one_bit_adaptive.png>]
 \tf@nav=\write9
 \openout9 = `OneBit_Allerton_slides_V2.nav'.
 
@@ -1623,58 +1656,59 @@ Overfull \hbox (23.21729pt too wide) in paragraph at lines 802--802
 
 runsystem(cd ""; rm -- "OneBit_Allerton_slides_V2.oldaux" )...executed.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 805.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 805.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 911.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 911.
  (./OneBit_Allerton_slides_V2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 805.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 805.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 911.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 911.
 Package rerunfilecheck Info: File `OneBit_Allerton_slides_V2.out' has not chang
 ed.
-(rerunfilecheck)             Checksum: 7252880205C531BFAA60B37E490CF425;316.
+(rerunfilecheck)             Checksum: 9D7A455677A7C03C945FF9E079C809A7;449.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 805.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 911.
  ) 
 Here is how much of TeX's memory you used:
- 35080 strings out of 493117
- 810244 string characters out of 6135434
- 939530 words of memory out of 5000000
- 37693 multiletter control sequences out of 15000+600000
+ 35133 strings out of 493117
+ 810902 string characters out of 6135434
+ 940806 words of memory out of 5000000
+ 37725 multiletter control sequences out of 15000+600000
  26305 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  50i,12n,76p,10363b,788s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.p
-fb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
-sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr
-/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
-ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/loca
-l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texl
-ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texli
-ve/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texliv
-e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/
-2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/20
-14/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2
-014/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2
-014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/20
-14/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/tex
-mf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2014
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2
-014/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on OneBit_Allerton_slides_V2.pdf (63 pages, 710565 bytes).
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
+l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
+live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
+014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2014/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2014/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2014/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2014/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2014/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-dist/
+fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2014/texmf-d
+ist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2014/texm
+f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on OneBit_Allerton_slides_V2.pdf (72 pages, 755143 bytes).
 PDF statistics:
- 666 PDF objects out of 1000 (max. 8388607)
- 469 compressed objects within 5 object streams
- 133 named destinations out of 1000 (max. 500000)
- 131 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 740 PDF objects out of 1000 (max. 8388607)
+ 530 compressed objects within 6 object streams
+ 153 named destinations out of 1000 (max. 500000)
+ 152 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,7 +1,9 @@
 \beamer@endinputifotherversion {3.33pt}
 \beamer@sectionintoc {1}{Introduction}{2}{0}{1}
 \beamer@subsectionintoc {1}{1}{Motivation}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Preliminary}{22}{0}{1}
-\beamer@sectionintoc {2}{Adaptive Encoding}{31}{0}{2}
-\beamer@sectionintoc {3}{Distributed Encoding}{41}{0}{3}
-\beamer@sectionintoc {4}{Summary}{52}{0}{4}
+\beamer@subsectionintoc {1}{2}{Preliminaries}{22}{0}{1}
+\beamer@sectionintoc {2}{Adaptive Encoding}{32}{0}{2}
+\beamer@subsectionintoc {2}{1}{Main Results}{36}{0}{2}
+\beamer@sectionintoc {3}{Distributed Encoding}{45}{0}{3}
+\beamer@subsectionintoc {3}{1}{Threshold Detection}{46}{0}{3}
+\beamer@sectionintoc {4}{Summary}{59}{0}{4}

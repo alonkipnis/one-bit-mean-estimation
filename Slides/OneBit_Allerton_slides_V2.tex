@@ -133,7 +133,6 @@ John Duchi (Stanford)\\
 \frame[plain]{\titlepage}
 
 
-
 \section{Introduction}
 
 
@@ -247,8 +246,6 @@ Estimating the mean $\thetac$ of a normal distribution $\mathcal N(\thetac,\sigm
 \pause
 \item Estimation from multiple machines subject to a bit constraint [Zhang, Duchi, Jordan, Wainwright '13] (distributed / adaptive)
 \pause
-\item Distributed hypothesis testing under quantization [Tsitsiklis '88] (distributed)
-\pause
 \item Remote multiterminal source coding (CEO) [Berger, Zhang, Wiswanathan '96], [Oohama '97] (distributed)
 \end{itemize}
 \end{frame}
@@ -270,19 +267,23 @@ M_i = \mathbf 1(X_i>0),\quad i=1,\ldots,n
 \[
 \frac{1}{n}\sum_{i=1}^n M_i \rightarrow \Prob\left(X>0 \right) = \Phi\left(\thetac / \sigma \right)
 \]
+\pause
+\[
+\sigma \Phi^{-1}\left( \frac{1}{n}\sum_{i=1}^n M_i  \right) \rightarrow \thetac
+\]
 \end{frame}
 
 %SAY: supper slow, of course. Can we do better? what is the best possible? 
 
-\subsection{Preliminary}
+\subsection{Preliminaries}
 
 \begin{frame}
 \frametitle{Efficiency}
 \textbf{Definition:} \emph{asymptotic relative efficiency (ARE)}:
 \[
-\mathrm{ARE}(\widehat{\theta}_n) \triangleq \lim_{n\rightarrow \infty} \mathbb E \left[ \left(\widehat{\theta}_n-\theta \right)^2 \right] / \left(\sigma^2 / n \right)
+\mathrm{ARE}(\widehat{\theta}_n) \triangleq \lim_{n\rightarrow \infty} \mathbb E \left[ \left(\widehat{\theta}_n-\thetac \right)^2 \right] / \left(\sigma^2 / n \right)
 \]
-(relative to minimax risk without bit constraint)
+(relative to sample mean $\bar{\theta}$)
 %SAY: many definitions for ARE are possible, we use this one becasue our results apply to all of them
 \bigskip
 
@@ -292,9 +293,26 @@ M_i = \mathbf 1(X_i>0),\quad i=1,\ldots,n
 \pause
 \textbf{Proof:}
 \[
+\mathbb E \left( \thetac- \widehat{\theta} \right)^2 = \overbrace{\mathbb E \left( \thetac- \bar{\theta} \right)^2}^{\sigma^2/n} + \mathbb E \left( \bar{\theta}- \widehat{\theta} \right)^2
+\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Efficiency}
+\textbf{Definition:} \emph{asymptotic relative efficiency (ARE)}:
+\[
+\mathrm{ARE}(\widehat{\theta}_n) \triangleq \lim_{n\rightarrow \infty} \mathbb E \left[ \left(\widehat{\theta}_n-\theta \right)^2 \right] / \left(\sigma^2 / n \right)
+\]
+(relative to sample mean $\bar{\theta}$)
+%SAY: many definitions for ARE are possible, we use this one becasue our results apply to all of them
+\bigskip
+
+\begin{prop} ARE under centralized encoding is $1$
+\end{prop}
+\textbf{Proof:}
+\[
 \mathbb E \left( \theta- \widehat{\theta} \right)^2 = \overbrace{\mathbb E \left( \theta- \bar{\theta} \right)^2}^{\sigma^2/n} + \underbrace{\mathbb E \left( \bar{\theta}- \widehat{\theta} \right)^2}_{O(2^{-2n})}
 \]
-
 \end{frame}
 
 %\begin{frame}
@@ -366,13 +384,17 @@ M_i = \mathbf 1(X_i>0),\quad i=1,\ldots,n
 \end{tikzpicture}
 \end{center}
 \begin{itemize}
-\item $X_{1},\ldots,X_{n} \overset{\mathrm{i.i.d}}{\sim}\mathcal N(\theta,\sigma^2)$
+\item $X_{1},\ldots,X_{n} \overset{\mathrm{i.i.d}}{\sim}\mathcal N(\thetac,\sigma^2)$
 \pause
-\item Replicate $k$ times: $\thetac_1,\ldots,\thetac_k \overset{\iid}{\sim} \mathcal N(0,\sigma_0^2)$ 
+\item Replicate $k$ times: 
+\begin{itemize}
+\item  $\thetac_1,\ldots,\thetac_k \overset{\iid}{\sim} \mathcal N(0,\sigma_0^2)$ 
+\item $\thetac_j \rightarrow X_{j,1},\ldots,X_{j,n}$
+\end{itemize}
 \pause
-\item Block encode $X_{j,1},\ldots,X_{j,n}$ using $k$ bits, $j=1,\ldots,k$
+\item Encoder $i$ block encodes $X_{1,i},\ldots,X_{k,i}$ using $k$ bits
 \pause
-\item $D_{CEO} = \underset{k,\widehat{\theta}}{\inf} \frac{1}{k} \sum_{j=1}^k \mathbb E \left( \theta_j - \widehat{\theta}_j\right)^2$
+\item $D_{CEO} = \underset{k}{\inf} \frac{1}{k} \sum_{j=1}^k \mathbb E \left( \theta_j - \widehat{\theta}_j\right)^2$
 \end{itemize}
 %SAY: lower bound to our setting
 \end{frame}
@@ -403,6 +425,7 @@ Distributed encoding will hurt you (even if you can repeat experiment and encode
 \end{frame}
 
 \section{Adaptive Encoding} 
+
 \begin{frame}
 \frametitle{Three Encoding Scenarios}
 
@@ -455,10 +478,11 @@ Distributed encoding will hurt you (even if you can repeat experiment and encode
 \visible<2->{
 \item {Centralized}: $M^n = f(X_1,\ldots,X_n)$ \hfill{ARE $=1$} }
 \visible<3->{
-\item Next: {\color{red} adaptive / sequential: $M_i = f_i(X_i,M^{i-1})$ \hfill{ARE$=\pi/2$} }  }
+\item Next: {\color{red} adaptive: $M_i = f_i(X_i,M^{i-1})$ \hfill{ARE$=\pi/2$} }  }
 \end{itemize}
 \end{frame}
 
+\subsection{Main Results}
 
 \begin{frame}
 \frametitle{Main Results (adaptive encoding)}
@@ -483,13 +507,23 @@ No estimator have ARE lower than $\pi/2$
 \begin{frame}
 \frametitle{Achievability}
 \framesubtitle{existence of an estimator with ARE $= \pi/2$}
-
+\pause
 \begin{itemize}
 \item[(i)] For $X \sim \mathcal{N}(\theta,\sigma^2)$, $\mathsf{med}(X) = \theta$ 
 \pause
 \item[(ii)] $\mathsf{med}(X) = \underset{m}{ \mathrm{argmin~}} \mathbb E \left|X-m \right|$
 \pause
 \item[(iii)] Stochastic gradient descent on $\mathbb E \left| X-\theta \right|$:
+\pause
+\begin{flushright}
+\begin{tikzpicture}
+\node[coordinate] at(0,0) (ti) {};
+\draw[color = red, line width = 1.5pt] (ti)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $\theta$} +(0,-0.2);
+\draw[<-,line width = 2pt] (-1.5,0) -- node[above] {$-1$} (ti);
+\draw[->,line width = 2pt] (ti) -- node[above] {$1$} (1.5,0);
+\draw (-1.3,1.5) -- (ti) -- (1.3,1.5);
+\end{tikzpicture}
+\end{flushright}
 \[
 \theta_n = \theta_{n-1} + \gamma_n \sgn(X_n - \theta_n)
 \]
@@ -503,7 +537,6 @@ From [Polyak \& Juditsky '92] (under conditions on $(\gamma_n)$):
 \[
 \sqrt{n}(\theta- \widehat{\theta}_n) \rightarrow \mathcal N\left(0, \sigma^2 \pi /2 \right)
 \]
-(MSE convergence follows from [Polyak '90]) 
 \end{frame}
 %picture
 
@@ -533,20 +566,19 @@ From [Polyak \& Juditsky '92] (under conditions on $(\gamma_n)$):
 \begin{frame}
 \frametitle{Converse}
 \framesubtitle{ARE $\geq \pi/2$}
-Let $\pi(\theta)$ be a prior on $\Theta$. The van-Trees inequality (e.g. [Tsybakov '08]) implies
+The van-Trees inequality (e.g. [Tsybakov '08]) implies
 \[
-\mathbb E \left(\theta - \widehat{\theta} \right)^2 \geq \frac{1}{\mathbb E I_\theta(M^n) + I_\pi} \geq \frac{1}{\sum_{i=1}^n I_\theta(M_i|M^{i-1}) + I_\pi} 
+\mathbb E \left(\theta - \widehat{\theta} \right)^2 \geq \frac{1}{ I_\theta(M^n) + c} = \frac{1}{\sum_{i=1}^n I_\theta(M_i|M^{i-1}) + c} 
 \]
-$I_\pi$ is the location Fisher information with w.r.t. $\pi(\theta)$ \\
-
+\pause
 \begin{lem}[K. \& Duchi '17]
 \[
 I_\theta(M_i|M^{i-1}) \leq \frac{2}{\pi\sigma^2}
 \]
 \end{lem}
+\pause
 \textbf{Proof}: \\
-Stein identity implies that portion maximizing the information is a threshold: $M_i^{-1}(1) = (\theta,\infty)$  \\
-The rest follows by induction over number of portions
+Stein's identity implies that detection region maximizing the information is a threshold: $M_i^{-1}(1) = (\theta,\infty)$ 
 %SAY: the rest follows by induction over number 
 \end{frame}
 
@@ -616,6 +648,42 @@ The rest follows by induction over number of portions
 
 \section{Distributed Encoding}
 
+\subsection{Threshold Detection}
+
+\begin{frame}
+\frametitle{Distributed Encoding}
+\framesubtitle{Threshold Detection}
+We consider only messages of the form
+\[
+M_i = \sgn(X_i - t_i),\quad i=1,\ldots,n
+\]
+\pause
+\begin{center}
+\begin{tikzpicture}
+\draw[<->,line width = 1pt] (-3,0) node[left] {$\cdots$} -- (3,0) node[right] {$\cdots$};
+\node[coordinate] at(0,0) (ti) {};
+%\draw[<-,line width = 1pt] (-3,0) -- node[above] (ti);
+%\draw[->,line width = 1pt] (ti) -- node[above]  (6,0);
+\draw[color = red, line width = 1.5pt] (ti)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_1$} +(0,-0.2);
+\pause
+\node[coordinate] at(2,0) (tj) {};
+\draw[color = blue, line width = 1.5pt] (tj)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_2$} +(0,-0.2);
+\pause
+\node[coordinate] at(-1,0) (tk) {};
+\draw[color = green, line width = 1.5pt] (tk)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_3$} +(0,-0.2);
+\end{tikzpicture}
+\end{center}
+%Assume:
+%\[
+%\lambda_n([a,b]) = \frac{1}{n} \mathsf{card}\left( [a,b]  \cap \left\{t_i \right\} \right)
+%\]
+%converges weakly to a probability distribution $\lambda$
+%\\
+%\bigskip
+%\pause
+%\textbf{Example:} $t_1,\ldots,t_n$ drawn i.i.d. from a distribution $\lambda$ on $\mathbb R$ 
+\end{frame}
+
 \begin{frame}
 \frametitle{Distributed Encoding}
 \framesubtitle{Threshold Detection}
@@ -624,12 +692,16 @@ We consider only messages of the form
 M_i = \sgn(X_i - t_i),\quad i=1,\ldots,n
 \]
 \begin{center}
-\pause
 \begin{tikzpicture}
+\draw[<->,line width = 1pt] (-3,0) node[left] {$\cdots$} -- (3,0) node[right] {$\cdots$};
 \node[coordinate] at(0,0) (ti) {};
-\draw[color = red, line width = 1.5pt] (ti)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_i$} +(0,-0.2);
-\draw[<-,line width = 1pt] (-3,0) -- node[above] {$M_i=-1$} (ti);
-\draw[->,line width = 2pt] (ti) -- node[above] {$M_i=1$} (6,0);
+%\draw[<-,line width = 1pt] (-3,0) -- node[above] (ti);
+%\draw[->,line width = 1pt] (ti) -- node[above]  (6,0);
+\draw[color = red, line width = 1.5pt] (ti)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_1$} +(0,-0.2);
+\node[coordinate] at(2,0) (tj) {};
+\draw[color = blue, line width = 1.5pt] (tj)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_2$} +(0,-0.2);
+\node[coordinate] at(-1,0) (tk) {};
+\draw[color = green, line width = 1.5pt] (tk)+(0,0.2) -- node[above, yshift = 0.08cm] {\color{black} $t_3$} +(0,-0.2);
 \end{tikzpicture}
 \end{center}
 Assume:
@@ -644,9 +716,11 @@ converges weakly to a probability distribution $\lambda$
 
 \end{frame}
 
+
+
 \begin{frame}
 \frametitle{Main Results (distributed encoding)}
-
+\pause
 \begin{theorem}
 \begin{itemize}
 \item[(i)] The Maximum likelihood estimator $\widehat{\theta}_{ML}$  satisfies
@@ -677,19 +751,20 @@ K_\lambda(\theta) & = \int_{\mathbb R} \eta\left( \frac{t-\theta}{\sigma}\right)
 \pause
 \item MLE is local asymptotically minimax 
 \pause
-\item ARE of MLE is $1/K_{\lambda}(\theta)$ -- 
+\item  ARE of MLE is $1/K_{\lambda}(\theta)$ -- 
 only depends on asymptotic threshold density $\lambda$
 \pause
-\item  
+\item
 \[
 \mathrm{ARE} = \frac{1}{K_{\lambda}(\theta)}  = \frac{\sigma^2}{\int \eta \left( \frac{t-\theta}{\sigma}\right) \lambda(dt)}
 > \pi / 2
 \]
 (equality iff $\lambda = \delta_{\theta}$)
+
 %SAY: cannot be as good as sequential thresholds
 %\item Threshold density $\lambda$ that maximizes
-\pause
-\item Minimax $\lambda$ can be found using a convex program -- minimax ARE  depends on radius of $\Theta$
+%\pause
+%\item Minimax $\lambda$ can be found using a convex program -- minimax ARE  depends on radius of $\Theta$
 %ARE depends on size of parameter space $\Theta$ 
 %\begin{center}
 %\begin{tikzpicture}
@@ -717,7 +792,7 @@ only depends on asymptotic threshold density $\lambda$
 \pause
 \item Adaptive:
 \begin{itemize}
-\item ARE is $\pi/2$ (regardless of radius of $\Theta$)
+\item ARE is $\pi/2$ % (regardless of radius of $\Theta$)
 \pause
 \item $\sim 1.57$ more samples are required due to 1-bit constraints
 \end{itemize}
@@ -731,7 +806,7 @@ only depends on asymptotic threshold density $\lambda$
 \pause
 \item MLE is local asymptotically optimal 
 \pause
-\item minimax ARE depends on radius of $\Theta$
+%\item minimax ARE depends on radius of $\Theta$
 \end{itemize}
 %\item Minimax ARE of MLE depends on size of parameter space
 \end{itemize}
@@ -745,8 +820,7 @@ Is there a distributed encoding scheme with ARE that is both finite and independ
 \end{frame}
 
 
-
-\begin{frame}
+\begin{frame}[noframenumbering]
 \frametitle{Minimax threshold density}
 
 Minimax $\lambda$ for $\theta \in (-b\sigma,b\sigma)$:
@@ -759,7 +833,7 @@ Minimax $\lambda$ for $\theta \in (-b\sigma,b\sigma)$:
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 \frametitle{Minimax $\lambda$}
 \begin{center}
 support of optimal threshold density $\lambda^\star$
@@ -779,7 +853,7 @@ K^\star = \inf_{\theta} K^\star(\theta) = \inf_\theta \int \eta(t-\theta) \lambd
 \]
 \end{frame}
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 \frametitle{Minimax $\lambda$}
 \begin{center}
 Minimax ARE vs size of parameter space %$\Theta= (-\sigma b, \sigma,b)$
@@ -798,11 +872,10 @@ Minimax ARE vs size of parameter space %$\Theta= (-\sigma b, \sigma,b)$
 \begin{itemize}
 \item ARE increases with size of parameter space
 \end{itemize}
-
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 \frametitle{One-step Optimal Scheme}
 Initialization: $P_0(t) = \pi(\theta)$ \\
 Repeat for $n \geq 1$:
@@ -817,7 +890,7 @@ Repeat for $n \geq 1$:
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[noframenumbering]
 \frametitle{Numerical Example}
 \begin{center}
 Normalized empirical risk versus number of samples $n$ \\
@@ -826,7 +899,7 @@ Normalized empirical risk versus number of samples $n$ \\
 \node at (0,0) {\includegraphics[scale=0.5]{one_bit_adaptive}};
 %\node[color = blue,  minimum width=1cm, align = left] at (1.5,1.5) {assymptotically optimal \eqref{eq:sgd_est}};
 %\node[color = red, minimum width=1cm, align = left] at (1.5,0.55) {one-step optimal \eqref{eq:message_update}} ;
-\node[rotate = 90, scale = 1] at (-5,0) {$n \mathbb E \left(\widehat{\theta}_n - \theta \right)^2$};
+\node[rotate = 90, scale = 1] at (-5,0) {$n \ mathbb E \left(\widehat{\theta}_n - \theta \right)^2$};
 \node[scale = 1] at (0,-3) {$n$};
 %\draw[dashed] (-3.5,1.18) node[left, scale = 0.7] {$\frac{\pi}{2}$}-- (-3,1.18);
 \end{tikzpicture}
