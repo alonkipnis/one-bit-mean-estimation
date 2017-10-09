@@ -21,6 +21,15 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{gill1995applications}
+R.~D. Gill and B.~Y. Levit, ``Applications of the van {T}rees inequality: a
+  {B}ayesian {C}ram{\'e}r-{R}ao bound,'' \emph{Bernoulli}, pp. 59--79, 1995.
+
+\bibitem{polyak1992acceleration}
+B.~T. Polyak and A.~B. Juditsky, ``Acceleration of stochastic approximation by
+  averaging,'' \emph{SIAM Journal on Control and Optimization}, vol.~30, no.~4,
+  pp. 838--855, 1992.
+
 \bibitem{cicalese2002least}
 F.~Cicalese, D.~Mundici, and U.~Vaccaro, ``Least adaptive optimal search with
   unreliable tests,'' \emph{Theoretical Computer Science}, vol. 270, no.~1, pp.
@@ -46,15 +55,6 @@ P.~W. Wong and R.~M. Gray, ``Sigma-delta modulation with i.i.d. {G}aussian
 \bibitem{gray1998quantization}
 R.~Gray and D.~Neuhoff, ``Quantization,'' \emph{{IEEE} Trans. Inf. Theory},
   vol.~44, no.~6, pp. 2325--2383, Oct 1998.
-
-\bibitem{gill1995applications}
-R.~D. Gill and B.~Y. Levit, ``Applications of the van {T}rees inequality: a
-  {B}ayesian {C}ram{\'e}r-{R}ao bound,'' \emph{Bernoulli}, pp. 59--79, 1995.
-
-\bibitem{polyak1992acceleration}
-B.~T. Polyak and A.~B. Juditsky, ``Acceleration of stochastic approximation by
-  averaging,'' \emph{SIAM Journal on Control and Optimization}, vol.~30, no.~4,
-  pp. 838--855, 1992.
 
 \bibitem{berger1996ceo}
 T.~Berger, Z.~Zhang, and H.~Viswanathan, ``The {CEO} problem [multiterminal
