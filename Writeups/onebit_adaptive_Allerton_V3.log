@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  8 OCT 2017 21:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  8 OCT 2017 21:59
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1163,18 +1163,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--118
  []
 
 
-Underfull \hbox (badness 1533) in paragraph at lines 123--124
-\OT1/ptm/m/n/9 analog-to-digital con-ver-sion [[]] uses one-bit thresh-old de-t
-ec-tor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
 
  []
 
@@ -1184,6 +1173,17 @@ map/pdftex.map}
 
 
 ]
+Underfull \hbox (badness 1533) in paragraph at lines 125--126
+\OT1/ptm/m/n/9 analog-to-digital con-ver-sion [[]] uses one-bit thresh-old de-t
+ec-tor
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 127--128
 
  []
@@ -1313,7 +1313,7 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adaptive_Allerton_V3.pdf (8 pages, 195814 bytes).
+Output written on onebit_adaptive_Allerton_V3.pdf (8 pages, 195855 bytes).
 PDF statistics:
  90 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
