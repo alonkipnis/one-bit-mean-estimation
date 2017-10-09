@@ -103,17 +103,17 @@ In addition, we provide an explicit estimator that attains this asymptotic error
 \section{Introduction}
 \label{sec:Intro}
 
-Estimation performance of information from data collected and processed by multiple units may be limited due to communication constraints between these units. 
+The performance in estimating information from data collected and processed by multiple units may be limited due to communication constraints between these units. 
 %For example, emerging sensor network technologies in medicine and ``smart cities" use many low-cost sensors to collect large amounts of data and transmit it to remote locations. These sensors must operate under severe power restrictions, hence they are limited by their communication bandwidth. 
-For example, consider large-scale sensor arrays where information is collected through multiple sensors and transmitted to a central estimation unit. In this scenario, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number, but also by available rate of communication between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by communication constraints, and what are the fundamental performance limits in estimating a parameter subject to these restrictions. In this paper we answer this question in a particular setting: the estimation of the mean $\theta$ of a normal distribution with variance $\sigma^2$ under the constraint that only a single bit can be communicated on each sample $X_n$ from this distribution. As it turns out, the ability to share information among different samples before committing on each single-bit message dramatically affects the performance in estimating $\theta$. We therefore distinguish in among three settings:
+For example, consider large-scale sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In this scenario, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number, but also by the available rate for communication between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by these communication constraints, and what are the fundamental performance limits in estimating a parameter subject to these restrictions. In this paper we answer this question in a particular setting: the estimation of the mean $\theta$ of a normal distribution with variance $\sigma^2$ under the constraint that only a single bit can be communicated on each sample $X_n$ from this distribution. As it turns out, the ability to share information among different samples before committing on each single-bit message dramatically affects the performance in estimating $\theta$. We therefore distinguish among three settings:
  \begin{itemize}
  \item[(i)] \emph{Centralized} encoding: all $n$ encoders confer and produce a single $n$ bit message which is a function of $X_1,\ldots,X_n$. 
  \item[(ii)] \emph{Adaptive} or \emph{sequential} encoding: the $n$th encoder observes $X_n$ and the $n-1$ previous single bit messages.
  \item[(iii)] \emph{Distributed} encoding: the output of the $n$th encoder is a single bit that is only a function of $X_n$.
  \end{itemize}
-Clearly, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). We measure the estimation performance by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting relative to the MSE attained by the sample mean, which is the minimax estimator in estimating without one-bit constraint and its MSE decreases as $\sigma^2/n+O(n^{-2})$. \\
+Clearly, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). We measure the estimation performance by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting relative to the MSE attained by the empirical mean of the samples, which is the minimax estimator in estimating without one-bit constraint and its MSE decreases as $\sigma^2/n+O(n^{-2})$. \\
 
-In setting (i) the estimator can evaluate the sample mean and then communicate it using $n$ bits. This strategy leads to MSE behavior of $\sigma^2/n + O(2^{-n})$. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. In this work we show that a similar result does not hold even in setting (ii): the ARE of any adaptive estimation scheme is at least $\pi/2$. Namely, the single-bit per sample constraint incurs a minimal penalty of at least $1.57$ in the number of samples compared to an unconstrained estimator or to the optimal estimator in setting (i). In addition to this negative statement, we provide an estimator that attains this ARE. In other words, we show that the lower bound of $\pi/2$ on the ARE is tight, and that it is attained regardless of the particular realization of $\theta$ or the radius of the parameter space from which it is taken. Clearly, the minimal penalty on the efficiency of $\pi/2$ also holds under setting (iii), although the question whether this efficiency is achievable (or otherwise, what is the minimal ARE) remains open. 
+In setting (i) the estimator can evaluate the empirical mean of the samples and then communicate it using $n$ bits. This strategy leads to MSE behavior of $\sigma^2/n + O(2^{-n})$. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. In this work we show that a similar result does not hold even in setting (ii): the ARE of any adaptive estimation scheme is at least $\pi/2$. Namely, the single-bit per sample constraint incurs a minimal penalty of at least $1.57$ in the number of samples compared to an unconstrained estimator or to the optimal estimator in setting (i). In addition to this negative statement, we provide an estimator that attains this ARE. In other words, we show that the lower bound of $\pi/2$ on the ARE is tight, and that it is attained regardless of the particular realization of $\theta$ or the radius of the parameter space from which it is taken. Clearly, the minimal penalty on the efficiency of $\pi/2$ also holds under setting (iii), although the question whether this efficiency is achievable (or otherwise, what is the minimal ARE) remains open. 
 \\
 
 The lower bound of $\pi/2$ on the ARE, i.e., a lower bound of $\sigma^2\pi/(2n) +O(n^{-2})$ on the MSE, is obtained by showing that the Fisher information of any $n$ adaptive messages is not larger than $2n/(\pi \sigma^2)$. From here, the desired bound on the MSE follows from the van Trees version of the information inequality \cite{gill1995applications}. Finally, we show that an estimator that attains asymptotic MSE of $\sigma^2\pi/(2n)$ is obtained as a special case of \cite[Thm. 4]{polyak1992acceleration}. In addition to these two results, we also derive the one-step optimal strategy in which the message sent at step $i$th is designed to minimize the MSE given this message and the previous $i-1$ messages. Furthermore, we demonstrates numerically that the MSE under this strategy converge to $\pi \sigma^2/(2n)$. %A proof for this converges remains elusive. \\
@@ -127,10 +127,7 @@ We note that even though its ARE is $1$, the centralized encoding setting (i) al
 Our result of ARE of $\pi/2$ in the adaptive setting implies that even under coarse quantization constraints it is possible to achieve MSE in parametric estimation within only a relatively small penalty compared to the unconstrained estimator. A possible clue for this non-intuitive result is obtained from drawing the connection between our setting and the remote multiterminal source coding problem, also known as the CEO problem \cite{berger1996ceo, viswanathan1997quadratic, oohama1998rate, prabhakaran2004rate}. This connection, which is explained in details in Section~\ref{sec:ceo}, immediately leads to a lower bound of $4/3$ on the ARE in the distributed encoding of setting (iii). While this lower bound provides no new information compared to the lower bound of $\pi /2$ we derive later for setting (ii), it shows that the distributed nature of the problem is not a limiting factor in achieving MSE close to optimal even under one-bit quantization of each sample.\\
 
 We also note that our settings (ii) and (iii) are special cases of 
-\cite{zhang2013information} that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting by, taking $m=n$ and $R=1$, leads to looser bounds then $\sigma^2\pi/(2n)$ for cases (ii) and (iii). 
-Other related works include statistical inference under multiterminal data compression \cite{han1987hypothesis, zhang1988estimation}, although their results apply only to setting (i). The counterpart of setting (iii) in the case of hypothesis testing was considered in \cite{52470}.
-%
-Estimation problem subject to the one-bit quantization constraint were also considered recently in compressed sensing \cite{boufounos20081,baraniuk2017exponential} and in MIMO detection in wireless communication \cite{singh2009limits}. \\
+\cite{zhang2013information} that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then $\sigma^2\pi/(2n)$ for cases (ii) and (iii). The counterpart of our setting (iii) in the case of hypothesis testing was considered in \cite{52470}, although the results there cannot be extended to parametric estimation. Other related works include statistical inference under multiterminal data compression \cite{han1987hypothesis, zhang1988estimation}, and one-bit quantization constraints in compressed sensing  \cite{baraniuk2017exponential} and in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
 \subsection*{Paper Organization}
 
@@ -193,21 +190,21 @@ We assume that the mean $\theta$ is drawn once from a prior distribution $\pi(\t
 \end{itemize}
 In other words, the $i$th message is defined by a function from the real line to $\{-1,1\}$ that is measurable with respect to the sigma algebra generated by $M^{i-1}$ and $X_i$, and the $n$ messages $M^n$ are the only available to the estimator. Upon observing $M^n$, the estimator produces an estimate $\widehat{\theta}_n(M^n)$ of $\theta$. A system describing the above scheme is illustrated in Fig.~\ref{fig:sequential}. \\
 
-In this work we are concerned with the MSE risk defined as
+In this work we are concerned with the Bayes MSE risk defined as
 \begin{equation}
 \label{eq:error_def}
 \mathbb E\left(\widehat{\theta}_n - \theta \right)^2,
 \end{equation}
 where the expectation is taken with respect to the distribution of $X^n$ and the prior distribution $\pi(\theta)$. \\
 
-The main problem we consider is the minimization of \eqref{eq:error_def} over all encoding and estimation strategies, and the characterization of its minimal value as a function of $n$. This minimization is the combination of the following two procedures: (1) selecting the $i$th message $M_i$ based on past messages and current observation $X_i$, and (2) estimating $\theta$ given messages $M^n$. 
+The main problem we consider is the minimization of \eqref{eq:error_def} over all encoding and estimation strategies and the characterization of its minimal value as a function of $n$. This minimization is the combination of the following two procedures: (1) selecting the $i$th message $M_i$ based on past messages and current observation $X_i$, and (2) estimating $\theta$ given messages $M^n$. 
 %
-We are interested in particular on the increase in sample complexity compared to the vanilla mean estimation without one-bit constraint. For this reason, we consider the limit
+We are interested in particular on the increase in sample complexity compared to the vanilla mean estimation without one-bit constraint. For this reason, we consider 
 \begin{equation}
-{\sigma^2} n \mathbb E\left(\widehat{\theta}_n - \theta \right)^2,
+{\sigma^2} n \mathbb E\left(\widehat{\theta}_n - \theta \right)^2
 \label{eq:relative_efficiency}
 \end{equation}
-which is the ratio between the MSE of the sample mean and the MSE of the estimator $\widehat{\theta}_n$. Note that if the limit $\mathbb E\left(\widehat{\theta}_{n} - \theta \right)^2$ exists and finite, than \eqref{eq:relative_efficiency} is the ARE of $\widehat{\theta}_n$. 
+in the limit as $n$ goes to infinity. Equation \eqref{eq:relative_efficiency} is the ratio between the MSE attained by the empirical mean of the samples and the MSE attained by the estimator $\widehat{\theta}_n$. Note that if the limit $\mathbb E\left(\widehat{\theta}_{n} - \theta \right)^2$ exists and finite, than \eqref{eq:relative_efficiency} is the ARE of $\widehat{\theta}_n$ \cite[Def. 6.6]{lehmann2006theory}. 
 
 %ARE of estimators of $\theta$ compared to the sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$. Since $\sqrt{n}(\bar{X}_n-\theta)$ converges to $\mathcal N(0,\sigma^2)$, this ARE is defined as
 %\begin{equation}
@@ -218,13 +215,14 @@ which is the ratio between the MSE of the sample mean and the MSE of the estimat
 
 In addition to the notations defined above, we denote by $\phi(x)$ the standard normal density and by $\Phi(x)$ the standard normal cumulative distribution function. \\%Derivatives with respect to $\theta$ are denoted by prime.\\
 
-Before deriving our main results, we comment on the relation between our setting and the remote multiterminal source coding problem. 
+Before deriving our main results, we comment on the relation between our setting and the remote multiterminal source coding problem, also known as the CEO problem.
 
 \section{Relation to Remote Multiterminal Source Coding \label{sec:ceo}}
-In this section we draw a connection between our general problem of mean estimation from one-bit samples and the remote multiterminal source coding problem \cite{berger1996ceo}, also known as the CEO problem. The setting of the CEO includes $n$ encoders, each has access to a noisy version of a random source sequence. 
+%In this section we draw a connection between our general problem of mean estimation from one-bit samples and the remote multiterminal source coding problem \cite{berger1996ceo}, also known as the CEO problem. 
+The setting of the CEO includes $n$ encoders, each has access to a noisy version of a random source sequence \cite{berger1996ceo}. 
 % $\left\{ U_j,\,j=1,2,\ldots \right\}$. 
 The $i$th encoder observes $k$ noisy source symbols and transmit $R_i k$ bits to a central estimator. \par
-Assuming that $\theta$ is drawn once from the prior $\pi(\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the Gaussian CEO setting with $k=1$ source realization: the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. As a result, the MSE in the optimal source coding scheme for the CEO with $n$ terminals at rates $R_1 = \ldots = R_n = 1$, a Gaussian observation noise at each estimate of variance $\sigma^2$, and an arbitrary number of $k$ independent draws of $\theta$, provides a lower bound on the MSE distortion in estimating $\theta$ in the distributed encoding setting. Note that the difference between the CEO and ours is in the fact encoders in the CEO describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, whereas our setting only allows $k=1$. 
+Assuming that $\theta$ is drawn once from the prior $\pi(\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the Gaussian CEO setting with $k=1$ source realization: the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. As a result, a lower bound on the MSE distortion in estimating $\theta$ in the distributed encoding setting is given by the MSE in the optimal source coding scheme for the CEO with: $n$ terminals of codes rates $R_1 = \ldots = R_n = 1$, a Gaussian observation noise at each terminal of variance $\sigma^2$, and an arbitrary number of $k$ independent draws of $\theta$. Note that the difference between the CEO and ours lays in the privilege of each of the CEO encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, whereas our setting only allows $k=1$. 
  \\
 
 By using an expression for the minimal MSE in the Gaussian CEO as the number of terminals goes to infinity, we conclude the following:
@@ -237,7 +235,7 @@ where the expectation is with respect to $\theta$ and $X^n$.
 \end{prop}
 
 \begin{proof}
-We consider the expression \cite[Eq. 10]{chen2004upper} that provides the minimal distortion $D^\star$ in the CEO with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$:
+We consider the expression \cite[Eq. 10]{chen2004upper} that gives the minimal distortion $D^\star$ in the CEO with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$:
 \begin{equation} \label{eq:ceo_optimal_sumrate}
 R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
 \end{equation}
@@ -250,17 +248,20 @@ The value of $D^\star$ that satisfies the equation above describes the MSE under
 D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
 \]
 \end{proof}
-Since the lower bound \eqref{eq:ceo_bound}  was derived assuming optimal allocation of the $n$ bits among the encoders, it may seem as if a tighter bound can be obtained in our case by considering the CEO distortion with $R_1=\ldots = R_n = 1$. However, an upper bound for the CEO distortion under this condition follows from \cite[Prop. 5.2]{KipnisRini2017}, and leads to
+
+Prop.~\ref{prop:ceo_lower_bound} implies that, unlike in the centralized setting, there is a loss in efficiency in estimating $\theta$ due to one-bit measurements in this setting. In the next section we show that the ARE in adaptive encoding setting does not exceeds $\pi/2$, and thus provides a tighter lower bound for the distributed encoding setting than $4/3$ of  \eqref{eq:ceo_bound}. \\
+
+We note although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the CEO distortion while enforcing the condition $R_1=\ldots = R_n = 1$. Indeed, an upper bound for the CEO distortion under the condition $R_1=\ldots = R_n = 1$ follows from \cite{KipnisRini2017}, and leads to
 \[
 D_{CEO} \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
 \frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + O(n^{-2}),
 \]
-which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ goes to zero. \par
-We conclude therefore that the difference between the MSE lower bound \eqref{eq:ceo_bound} and the actual MSE in the distributed encoding setting, is attributed exclusively to the ability to perform coding over blocks. Namely, the freedom to consider an arbitrary number $k$ of independent realizations of the problem, versus only one in ours. In other words, it is the ability to exploit the geometry of a high-dimensional product space, rather than the distributed nature of the problem, that distinguishes between the CEO distortion and our problem of mean estimation from one-bit samples.\par
-In the next section we show that the ARE in adaptive encoding setting does not exceeds $\pi/2$, and thus provides a tighter lower bound for the distributed encoding setting than $4/3$ of  \eqref{eq:ceo_bound}. 
+which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ goes to zero. 
+%Recall that the difference between the MSE lower bound \eqref{eq:ceo_bound} and the actual MSE in the distributed encoding setting is attributed exclusively to the ability to perform coding over blocks. Namely, the freedom to consider an arbitrary number $k$ of independent realizations of the problem, versus only one in ours. Therefore, since 
+%In other words, it is the ability to exploit the geometry of a high-dimensional product space, rather than the distributed nature of the problem, that distinguishes between the CEO distortion and our problem of mean estimation from one-bit samples.\par
 
 \section{Results \label{sec:sequential}}
-The first main result of this paper, as described in Thm.~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be lower than $\pi/2$. Next, we provide a particular adaptive estimation scheme and show in Thm.~\ref{thm:sgd} that its efficiency is $\pi/2$. Finally, in Thm.~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $M^{i-1}$ messages is chosen. While it is not clear whether the efficiency of this last scheme is $\pi/2$, numerical simulations suggests that the MSE of this scheme times $n$ also converges to $\pi/2$ faster than the first scheme.
+The first main result of this paper, as described in Thm.~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be lower than $\pi/2$. Next, we provide a particular adaptive estimation scheme and show in Thm.~\ref{thm:sgd} that its efficiency is $\pi/2$. Finally, in Thm.~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the encoder send the message $M_i^\star$ that minimizes the MSE given $X_i$ and the previous $M^{i-1}$ messages. While it is not clear whether the efficiency of this last scheme is $\pi/2$, numerical simulations suggests that the MSE of this scheme times $n$ also converges to $\pi/2$ faster than the first scheme.
 
 %\begin{figure}
 %\begin{center}
@@ -300,7 +301,7 @@ The first main result of this paper, as described in Thm.~\ref{thm:adpative_lowe
 \subsection{A lower bound on adaptive one-bit schemes}
 Our first results asserts that the ARE \eqref{eq:relative_efficiency} of any adaptive estimation scheme is bounded from below by $\pi/2$, as follows from the following theorem:
 \begin{thm}[minimal relative effeciency] \label{thm:adpative_lower_bound}
-Let $\widehat{\theta}_n$ be any estimator of $\theta$ in the adaptive setting of Fig.~\ref{fig:sequential}. Assume that $\Theta$ is an interval and that the density of the prior $\pi(\theta)$ converges to zero at the endpoints of $\Theta$. Then
+Let $\widehat{\theta}_n$ be any estimator of $\theta$ in the adaptive setting of Fig.~\ref{fig:sequential}. Assume that the density of the prior $\pi(\theta)$ converges to zero at the endpoints of the interval $\Theta$. Then
 \[
 \mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{\pi \sigma^2 }{2n +\pi \sigma^2  I_0}  =  \frac{\pi}{2n}\sigma^2+O(n^{-2}),
 \]
@@ -335,7 +336,7 @@ and set the $n$th step estimation as
 \widehat{\theta}_n =  \frac{1}{n} \sum_{i=1}^n  \theta_i. 
 \end{equation}
 
-For the estimator defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} we have the following results:
+For the estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est} we have the following results:
 \begin{thm} \label{thm:sgd}
 The sequence $\widehat{\theta}_n$ of \eqref{eq:sgd_est} satisfies
 \begin{enumerate}
@@ -357,10 +358,10 @@ The asymptotic behavior of \eqref{eq:sgd_est} is a special case of \cite[Thm. 4]
 Thm.~\ref{thm:sgd} implies that the estimator $\widehat{\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the minimal ARE as established by Thm.~\ref{thm:adpative_lower_bound}.
 \par
 Note that $\theta_0$ is not explicitly defined 
-in equation \eqref{eq:sgd_est}. While a reasonable initialization is $\theta_0 = \mathbb E [\theta]$,  Thm.~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the size of the parameter space $\Theta$. Nevertheless, the bound in Thm.~\ref{thm:adpative_lower_bound} suggests that the non-asymptotic estimation error can be significantly reduced whenever the location information $I_0$ is large. In contrast, the one-step optimal scheme presented in the following subsection updates the prior distribution on $\theta$ given all information gathered until step $n-1$ to provide the step $n$ estimate and prior. In particular, the this scheme exploit the prior information on $\theta$ provided by $\pi(\theta)$. 
+in equation \eqref{eq:sgd_est}. While a reasonable initialization is $\theta_0 = \mathbb E [\theta]$, Thm.~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$. Nevertheless, the bound in Thm.~\ref{thm:adpative_lower_bound} suggests that the non-asymptotic estimation error can be significantly reduced whenever the location information $I_0$ is large. In contrast, the one-step optimal scheme presented in the following subsection updates the prior distribution on $\theta$ given all information gathered until step $n-1$ to provide the step $n$ estimate and prior. In particular, the this scheme exploit the prior information on $\theta$ provided by $\pi(\theta)$. 
 
 \subsection{One-step optimal estimation}
-We now consider an estimation scheme that posses the property of \emph{one-step optimality}: at each step $i$, the $i$th encoder designs the detection region $M_i^{-1}(1)$ such that the MSE given $M^i$ is minimal. In other word, this scheme designs the messages in a greedy manner, such that the MSE at step $i$ is minimal given the current state of the estimation described by $M^{i-1}$. \\
+We now consider an estimation scheme that posses the property of \emph{one-step optimality}: at each step $i$, the $i$th encoder designs the detection region $M_i^{-1}(1)$ such that the MSE given $M^i$ is minimal. In other word, this scheme designs the messages $M^n$ in a greedy manner, such that the MSE at step $i$ is minimal given the current state of the estimation described by $M^{i-1}$. \\
 
 The following theorem determine the structure of the message that minimizes the next step MSE:
 \begin{thm}[optimal one-step estimation] \label{thm:opt_one_step}
@@ -397,8 +398,7 @@ Let $f(x)$ be a log-concave probability density function. Then the equation
 has a unique solution.
 \end{lem}
 \begin{lem} \label{lem:adaptive}
-Let $U$ be an absolutely continuous random variable with
-pdf $P(du)$. Then the one-bit message $M^\star\in \{-1,1\}$ that minimizes
+Let $U$ be a random variable with probability density function  $P(du)$. Then the one-bit message $M^\star\in \{-1,1\}$ that minimizes
 \[
 \int \left( u - \mathbb E[U|M(u)]  \right)^2 P(du)
 \]
@@ -424,7 +424,7 @@ P_n(t) = & P(\theta=t |M^n) \\
 & = \frac{ P\left( \theta=t | M^{n-1} \right) P(M_n | \theta = t , M^{n-1})  } { P(M_n | M^{n-1} )} \nonumber \\ 
 & = \alpha_n  P_{n-1}(t) \Phi\left(M_n \frac{ t - \tau_{n-1} }{\sigma} \right), \label{eq:density_update}
 \end{align}
-where $\alpha_n$ is a normalization coefficient that equals to
+where $\alpha_n$ is a normalization coefficient that equals
 \[
 \alpha_n = \left(\int_{\mathbb R} P_{n-1}(t) \Phi\left(M_n \frac{t- \tau_{n-1} }{\sigma} \right)  dt \right)^{-1}. 
 \]
@@ -439,7 +439,7 @@ M_{n+1} = \sgn(X_{n+1}-\tau_n)
 \end{equation}
 \end{enumerate}
 \end{itemize}
-Since equation \eqref{eq:fixed_point} has no analytic solution, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture that it attains the asymptotic relative efficiency of $\sigma^2\pi/2$ as can be observed from the numerical simulation illustrated in Fig.~\ref{fig:adaptive_error}. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the sample mean for the same sample realization.
+Since equation \eqref{eq:fixed_point} has no analytic solution, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture that it attains the asymptotic relative efficiency of $\sigma^2\pi/2$ as can be observed from the numerical simulation illustrated in Fig.~\ref{fig:adaptive_error}. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the empirical mean of the samples for the same sample realization.
 
 \begin{figure}
 \begin{center}
@@ -610,7 +610,7 @@ Then, for any estimator $\widehat{t}(\mathbf X)$, the Bayes risk is bounded as f
 \int_{\theta} \mathbb E \left[ \left( \widehat{t}(\mathbf X) - \theta\right)^2 \right] \pi(d\theta) \geq \frac{1}{ \int I(\theta) \pi(d \theta) + I_0 }.
 \]
 \end{thm}
-Theorem~\ref{thm:vanTrees} applied to our problem with $p(x,\theta) = P(M^n|\theta)$ implies
+Thm.~\ref{thm:vanTrees} applied to our problem with $p(x,\theta) = P(M^n|\theta)$ implies
 \begin{align*}
 \mathbb E \left(\widehat{\theta}_n - \theta \right)^2 &  \geq \frac{1}{ \mathbb E I_\theta(M^n) + I_0} \\
 & = \frac{1}{ \sum_{i=1}^n I_\theta (M_i | M^{i-1} ) + I_0} \\
@@ -703,7 +703,7 @@ n V_n = \mathbb E \left[ \left(\widehat{\theta}_n-\theta \right)^2 \right]  = \f
 
 
 \subsection*{Proof of Thm.~\ref{thm:opt_one_step}}
-In this subsection we prove Lemmas \ref{lem:adaptive} and \ref{lem:unique} that lead to Thm.~\ref{thm:opt_one_step}. 
+In this subsection we prove Lem. \ref{lem:adaptive} and \ref{lem:unique} that lead to Thm.~\ref{thm:opt_one_step}. 
 
 \subsubsection*{Proof of Lem. \ref{lem:adaptive}}
 Since any single-bit message $M(u) \in \{-1,1\}$ is characterized by two decision region $A_1 = M^{-1}(1)$ and $A_{-1} = M^{-1}(-1)$, it follows that $\mathbb E \left[ U | M(U) \right]$ assumes only two values: $\mu_1 = \mathbb E \left[ U | M(U) = 1 \right]$ and $\mu_{-1} = \mathbb E \left[ U | M(U) = -1 \right]$. We claim that a necessary condition for $M(u)$ to be optimal is that the sets $A_1$ and $A_{-1}$ are, modulo a set of measure $P(du)$ zero, the Voronoi sets on $\mathbb R$ corresponding to the points $\mu_1$ and $\mu_{-1}$, respectively. Indeed, assume by contradiction that for such an optimal partition there exists a set $B \subset A_{1}$ with $\mathbb P (U \in B) >0$ such that $\left( b-\mu_{1} \right)^2 > \left( b- \mu_{-1} \right)^2$. The expected square error in this partition satisfies:

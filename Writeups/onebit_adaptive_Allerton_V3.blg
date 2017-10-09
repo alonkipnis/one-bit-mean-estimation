@@ -16,42 +16,42 @@ Database file #2: /Users/Alon1/LaTex/bibtex/sampling.bib
 Done.
 You've used 25 entries,
             4039 wiz_defined-function locations,
-            1370 strings with 18890 characters,
-and the built_in function-call counts, 20037 in all, are:
-= -- 1717
-> -- 388
-< -- 206
-+ -- 230
+            1370 strings with 18845 characters,
+and the built_in function-call counts, 19619 in all, are:
+= -- 1680
+> -- 382
+< -- 199
++ -- 226
 - -- 55
-* -- 972
-:= -- 3045
-add.period$ -- 53
+* -- 949
+:= -- 2993
+add.period$ -- 52
 call.type$ -- 25
-change.case$ -- 24
-chr.to.int$ -- 453
+change.case$ -- 23
+chr.to.int$ -- 435
 cite$ -- 25
-duplicate$ -- 1415
-empty$ -- 1525
+duplicate$ -- 1388
+empty$ -- 1497
 format.name$ -- 72
-if$ -- 4630
+if$ -- 4529
 int.to.chr$ -- 0
 int.to.str$ -- 25
-missing$ -- 221
+missing$ -- 218
 newline$ -- 100
 num.names$ -- 25
-pop$ -- 420
+pop$ -- 417
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1583
+skip$ -- 1554
 stack$ -- 0
-substring$ -- 1090
-swap$ -- 1247
-text.length$ -- 55
+substring$ -- 1047
+swap$ -- 1219
+text.length$ -- 54
 text.prefix$ -- 0
 top$ -- 5
 type$ -- 25
 warning$ -- 0
-while$ -- 96
+while$ -- 92
 width$ -- 27
-write$ -- 280
+write$ -- 278

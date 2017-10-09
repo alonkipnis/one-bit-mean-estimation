@@ -95,12 +95,6 @@ M.~Longo, T.~D. Lookabaugh, and R.~M. Gray, ``Quantization for decentralized
   hypothesis testing under communication constraints,'' \emph{{IEEE} Trans.
   Inf. Theory}, vol.~36, no.~2, pp. 241--255, Mar 1990.
 
-\bibitem{boufounos20081}
-P.~T. Boufounos and R.~G. Baraniuk, ``1-bit compressive sensing,'' in
-  \emph{Information Sciences and Systems, 2008. CISS 2008. 42nd Annual
-  Conference on}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2008, pp.
-  16--21.
-
 \bibitem{baraniuk2017exponential}
 R.~G. Baraniuk, S.~Foucart, D.~Needell, Y.~Plan, and M.~Wootters, ``Exponential
   decay of reconstruction error from binary measurements of sparse signals,''
@@ -111,6 +105,10 @@ R.~G. Baraniuk, S.~Foucart, D.~Needell, Y.~Plan, and M.~Wootters, ``Exponential
 J.~Singh, O.~Dabeer, and U.~Madhow, ``On the limits of communication with
   low-precision analog-to-digital conversion at the receiver,'' \emph{IEEE
   Transactions on Communications}, vol.~57, no.~12, 2009.
+
+\bibitem{lehmann2006theory}
+E.~L. Lehmann and G.~Casella, \emph{Theory of point estimation}.\hskip 1em plus
+  0.5em minus 0.4em\relax Springer Science \& Business Media, 2006.
 
 \bibitem{chen2004upper}
 J.~Chen, X.~Zhang, T.~Berger, and S.~Wicker, ``An upper bound on the sum-rate
