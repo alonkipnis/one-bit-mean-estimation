@@ -93,24 +93,34 @@ Let $f(x)$ be a log-concave, symmetric, and twice differentiable pdf. Denote by 
 \eta(x) \triangleq \frac{  f^2(x)} 
 {F(x) \left(1 - F(x) \right) }.
 \end{equation}
-Since $f(x)$ is log-concave, positive, and twice differentiable, we may write $f(x) = e^{g(x)}$ with $g(x)$ concave and twice differentiable. Moreover, since symmetry of $f(x)$ implies symmetry of $g(x)$, and, since the latter is concave, it attains a single maximum at the symmetry point $x=0$. Therefore, $x=0$ is the only point for which $g'(x)=0$. We now show that $x=0$ is the point where $\eta(x)$ attains its maximum value. Since $\eta(x)$ is positive and  goes to zero as $x\rightarrow \pm \infty$, the maximum of $\eta(x)$ cannot be attained as $x\rightarrow \pm \infty$. We therefore consider the derivative of $\eta(x)$, given as
+Since $\eta(x)$ is symmetric about the origin, it is enough to show that $\eta'(x) \leq$ for all $x>0$, and hence $x=0$ is a global maximum of $\eta(x)$. Since $F(x)$ is log-concave and twice differentiable, we may write $F(x) = e^{h(x)}$ with $h(x)$ concave and twice differentiable. Moreover, note that $h'(x)\geq 0$ because $e^{h(x)}$ is non-decreasing, $h''(x) \leq 0$ because $h(x)$ is concave, and $e^{h(-x)} = 1- e^{h(x)}$ because $f(x)$ is symmetric around $0$. Moreover, since $f(x)$ is unimodal, for $x>0$ we have
 \[
-\eta'(x) = 2 \eta(x) e^{g(x)} \left(\frac{F(x)-1/2}{F(x)(1-F(x))} + g'(x) \right). 
+0 \geq f'(x) = e^{h(x)} \left(h''(x) + (h'(x))^2 \right),
 \]
-Since $f(x)$ is symmetric and integrates to $1$, we 
-have that $F(0)=0.5$ and hence $\eta'(0) = 0$.  It is left to verify that $\eta'(x)\neq 0$ for $x \neq 0$. 
-
-
-Taking the logarithm of \eqref{eq:induction_base} leads to 
+and hence 
+\[
+0 \geq h''(x) + (h'(x))^2, \quad x\geq 0.
+\]
+Similarly, 
+\[
+0 \leq h''(-x) + (h'(-x))^2, \quad x\geq 0. 
+\]
+Using these facts, we conclude that
+\[
+\eta(x) =  \frac{ h'(x) h'(-x) e^{h(x)+h(-x)}} 
+{e^{h(x) + h(-x)}  } = h'(x)h'(-x),
+\]
+thus
+\[
+\eta'(x) = h''(x)h'(-x) - h''(-x) h'(x).
+\]
+For $x>0$ we obtain
 \begin{align*}
-& 2 \log f(x) - \log F(x) - \log F(-x) \\
-& = 2 \log h'(x) + h(x) - h(-x).
+\eta'(x) &\leq -\left(h'(x) \right)^2 h'(-x)  + \left(h'(-x) \right)^2 h'(x) \\
+& = h'(x)h'(-x) \left( h'(-x)-h'(x) \right) \leq 0.
 \end{align*}
-Note that since $F(x)$ is non-decreasing, so is $h(x)$. In addition, $h'(x)$ is non-increasing since $h(x)$ 
-, the maximal value of \eqref{eq:induction_base} is obtained as 
-{HERE!! \color{red} finish proof by showing that \eqref{eq:induction_base} is smaller than $4f(0)$.\\
-}
 \\
+
 Assume now that \eqref{eq:bound_intervals} holds for all integers up to some $n = N-1$ and consider the case $n = N$. The maximal value of \eqref{eq:bound_intervals} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
 \begin{align*}
 & g(x_1,\ldots, x_N) \triangleq 2 \log \left(  \sum_{k=1}^{N} (-1)^{k+1} f(x_k) \right) - \\

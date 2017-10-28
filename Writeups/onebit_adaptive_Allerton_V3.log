@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  8 OCT 2017 21:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  20 OCT 2017 19:42
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -23,25 +23,17 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 -- Using 8.5in x 11in (letter) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen104
--- This is a 9 point document.
+-- This is an 11 point document.
 \CLASSINFOnormalsizebaselineskip=\dimen105
 \CLASSINFOnormalsizeunitybaselineskip=\dimen106
 \IEEEnormaljot=\dimen107
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8.5> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
@@ -51,9 +43,13 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
@@ -62,6 +58,10 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 726.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 726.
 \IEEEilabelindentA=\dimen108
 \IEEEilabelindentB=\dimen109
@@ -1146,24 +1146,36 @@ LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 90
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
 LaTeX Font Info:    Try loading font information for U+rsfs on input line 90.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 107.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 107.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 107.
+
+Underfull \hbox (badness 1810) in paragraph at lines 113--114
+\OT1/ptm/m/n/11 es-ti-mat-ing with-out one-bit con-straint and its MSE
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--118
-
+Underfull \hbox (badness 3128) in paragraph at lines 115--117
+\OML/ztmcm/m/it/11 n$ \OT1/ptm/m/n/11 bits. This strat-egy leads to MSE be-hav-
+ior of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 115--117
 
  []
 
@@ -1173,90 +1185,121 @@ map/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 1533) in paragraph at lines 125--126
-\OT1/ptm/m/n/9 analog-to-digital con-ver-sion [[]] uses one-bit thresh-old de-t
-ec-tor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 125--126
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 1527) in paragraph at lines 124--125
+\OT1/ptm/m/n/11 to the true con-stant in-put al-most surely. In other
+ []
+
+
+Underfull \hbox (badness 1515) in paragraph at lines 124--125
+\OT1/ptm/m/n/11 re-sults of [[]]. Our re-sults im-ply that the rate of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 129--131
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \hbox (badness 1460) in paragraph at lines 126--127
+\OT1/ptm/m/n/11 new in-for-ma-tion com-pared to the lower bound of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
-
+Underfull \hbox (badness 3364) in paragraph at lines 128--130
+\OT1/ptm/m/n/11 spe-cial cases of [[]] that con-sider adap-tive and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 197--199
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 225--227
+Underfull \hbox (badness 10000) in paragraph at lines 196--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--251
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 316--317
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 356--357
+Underfull \hbox (badness 2818) in paragraph at lines 224--226
+\OML/ztmcm/m/it/11 ^^Y\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/11 ^^R\OT1/ztmcm/m/n/1
+1 )$\OT1/ptm/m/n/11 , our mean es-ti-ma-tion prob-lem from one-bit
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 224--226
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 364--365
+Underfull \hbox (badness 10000) in paragraph at lines 248--250
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 414--415
+Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
-<../Figs/one_bit_adaptive.png, id=28, 578.16pt x 361.35pt>
+[4]
+Underfull \hbox (badness 1688) in paragraph at lines 315--316
+\OT1/ptm/m/n/11 in-equal-ity [[], Thm. 2.13],[[]] which bounds from
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 363--364
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 413--414
+
+ []
+
+<../Figs/one_bit_adaptive.png, id=34, 578.16pt x 361.35pt>
 File: ../Figs/one_bit_adaptive.png Graphic file (type png)
 
 <use ../Figs/one_bit_adaptive.png>
-Package pdftex.def Info: ../Figs/one_bit_adaptive.png used on input line 447.
+Package pdftex.def Info: ../Figs/one_bit_adaptive.png used on input line 446.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
- [4]
-** WARNING: Ignoring useless \section in Appendix (line 476).
+ [6 <../Figs/one_bit_adaptive.png>]
+** WARNING: Ignoring useless \section in Appendix (line 475).
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--517
-\OT1/ptm/m/n/9 where we de-noted $\OML/ztmcm/m/it/9 ^^N[] \U/msa/m/n/9 , [][]\O
-T1/ztmcm/m/n/9 (\OMS/ztmcm/m/n/9 ^^@\OT1/ztmcm/m/n/9 1)[]\OML/ztmcm/m/it/9 ^^^\
-OT1/ztmcm/m/n/9 (\OML/ztmcm/m/it/9 x[]\OT1/ztmcm/m/n/9 )$ \OT1/ptm/m/n/9 and $\
-OT1/ztmcm/m/n/9 ^^A[] =
+Overfull \hbox (3.38803pt too wide) detected at line 519
+[] \OT1/ztmcm/m/n/11 = [] \OMS/ztmcm/m/n/11 ^^@ [] \OT1/ztmcm/m/n/11 + []\OML/z
+tmcm/m/it/11 :
  []
 
 
@@ -1265,14 +1308,34 @@ Underfull \hbox (badness 10000) in paragraph at lines 540--542
  []
 
 
-Underfull \vbox (badness 1609) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5 <../Figs/one_bit_adaptive.png>]
+ [7]
+Underfull \hbox (badness 1509) in paragraph at lines 573--576
+\OT1/ztmcm/m/n/11 2\OML/ztmcm/m/it/11 =\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/11 ^^
+[[]^^Y\OT1/ztmcm/m/n/11 )$\OT1/ptm/m/n/11 . There-fore, the proof of Lem. 8[] i
+s now
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 573--576
 
  []
 
-[6] [7] (./onebit_adaptive_Allerton_V3.bbl)
+[8] [9]
+Underfull \hbox (badness 5622) in paragraph at lines 737--739
+\OT1/ptm/m/n/11 Denote $\OML/ztmcm/m/it/11 F\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/
+11 x\OT1/ztmcm/m/n/11 ) = [][] \OML/ztmcm/m/it/11 f\OT1/ztmcm/m/n/11 (\OML/ztmc
+m/m/it/11 u\OT1/ztmcm/m/n/11 )\OML/ztmcm/m/it/11 du$\OT1/ptm/m/n/11 . Us-ing in
+-te-gra-tion by
+ []
+
+
+Underfull \hbox (badness 5105) in paragraph at lines 737--739
+\OT1/ptm/m/n/11 parts in the nu-mer-a-tor and from the fact that
+ []
+
+(./onebit_adaptive_Allerton_V3.bbl [10])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1286,17 +1349,17 @@ Before submitting the final camera ready copy, remember to:
 
 runsystem(cd ""; rm -- "onebit_adaptive_Allerton_V3.oldaux" )...executed.
 
-[8] (./onebit_adaptive_Allerton_V3.aux)
+[11] (./onebit_adaptive_Allerton_V3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 32247 strings out of 493117
- 775301 string characters out of 6135434
- 908708 words of memory out of 5000000
- 35102 multiletter control sequences out of 15000+600000
- 60522 words of font info for 132 fonts, out of 8000000 for 9000
+ 32264 strings out of 493117
+ 775679 string characters out of 6135434
+ 905710 words of memory out of 5000000
+ 35119 multiletter control sequences out of 15000+600000
+ 66171 words of font info for 142 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,15n,92p,10373b,794s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
@@ -1313,10 +1376,10 @@ s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
 w/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/u
 tmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmri8a.pfb
 >
-Output written on onebit_adaptive_Allerton_V3.pdf (8 pages, 195855 bytes).
+Output written on onebit_adaptive_Allerton_V3.pdf (11 pages, 198715 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 99 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
