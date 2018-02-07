@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  26 SEP 2017 13:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.7)  26 DEC 2017 16:03
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1158,68 +1158,68 @@ LaTeX Font Info:    Try loading font information for U+rsfs on input line 105.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-Underfull \hbox (badness 10000) in paragraph at lines 115--119
-
- []
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 120.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 120.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
 
-LaTeX Warning: Citation `Shamir' on page 1 undefined on input line 135.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--136
+Underfull \hbox (badness 10000) in paragraph at lines 122--126
 
  []
+
+
+LaTeX Warning: Citation `Shamir' on page 1 undefined on input line 142.
+
+
+LaTeX Warning: Citation `baraniuk2017exponential' on page 1 undefined on input 
+line 143.
 
 [1
 Non-PDF special ignored!
 
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 144--146
+Underfull \hbox (badness 10000) in paragraph at lines 153--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 283--284
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 274--275
+Underfull \hbox (badness 10000) in paragraph at lines 289--296
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 319--322
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 416--417
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 280--287
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 310--313
-
- []
-
-[3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 407--408
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 437--438
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 444--445
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 495--496
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 504--505
 
  []
 
@@ -1227,190 +1227,154 @@ Underfull \hbox (badness 10000) in paragraph at lines 495--496
 File: ../Figs/one_bit_adpative.png Graphic file (type png)
 
 <use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 532.
+Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 541.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
  Excluding 'comment' comment. [7 <../Figs/one_bit_adpative.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 613--614
+Underfull \hbox (badness 10000) in paragraph at lines 622--623
 
  []
 
 [8]
 
 LaTeX Warning: Citation `papadimitriou1998combinatorial' on page 9 undefined on
- input line 652.
+ input line 661.
 
 Package epstopdf Info: Source file: <../Figs/minimax_b1.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 75532 bytes
 (epstopdf)             Output file: <../Figs/minimax_b1-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:53
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 66265 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b1-eps-conv
 erted-to.pdf ../Figs/minimax_b1.eps>
-(epstopdf)             \includegraphics on input line 660.
-runsystem(epstopdf --outfile=../Figs/minimax_b1-eps-converted-to.pdf ../Figs/mi
-nimax_b1.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b1-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:49
-(epstopdf)                    size: 66265 bytes.
+(epstopdf)             \includegraphics on input line 669.
+Package epstopdf Info: Output file is already uptodate.
 <../Figs/minimax_b1-eps-converted-to.pdf, id=46, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b1-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b1-eps-converted-to.pdf used on input 
-line 660.
+line 669.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b2.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 74945 bytes
 (epstopdf)             Output file: <../Figs/minimax_b2-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:53
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 65572 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b2-eps-conv
 erted-to.pdf ../Figs/minimax_b2.eps>
-(epstopdf)             \includegraphics on input line 661.
-runsystem(epstopdf --outfile=../Figs/minimax_b2-eps-converted-to.pdf ../Figs/mi
-nimax_b2.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b2-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:50
-(epstopdf)                    size: 65572 bytes.
+(epstopdf)             \includegraphics on input line 670.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/minimax_b2-eps-converted-to.pdf, id=47, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b2-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b2-eps-converted-to.pdf used on input 
-line 661.
+line 670.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b5.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 71875 bytes
 (epstopdf)             Output file: <../Figs/minimax_b5-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:54
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 64886 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b5-eps-conv
 erted-to.pdf ../Figs/minimax_b5.eps>
-(epstopdf)             \includegraphics on input line 662.
-runsystem(epstopdf --outfile=../Figs/minimax_b5-eps-converted-to.pdf ../Figs/mi
-nimax_b5.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b5-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:50
-(epstopdf)                    size: 64886 bytes.
+(epstopdf)             \includegraphics on input line 671.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/minimax_b5-eps-converted-to.pdf, id=48, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b5-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b5-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b5-eps-converted-to.pdf used on input 
-line 662.
+line 671.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b10.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 78142 bytes
 (epstopdf)             Output file: <../Figs/minimax_b10-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:54
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 67168 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b10-eps-con
 verted-to.pdf ../Figs/minimax_b10.eps>
-(epstopdf)             \includegraphics on input line 663.
-runsystem(epstopdf --outfile=../Figs/minimax_b10-eps-converted-to.pdf ../Figs/m
-inimax_b10.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b10-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:50
-(epstopdf)                    size: 67168 bytes.
+(epstopdf)             \includegraphics on input line 672.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/minimax_b10-eps-converted-to.pdf, id=49, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b10-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b10-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b10-eps-converted-to.pdf used on input
- line 663.
+ line 672.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b50.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 73617 bytes
 (epstopdf)             Output file: <../Figs/minimax_b50-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:54
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 67373 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b50-eps-con
 verted-to.pdf ../Figs/minimax_b50.eps>
-(epstopdf)             \includegraphics on input line 664.
-runsystem(epstopdf --outfile=../Figs/minimax_b50-eps-converted-to.pdf ../Figs/m
-inimax_b50.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b50-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:51
-(epstopdf)                    size: 67373 bytes.
+(epstopdf)             \includegraphics on input line 673.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/minimax_b50-eps-converted-to.pdf, id=50, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b50-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b50-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b50-eps-converted-to.pdf used on input
- line 664.
+ line 673.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/minimax_b100.eps>
-(epstopdf)                    date: 2017-09-26 19:41:08
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 76356 bytes
 (epstopdf)             Output file: <../Figs/minimax_b100-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2017-09-26 13:08:55
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 69774 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b100-eps-co
 nverted-to.pdf ../Figs/minimax_b100.eps>
-(epstopdf)             \includegraphics on input line 665.
-runsystem(epstopdf --outfile=../Figs/minimax_b100-eps-converted-to.pdf ../Figs/
-minimax_b100.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/minimax_b100-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2017-09-26 13:09:51
-(epstopdf)                    size: 69774 bytes.
+(epstopdf)             \includegraphics on input line 674.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/minimax_b100-eps-converted-to.pdf, id=51, 433.62pt x 289.08pt>
 File: ../Figs/minimax_b100-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/minimax_b100-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/minimax_b100-eps-converted-to.pdf used on inpu
-t line 665.
+t line 674.
 (pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
 Package epstopdf Info: Source file: <../Figs/K_vs_b.eps>
-(epstopdf)                    date: 2017-09-26 19:41:04
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 15195 bytes
 (epstopdf)             Output file: <../Figs/K_vs_b-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:08:55
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 8119 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/K_vs_b-eps-converte
 d-to.pdf ../Figs/K_vs_b.eps>
-(epstopdf)             \includegraphics on input line 676.
-runsystem(epstopdf --outfile=../Figs/K_vs_b-eps-converted-to.pdf ../Figs/K_vs_b
-.eps)...executed.
-
-Package epstopdf Info: Result file: <../Figs/K_vs_b-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:09:52
-(epstopdf)                    size: 8119 bytes.
+(epstopdf)             \includegraphics on input line 685.
+Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/K_vs_b-eps-converted-to.pdf, id=52, 433.62pt x 289.08pt>
 File: ../Figs/K_vs_b-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ../Figs/K_vs_b-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/K_vs_b-eps-converted-to.pdf used on input line
- 676.
+ 685.
 (pdftex.def)             Requested size: 151.76927pt x 101.1795pt.
 Package epstopdf Info: Source file: <../Figs/opt_density_sig025.eps>
-(epstopdf)                    date: 2017-05-15 21:06:42
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 18508 bytes
 (epstopdf)             Output file: <../Figs/opt_density_sig025-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2017-05-15 21:09:23
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 15039 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig025-
 eps-converted-to.pdf ../Figs/opt_density_sig025.eps>
-(epstopdf)             \includegraphics on input line 689.
+(epstopdf)             \includegraphics on input line 698.
 Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/opt_density_sig025-eps-converted-to.pdf, id=53, 480.79625pt x 375.4025
@@ -1418,18 +1382,18 @@ pt>
 File: ../Figs/opt_density_sig025-eps-converted-to.pdf Graphic file (type pdf)
  <use ../Figs/opt_density_sig025-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/opt_density_sig025-eps-converted-to.pdf used o
-n input line 689.
+n input line 698.
 (pdftex.def)             Requested size: 96.15753pt x 75.07916pt.
 Package epstopdf Info: Source file: <../Figs/opt_density_sig1.eps>
-(epstopdf)                    date: 2017-05-15 21:04:59
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 18348 bytes
 (epstopdf)             Output file: <../Figs/opt_density_sig1-eps-converted-to.
 pdf>
-(epstopdf)                    date: 2017-05-15 21:09:25
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 14956 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig1-ep
 s-converted-to.pdf ../Figs/opt_density_sig1.eps>
-(epstopdf)             \includegraphics on input line 690.
+(epstopdf)             \includegraphics on input line 699.
 Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/opt_density_sig1-eps-converted-to.pdf, id=54, 474.77374pt x 375.4025pt
@@ -1437,18 +1401,18 @@ Package epstopdf Info: Output file is already uptodate.
 File: ../Figs/opt_density_sig1-eps-converted-to.pdf Graphic file (type pdf)
  <use ../Figs/opt_density_sig1-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/opt_density_sig1-eps-converted-to.pdf used on 
-input line 690.
+input line 699.
 (pdftex.def)             Requested size: 94.95306pt x 75.07916pt.
 Package epstopdf Info: Source file: <../Figs/opt_density_sig2.eps>
-(epstopdf)                    date: 2017-05-15 21:06:58
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 18546 bytes
 (epstopdf)             Output file: <../Figs/opt_density_sig2-eps-converted-to.
 pdf>
-(epstopdf)                    date: 2017-05-15 21:09:27
+(epstopdf)                    date: 2017-09-26 15:32:28
 (epstopdf)                    size: 15268 bytes
 (epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig2-ep
 s-converted-to.pdf ../Figs/opt_density_sig2.eps>
-(epstopdf)             \includegraphics on input line 691.
+(epstopdf)             \includegraphics on input line 700.
 Package epstopdf Info: Output file is already uptodate.
 
 <../Figs/opt_density_sig2-eps-converted-to.pdf, id=55, 474.77374pt x 375.4025pt
@@ -1456,65 +1420,65 @@ Package epstopdf Info: Output file is already uptodate.
 File: ../Figs/opt_density_sig2-eps-converted-to.pdf Graphic file (type pdf)
  <use ../Figs/opt_density_sig2-eps-converted-to.pdf>
 Package pdftex.def Info: ../Figs/opt_density_sig2-eps-converted-to.pdf used on 
-input line 691.
+input line 700.
 (pdftex.def)             Requested size: 94.95306pt x 75.07916pt.
- [9 <../Figs/minimax_b1-eps-converted-to.pdf> <../Figs/minimax_b2-eps-converted
--to.pdf> <../Figs/minimax_b5-eps-converted-to.pdf> <../Figs/minimax_b10-eps-con
-verted-to.pdf> <../Figs/minimax_b50-eps-converted-to.pdf> <../Figs/minimax_b100
--eps-converted-to.pdf>]
-<../Figs/dist_bound_Gauss_prior.png, id=167, 433.62pt x 289.08pt>
+
+<../Figs/dist_bound_Gauss_prior.png, id=56, 433.62pt x 289.08pt>
 File: ../Figs/dist_bound_Gauss_prior.png Graphic file (type png)
 
 <use ../Figs/dist_bound_Gauss_prior.png>
 Package pdftex.def Info: ../Figs/dist_bound_Gauss_prior.png used on input line 
-722.
+731.
 (pdftex.def)             Requested size: 216.80946pt x 144.53964pt.
 
-<../Figs/dist_bound_uniform_prior.png, id=168, 433.62pt x 289.08pt>
+<../Figs/dist_bound_uniform_prior.png, id=57, 433.62pt x 289.08pt>
 File: ../Figs/dist_bound_uniform_prior.png Graphic file (type png)
 
 <use ../Figs/dist_bound_uniform_prior.png>
 Package pdftex.def Info: ../Figs/dist_bound_uniform_prior.png used on input lin
-e 738.
+e 747.
 (pdftex.def)             Requested size: 216.80946pt x 144.53964pt.
- [10 <../Figs/K_vs_b-eps-converted-to.pdf> <../Figs/opt_density_sig025-eps-conv
-erted-to.pdf> <../Figs/opt_density_sig1-eps-converted-to.pdf> <../Figs/opt_dens
-ity_sig2-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 788--790
+ [9] [10 <../Figs/minimax_b1-eps-converted-to.pdf> <../Figs/minimax_b2-eps-conv
+erted-to.pdf> <../Figs/minimax_b5-eps-converted-to.pdf> <../Figs/minimax_b10-ep
+s-converted-to.pdf> <../Figs/minimax_b50-eps-converted-to.pdf> <../Figs/minimax
+_b100-eps-converted-to.pdf> <../Figs/K_vs_b-eps-converted-to.pdf> <../Figs/opt_
+density_sig025-eps-converted-to.pdf> <../Figs/opt_density_sig1-eps-converted-to
+.pdf> <../Figs/opt_density_sig2-eps-converted-to.pdf>] [11 <../Figs/dist_bound_
+Gauss_prior.png> <../Figs/dist_bound_uniform_prior.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 797--799
 
  []
 
-[11 <../Figs/dist_bound_Gauss_prior.png> <../Figs/dist_bound_uniform_prior.png>
-]
-Underfull \hbox (badness 10000) in paragraph at lines 794--796
+
+Underfull \hbox (badness 10000) in paragraph at lines 803--805
 
  []
 
-** WARNING: Ignoring useless \section in Appendix (line 813).
+** WARNING: Ignoring useless \section in Appendix (line 822).
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 874--876
+Underfull \hbox (badness 10000) in paragraph at lines 883--885
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 906--908
+Underfull \hbox (badness 10000) in paragraph at lines 915--917
 
  []
 
 [14] [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1038--1039
+Underfull \hbox (badness 10000) in paragraph at lines 1047--1048
 
  []
 
 [17] (./onebit_full_V1.bbl [18])
-** WARNING: Ignoring useless \section in Appendix (line 1127).
+** WARNING: Ignoring useless \section in Appendix (line 1136).
 
-Underfull \hbox (badness 10000) in paragraph at lines 1144--1146
+Underfull \hbox (badness 10000) in paragraph at lines 1153--1155
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1154--1155
+Underfull \hbox (badness 10000) in paragraph at lines 1163--1164
 
  []
 
@@ -1541,10 +1505,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 32403 strings out of 493117
- 778734 string characters out of 6135434
- 903653 words of memory out of 5000000
- 35243 multiletter control sequences out of 15000+600000
+ 32404 strings out of 493117
+ 778759 string characters out of 6135434
+ 907653 words of memory out of 5000000
+ 35244 multiletter control sequences out of 15000+600000
  62087 words of font info for 136 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,13n,92p,10360b,802s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1562,7 +1526,7 @@ dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2014/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on onebit_full_V1.pdf (20 pages, 676384 bytes).
+Output written on onebit_full_V1.pdf (20 pages, 676183 bytes).
 PDF statistics:
  281 PDF objects out of 1000 (max. 8388607)
  145 compressed objects within 2 object streams

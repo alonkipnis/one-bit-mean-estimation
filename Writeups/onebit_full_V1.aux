@@ -3,6 +3,10 @@
 \citation{zhang2013information}
 \citation{zhang1988estimation}
 \citation{Shamir}
+\citation{baraniuk2017exponential}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Background}{1}}
+\newlabel{sec:Intro}{{I}{1}}
 \citation{han1987hypothesis}
 \citation{zhang1988estimation}
 \citation{720540}
@@ -11,28 +15,24 @@
 \citation{53738}
 \citation{53738}
 \citation{berger1996ceo}
-\providecommand \oddpage@label [2]{}
-\@writefile{toc}{\contentsline {section}{\numberline {I}Background}{1}}
-\newlabel{sec:Intro}{{I}{1}}
 \citation{zhang2013information}
 \citation{zhang2013information}
 \citation{zhang2013information}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Centralized encoding using one bit per sample on average.\relax }}{2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:centralized}{{1}{2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Adaptive single-bit encoding: the $i$th encoder delivers a single bit message which is a function of its private sample $X_i$ and the previous messages $M_1,\ldots  ,M_{i-1}$.\relax }}{2}}
-\newlabel{fig:sequential}{{2}{2}}
 \newlabel{sec:problem}{{II}{2}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Problem Formulation }{2}}
 \citation{berger1996ceo}
-\citation{prabhakaran2004rate}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Adaptive single-bit encoding: the $i$th encoder delivers a single bit message which is a function of its private sample $X_i$ and the previous messages $M_1,\ldots  ,M_{i-1}$.\relax }}{3}}
+\newlabel{fig:sequential}{{2}{3}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Distributed single-bit encoding: the single-bit message produced by each encoder is only a function of its private sample $X_i$.\relax }}{3}}
 \newlabel{fig:distributed}{{3}{3}}
 \newlabel{eq:error_def}{{1}{3}}
 \newlabel{eq:relative_efficiency}{{2}{3}}
 \newlabel{sec:ceo}{{III}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {III}Relation to Remote Multiterminal Source Coding }{3}}
-\newlabel{eq:Gaussian_channel}{{3}{3}}
+\citation{prabhakaran2004rate}
 \citation{chen2004upper}
 \citation{KipnisRini2017}
 \citation{tsitsiklis1988decentralized}
@@ -42,6 +42,7 @@
 \citation{6882252}
 \citation{chen2010performance}
 \citation{5184907}
+\newlabel{eq:Gaussian_channel}{{3}{4}}
 \newlabel{prop:ceo_lower_bound}{{1}{4}}
 \newlabel{eq:ceo_bound}{{4}{4}}
 \newlabel{eq:ceo_optimal_sumrate}{{5}{4}}
@@ -67,9 +68,9 @@
 \newlabel{lem:unique}{{5}{6}}
 \newlabel{eq:lem_fixed_point}{{12}{6}}
 \newlabel{lem:adaptive}{{6}{6}}
-\newlabel{eq:density_update}{{14}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Normalized empirical risk $n\left (\setbox \z@ \hbox {\frozen@everymath \@emptytoks \mathsurround \z@ $\textstyle \theta $}\mathaccent "0362{\theta }_n-\theta \right )^2$ versus number of samples $n$ for $500$ Monte Carlo trials. In each trial, $\theta $ is chosen uniformly in the interval $(-3,3)$.  \relax }}{7}}
 \newlabel{fig:adaptive_error}{{4}{7}}
+\newlabel{eq:density_update}{{14}{7}}
 \newlabel{eq:estimator_update}{{15}{7}}
 \newlabel{eq:message_update}{{16}{7}}
 \newlabel{sec:distributed}{{VI}{7}}
@@ -78,45 +79,45 @@
 \citation{van2000asymptotic}
 \citation{van2000asymptotic}
 \newlabel{thm:LAN}{{7}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-B}}Worst case $\theta $}{8}}
-\newlabel{eq:variational}{{17}{8}}
-\newlabel{eq:variational2}{{18}{8}}
 \citation{papadimitriou1998combinatorial}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  Support of the optimal density $\lambda ^\star $ that minimizes the asymptotic ML risk for the worst choice of $\theta \in (-\sigma b, \sigma b)$ where the parameter space is the interval $(-b,b)$, for $b=1,2,5,10,50,100$. The continuous curve represents the inverse of the asymptotic risk under the optimal density and the dashed curves corresponds the inverse of the asymptotic risk under a uniform distribution over $(-a,a)$ with $a = b+2$. \relax }}{9}}
-\newlabel{fig:minimax_support}{{5}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-B}}Worst case $\theta $}{9}}
+\newlabel{eq:variational}{{17}{9}}
+\newlabel{eq:variational2}{{18}{9}}
 \newlabel{eq:var_cvx_minimax}{{19}{9}}
 \newlabel{eq:cvx_minimax}{{20}{9}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-C}}Uniform Threshold Distribution}{9}}
 \newlabel{eq:uniform_risk}{{22}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-D}}Asymptotic Bayes Risk}{9}}
+\newlabel{eq:cvx_average}{{23}{9}}
+\newlabel{prop:upper_bound}{{8}{9}}
+\newlabel{eq:upper_bound}{{24}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  Support of the optimal density $\lambda ^\star $ that minimizes the asymptotic ML risk for the worst choice of $\theta \in (-\sigma b, \sigma b)$ where the parameter space is the interval $(-b,b)$, for $b=1,2,5,10,50,100$. The continuous curve represents the inverse of the asymptotic risk under the optimal density and the dashed curves corresponds the inverse of the asymptotic risk under a uniform distribution over $(-a,a)$ with $a = b+2$. \relax }}{10}}
+\newlabel{fig:minimax_support}{{5}{10}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Asymptotic risk of the ML estimator under an optimal choice of the threshold density $\lambda $ versus the support of the parameter space $\Theta = (-b,b)$. \relax }}{10}}
 \newlabel{fig:minimax_optval}{{6}{10}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  The optimal asymptotic threshold density $\lambda $ that minimizes the expected asymptotic ML risk \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 23\hbox {}\unskip \@@italiccorr )}} for a Gaussian prior for $\sigma /\sigma _\theta =0.25,1,2$ (left to right), where $\sigma _\theta ^2$ is the variance of the prior. \relax }}{10}}
 \newlabel{fig:opt_density}{{7}{10}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-D}}Asymptotic Bayes Risk}{10}}
-\newlabel{eq:cvx_average}{{23}{10}}
-\newlabel{prop:upper_bound}{{8}{10}}
-\newlabel{eq:upper_bound}{{24}{10}}
-\newlabel{eq:upper_bound_proof}{{25}{10}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Expected asymptotic risk $\mathbb  E (1/K(\theta ))$ in estimation from threshold detectors versus $\sigma /\sigma _\theta $ for a Gaussian prior with variance $\sigma _\theta ^2$. The optimal asymptotic threshold density $\lambda $ (red) is obtained by solving \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 23\hbox {}\unskip \@@italiccorr )}}. The bound (blue) is obtained using \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 24\hbox {}\unskip \@@italiccorr )}}.  \relax }}{11}}
 \newlabel{fig:dist_bound_Gaussian}{{8}{11}}
 \@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Expected asymptotic risk $\mathbb  E (1/K(\theta ))$ in estimation from threshold detectors versus $\sigma /\sigma _\theta $ for a uniform prior with variance $\sigma _\theta ^2$. The optimal asymptotic threshold density $\lambda $ (red) is obtained by solving \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 23\hbox {}\unskip \@@italiccorr )}}. The bound (blue) is obtained using \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 24\hbox {}\unskip \@@italiccorr )}}.  \relax }}{11}}
 \newlabel{fig:dist_bound_uniform}{{9}{11}}
+\newlabel{eq:upper_bound_proof}{{25}{11}}
 \newlabel{prop:asymp}{{9}{11}}
-\newlabel{eq:asymp}{{26}{11}}
+\newlabel{eq:asymp}{{26}{12}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-E}}Discussion}{12}}
 \newlabel{sec:conclusions}{{VII}{12}}
 \@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusions }{12}}
-\@writefile{toc}{\contentsline {section}{Appendix}{12}}
-\newlabel{lem:bound_intervals}{{10}{12}}
-\newlabel{eq:bound_intervals}{{27}{12}}
-\newlabel{lem:fisher_bound}{{11}{12}}
+\@writefile{toc}{\contentsline {section}{Appendix}{13}}
+\newlabel{lem:bound_intervals}{{10}{13}}
+\newlabel{eq:bound_intervals}{{27}{13}}
+\newlabel{lem:fisher_bound}{{11}{13}}
 \newlabel{eq:induction_base}{{28}{13}}
-\citation{van2004detection}
-\citation{gill1995applications}
 \newlabel{eq:lem_fisher_bound_proof1}{{29}{14}}
 \newlabel{eq:lemma_J}{{30}{14}}
 \newlabel{eq:general_messages}{{31}{14}}
 \newlabel{eq:adpt_lower_bound_proof:1}{{32}{14}}
+\citation{van2004detection}
+\citation{gill1995applications}
 \citation{polyak1992acceleration}
 \citation{polyak1992acceleration}
 \citation{polyak1992acceleration}

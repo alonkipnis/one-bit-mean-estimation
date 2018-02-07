@@ -105,7 +105,14 @@
 We consider the problem of estimating the mean of a normal distribution under the constraint that only a single bit per sample from this distribution is available to the estimator. We study the mean squared error risk in this estimation as a function of the number of samples, and hence number of bits, from this distribution. We consider an adaptive scheme in which each bit is a function of the current sample and the previously observed bits, as well as a fully distributed setting in which each bit is only a function of the current sample. For the adaptive scheme, we show that the optimal relative efficiency, compared to the standard mean estimator without bit limitation, is $\pi/2$. Namely, the number of samples required to attain the mean to a prescribed accuracy is only $\pi/2$ times larger due to the bit constraint. For the distributed scheme we consider the setting where each bit is obtained by comparing the current sample to a prescribed value. For this setting, we show that the expected asymptotic efficiency converges to $\pi/2$ provided that the variance of the distribution is high compared to the apriori uncertainty about the mean. Our results indicate that, rather surprisingly, parametric estimation from the coarsest form of quantization without significant penalty in the number of measurements is possible. 
 \end{abstract}
 
-%{\color{red}  The $\mu$-sum problem (Kim-ElGamal Ch. 21) gives a lower bound. Can be reduced to the CEO.}
+{\color{red} 
+One-bit with constant input is important, since estimating when the parameter varies with time is always harder. Our result implies than the error in any estimation with one-bit per sample is at least $pi/2$ times the MSE with an unlimited number of bits per sample.
+ \\
+}
+
+
+{\color{red} Check connection to the $\mu$-sum problem (Kim-ElGamal Ch. 21) that (maybe ?) gives a lower bound, and can be reduced to the CEO.
+}
 
 %{\color{red}  See LASSO results in http://arxiv.org/abs/1506.02181v1}
 
@@ -132,7 +139,15 @@ It is well known that the relative efficiency in setting (i) is $1$ \cite{720540
 
 \subsection*{Related Works}
 %\subsubsection*{Statistical inference under communication constraints}
-{\color{red} Shamir \cite{Shamir} showed that in hide-and-seek hypothesis testing problem, bitrate constraint may lead to a significant reduction in detection performance compared to the unrestricted case. This result is then applied to online learning, stochastic optimization and sparse PCA. Shamir's results shows that the penalty is in the dimension ($d/R$ instead of $lod(d)$). In our setting the dimension is $1$.} \\
+{\color{red} Shamir \cite{Shamir} showed that in hide-and-seek hypothesis testing problem, bitrate constraint may lead to a significant reduction in detection performance compared to the unrestricted case. This result is then applied to online learning, stochastic optimization and sparse PCA. Shamir's results shows that the penalty is in the dimension ($d/R$ instead of $lod(d)$). In our setting the dimension is $1$. \\
+Baranuik et. al. \cite{baraniuk2017exponential} showed that adaptive one-bit measurements leads to exponential decay of MSE, but they did not consider noise!! \\
+Masry and Ishwar 
+\cite{masry2009field} considered the estimation of 
+he case of threshold measurements of random threshold values, and provided exact expression for the mean and variance of the
+error attained under two random sampling techniques and linear estimation. \\
+As we explain below, our problem can also be seen as a special case of communicating a function, namely the sample mean, as in \cite{1413468}, and ($\mu$-sum).
+Difference between one-bit quantization and threshold detection / quantization. 
+} 
 
 Statistical inference problems under communication constraints were considered in information theory in 
 \cite{han1987hypothesis, zhang1988estimation, 720540}. These works consider a multi-terminal source coding setting in which the $i$th terminal observes $n$ samples from the distribution and is allotted $nR_i$ bits to communicate its estimate. The main focus of these works is the difference between inference with communication constraint and the unconstrained vanilla statistical estimation setting, as the number of samples $n$ goes to infinity subject to a total finite rate constraint. Our setting (i) can be seen as a special case of this setting where with a single terminal and $R_1 = 1$.% whereas our case (iii) is obtained from this setting by taking $n=1$, $R_i=1$, and number of terminals grow with $n$. 
