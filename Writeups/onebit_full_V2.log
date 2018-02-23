@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.7)  14 FEB 2018 16:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.7)  23 FEB 2018 13:32
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**onebit_full_V1.tex
-(./onebit_full_V1.tex
+**onebit_full_V2.tex
+(./onebit_full_V2.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
@@ -25,18 +25,13 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 -- Using 8.5in x 11in (letter) paper.
 -- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen105
--- This is a 10 point document.
+-- This is an 11 point document.
 \CLASSINFOnormalsizebaselineskip=\dimen106
 \CLASSINFOnormalsizeunitybaselineskip=\dimen107
 \IEEEnormaljot=\dimen108
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
@@ -862,11 +857,11 @@ Package etexcmds Info: Could not find \expanded.
 ))
 (/usr/local/texlive/2017/texmf-dist/tex/latex/ifplatform/ifplatform.sty
 Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
-runsystem(uname -s > "onebit_full_V1.w18")...executed.
+runsystem(uname -s > "onebit_full_V2.w18")...executed.
 
 
-(./onebit_full_V1.w18)
-runsystem(rm -- "onebit_full_V1.w18")...executed.
+(./onebit_full_V2.w18)
+runsystem(rm -- "onebit_full_V2.w18")...executed.
 
 )
 (/usr/local/texlive/2017/texmf-dist/tex/latex/filemod/filemod.sty
@@ -995,7 +990,7 @@ File: l3pdfmode.def 2017/03/18 v L3 Experimental driver: PDF mode
 \pstool@out=\write6
 \pstool@mainfile@ior=\read2
 \pstool@auxfile@ior=\read3
-runsystem(cd ""; cp -- "onebit_full_V1.aux" "onebit_full_V1.oldaux" )...execute
+runsystem(cd ""; cp -- "onebit_full_V2.aux" "onebit_full_V2.oldaux" )...execute
 d.
 
 )
@@ -1111,27 +1106,27 @@ e
 \c@definition=\count196
 \c@rem=\count197
 
-(./onebit_full_V1.aux
+(./onebit_full_V2.aux
 
 LaTeX Warning: Label `eq:ceo_optimal_sumrate' multiply defined.
 
 )
-\openout1 = `onebit_full_V1.aux'.
+\openout1 = `onebit_full_V2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
-LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 97.
+LaTeX Font Info:    ... okay on input line 97.
 
--- Lines per column: 56 (exact).
+-- Lines per column: 50 (exact).
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count198
@@ -1150,432 +1145,420 @@ LaTeX Font Info:    ... okay on input line 95.
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.14} into 
 your preamble.
- on input line 95.
+ on input line 97.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
 LaTeX Warning: No \author given.
 
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 10
-5.
+
+LaTeX Warning: No \author given.
+
+
+LaTeX Warning: No \author given.
+
+
+Underfull \hbox (badness 5050) in paragraph at lines 119--122
+[]\OT1/ptm/m/n/11 Estimating pa-ram-e-ters from data col-lected and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--122
+
+ []
+
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 123.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 12
+3.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 10
-5.
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 12
+3.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 10
-5.
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 12
+3.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 10
-5.
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 12
+3.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 105.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 123.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 123.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 123.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
-
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
-
+Underfull \hbox (badness 5316) in paragraph at lines 132--133
+[]\OT1/ptm/b/n/11 analog-to-digital con-ver-sion via sigma-delta
  []
 
 [1
-Non-PDF special ignored!
+Non-PDF special ignored!{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/upd
+map/pdftex.map}
 
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+]
+Underfull \hbox (badness 10000) in paragraph at lines 155--157
 
-LaTeX Warning: Citation `gray1998quantization' on page 2 undefined on input lin
-e 138.
+ []
 
-
-LaTeX Warning: Citation `Shamir' on page 2 undefined on input line 144.
-
-
-LaTeX Warning: Citation `baraniuk2017exponential' on page 2 undefined on input 
-line 145.
-
-
-LaTeX Warning: Citation `masry2009field' on page 2 undefined on input line 147.
-
-
-
-LaTeX Warning: Citation `1413468' on page 2 undefined on input line 150.
-
-
-LaTeX Warning: Citation `cicalese2002least' on page 2 undefined on input line 1
-56.
-
-
-LaTeX Warning: Citation `Karp:2007:NBS:1283383.1283478' on page 2 undefined on 
-input line 156.
-
-
-LaTeX Warning: Citation `1092194' on page 2 undefined on input line 156.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
 
  []
 
 
-LaTeX Warning: Citation `viswanathan1997quadratic' on page 2 undefined on input
- line 158.
-
-
-LaTeX Warning: Citation `oohama1998rate' on page 2 undefined on input line 158.
-
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 158--159
+Underfull \hbox (badness 10000) in paragraph at lines 165--169
 
  []
 
 
-LaTeX Warning: Citation `52470' on page 2 undefined on input line 161.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
-LaTeX Warning: Citation `baraniuk2017exponential' on page 2 undefined on input 
-line 161.
-
-
-LaTeX Warning: Citation `singh2009limits' on page 2 undefined on input line 161
-.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
-
- []
-
-[2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 317--319
+ [3]
+Underfull \hbox (badness 10000) in paragraph at lines 292--301
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--343
+LaTeX Warning: Reference `app:proofs' on page 4 undefined on input line 356.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
-
- []
-
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/eta.csv}
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/eta.csv}
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 350--352
-
+Underfull \hbox (badness 1436) in paragraph at lines 425--427
+\OML/ztmcm/m/it/11 ^^Y\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/11 d^^R\OT1/ztmcm/m/n/
+11 )$\OT1/ptm/m/n/11 , our mean es-ti-ma-tion prob-lem from one-bit
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 416--417
+Underfull \hbox (badness 10000) in paragraph at lines 425--427
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 427--428
+Underfull \hbox (badness 10000) in paragraph at lines 478--479
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 446--447
+Underfull \hbox (badness 10000) in paragraph at lines 524--525
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 453--454
+Underfull \hbox (badness 10000) in paragraph at lines 532--533
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 582--583
 
  []
 
-<../Figs/one_bit_adpative.png, id=36, 578.16pt x 361.35pt>
+<../Figs/one_bit_adpative.png, id=38, 578.16pt x 361.35pt>
 File: ../Figs/one_bit_adpative.png Graphic file (type png)
 
 <use ../Figs/one_bit_adpative.png>
-Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 541.
+Package pdftex.def Info: ../Figs/one_bit_adpative.png used on input line 620.
 (pdftex.def)             Requested size: 231.2599pt x 144.53743pt.
- Excluding 'comment' comment. [7] [8 <../Figs/one_bit_adpative.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 622--623
+ Excluding 'comment' comment. [7]
+Underfull \hbox (badness 4859) in paragraph at lines 654--657
+\OT1/ptm/m/n/11 con-ver-gence oc-curs when-ever $\OML/ztmcm/m/it/11 t[]; [] ; t
+[]$ \OT1/ptm/m/n/11 are drawn
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--657
 
  []
 
 
-LaTeX Warning: Citation `papadimitriou1998combinatorial' on page 9 undefined on
- input line 661.
-
-Package epstopdf Info: Source file: <../Figs/minimax_b1.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 75532 bytes
-(epstopdf)             Output file: <../Figs/minimax_b1-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 66265 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b1-eps-conv
-erted-to.pdf ../Figs/minimax_b1.eps>
-(epstopdf)             \includegraphics on input line 669.
-Package epstopdf Info: Output file is already uptodate.
-<../Figs/minimax_b1-eps-converted-to.pdf, id=46, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b1-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b1-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b1-eps-converted-to.pdf used on input 
-line 669.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/minimax_b2.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 74945 bytes
-(epstopdf)             Output file: <../Figs/minimax_b2-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 65572 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b2-eps-conv
-erted-to.pdf ../Figs/minimax_b2.eps>
-(epstopdf)             \includegraphics on input line 670.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/minimax_b2-eps-converted-to.pdf, id=47, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b2-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b2-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b2-eps-converted-to.pdf used on input 
-line 670.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/minimax_b5.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 71875 bytes
-(epstopdf)             Output file: <../Figs/minimax_b5-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 64886 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b5-eps-conv
-erted-to.pdf ../Figs/minimax_b5.eps>
-(epstopdf)             \includegraphics on input line 671.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/minimax_b5-eps-converted-to.pdf, id=48, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b5-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b5-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b5-eps-converted-to.pdf used on input 
-line 671.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/minimax_b10.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 78142 bytes
-(epstopdf)             Output file: <../Figs/minimax_b10-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 67168 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b10-eps-con
-verted-to.pdf ../Figs/minimax_b10.eps>
-(epstopdf)             \includegraphics on input line 672.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/minimax_b10-eps-converted-to.pdf, id=49, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b10-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b10-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b10-eps-converted-to.pdf used on input
- line 672.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/minimax_b50.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 73617 bytes
-(epstopdf)             Output file: <../Figs/minimax_b50-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 67373 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b50-eps-con
-verted-to.pdf ../Figs/minimax_b50.eps>
-(epstopdf)             \includegraphics on input line 673.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/minimax_b50-eps-converted-to.pdf, id=50, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b50-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b50-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b50-eps-converted-to.pdf used on input
- line 673.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/minimax_b100.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 76356 bytes
-(epstopdf)             Output file: <../Figs/minimax_b100-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 69774 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/minimax_b100-eps-co
-nverted-to.pdf ../Figs/minimax_b100.eps>
-(epstopdf)             \includegraphics on input line 674.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/minimax_b100-eps-converted-to.pdf, id=51, 433.62pt x 289.08pt>
-File: ../Figs/minimax_b100-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/minimax_b100-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/minimax_b100-eps-converted-to.pdf used on inpu
-t line 674.
-(pdftex.def)             Requested size: 108.40472pt x 72.26982pt.
-Package epstopdf Info: Source file: <../Figs/K_vs_b.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 15195 bytes
-(epstopdf)             Output file: <../Figs/K_vs_b-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 8119 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/K_vs_b-eps-converte
-d-to.pdf ../Figs/K_vs_b.eps>
-(epstopdf)             \includegraphics on input line 685.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/K_vs_b-eps-converted-to.pdf, id=52, 433.62pt x 289.08pt>
-File: ../Figs/K_vs_b-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ../Figs/K_vs_b-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/K_vs_b-eps-converted-to.pdf used on input line
- 685.
-(pdftex.def)             Requested size: 151.76927pt x 101.1795pt.
-Package epstopdf Info: Source file: <../Figs/opt_density_sig025.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 18508 bytes
-(epstopdf)             Output file: <../Figs/opt_density_sig025-eps-converted-t
-o.pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 15039 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig025-
-eps-converted-to.pdf ../Figs/opt_density_sig025.eps>
-(epstopdf)             \includegraphics on input line 698.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/opt_density_sig025-eps-converted-to.pdf, id=53, 480.79625pt x 375.4025
-pt>
-File: ../Figs/opt_density_sig025-eps-converted-to.pdf Graphic file (type pdf)
- <use ../Figs/opt_density_sig025-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/opt_density_sig025-eps-converted-to.pdf used o
-n input line 698.
-(pdftex.def)             Requested size: 96.15753pt x 75.07916pt.
-Package epstopdf Info: Source file: <../Figs/opt_density_sig1.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 18348 bytes
-(epstopdf)             Output file: <../Figs/opt_density_sig1-eps-converted-to.
-pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 14956 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig1-ep
-s-converted-to.pdf ../Figs/opt_density_sig1.eps>
-(epstopdf)             \includegraphics on input line 699.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/opt_density_sig1-eps-converted-to.pdf, id=54, 474.77374pt x 375.4025pt
->
-File: ../Figs/opt_density_sig1-eps-converted-to.pdf Graphic file (type pdf)
- <use ../Figs/opt_density_sig1-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/opt_density_sig1-eps-converted-to.pdf used on 
-input line 699.
-(pdftex.def)             Requested size: 94.95306pt x 75.07916pt.
-Package epstopdf Info: Source file: <../Figs/opt_density_sig2.eps>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 18546 bytes
-(epstopdf)             Output file: <../Figs/opt_density_sig2-eps-converted-to.
-pdf>
-(epstopdf)                    date: 2017-09-26 13:32:28
-(epstopdf)                    size: 15268 bytes
-(epstopdf)             Command: <epstopdf --outfile=../Figs/opt_density_sig2-ep
-s-converted-to.pdf ../Figs/opt_density_sig2.eps>
-(epstopdf)             \includegraphics on input line 700.
-Package epstopdf Info: Output file is already uptodate.
-
-<../Figs/opt_density_sig2-eps-converted-to.pdf, id=55, 474.77374pt x 375.4025pt
->
-File: ../Figs/opt_density_sig2-eps-converted-to.pdf Graphic file (type pdf)
- <use ../Figs/opt_density_sig2-eps-converted-to.pdf>
-Package pdftex.def Info: ../Figs/opt_density_sig2-eps-converted-to.pdf used on 
-input line 700.
-(pdftex.def)             Requested size: 94.95306pt x 75.07916pt.
- [9] [10 <../Figs/minimax_b1-eps-converted-to.pdf> <../Figs/minimax_b2-eps-conv
-erted-to.pdf> <../Figs/minimax_b5-eps-converted-to.pdf> <../Figs/minimax_b10-ep
-s-converted-to.pdf> <../Figs/minimax_b50-eps-converted-to.pdf> <../Figs/minimax
-_b100-eps-converted-to.pdf> <../Figs/K_vs_b-eps-converted-to.pdf> <../Figs/opt_
-density_sig025-eps-converted-to.pdf> <../Figs/opt_density_sig1-eps-converted-to
-.pdf> <../Figs/opt_density_sig2-eps-converted-to.pdf>]
-<../Figs/dist_bound_Gauss_prior.png, id=200, 433.62pt x 289.08pt>
-File: ../Figs/dist_bound_Gauss_prior.png Graphic file (type png)
-
-<use ../Figs/dist_bound_Gauss_prior.png>
-Package pdftex.def Info: ../Figs/dist_bound_Gauss_prior.png used on input line 
-731.
-(pdftex.def)             Requested size: 216.80946pt x 144.53964pt.
-
-<../Figs/dist_bound_uniform_prior.png, id=201, 433.62pt x 289.08pt>
-File: ../Figs/dist_bound_uniform_prior.png Graphic file (type png)
-
-<use ../Figs/dist_bound_uniform_prior.png>
-Package pdftex.def Info: ../Figs/dist_bound_uniform_prior.png used on input lin
-e 747.
-(pdftex.def)             Requested size: 216.80946pt x 144.53964pt.
- [11 <../Figs/dist_bound_Gauss_prior.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 797--799
+Underfull \hbox (badness 10000) in paragraph at lines 705--707
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 803--805
+Underfull \hbox (badness 1389) in paragraph at lines 712--715
+\OT1/ptm/m/n/11 den-sity $\OML/ztmcm/m/it/11 ^^U$ \OT1/ptm/m/n/11 is the mass d
+is-tri-bu-tion at $\OML/ztmcm/m/it/11 ^^R$ \OT1/ptm/m/n/11 which is
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 712--715
 
  []
 
-[12 <../Figs/dist_bound_uniform_prior.png>]
-** WARNING: Ignoring useless \section in Appendix (line 822).
+[8 <../Figs/one_bit_adpative.png>]
+Overfull \hbox (1.5006pt too wide) in paragraph at lines 759--759
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 759--761
+
+ []
+
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minmax_lmd_b0.5_sig0.5.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.5.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.5.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minmax_lmd_b0.5_sig0.2.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.2.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.2.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minmax_lmd_b0.5_sig0.1.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.1.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.1.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minmax_lmd_b0.5_sig0.05.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.05.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/minimax_th_b0.5_sig0.05.csv}
+PGFPlots: reading {../Figs/minmax_ARE_b0.5.csv}
+Missing character: There is no ; in font nullfont!
+PGFPlots: reading {../Figs/minmax_ARE_b0.5.csv}
+Missing character: There is no ; in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/unif_Bayes_lmd_b0.5_sig1.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/unif_Bayes_lmd_b0.5_sig2.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/unif_Bayes_lmd_b0.5_sig3.csv}
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+PGFPlots: reading {../Figs/unif_Bayes_lmd_b0.5_sig4.csv}
+[9]
+PGFPlots: reading {../Figs/unif_Bayes_Risk.csv}
+PGFPlots: reading {../Figs/unif_Bayes_Risk.csv}
+ [10]
+Underfull \hbox (badness 2582) in paragraph at lines 1174--1175
+\OT1/ptm/m/n/11 to a prob-a-bil-ity dis-tri-bu-tion. For this set-ting, we
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1174--1175
+
+ []
+
+** WARNING: Ignoring useless \section in Appendix (line 1187).
+[11]
+Overfull \hbox (1.54977pt too wide) detected at line 1219
+[] \OMS/ztmcm/m/n/11 ^^T \OT1/ztmcm/m/n/11 4\OML/ztmcm/m/it/11 f[]\OT1/ztmcm/m/
+n/11 (0)\OML/ztmcm/m/it/11 :
+ []
+
+
+Overfull \hbox (1.44066pt too wide) detected at line 1248
+[] \OT1/ztmcm/m/n/11 = [] \OMS/ztmcm/m/n/11 ^^@ [] \OT1/ztmcm/m/n/11 + []\OML/z
+tmcm/m/it/11 :
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1270--1272
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 1303--1305
+
+ []
+
+
+Underfull \hbox (badness 1484) in paragraph at lines 1317--1319
+\OT1/ptm/m/n/11 where $\OML/ztmcm/m/it/11 P [] \OT1/ztmcm/m/n/11 = \U/msb/m/n/1
+1 P []$\OT1/ptm/m/n/11 , so that the
+ []
+
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 883--885
+Underfull \hbox (badness 10000) in paragraph at lines 1371--1373
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 915--917
-
- []
-
-[15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1047--1048
-
- []
-
-[17] [18] (./onebit_full_V1.bbl)
-** WARNING: Ignoring useless \section in Appendix (line 1136).
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 1153--1155
-
+Underfull \hbox (badness 5622) in paragraph at lines 1442--1444
+\OT1/ptm/m/n/11 Denote $\OML/ztmcm/m/it/11 F\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/
+11 x\OT1/ztmcm/m/n/11 ) = [][] \OML/ztmcm/m/it/11 f\OT1/ztmcm/m/n/11 (\OML/ztmc
+m/m/it/11 u\OT1/ztmcm/m/n/11 )\OML/ztmcm/m/it/11 du$\OT1/ptm/m/n/11 . Us-ing in
+-te-gra-tion by
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1163--1164
+Underfull \hbox (badness 5105) in paragraph at lines 1442--1444
+\OT1/ptm/m/n/11 parts in the nu-mer-a-tor and from the fact that
+ []
+
+
+LaTeX Warning: Command \i invalid in math mode on input line 1468.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1468--1469
 
  []
 
-[20]
+
+Overfull \hbox (81.89198pt too wide) in paragraph at lines 1477--1477
+[] 
+ []
+
+
+Overfull \hbox (24.69064pt too wide) detected at line 1481
+[] \OML/ztmcm/m/it/11 F\OT1/ztmcm/m/n/11 (\OML/ztmcm/m/it/11 x \OT1/ztmcm/m/n/1
+1 + \OML/ztmcm/m/it/11 t\OT1/ztmcm/m/n/11 ) = [] \OML/ztmcm/m/it/11 F\OT1/ztmcm
+/m/n/11 (\OML/ztmcm/m/it/11 x\OT1/ztmcm/m/n/11 ) + []\OML/ztmcm/m/it/11 h \OMS/
+ztmcm/m/n/11 ^^@ [] [] \OT1/ztmcm/m/n/11 + \OML/ztmcm/m/it/11 o\OT1/ztmcm/m/n/1
+1 (\OML/ztmcm/m/it/11 t[]\OT1/ztmcm/m/n/11 )\OML/ztmcm/m/it/11 :
+ []
+
+
+Overfull \hbox (97.34361pt too wide) detected at line 1485
+\OMS/ztmcm/m/n/11 ^^@\OML/ztmcm/m/it/11 h [] [][] \OMS/ztmcm/m/n/11 ^^@ [] [] [
+] \OT1/ztmcm/m/n/11 + \OML/ztmcm/m/it/11 o\OT1/ztmcm/m/n/11 (1\OML/ztmcm/m/it/1
+1 =n\OT1/ztmcm/m/n/11 )
+ []
+
+[15]
+Overfull \hbox (28.81885pt too wide) detected at line 1538
+[] [] \U/msb/m/n/11 E [][] \OMS/ztmcm/m/n/11 ! [] [] \OML/ztmcm/m/it/11 ^^U\OT1
+/ztmcm/m/n/11 (\OML/ztmcm/m/it/11 dt\OT1/ztmcm/m/n/11 )\OML/ztmcm/m/it/11 ;
+ []
+
+
+Overfull \hbox (15.42725pt too wide) in paragraph at lines 1552--1552
+[] 
+ []
+
+(./onebit_full_V2.bbl [16])
+** WARNING: Ignoring useless \section in Appendix (line 1569).
+
+Underfull \hbox (badness 2213) in paragraph at lines 1577--1577
+ \OT1/ptm/m/it/11 B. Sta-tis-ti-cal In-fer-ence un-der Com-mu-ni-ca-tion Con-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1586--1588
+
+ []
+
+
+Underfull \hbox (badness 2213) in paragraph at lines 1596--1597
+\OT1/ptm/m/n/11 (SDM) analog-to-digital con-ver-sion scheme with a
+ []
+
+
+Underfull \hbox (badness 3471) in paragraph at lines 1596--1597
+\OT1/ptm/m/n/11 ver-sion of an in-for-ma-tion source. The dif-fer-ence
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 1596--1597
+\OT1/ptm/m/n/11 be-tween this set-ting and ours is that in ours the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1596--1597
+
+ []
+
+[17]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1587,9 +1570,11 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-runsystem(cd ""; rm -- "onebit_full_V1.oldaux" )...executed.
+runsystem(cd ""; rm -- "onebit_full_V2.oldaux" )...executed.
 
-[21] (./onebit_full_V1.aux)
+[18
+
+] (./onebit_full_V2.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1598,31 +1583,32 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 35749 strings out of 492995
- 865752 string characters out of 6132705
- 1000566 words of memory out of 5000000
- 38662 multiletter control sequences out of 15000+600000
- 62087 words of font info for 136 fonts, out of 8000000 for 9000
+ 36220 strings out of 492995
+ 879063 string characters out of 6132705
+ 2801966 words of memory out of 5000000
+ 39127 multiletter control sequences out of 15000+600000
+ 53406 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,13n,96p,10360b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,21n,96p,10360b,2248s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/
-texlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/
-type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/
-times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmr
-i8a.pfb>
-Output written on onebit_full_V1.pdf (21 pages, 679096 bytes).
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
+ype1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/t
+imes/utmbi8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmr
+8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on onebit_full_V2.pdf (18 pages, 696030 bytes).
 PDF statistics:
- 284 PDF objects out of 1000 (max. 8388607)
- 147 compressed objects within 2 object streams
+ 129 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 78 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
