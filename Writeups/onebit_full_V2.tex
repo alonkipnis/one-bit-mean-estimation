@@ -1,5 +1,5 @@
 %\documentclass[letterpaper]{IEEEtran}
-\documentclass[letterpaper, conference, 11pt]{IEEEtran}      % Use this line for a4 paper
+\documentclass[letterpaper, 11pt]{IEEEtran}      % Use this line for a4 paper
 
 %LatexiDiff ignore tikz:
 % $: latexdiff -c "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" old.tex new.tex > diff.tex
@@ -17,11 +17,10 @@
 % See the \addtolength command later in the file to balance the column lengths
 % on the last page of the document
 
-%\onecolumn
+\onecolumn
 
 \usepackage{mathptmx} 
 \usepackage{times} 
-
 \usepackage{amsmath} 
 \usepackage{amsbsy} 
 \usepackage{amssymb}
@@ -41,7 +40,7 @@
 \usetikzlibrary{arrows,shapes}
 \usepackage{xifthen}
 \usepackage{epic}
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{epstopdf}
 
 \newtheorem{thm}{\bf{Theorem}}
@@ -51,6 +50,7 @@
 \newtheorem{example}{\bf {Example}}
 \newtheorem{definition}{\bf {Definition}}
 \newtheorem{rem}{\bf {Remark}}
+\newtheorem{assump}{\bf {Assumptions}}
 
 \newcommand{\mmse}{\mathsf{mmse}}
 \newcommand{\unif}{\mathsf{unif}}
@@ -60,6 +60,7 @@
 \renewcommand\vec[1]{\ensuremath\boldsymbol{#1}}
 \newenvironment{proof}{\paragraph*{Proof}}{\hfill$\square$ \newline}
 \newcommand{\sgn}{\mathrm{sgn} }
+\newcommand{\Prob}{\mathbb{P} }
 \newcommand{\argmax}{\mathrm{argmax}}
 \newcommand*{\QEDA}{\hfill\ensuremath{\square}}
 
@@ -104,8 +105,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-We consider the problem of estimating the mean of a symmetric log-concave distribution under the constraint that only a single bit per sample from this distribution is available to the estimator. We study the mean squared error risk in this estimation as a function of the number of samples, and hence number of bits, from this distribution. Under an adaptive scheme in which each bit is a function of the current sample and the previously observed bits, we show that the optimal relative efficiency, compared to the standard mean estimator without bit limitation, is the efficiency of the median. For the distributed scheme we consider the setting where each bit is obtained by comparing against a prescribed threshold value. We show that the maximum likelihood estimator in this case is asymptotically local minimax, and its asymptotic relative efficiency is finite although strictly larger than that of the sample median. 
-% and depends on the size of the parameter space from which the mean is taken. Furthermore, assuming a prior on this space, the efficiency in the distributed case approaches $\sigma^2/4f^2(0)$ provided the variance of the distribution is high compared to the variance of the prior. 
+We consider the problem of estimating the mean of a symmetric log-concave distribution under the following constraint: only a single bit per sample from this distribution is available to the estimator. We study the mean squared error (MSE) risk in this estimation as a function of the number of samples, and hence number of bits, from this distribution. Under an adaptive setting in which each bit is a function of the current sample and the previously observed bits, we show that the optimal relative efficiency compared to the sample mean is the efficiency of the median. For example, in estimating the mean of a normal distribution, a constraint of one bit per sample incurs a penalty of $\pi/2$ in sample size compared to the unconstrained case. 
+%
+We also consider a distributed setting where each one bit message is only a function of a single sample. We derive lower bounds on the MSE in this setting, and show that the optimal efficiency can only be attained at a finite number of points in the parameter space. 
+%
+Finally, we analyze a distributed setting where the bits are obtained by comparing each sample against a prescribed threshold, and consider the threshold density that minimizes the maximal MSE. 
+%
+Our results indicates that estimating the mean from one bit measurements is equivalent to estimating the sample median from these measurements. In the adaptive case, this estimate can be done with vanishing error for any point in the parameter space. In the distributed case, this estimate can be done with vanishing error only for a finite number of possible values for the unknown mean. 
 %
 %Therefore, our results indicates that, rather surprisingly, parametric estimation from the coarsest form of quantization incurs only a multiplicative penalty factor on the number of measurements. For example, this factor is $\pi/2$ for the normal distribution. 
 \end{abstract}
@@ -118,55 +124,64 @@ We consider the problem of estimating the mean of a symmetric log-concave distri
 \label{sec:Intro}
 Estimating parameters from data collected and processed by multiple units may be limited due to communication constraints between these units. 
 %
-For example, this scenario arises in sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In these situations, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number, but also by the available bandwidth for communicating between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by this constraint on communication, and what are the fundamental performance limits in estimating a parameter subject to such restriction. \\
-
-This paper answers this question in a particular setting: the estimation of the mean $\theta$ of a symmetric log-concave distribution $P_X$ with a finite variance, under the constraint that only a single bit can be communicated on each sample from this distribution. As it turns out, the ability to share information before committing on each single-bit message dramatically affects the performance in estimating $\theta$. We therefore distinguish among three settings:
+For example, this scenario arises in sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In these situations, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number, but also by the available bandwidth for communicating between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by this constraint on communication, and what are the fundamental performance limits in estimating a parameter subject to such restriction. \par
+This paper answers this question in a particular setting: the estimation of the mean $\theta$ of a symmetric log-concave distribution with a finite variance, under the constraint that only a single bit can be communicated on each sample from this distribution. As it turns out, the ability to share information before committing on each single-bit message dramatically affects the performance in estimating $\theta$. We therefore distinguish among three settings:
 \begin{itemize}
- \item[(i)] \emph{Centralized} encoding: all $n$ encoders confer and produce a single $n$ bit message. 
- \item[(ii)] \emph{Adaptive} or \emph{sequential} encoding: the $i$th encoder observes the $i$th sample and the $i-1$ previous messages.
- \item[(iii)] \emph{Distributed} encoding: the $i$th message is only a function of the $i$th observation.
+ \item[(i)\,\,] \emph{Centralized} encoding: all $n$ encoders confer and produce a single $n$ bit message. 
+ \item[(ii)\,] \emph{Adaptive} or \emph{sequential} encoding: the $n$th encoder observes the $n$th sample and the $n-1$ previous messages (bits).
+ \item[(iii)] \emph{Distributed} encoding: the $n$th message is only a function of the $n$th observation.
  \end{itemize}
-Evidently, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). Below are three application example of each of settings (i)-(iii), respectively:
+Evidently, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). Below are three application examples for each of settings (i)-(iii) above, respectively:
 \begin{itemize}
-\item[(i)] {\bf Signal acquisition:} a quantity is measured $n$ times at different instances, and the results are averaged in order to reduce measurement noise. The averaged result is then stored using one of $n$ states. 
-\item[(ii)] {\bf analog-to-digital conversion via sigma-delta modulation (SDM):} in SDM an analog signal is converted into a sequence of bits by sampling it at a very high rate and then using one-bit threshold detector combined with a feedback loop to update an accumulated error state. Therefore, the MSE in tracking an analog signal using a SDM falls under our setting (ii) when we assume that the signal at the input to the modulator is a constant (direct current) corrupted by, say, thermal noise \cite{53738}. Since the sampling rates in SDM is usually many times more than the bandwidth of its input, analyzing SDM under a constant input provides meaningful lower bound even for non-constant signals.
-\item[(iii)] {\bf Differential privacy:} -- a business entity is interested in estimating the average income of its clients. In order to keep this information as confidential as possible, each client answers a single yes/no questions about its individual income. 
+\item {\bf Signal acquisition:} a quantity is measured $n$ times at different instances, and the results are averaged in order to reduce measurement noise. The averaged result is then stored using one of $n$ states. 
+\item {\bf Analog-to-digital conversion:} in sigma-delta modulation, an analog signal is converted into a sequence of bits by sampling it at a very high rate and then using one-bit threshold detector combined with a feedback loop to update an accumulated error state. Therefore, the MSE in tracking an analog signal using a SDM falls under our setting (ii) when we assume that the signal at the input to the modulator is a constant (direct current) corrupted by, say, thermal noise \cite{53738}. Since the sampling rates in SDM are usually many times more than the bandwidth of its input, analyzing SDM under a constant input provides meaningful lower bound even for non-constant signals.
+\item {\bf Differential privacy:} -- a business entity is interested in estimating the average income of its clients. In order to keep this information as confidential as possible, each client independently provides an answer to a yes/no question related to its income.
 \end{itemize}
+%
+We measure the performance in estimating $\theta$ by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting compared to asymptotically normal estimators whose variances decreases as $\sigma^2/n+o(n^{-1})$. Estimators of this form include the empirical mean of the samples, and, under some conditions, the optimal Bayes estimator. \par
+%
+In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per measurement constraint is useful in bounding from below the excess risk in estimating a signal from its noisy measurements. Namely, the excess MSE or ARE we derive serves as the most optimistic estimate for the risk in estimating a signal that varies in time or space under the one bit per measurement constraint. Such situtations are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \\
 
-We measure the performance in estimating $\theta$ by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting compared to asymptotically normal estimators whose variances decreases as $\sigma^2/n+o(n^{-1})$ where $\sigma^2$. Estimator of this form includes the empirical mean of $X_1,\ldots,X_n$, and under some conditions, optimal Bayes estimations. We note that the performance under estimating a signal that may vary with each noisy measurement is always harder that our setting where the parameter (the mean) remains fixed. Therefore, the excess MSE risk due to the one-bit per measurement constraint we derive in this paper can serve as the most optimistic estimate for the degradation in performance in estimating a signal that vary in time. 
 
 % given a prior distribution on the space $\Theta$ where $\theta$ resides. \\
 
-In setting (i), the estimator can evaluate the empirical mean of the samples and then quantize it using $n$ bits. Since the accuracy in describing the empirical mean decreases exponentially in $n$, the error due to quantization is negligible compared to the MSE in estimating the mean. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. 
+In setting (i), the estimator can evaluate the optimal mean estimator (e.g., the sample mean in the Gaussian case) and then quantize it using $n$ bits. Since the accuracy in describing the empirical mean decreases exponentially in $n$, the error due to quantization is negligible compared to the MSE in estimating the mean. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. 
 %
-In this paper we show that a similar results does not hold even in setting and (ii): the ARE of any adaptive estimation scheme is at least that of the sample median. Specifically, when $P_X$ is normal, this ARE equals $2/\pi \approx 0.637$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $2/\pi \approx 1.57$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE and is tight by providing an estimator that attains it. % This estimator is obtained by averaging the results of a series of comparisons of the samples against certain thresholds. 
+In this paper we show that a similar results does not hold in setting (ii): the ARE of any adaptive estimation scheme is at most the ARE of the sample median. Specifically, when the samples are drawn from the normal distribution, this ARE equals $\pi/2$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $\pi/2 \approx 1.57$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE is tight by providing an estimator that attains it. % This estimator is obtained by averaging the results of a series of comparisons of the samples against certain thresholds. 
 %This estimator is can be seen as a stochastic gradient descent procedure for minimizing the absolute error, hence it attains the asymptotic MSE of the sample median. % Interestingly, our estimator attains \eqref{eq:median_MSE} regardless of the particular realization of $\theta$ or the radius of the parameter space from which it is taken.
 %
-Clearly, the minimal penalty on the MSE in setting (ii) also holds under setting (iii), although the question whether this MSE is achievable (or otherwise, what is the minimal MSE) remains open. Instead, in setting (iii) we restrict ourselves to estimators from messages obtained by comparison against a prescribed value (that may be different for each sample). We show that the maximum likelihood (ML) estimator for $\theta$ from these messages is asymptotically local minimax, and its asymptotic variance is strictly greater than the variance of the median. Thus, at least when limited to threshold detection, the ability to adapt the threshold allows for a more efficient estimation. %This is in contrast to the \\ counterpart of our setting where $\theta$ is taken from a finite space 
+Clearly, the penalty on the sample size in setting (iii) is at least as large as that in setting (ii). 
+Unlike in setting (ii), we show that there is no distributed estimation scheme that is uniformly optimal in the sense that it attains the ARE of the sample median for all $\theta$ in the parameter space. 
+% Instead, in setting (iii) we restrict ourselves to estimators from messages obtained by comparison against a prescribed value (that may be different for each sample). We show that the maximum likelihood (ML) estimator for $\theta$ from these messages is asymptotically local minimax, and its asymptotic variance is strictly greater than the variance of the median. Thus, at least when limited to threshold detection, the ability to adapt the threshold allows for a more efficient estimation. %This is in contrast to the \\ counterpart of our setting where $\theta$ is taken from a finite space 
 
-
-Even though the ARE in setting (i) is $1$, this scheme already poses a non-trivial challenge for the design and analysis of an optimal encoding and estimation procedures. Indeed, the standard technique to encode an unknown random quantity using $n$ bits is equivalent to the design of a scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration exploitation trade-off arises in this case. Note that the only missing parameter in our setting is the mean, which, under setting (i), is known to the encoder with uncertainty interval proportional to $\sigma/\sqrt{n}$. Therefore, while it is clear that uncertainty due to quantization decreases exponentially in the number of bits $n$ leading to ARE $1$, an exact expression for the MSE in this setting is still difficult to derive. \par
-The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$, may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal detector given the previous messages, this characterization cannot be use to derive a lower bound on the ARE. Instead, our result on the median efficiency being the minimal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using the van Trees version of the information inequality \cite{gill1995applications}. 
+We note that although the ARE in setting (i) is $1$, this scheme already poses a non-trivial challenge for the design and analysis of an optimal encoding and estimation procedures. Indeed, the standard technique to encode an unknown random quantity using $n$ bits is equivalent to the design of a scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration exploitation trade-off arises in this case. 
+%Note that the only missing parameter in our setting is the mean, which, under setting (i), is known to the encoder with uncertainty interval proportional to $\sigma/\sqrt{n}$. 
+Therefore, while uncertainty due to quantization decreases exponentially in the number of bits $n$, hence the ARE is $1$, an exact expression for the MSE in this setting is still difficult to derive. \par
+%
+The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$ may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal one-bit message given the previous messages, this characterization does not necessarily  leads to an upper bound on the ARE. Instead, our result on the maximal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using an appropriate information inequality. \par
+In addition to encoding and estimation schemes that leads to optimal results, we also consider two additional ``natural'' schemes. Specifically, in setting (ii) we consider the one-bit optimal scheme, i.e., the case of a greedy encoder that given the $n$th sample and the previous $n-1$ bits, provides a bit that minimizes the $n$-step MSE. In setting (iii) we also consider the case where the messages are obtained by comparing each sample against a prescribed threshold. This threshold may be different across samples and is assumed deterministic (independent of the data). 
 
 %Finally, we show that an estimator that attains asymptotic MSE of $\sigma^2\pi/(2n)$ is obtained as a special case of \cite[Thm. 4]{polyak1992acceleration}. In addition to these two results, we also derive the one-step optimal strategy in which the message sent at step $i$th is designed to minimize the MSE given this message and the previous $i-1$ messages. Furthermore, we demonstrates numerically that the MSE under this strategy converges to $\pi \sigma^2/(2n)$.\\ 
 
 
 \subsection*{Related Works}
-As the variance $\sigma^2$ goes to zero, the task of finding $\theta$ using one-bit queries in the adaptive setting (ii) is easily solved by a bisection style method over the parameter space. Therefore, the general case of non-zero variance is a reminiscent of the noisy binary search problem with possibly infinite number of unreliable tests \cite{cicalese2002least, Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous parameter space, a more closely related problem is that of one-bit analog-to-digital conversion of a constant input $\theta$ corrupted by a Gaussian noise. Using a SDM, Wong and Gray \cite{53738} showed that the output of the modulator converges to the true constant input almost surely, so that a SDM provides a consistent estimator for setting (ii). The rate of this convergence, however, was not analyzed and cannot be derived from the results of \cite{53738}. In particular, our results for setting (ii) imply that the asymptotic rate of convergence of the MSE in SDM to a constant input under Gaussian nosie is at most $\sigma^2\pi/2$ over the number of feedback iterations. Baraniuk et. al \cite{baraniuk2017exponential} also considered adaptive one-bit measurements in the context of analog-to-digital conversion, although without noise at the input. Their result of an exponential MSE decaying rate clearly does not hold in the noisy setting (stated otherwise, the MSE can decay exponentially up to the noise level). 
-\\
-
-One-bit measurements in the distributed setting (iii) was considered in \cite{904560,4244748, 6882252, chen2010performance, 5184907}, but without optimizing the encoders or their detection rule. % analyzed the estimation from distributed quantized measurements when the same detection rule is applied by all encoders. However, the error criterion considered in these works is the Fisher information rather than the MSE risk or ARE criterion. \par
-%Once the decision rule of each encoder is fixed, the optimal estimation of $\theta$ is determined using the maximum a posteriori probability rule. Hence, the distributed setting is reduced to finding the optimal decision rule of each encoder.
-The work of \cite{52470} addresses the counterpart of our setting (iii) in the case of hypothesis testing, although the results there cannot be extended to parametric estimation. More generally, when the parameter space $\Theta$ is finite, the characterization of the optimal detection rules was considered by Tsitsiklist in \cite{tsitsiklis1988decentralized}. It was shown there that if the cardinality of $\Theta$ is at most $M$ and the probability of error criterion is used, than no more than $M(M-1)/2$ different detection rules are necessary in order to attain probability of error decreasing exponentially with the optimal exponent. %That is, beyond $M(M-1)/2$ some decision rules can be repeated without lossing optimality.
-Furthermore, in a version of this problem for the adaptive sestting \cite{5751320}, it was shown that, with a specific two-stages feedback, there is no gain in feedback compared to the fully distributed setting. Our results implies that the ARE in the distributed setting with threshold detection rules is strictly larger than that in the adaptive setting, suggesting that the case of a finite $\Theta$ is very different than when $\Theta$ is an open set.\par
+As the variance $\sigma^2$ goes to zero, the task of finding $\theta$ using one-bit queries in the adaptive setting (ii) is solved by a bisection style method over the parameter space. Therefore, the general case of non-zero variance is a reminiscent of the noisy binary search problem with possibly infinite number of unreliable tests \cite{cicalese2002least, Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous parameter space, a more closely related problem is that of one-bit analog-to-digital conversion of a constant input corrupted by a Gaussian noise. Using a SDM, Wong and Gray \cite{53738} showed that the output of the modulator converges to the true constant input almost surely, so that a SDM provides a consistent estimator for setting (ii). The rate of this convergence, however, was not analyzed and cannot be derived from the results of \cite{53738}. In particular, our results for setting (ii) imply that the asymptotic rate of convergence of the MSE in SDM to a constant input under an additive white Gaussian nosie is at most $\sigma^2\pi/2$ over the number of feedback iterations. Baraniuk et. al \cite{baraniuk2017exponential} also considered adaptive one-bit measurements in the context of analog-to-digital conversion, although without noise at the input. By establishing the lower bound of $\sigma^2\pi/2n$ on the MSE, we show that the main results of \cite{baraniuk2017exponential}, an exponential MSE decaying rate, does not hold in the noisy setting. Stated otherwise, the MSE in the setting of \cite{baraniuk2017exponential} may decay exponentially up to the noise level, after which it decays at most as $\sigma^2\pi/2n$. \par
 %
-As we explain in details in Section~\ref{sec:preliminary}, the remote multiterminal source coding problem, also known as the CEO problem \cite{berger1996ceo, viswanathan1997quadratic, oohama1998rate, prabhakaran2004rate}, leads to a lower bounds on the MSE in setting (iii). For the case of a Gaussian distribution, this lower bound bounds the ARE to be at most $3/4$. Thus, while this bound on the ARE provides no new information compared to the upper bound of $2/\pi$ we derive for setting (ii), it shows that the distributed nature of the problem is not a limiting factor in achieving MSE close to optimal even under one-bit quantization of each sample.\\
-
+One-bit measurements in the distributed setting (iii) was considered in \cite{904560,4244748, 6882252, chen2010performance, 5184907}, but without optimizing the encoders and their detection rules. Consequently, the performance derived in these works are not optimal. 
+ % analyzed the estimation from distributed quantized measurements when the same detection rule is applied by all encoders. However, the error criterion considered in these works is the Fisher information rather than the MSE risk or ARE criterion. \par
+%Once the decision rule of each encoder is fixed, the optimal estimation of $\theta$ is determined using the maximum a posteriori probability rule. Hence, the distributed setting is reduced to finding the optimal decision rule of each encoder.
+The work of \cite{52470} addresses the counterpart of our setting (iii) in the case of hypothesis testing, although the results there cannot be extended to parametric estimation. When the parameter space $\Theta$ is finite, Tsitsiklist \cite{tsitsiklis1988decentralized} showed that when the cardinality of $\Theta$ is at most $M$ and the probability of error criterion is used, then no more than $M(M-1)/2$ different detection rules are necessary in order to attain probability of error decreasing exponentially with the optimal exponent. %That is, beyond $M(M-1)/2$ some decision rules can be repeated without lossing optimality.
+Furthermore, in a version of this problem for the adaptive sestting \cite{5751320}, it was shown that, with a specific two-stages feedback, there is no gain in feedback compared to the fully distributed setting. Our results implies that the ARE in the distributed setting with threshold detection rules is strictly larger than that in the adaptive setting, suggesting that the case of a finite $\Theta$ is very different than the case where $\Theta$ is an open set.\par
+%
+As we explain in detail in Section~ \ref{sec:preliminary}, the remote multiterminal source coding problem, also known as the CEO problem \cite{berger1996ceo, viswanathan1997quadratic, oohama1998rate, prabhakaran2004rate}, leads to a lower bounds on the MSE in setting (iii). For the case of a Gaussian distribution, this lower bound bounds the ARE to be at most $3/4$. Thus, while this bound on the ARE provides no new information compared to the upper bound of $2/\pi$ we derive for setting (ii), it shows that the distributed nature of the problem is not a limiting factor in achieving MSE close to optimal even under the one bit per sample constraint. 
+ \par
+% 
 Finally, we note that our settings (ii) and (iii) can be obtained as special cases of 
-\cite{zhang2013information} that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then we derive here for cases (ii) and (iii). Other related works include statistical inference under multiterminal data compression \cite{han1987hypothesis, zhang1988estimation}, and one-bit quantization constraints 
-%in compressed sensing\cite{baraniuk2017exponential} and 
-in MIMO detection in wireless communication \cite{singh2009limits}. \\
+\cite{zhang2013information} 
+that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then we derive here for cases (ii) and (iii). Looser bounds can also be obtained from \cite{zhang1988estimation, han2018distributed} that considered inference and distributed estimation under data compression constraint \cite{DBLP:journals/corr/abs-1802-08417, zhang1988estimation, han2018distributed}. \\
+%in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
+The remainder of this paper is organized as follows. In Section~\ref{sec:problem} we describe the problem and useful notation. In Section~\ref{sec:preliminary} we provide two simple bounds on the efficiency and MSE. Our main results for the adaptive and distributed cases are given in Sections~\ref{sec:sequential} and \ref{sec:distributed}, respectively. In Section~\ref{sec:conclusions} we provide concluding remarks. 
 
 \section{Problem Formulation \label{sec:problem}}
 
@@ -214,6 +229,7 @@ in MIMO detection in wireless communication \cite{singh2009limits}. \\
 \node[int1, right of = enc2, node distance = 4cm ] (est) {Est};
 \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -2cm] (mes1) {$M_1 \in \left\{-1,1\right\}$} (est);   
 \draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$M_2 \in \left\{-1,1\right\}$} (est);   
+
 \draw[->] (enc1)+(0.7,0) -- +(0.7,-0.7) -| (enc2);
 
 \draw[dashed,->] (enc2)+(0.7,0) -- +(0.7,-0.7) -| +(0,-1.2);
@@ -225,14 +241,14 @@ in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
 \draw[->] (mes3.west) -- +(0,-0.5) -| (enc3);
 
-\node[right of = est, node distance = 1.5cm] (dest) {$\widehat{\theta}_n$};
+\node[right of = est, node distance = 1.5cm] (dest) {$\hat{\theta}_n$};
 %         \node [int1] (dec) [right of=dest, node distance = 1.5cm,  align=center] {\small Dec };
 %\node [int1] (enc) [right of = dec, node distance = 3cm]{Enc}; 
 %\draw[->,line width=2pt] (dec) -- (dest);
 \draw[->, line width=2pt] (est) -- (dest);
 \end{tikzpicture}
 \end{center}
-\caption{\label{fig:sequential} Adaptive single-bit encoding: the $i$th encoder delivers a single bit message which is a function of its private sample $X_i$ and the previous messages $M_1,\ldots,M_{i-1}$.}
+\caption{\label{fig:sequential} Adaptive single-bit encoding: the $n$th encoder delivers a single bit message which is a function of its private sample $X_n$ and the previous messages $M_1,\ldots,M_{n-1}$.}
 \end{figure}
 
 
@@ -264,7 +280,7 @@ in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
 \draw[->,line width = 2pt] (enc3) -| node[above, xshift = -2cm]  {$M_n \in \left\{-1,1\right\}$} (est);   
 
-\node[right of = est, node distance = 1.5cm] (dest) {$\widehat{\theta}_n$};
+\node[right of = est, node distance = 1.5cm] (dest) {$\hat{\theta}_n$};
 %         \node [int1] (dec) [right of=dest, node distance = 1.5cm,  align=center] {\small Dec };
 %\node [int1] (enc) [right of = dec, node distance = 3cm]{Enc}; 
 %\draw[->,line width=2pt] (dec) -- (dest);
@@ -273,15 +289,15 @@ in MIMO detection in wireless communication \cite{singh2009limits}. \\
 \end{center}
 \caption{\label{fig:distributed} Distributed single-bit encoding: the single-bit message produced by each encoder is only a function of its private sample $X_i$.}
 \end{figure}
-Let $\Theta$ be a closed interval of the real line. Let $f(x)$ be a symmetric log-concave density function with a finite second moment $\sigma^2$. We denote by $P_X$ the probability distribution with density $f\left( x-\theta \right)$, where $\theta \in \Theta$. Therefore, $P_X$ is an absolutely continuous log-concave distribution with mean $\theta$, variance $\sigma^2$. Moreover, symmetry and log-concavity of $f(x)$ implies that $P_X$ has a single mode at $x =\theta$. \par
-In some cases we assume that $\theta$ is drawn once from the prior distribution $\pi$ on the parameter space $\Theta$. In this cases we assume that $\pi$  
-is absolutely continuous distribution, and denote its density by $\pi(\theta)$, i.e., $\pi(d\theta) = \pi(\theta)d\theta$.  
+Let $f(x)$ be a symmetric and log-concave density function with a finite second moment $\sigma^2$. For $\theta \in \Theta$, denote by $P_X$ the probability distribution with density $f\left( x-\theta \right)$. Therefore, $P_X$ is an absolutely continuous log-concave distribution with mean $\theta$ and variance $\sigma^2$. Symmetry and log-concavity of $f(x)$ imply that $P_X$ is strongly unimodal with its mode at $x =\theta$ \cite{ibragimov1956composition}. We further assume that the \emph{parameter space} $\Theta$ is a closed interval of the real line. 
+\par
+In some situations it is useful to assume that $\theta$ is drawn once from the prior distribution $\pi$ on $\Theta$. In this case we assume that $\pi$ is an absolutely continuous distribution, and denote its density by $\pi(\theta)$, i.e., $\pi(d\theta) = \pi(\theta)d\theta$.  
 \par
 The random variables $X_1,\ldots,X_n$ represent $n$ independent samples from $P_X$. 
-We are interested in estimating the parameter $\theta$ from a set of $n$ binary messages $M^n = (M_1,\ldots,M_n)$, obtained from $X^n = (X_1,\ldots,X_n)$ under three possible scenarios: 
+We are interested in estimating $\theta$ from a set of $n$ binary messages $M_1,\ldots,M_n$, obtained from $X_1,\ldots,X_n$ under three possible scenarios: 
 \begin{itemize}
-\item[(i)~~] Centralized $M^n(X^n)$ (Fig.~\ref{fig:centralized}).
-\item[(ii)~] Adaptive $M_i(X_i,M^{i-1})$, $i=1,\ldots,n$ (Fig.~\ref{fig:sequential}).
+\item[(i)~~] Centralized $M_i(X_1,\ldots,X_n)$, $i=1,\ldots,n$ (Fig.~\ref{fig:centralized}).
+\item[(ii)~] Adaptive $M_i(X_i,M_1,\ldots,M_{i-1})$, $i=2,\ldots,n$ (Fig.~\ref{fig:sequential}).
 \item[(iii)] Distributed $M_i(X_i)$, $i=1,\ldots,n$ (Fig.~\ref{fig:distributed}).
 \end{itemize}
 
@@ -290,16 +306,16 @@ The performance of an estimator $\hat{\theta}_n \triangleq \hat{\theta}_n(M^n)$ 
 \label{eq:error_def}
 R_n \triangleq \mathbb E\left(\hat{\theta}_n - \theta \right)^2,
 \end{equation}
-where the expectation is taken with respect to the distribution of $X^n$ and the prior distribution $\pi(\theta)$.  
+where the expectation is taken with respect to the distribution of $X^n$ and, whenever available, a prior distribution $\pi(\theta)$ over $\Theta$.  
 %It is well known that minmax estimation error 
 %\begin{equation}
 %R_n = \min \sup_{\theta \in \Theta}  \mathbb E\left[ \left(\hat{\theta}_n - \theta \right)^2 | \theta \right],
 %\end{equation}
 %can be obtained from $R_n$ by assuming a particular least favorable prior distribution on the parameter space $\Theta$ \cite{casella1981}. 
 %
-The main problem we consider is the minimal value of \eqref{eq:error_def} as a function of $n$, under various choices of the encoding functions in cases (i), (ii), and (iii). \\
+The main problem we consider is the minimal value of \eqref{eq:error_def} as a function of $n$ under different choices of the encoding functions in cases (i), (ii), and (iii). \\
 
-Particular interest is given to the ARE of estimators with respect to an asymptotically normal efficient estimator without the one-bit constraint. Specifically,  let $\{a_n,\,n\in \mathbb N\}$ be a sequence such that 
+We give particular attention to the ARE of estimators with respect to an asymptotically normal efficient estimator that is not subject to the bit constraint. Specifically, let $\{a_n,\,n\in \mathbb N\}$ be a sequence such that 
 \[
 \sqrt{a_n}\left(\hat{\theta}_n - \theta\right) \overset{D}{\longrightarrow} \mathcal N(0, \sigma^2).
 \]
@@ -310,52 +326,42 @@ Then the ARE of $\hat{\theta}_n$ with respect to an unconstrained efficient esti
 \]
 Note that in the special case where there exists $V \in \mathbb R$ such that
 \[
-a_n \mathbb E \left(\hat{\theta}_n - \theta \right)^2 = V + O(1/n),
+a_n \mathbb E \left(\hat{\theta}_n - \theta \right)^2 = V + o(1),
 \]
-then the ARE of $\hat{\theta}_n$ is finite and equals $\sigma^2/V$. 
-%sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i$. Since the MSE attained by the latter is $\sigma^2/n$, this relative efficiency is defined as
-%\begin{equation}
-% \lim_{n \rightarrow \infty} \frac{n}{\sigma^2}  R_n. 
-%\label{eq:relative_efficiency}
-%\end{equation}
+with $o(1)\to 0$ as $n\to \infty$, then the ARE of $\hat{\theta}_n$ is finite and equals $\sigma^2/V$. \\
 
-%In addition to the notations defined above, we denote by $\phi(x)$ the standard normal density and by $\Phi(x)$ the standard normal cumulative distribution function. Prime denote derivative with respect to $\theta$.
-
-\section{Preliminary Results \label{sec:preliminary}}
-On a first impression it may not be clear whether consistent estimation of the mean is even possible in the adaptive and centralized settings. On the other hand, one may suspect that estimation in these cases is trivial as in the centralized setting (i), where it is easy to attain ARE 1. In this section we settle this skepticism by showing that (1) a consistent estimator with an asymptotically normal distribution always exists in setting (iii), and (2) the ARE in setting (iii) with $P_X = \mathcal N(\theta, \sigma^2)$ is bounded from below by $3/4$. 
-
-\subsection{Consistent Estimation}
-Denote by $M_i$ is the indicator of the event $X_i > \theta_0$ for some arbitrary $\theta_0$. Note that
-\[
-\frac{1}{n} \sum_{i=1}^n M_i \overset{a.s.}{\rightarrow} F(\theta),
-\]
-where $F(x)$ is the cumulative distribution of $X_1-\theta$ that is assumed to be known. Therefore, 
-\begin{equation}
-\label{eq:estimator_naive}
-\hat{\theta}_n = F^{-1}\left( \frac{1}{n} \sum_{i=1}^n M_i \right)
-\end{equation}
-is a consistent estimator for $\theta$ under setting (iii). Moreover, it can be verified, as we do in Section~\ref{sec:distributed}, that $\hat{\theta}_n$ is asymptotically normal with variance that is the inverse of
+In addition to the notation above, we also denote by $F(x)$ the cumulative distribution function of $X_i$, and define
 \begin{equation} \label{eq:eta_def}
-\eta(\theta-\theta_0) \triangleq \frac{f^2(\theta-\theta_0)} {F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)}. 
+\eta(x) \triangleq \frac{f^2(x)}{F(x)(1-F(x))} =  \frac{f(x)f(-x)}{F(x)F(-x)}, 
 \end{equation}
-In particular, the ARE of $\hat{\theta}_n$ is finite and equals $\sigma^2/\eta(\theta - \theta_0)$. For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that the function $\eta(x)$ is a strictly decreasing function of $|x|$. The following proposition, generalizes this property of $\eta(x)$ to any log-concave distribution.
-\begin{prop} \label{prop:eta}
-Let $f(x)$ be log-concave, symmetric and differntiable probability density function. Then 
-\begin{itemize}
-\item[(i)] The function
+where the last equality is due to symmetry of $f(x)$. We note that 
+\begin{equation}
+\label{eq:eta_h}
+\eta(x) = h(x)h(-x) = f(x) \left( h(x) + h(-x) \right), 
+\end{equation}
+where 
 \[
-\eta(x) = \frac{f^2(x)}{F(x) \left(1-F(x) \right)}
+h(x) \triangleq \frac{f(x)}{1-F(x)} = \frac{f(x)}{F(-x)}
 \]
-is symmetric and strictly decreasing for any $x>0$ in the support of $f(x)$. In particular, $
-\eta(x) \leq \eta(0) = 4f^2(0)$. 
-\item[(ii)] $\eta(x)$ goes to $0$ as $|x|$ goes to infinity. 
-\end{itemize}
-
-\end{prop}
-\begin{proof}
-See Appendix~\ref{app:proofs}. 
-\end{proof}
+is the \emph{hazard} function (a.k.a. \emph{failure rate} or \emph{force of mortality}), which is a monotone increasing function of since $f(x)$ is log-concave \cite{bagnoli2005log}. 
 %
+For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that $\eta(x)$ is a strictly decreasing function of $|x|$, as shown in Fig.~\ref{fig:eta}. 
+%
+In this paper we only consider the normal distribution and other log-concave symmetric distributions for which this property of $\eta(x)$ holds. Specifically, we require the following:
+\begin{assump} \label{assump:failure_rate}
+ $\eta(x)$ is strongly unimodal. 
+\end{assump}
+%That is, Assumption~\ref{assump:failure_rate} says that $\eta'(x) < 0 $ for all $x>0$. 
+Under this assumption we have, 
+\[
+4f^2(x) \leq \eta(x) \leq \eta(0),
+\] 
+%
+where $\eta(0) = 4 f^2(0)$ is the asymptotic variance of the sample median. Combined with log-concavity of $f(x)$, Assumption~\ref{assump:failure_rate} implies that $\eta(x)$ vanishes as $|x|\rightarrow \infty$. \par
+%
+Assumption~\ref{assump:failure_rate} is satisfied, for example, by the generalized normal distributions with a shape parameter between $1$ and $2$ (including normal and Laplace distributions). Symmetric log-concave distributions that do not satisfy Assumption~\ref{assump:failure_rate} include the uniform distribution and the generalized normal distribution with shape parameter greater than $2$.
+\\
+
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[scale = 0.6]
@@ -364,6 +370,7 @@ width=8cm, height=6cm,
 xmin = -3, xmax=3, 
 restrict y to domain = 0:100,
 ymin = 0,
+ymax = 0.9,
 samples=10, 
 xlabel= $x$,
 xtick={-2,-1,0,1,2},
@@ -380,6 +387,9 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addlegendentry{$\eta(x)$};
 \addplot[domain = -5:5, samples = 50, color = red, solid, smooth]  {exp(-x^2/2) / sqrt(2*3.14159)};
 \addlegendentry{$\phi(x)$};
+\addplot[domain = -5:5, samples = 50, color = black, solid, dashed]  {4*exp(-x^2) / (2*3.14159)};
+\addlegendentry{$4\phi^2(x)$};
+
 \end{axis}
 \end{tikzpicture}
 %
@@ -408,24 +418,54 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{axis}
 \end{tikzpicture}
 \caption{
-The function $\eta(x) = f^2(x) / F(x)F(-x)$ (blue) for $f(x) = \phi(x)$ the standard normal density (red).
+The function $\eta(x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi(x)$ the standard normal density.
 \label{fig:eta}
 }
 \end{center}
 \end{figure}
 
-At $\theta = \theta_0$ the variance of $\hat{\theta}_n$ of \eqref{eq:estimator_naive} equals $1/(4f(0)^2)$ which is the variance of the median. However, since  $\eta(x)$ vanishes as $|x|\rightarrow \infty$ (see illustration in Fig.~\ref{fig:eta} for the normal density),  the variance of $\hat{\theta}_n$ may be very large when $\theta$ is away from $\theta_0$. In this case, the estimator $\hat{\theta}_n$ has little practical value unless $\Theta$ is very small compared to $\sigma^2$. \par
+\section{Simple Bounds \label{sec:preliminary}}
+On a first impression it may not be clear whether consistent estimation of the mean is even possible in the adaptive and centralized settings. On the other hand, it may seem as if estimation in these cases is trivial as in the centralized setting (i). 
 %
-In Section~\ref{sec:sequential} we present an asymptotically normal estimator that attains the variance of the median $1/\eta(0)$ regardless of the radius of $\Theta$ or the prior $\pi(\theta)$. We also show in Section~\ref{sec:sequential} that no estimator can attain variance that is smaller than $1/\eta(0)$, so that the ARE of any estimator is at least $\sigma^2\eta(0) = (2f(0)\sigma)^2$. 
+In this section we settle such skepticism by providing simple lower and upper bounds to the relative efficiency under setting (iii). We show that:
+\begin{itemize}
+\item[I.] A consistent estimator with an asymptotically normal distribution always exists in setting (iii), and hence in setting (ii). 
+\item[II.] For the normal distribution, the ARE in setting (iii) is at most $3/4$. Namely, all estimators in this case are strictly inferior compared to the sample mean. 
+\end{itemize}
 
-\subsection{Lower bound from the CEO \label{sec:ceo}}
-The CEO setting includes $n$ encoders, each has access to a noisy version of a random source sequence \cite{berger1996ceo}. 
+\subsection{Consistent Estimation}
+Fix $\theta_0 \in \mathbb R$ and define the $i$th message by 
+\[
+M_i = \mathbf 1_{X_i>\theta_0}, 
+\]
+where $\mathbf 1_A$ is the indicator of the event $A$. We have
+\[
+p_n \triangleq\frac{1}{n} \sum_{i=1}^n M_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),  
+\]
+so that 
+\begin{equation}
+\label{eq:estimator_naive}
+\hat{\theta}_n = \theta_0 + F^{-1}\left( p_n \right)
+\end{equation}
+is a consistent estimator for $\theta$ in the distributed setting of Fig.~\ref{fig:distributed}, where we note that $F(x)$ is invertible over the support of $f(x)$ which is a connected set. Furthermore, the variance of $p_n$ is $F(\theta-\theta_0)F(\theta_0-\theta)$, and hence the delta method implies that $\hat{\theta}_n$ is asymptotically normal with variance 
+\begin{equation} 
+\frac{1}{
+\eta(\theta-\theta_0)} = \frac{F(\theta-\theta_0)F(\theta_0-\theta)}{f^2(\theta-\theta_0)}. 
+\end{equation}
+In particular, the ARE of $\hat{\theta}_n$ equals $\eta(\theta - \theta_0)\sigma^2$. In other words, for a prescribed accuracy, $\hat{\theta}_n$ of  \eqref{eq:estimator_naive} estimates $\theta$ with sample size that is $\eta(\theta- \theta_0)  \sigma^2$ times the samples size required for the sample mean. \par
+%
+%
+Assumption~\ref{assump:failure_rate} implies that for  all $n$ large enough the ARE of $\hat{\theta}_n$ of \eqref{eq:estimator_naive} is never greater than $\eta(0)$, which is the ARE of the sample median. This ARE is attained only when $\theta_0 = \theta$, although $\theta$ is unknown apriori. Since $\eta(x)$ vanishes as $|x|\rightarrow \infty$, the ARE of $\hat{\theta}_n$ may be very small when $\theta$ is away from $\theta_0$. As an example, when $f(x)$ is a normal density, the ARE of $\hat{\theta}_n$ is $\approx 0.07$ when $\theta_0$ is $2.33$ standard deviations from $\theta$. Therefore, the estimator $\hat{\theta}_n$ has little practical value unless the radius of $\Theta$ is small compared to the standard deviation. \par 
+It is suggested that lower variance can be obtained by an estimator of the form \eqref{eq:estimator_naive} if, after observing a batch of the single bit messages, one can update the threshold value $\theta_0$. Such a scheme falls within the adaptive setting of Fig.~\ref{fig:sequential} which we consider in Section~\ref{sec:sequential}. \\
+% variance equals to $1/\eta(0)n + o(1)$. We also show in Section~\ref{sec:sequential} that no estimator can attain variance that is asymptotically smaller than $1/\eta(0)n$, so that the ARE of any estimator in settings (ii) and (iii) is at least $\eta(0) \sigma^2$. 
+
+\subsection{Multiterminal Source Coding \label{sec:ceo}}
+The CEO setting includes $n$ encoders, each has access to a noisy version of a random sequence \cite{berger1996ceo}. 
 % $\left\{ U_j,\,j=1,2,\ldots \right\}$. 
-The $i$th encoder observes $k$ noisy source symbols and transmit $R_i k$ bits to a central estimator. \par
-Assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the Gaussian CEO setting with $k=1$ source realization: the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. As a result, a lower bound on the MSE distortion in estimating $\theta$ in the distributed encoding setting is given by the MSE in the optimal source coding scheme for the CEO with: $n$ terminals of codes rates $R_1 = \ldots = R_n = 1$, a Gaussian observation noise at each terminal of variance $\sigma^2$, and an arbitrary number of $k$ independent draws of $\theta$. Note that the difference between the CEO and ours lays in the privilege of each of the CEO encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, whereas our setting only allows $k=1$. 
- \\
-
-By using an expression for the minimal MSE in the Gaussian CEO as the number of terminals goes to infinity, we conclude the following:
+The $i$th encoder observes $k$ noisy samples and transmit $R_i k$ bits to a central estimator. \par
+Assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. As a result, a lower bound on the MSE in estimating $\theta$ in the distributed encoding setting is given by the MSE in the optimal coding scheme for the CEO. Note that the difference between the CEO setting and ours lays in the privilege of each of the encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, rather than a single realization using a single bit in ours. 
+ \par
+An optimal scheme for the CEO and its corresponding MSE is known only for the case where the prior on $\theta$, as well as the noise corrupting it at each location, are Gaussian. Namely, the Gaussian CEO is obtained from our setting when the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. Consequently, a lower bound the MSE in our distributed setting is obtained by considering the minimal MSE in the Gaussian CEO as the number of terminals goes to infinity. This leads to the following proposition:
 \begin{prop} \label{prop:ceo_lower_bound}
 Assume that $\Theta = \mathbb R$ and that $\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$. Then any estimator $\hat{\theta}_n$ of $\theta$ in the distributed setting satisfies
 \begin{equation} \label{eq:ceo_bound}
@@ -440,10 +480,10 @@ We consider the expression \cite[Eq. 10]{chen2004upper} that gives the minimal d
 R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
 \end{equation}
 Assuming $R_\Sigma = n$ and $L=n$, we get
-\begin{equation} \label{eq:ceo_optimal_sumrate}
+\begin{equation} \label{eq:ceo_optimal_sumrate2}
 n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
 \end{equation}
-The value of $D^\star$ that satisfies the equation above describes the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed encoding setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate} as $n\rightarrow \infty$, we see that 
+The value of $D^\star$ that satisfies the equation above describes the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed encoding setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
 \[
 D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
 \]
@@ -453,19 +493,19 @@ We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming 
 D^\star \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
 \frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + O(n^{-2}),
 \]
-which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ goes to zero. \par
+which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ is small. \par
 From the formulation of the CEO problem, it follows that the difference between the MSE lower bound \eqref{eq:ceo_bound} and the actual MSE in the distributed setting (case (iii)) is exclusively attributed  to the ability to perform coding over blocks. Namely, each CEO encoder may encode an arbitrary number of $k$ independent realizations of $\theta$ using $k$ bits, versus only one realization with one bit in ours. In other words, it is the ability to exploit the geometry of a high-dimensional product probability space that 
 distinguishes between the CEO problem with one bit per encoder and the mean estimation problem from one-bit measurements in the distributed setting of Fig.~\ref{fig:distributed}. 
 
 \section{Adaptive Estimation \label{sec:sequential}}
-The first main results of this paper, as described in Theorem~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be larger than $(2f(0)\sigma)^2$, which the ARE of the median of $X^n$. Next, we provide a particular adaptive estimation scheme that attains this maximal efficiency. Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $M^{i-1}$ messages is chosen. Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $(2f(0)\sigma)^2$. 
+The first main results of this paper, as described in Theorem~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be larger than $\eta(0)\sigma^2$, which is the ARE of the median of the sample $X_1,\ldots,X_n$. Next, we provide a particular adaptive estimation scheme that attains this maximal efficiency. Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $i-1$ messages is chosen. %Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $\eta(0)\sigma^2$. 
 
-\subsection{Maximal efficiency of adaptive one-bit schemes}
-Our first results asserts that the ARE of any adaptive estimation scheme is bounded from above by $(2 f(0)\sigma )^2$, as follows from the following theorem:
-\begin{thm}[minimal relative effeciency] \label{thm:adpative_lower_bound}
-Let $\hat{\theta}_n$ be any estimator of $\theta$ in the adaptive setting of Fig.~\ref{fig:sequential} and assumes that $\pi(\theta)$ converges to zero at the endpoints of the interval $\Theta$. Then
+\subsection{Maximal efficiency in adaptive setting}
+Our first result asserts that the ARE of any adaptive encoding and estimation scheme is bounded from above by $\eta(0)\sigma^2$. %This result follows from the following theorem:
+\begin{thm}[maximal relative effeciency] \label{thm:adpative_lower_bound}
+Let $\hat{\theta}_n$ be any estimator of $\theta$ in the adaptive setting of Fig.~\ref{fig:sequential}. Assumes that $\pi(\theta)$ converges to zero at the endpoints of the interval $\Theta$. Then
 \[
-\mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{\pi \sigma^2 }{2n +\pi \sigma^2  I_0}  =  \frac{\sigma^2}{4f^2(0) n}+o(n^{-1}),
+n\mathbb E\left[ (\theta-\hat{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0},
 \]
 where 
 \[
@@ -475,22 +515,35 @@ is the Fisher information with respect to a location model in $\theta$.
 \end{thm}
 
 \subsubsection*{Sketch of Proof}
-The main idea in the proof is to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality \cite[Thm. 2.13]{tsybakov2008introduction},\cite{gill1995applications} which bounds from below the MSE of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are given in the Appendix.\\
+The main idea in the proof is to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality \cite[Thm. 2.13]{tsybakov2008introduction},\cite{gill1995applications} which bounds from below the MSE of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in the Appendix.\\
 
-Next, we present an adaptive estimation scheme that attains the maximal ARE of $(2f(0)\sigma)^2$. 
+Theorem~\ref{thm:adpative_lower_bound} implies that any estimator $\hat{\theta}_n$ from any adaptive encoding scheme satisfies
+\[
+n\mathbb E\left[ (\theta-\theta_n)^2 \right] \leq  \frac{1}{4f^2(0)}+O(n^{-1}),
+\]
+and 
+\[
+\ARE(\hat{\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
+\]
+
+Next, we present an adaptive encoding and estimation scheme that attains the maximal ARE of $\eta(0)\sigma^2$. 
 
 \subsection{Asymptotically optimal estimator}
 Let $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ be a strictly positive sequence. Consider the following estimator $\hat{\theta}_n$ for $\theta$:  
 \begin{equation}
 \label{eq:sgd_alg}
-\theta_n = \theta_{n-1} +  \gamma_n \sgn (X_n - \theta_{n-1}), \quad n = 1,2,\ldots,
+\theta_n = \theta_{n-1} +  \gamma_n M_n, \quad n = 1,2,\ldots,
 \end{equation}
-and set the $n$th step estimation as
+where 
+\begin{equation}
+M_n = M_n (X_n,\theta_{n-1}) =\sgn (X_n - \theta_{n-1}).
+\end{equation}
+Define the $n$th step estimation as
 \begin{equation} \label{eq:sgd_est}
 \hat{\theta}_n =  \frac{1}{n} \sum_{i=1}^n  \theta_i. 
 \end{equation}
 
-For the estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est} we have the following results:
+We have the following results:
 \begin{thm} \label{thm:sgd}
 Consider the sequence $\left\{\hat{\theta}_n,\, n\in \mathbb N \right\}$ defined by \eqref{eq:sgd_est}. 
 \begin{enumerate}
@@ -504,7 +557,7 @@ Consider the sequence $\left\{\hat{\theta}_n,\, n\in \mathbb N \right\}$ defined
 \end{equation}
 (e.g., $\gamma_n = n^{-\beta}$ for $\beta \in (0,1)$). Then
 \[
-\sqrt{n} \left( \hat{\theta}_n - \theta \right) \overset{d}{\rightarrow} \mathcal N \left(0,  \left( 2 f(0)\right)^{-2} \right).
+\sqrt{n} \left( \hat{\theta}_n - \theta \right) \overset{d}{\rightarrow} \mathcal N \left(0,  1/\eta(0) \right).
 \]
 \item[(ii)] Assume that in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
 \begin{equation} \label{eq:conditions2}
@@ -515,18 +568,93 @@ Consider the sequence $\left\{\hat{\theta}_n,\, n\in \mathbb N \right\}$ defined
 \end{equation}
 (e.g., $\gamma_n = n^{-\beta}$ with $2/3<\beta<1$). Then
 \[
-\lim_{n\rightarrow \infty} n\mathbb E \left[ \left(\theta-\hat{\theta}_n \right)^2 \right] = \left( 2 f(0)\right)^{-2}. 
+\lim_{n\rightarrow \infty} n\mathbb E \left[ \left(\theta-\hat{\theta}_n \right)^2 \right] = \frac{1}{\eta(0)}. 
 \]
 \end{enumerate}
 \end{thm}
 
 \subsubsection*{Proof}
-The asymptotic behavior of \eqref{eq:sgd_est} is obtained from \cite[Thm. 4]{polyak1992acceleration} and \cite[Thm. 2]{polyak1990new}. The details are in the Appendix.\\
+The asymptotic behavior of \eqref{eq:sgd_est} follows from \cite[Thm. 4]{polyak1992acceleration} and \cite[Thm. 2]{polyak1990new}. The details are in the Appendix. \\
 
-Theorem~\ref{thm:sgd} implies that the estimator $\hat{\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}.
-\par
-Note that $\theta_0$ is not explicitly defined 
-in equation \eqref{eq:sgd_est}. A reasonable initialization for $\theta_0$ is $\theta_0 = \mathbb E [\theta]$, although Theorem~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$. Nevertheless, the bound in Theorem~\ref{thm:adpative_lower_bound} suggests that the non-asymptotic MSE can be reduced significantly whenever the location information $I_0$ is large. In what follows, we consider a greedy estimation procedure that uses the optimal decision rule given the prior distribution and the previous messages. In particular, this procedure exploit the prior information on $\theta$ provided by its prior. 
+Theorem~\ref{thm:sgd} implies that the estimator $\hat{\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}. The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. 
+ \par
+%Note that $\theta_0$ is not explicitly defined in equation \eqref{eq:sgd_est}. A reasonable initialization for $\theta_0$ is $\theta_0 = \mathbb E [\theta]$, although Theorem~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$.  \\
+In the encoding and estimating procedure \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, each one-bit message $M_n$ is a function of the current gradient descent estimate $\theta_{n-1}$ and its private sample. As we explain next, it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ using only a single ``access'' to such state.  
+
+\subsection{Optimality using a Single Interaction}
+In Section~\ref{sec:preliminary} we considered an estimator that is based on messages of the form 
+\[
+M_i = \mathbf 1_{X_i > \theta_0},\qquad i=1,\ldots,n,
+\]
+and showed that it is asymptotically normal with variance $1/\eta(\theta-\theta_0)$.
+%
+We now show that a similar encoding leads to an asymptotically normal estimator with the minimal variance $1/\eta(0)$, provided we may update once the threshold value $\theta_0$. In this procedure we separate the sample into two disjoint sets: $X_1,\ldots,X_{n_1}$ and $X_{n_1+1},\ldots,X_n$ for some $n_1 < n$. We first use the estimator \eqref{eq:estimator_naive} to obtain an estimate $\hat{\theta}_{n_1}$ based on $M_1,\ldots,M_{n_1}$, and then use $\hat{\theta}_{n_1}$ as the new threshold value to obtain messages $M_{n_1+1}, \ldots, M_n$. The specific encoding and estimation scheme, as well as its asymptotic performance, are given by the following theorem:
+\begin{thm}
+For $i=1,\ldots,n$ set
+\[
+M_i = \begin{cases}
+ \mathbf 1_{X_i \geq \theta_0} & i = 1,\ldots,n_1, \\
+ \mathbf 1_{X_i \geq \hat{\theta}_{n_1} }& i={n_1+1,\ldots,n},
+\end{cases}
+\]
+where $n = n_1+ n_2$ and 
+\[
+\hat{\theta}_{n_1} \triangleq \theta_0 + F^{-1}\left(
+\frac{1}{n_1} \sum_{i=1}^{n_1} M_i 
+ \right).
+\] 
+Let 
+\[
+\hat{\theta}_{n_2}  = \hat{\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} M_i \right)
+\]
+and assume that $n_1(n) \rightarrow \infty$ and $n_1(n)/n \rightarrow 0$. Then:
+\begin{align*}
+ \sqrt{n} \left( \hat{\theta}_{n_2} - \theta  \right)^2  \overset{D}{\longrightarrow}  \mathcal N\left( 0, 1/\eta(0) \right).
+\end{align*}
+\end{thm}
+%
+%
+\begin{proof}
+For $t\in \mathbb R$, set
+\[
+p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}. 
+\]
+From the central limit theorem
+\begin{align*}
+& \sqrt{n} \left( p_{n_2}(t) - F( \theta - t) \right)  = \sqrt{\frac{n}{n_2}} \sqrt{n_2} \left(  p_{n_2}(t) - F(\theta - t) \right) \\
+& \overset{D}{\rightarrow} \mathcal N\left( 0, V(t) \right),
+\end{align*}
+where
+\[
+V(t) \triangleq F(\theta - t) F \left( t - \theta\right). 
+\]
+Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ we obtain
+\begin{align*}
+& \sqrt{n} \left( t + F^{-1}(\hat{p}_{n_2}(t)) - \theta \right) \\
+&= \sqrt{n} \left( g(\hat{p}_{n_2}(t)) - g \left(F(\theta-t) \right)  \right) \\
+& \overset{D}{\to} \mathcal N\left(0, 
+1/\eta(\theta-t) \right).
+\end{align*}
+%where this convergence is uniform in $t$ since all moments of $F^{-1}(\hat{p}_{n_2})$ exists. 
+By the law of large numbers we also have
+\[
+p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} M_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
+\]
+so that $\hat{\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity, and thus 
+\[
+\eta( \hat{\theta}_{n_1}-\theta) \overset{a.s.}{\rightarrow} \eta(0). 
+\]
+By Slutsky's theorem we get
+\begin{align*}
+& \sqrt{n}\left(\hat{\theta}_{n_2} - \theta\right) \\
+& = \sqrt{n} \left( \hat{\theta}_{n_1} + F^{-1}(\hat{p}_{n_2}(\hat{\theta}_{n_1})) - \theta \right)  \\
+& \overset{D}{\to} \mathcal N\left( 0, 
+1/\eta(0) \right). 
+\end{align*}
+\end{proof}
+%
+
+To conclude the adaptive estimation setting, we now consider estimation from one bit messages obtained via an encoding scheme that is one-step optimal. %Namely, each message obtained by employing the optimal the decision rule given the prior distribution and the previous messages.
 
 \subsection{One-step optimal estimation}
 We now consider an estimation scheme that posses the property of \emph{one-step optimality}: at each step $n$, the $n$th encoder designs the detection region $M_n^{-1}(1)$ such that the MSE given $M^n$ is minimal. In other word, this scheme designs the messages in a greedy manner, such that the MSE at step $n$ is minimal given the current state of the estimation described by $M^{n-1}$. \\
@@ -548,17 +676,17 @@ with
 m^-(\tau)  & = \frac{\int_{-\infty}^{\tau} \theta \pi(d\theta) }{\int_{-\infty}^{\tau} \pi(d\theta)} ,\\
 m^+(\tau) & = \frac{\int_{\tau}^\infty \theta \pi(d\theta) }{\int_{\tau}^\infty \pi(d\theta)} .
 \end{align*}
-Then for any estimator $\hat{\theta}$ which is a function of $M(X) \in \{-1,1\}$, we have
+For any estimator $\hat{\theta}$ which is a function of $M(X) \in \{-1,1\}$,
 \begin{equation}
 \label{eq:opt_cond}
-\mathbb E \left(\theta-\hat{\theta}(M)\right)^2 \geq  \mathbb E \left(\theta- \mathbb E[\theta|M^\star]\right)^2,
+\mathbb E \left(\theta-\hat{\theta}(M)\right)^2 \geq  \mathbb E \left(\theta- \mathbb E[\theta|M^\star]\right)^2.
 \end{equation}
 \end{thm}
 
 \begin{proof}
-The proof is completed by the following two lemmas, proofs of which can be found in the Appendix:
+The proof is the result of the following two lemmas, proofs of which can be found in the Appendix:
 \begin{lem} \label{lem:unique}
-Let $f(x)$ be a log-concave probability density function. Then the equation 
+Let $f(x)$ be a log-concave density function. Then the equation 
 \begin{equation}
 \label{eq:lem_fixed_point}
 2x = \frac{\int_x^\infty uf(u)du}{\int_x^\infty f(u)du} + \frac{\int_{-\infty}^x uf(u)du}{\int_{-\infty}^x f(u)du} 
@@ -566,26 +694,27 @@ Let $f(x)$ be a log-concave probability density function. Then the equation
 has a unique solution.
 \end{lem}
 \begin{lem} \label{lem:adaptive}
-Let $U$ be an absolutely continuous random variable with pdf $P(du)$. Then the one-bit message $M^\star\in \{-1,1\}$ that minimizes
+Let $U$ be an absolutely continuous random variable with PDF $P(du)$. Set 
 \[
-\int \left( u - \mathbb E[U|M(u)]  \right)^2 P(du)
-\]
-is given by
-\[
-M^\star  =  \sgn(U - \tau),
+M^\star(u)  =  \sgn(u - \tau),
 \]
 where $\tau$ is the unique solution to
  \[
 2 \tau = \frac{\int_{\tau}^\infty u P(du)} {\int_{\tau}^\infty P(du)} + \frac{\int_{-\infty}^{\tau} u P(du)}{\int_{-\infty}^{\tau} P(du)}.
 \]
+Then for any measurable $M: \mathbb R\to \{-1,1\}$,
+\[
+\int \left( u - \mathbb E[U|M^\star (u)]  \right)^2 P(du) \leq \int \left( u - \mathbb E[U|M(u)]  \right)^2 P(du). 
+\]
 \end{lem}
 \end{proof}
 
 \begin{rem}
-The value of the optimal threshold as given in Theorem~\ref{thm:opt_one_step} is different than the one given in \cite[Eq. 5]{1619423} for apparently the same problem. Indeed, it seems like Equation 4 there is erroneous. 
+The optimal threshold given in Theorem~\ref{thm:opt_one_step} is different than the one given in \cite[Eq. 5]{1619423} for apparently the same problem. Indeed, it seems like Equation 4 in 
+\cite{1619423} is erroneous. 
 \end{rem}
 
-By applying at each step the optimal one-step decision rule from Theorem~\ref{thm:opt_one_step},  we arrive at the following adaptive encoding and estimation scheme: 
+By applying the optimal one-step decision rule from Theorem~\ref{thm:opt_one_step} at each step, we arrive at the following adaptive encoding and estimation scheme: 
 \begin{itemize}
 \item Initialization: set $P_0(t) = \pi(t)$ and $\tau_0 = \mathbb E \theta$. 
 \item For $n\geq 1$:
@@ -604,27 +733,57 @@ where $\alpha_n$ is given by
 \begin{equation}
 \theta_n = \mathbb E \left[ \theta| M^n\right] = \int_{-\infty}^\infty t P_n(t) dt. \label{eq:estimator_update}
 \end{equation}
-\item[(3)] Obtain $\tau_n$ from equation \eqref{eq:fixed_point} with the updated prior $P_n(t)$. Note that $F(x)$ is log-concave so the updated prior $P_n(t)$ remains log-concave and thus a unique solution to \eqref{eq:fixed_point} is guaranteed by Lemma~\ref{lem:unique}. 
+\item[(3)] Obtain $\tau_n$ from equation \eqref{eq:fixed_point} with the updated prior $P_n(t)$. Note that if $P_{n-1}(t)$ and $F(x)$ are log-concave, so does $P_n(t)$. Therefore, $P_n(t)$ is log-concave by induction and a unique solution to \eqref{eq:fixed_point} is guaranteed by Lemma~\ref{lem:unique}. 
 \item[(4)] Update the $(n+1)$th message as
 \begin{equation}\label{eq:message_update}
 M_{n+1} = \sgn(X_{n+1}-\tau_n)
 \end{equation}
 \end{enumerate}
 \end{itemize}
-Since equation \eqref{eq:fixed_point} has no analytic solution in general, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture, however, that it attains the asymptotic relative efficiency of $4f^2(0)$ under the same conditions on $f(x)$ in the problem formulation. 
-In Fig.~\ref{fig:adaptive_error} we demonstrate this convergence in the case where $f(x)$ is the standard normal density. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the sample mean for the same sample realization. 
+%Since Equation \eqref{eq:fixed_point} has no analytic solution in general, it is hard to derive the asymptotic behavior of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update}. We conjecture, however, that it attains the asymptotic relative efficiency of $4f^2(0)$ under the same conditions on $f(x)$ in the problem formulation. 
+The normalized MSE of the estimator defined by \eqref{eq:estimator_update} and \eqref{eq:message_update} is illustrated in Fig.~\ref{fig:adaptive_error} in the case where $f(x)$ is the standard normal density. Also shown in Fig.~\ref{fig:adaptive_error} are the normalized MSE of the asymptotically optimal estimator defined by \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, as well as the MSE achieved by the sample mean for the same sample realization. 
 
 \begin{figure}
 \begin{center}
-\begin{tikzpicture}
-\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
-%\node[color = blue,  minimum width=1cm, align = left] at (1.5,1.5) {assymptotically optimal \eqref{eq:sgd_est}};
-%\node[color = red, minimum width=1cm, align = left] at (1.5,0.55) {one-step optimal \eqref{eq:message_update}} ;
-\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left(\hat{\theta}_n - \theta \right)^2$};
-\node[scale = 0.7] at (0,-2.4) {$n$};
-%\draw[dashed] (-3.5,1.18) node[left, scale = 0.7] {$\frac{\pi}{2}$}-- (-3,1.18);
+\begin{tikzpicture}[scale = 0.6]
+\begin{axis}[
+width=10cm, height=6cm,
+xmin = 0, xmax=1000, 
+restrict y to domain = 0:3,
+ymin = 0,
+ymax = 3.4,
+samples=10, 
+xlabel= $n$,
+%ylabel = $n\mathbb E \left[\left(\theta - \hat{\theta}_n \right)^2 \right]$,
+%xtick={-3,-2,-1,0,1,2,3},
+%xticklabels={-3,-2,-1,0,1,2,3},
+ytick={0,1,1.57},
+yticklabels={0,1,$\pi/2$},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+
+\addplot[color = blue, solid, smooth] plot table [x = n, y = SGD, col sep=comma] {../SimRes/sim_res.csv};
+\addlegendentry{asymptotically optimal};
+
+\addplot[color = red, solid, smooth] plot table [x = n, y = Bayes, col sep=comma] {../SimRes/sim_res.csv};
+\addlegendentry{one step optimal};
+
+\addplot[color = green!30!black, solid, smooth] plot table [x = n, y = split, col sep=comma] {../SimRes/sim_res.csv};
+\addlegendentry{single interaction};
+
+\end{axis}
 \end{tikzpicture}
-\caption{Normalized empirical risk $n\left(\hat{\theta}_n-\theta\right)^2$ versus number of samples $n$ for $500$ Monte Carlo trials. In each trial, $\theta$ is chosen uniformly in the interval $(-3,3)$. \label{fig:adaptive_error}  }
+%\begin{tikzpicture}
+%\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
+%\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left(\hat{\theta}_n - \theta \right)^2$};
+%\node[scale = 0.7] at (0,-2.4) {$n$};
+%\end{tikzpicture}
+\caption{Normalized empirical risk $n\left(\hat{\theta}_n-\theta\right)^2$ versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
+\label{fig:adaptive_error}  }
 \end{center}
 \end{figure}
 
@@ -639,125 +798,175 @@ M_n & = \sgn(V_n)  \end{cases}, \quad n=1,2,\ldots, \label{eq:sdm}
 where $\alpha > 0$ is a parameter of the modulator that is determined by the maximal value of the input sequence $X^n$. The SDM of the form \eqref{eq:sdm} was studied in \cite{53738} under the assumption that the input process $X_n$ is an i.i.d Gaussian process. The main results from \cite{53738} shows that regardless of the initial state $V_0$, the process $M_n$ is a stationary ergodic process with mean $\theta$. It follows that a consistent estimation of $\theta$ is obtained by taking the mean of the sequence $\{M_n\}$. However, the results from \cite{53738} does not provide a closed form for the second order statistics of $\{M_n\}$, so that convergence rate cannot be derived from \cite{53738}.  
 \end{comment}
 
+\section{Distributed Estimation \label{sec:distributed}}
+We now consider the distributed encoding setting described in Fig.~\ref{fig:distributed} (Setting (iii) in the Introduction). In this setting each single-bit message $M_i$ is only a function of its private sample $X_i$, and hence $M_i$ characterized by its \emph{detection region}, defined as 
+\[
+A_i = \left\{ x \in \mathbb R \,:\, M_i(x) = 1 \right\}.
+\]
+Consequently, $M_i$ is of the form
+\[
+M_i = \begin{cases} 1 & X_i \in A_i, \\
+-1 & X_i \notin A_i,
+\end{cases} \quad i\in \mathbb N,
+\]
+where the detection region $A_i$ is a Borel set that is independent of $X_1,\ldots,X_n$.\\
 
-\section{Distributed Estimation from Threshold Detectors \label{sec:distributed}}
-We now consider the distributed encoding setting described in Fig.~\ref{fig:distributed}, in which each single-bit message is independent of the other messages. Instead of searching for the optimal choice of the messages, we only consider messages that are obtained each sample against a prescribed threshold. Namely, each message is of the form
+As a first step, we provide conditions under which the messages $M_1,M_2,\ldots$ define a local asymptotic normal family. 
+
+\begin{thm} \label{thm:LAN1}
+For $n \in \mathbb N$ and $A_n \subset \mathbb R$,  define
+\begin{equation}
+\label{eq:precision_general}
+L_n(A_1,\ldots,A_n;\theta) \triangleq \frac{1}{n} \sum_{i=1}^n \frac{ \left(\frac{d}{d \theta} \Prob(X_i \in A_i) \right)^2 }{ \Prob(X_i \in A_i)\left(1- \Prob(X_i \in A_i) \right) }. 
+\end{equation}
+Consider the following conditions:
+\begin{itemize}
+\item [(i)\,\,] The pdf $f(x)$ of $X_n-\theta$ is a log-concave, differentiable and symmetric density function such that $\eta(x)$ is unimodal.
+\item[(ii)\,] $A_n$ is a finite union of disjoint intervals.
+\item[(iii)] The limit 
+\begin{equation}
+\label{eq:LAN_lim}
+\kappa(\theta) \triangleq \lim_{n\to \infty} L_n(A_1,\ldots,A_n; \theta)
+\end{equation}
+exists. 
+\end{itemize}
+For $i=1,\ldots,n$ set
+\[
+M_n = \begin{cases} 1 & X_n \in A_n, \\
+-1 & X_n \notin A_n. 
+\end{cases} 
+\]
+For any $\theta$, $f(x)$ and a sequence of sets $A_1,A_2,\ldots$ such that (i)-(iii) hold, and any $h\in \mathbb R$, we have
+\begin{align*}
+& \log  \frac{ \mathbb P_{\theta+h/\sqrt{n}} (M_1,\ldots,M_n) }{
+\mathbb P_{\theta} (M_1,\ldots,M_n)} \\
+& \overset{D}{\longrightarrow} \mathcal N\left(-\frac{1}{2} h^2 \kappa(\theta), h^2 \kappa(\theta) \right).
+\end{align*} 
+\end{thm}
+Theorem~\ref{thm:LAN1} provides conditions under which $M_1,\ldots,M_n$ defines a LAN family with a precision parameter given by the limit in \eqref{eq:LAN_lim}. An important conclusion of this theorem follows from the local asymptotic minimax property of estimators in LAN models (e.g. \cite{van2000asymptotic}):
+\begin{cor} \label{cor:LA_minimax}
+Let $\hat{\theta}_n$ be an estimator of $\theta \in \Theta$ from $M_1,\ldots,M_n$ with detection regions $A_1,\ldots,A_n$. Assume that as $n$ goes to infinity, conditions (i)-(iii) of Theorem~\ref{thm:LAN1} hold. Then for any bounded, symmetric, and quasi-convex function $L$, 
+\[
+\liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\hat{\theta}_{n} - \tau) \right) \right] \geq \mathbb E \left[ L (Z/\sqrt{\kappa(\theta)}) \right],
+\]
+where $Z \sim \mathcal N(0,1)$. In particular, for $L(x) = x^2$, 
+\[
+\liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  n \mathbb E  \left( \hat{\theta}_{n} - \tau \right)^2 \geq 1/\kappa(\theta).
+\]
+\end{cor}
+%
+Corollary~\ref{cor:LA_minimax} says that when the messages define a LAN model, no estimator can attain MSE smaller than $1/\kappa(\theta)n + O(1/n)$ where $\kappa(\theta)$ is the precision parameter of the model at $\theta$. This fact poses the upper bound of $\kappa(\theta)\sigma^2$ for the ARE of estimators in such models. \\
+
+Next, we show that under LAN no estimator can attain the optimal ARE of $\eta(0)\sigma^2$ uniformly for all $\theta \in \Theta$.
+
+\subsection{Non-existence of a Uniformly Optimal Strategy}
+We now show that under LAN models, the optimal minimal risk $1/\eta(0)$ can only be attained at a finite number of points within $\Theta$. This fact implies in particular that, unlike in the adaptive setting, no distributed estimation scheme has ARE of $\eta(0)\sigma^2$ for all $\theta \in \Theta$. 
+
+\begin{thm} \label{thm:non_existence}
+Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is a union of at most $K$ intervals. The number of points $\theta \in \Theta$ satisfying $\kappa(\theta) = \eta(0)$ is at most $2K$. 
+\end{thm}
+
+\begin{proof}
+See Appendix. 
+\end{proof}
+%Theorem ~\ref{thm:non_existence} implies that for any distributed encoding scheme with messages defining a LAN family, and whose number of connected components is uniformly bounded, the set of point with MSe 
+
+We next consider the case where each detection region is a half open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain, in this case, existence of a density for the sequence of threshold is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
+
+%In the adaptive setting, it follows from Theorem~\ref{thm:sgd} that messages of this kind with appropriately chosen thresholds leads to an estimator with the optimal ARE of $\eta(0)sigma^2$. However, Theorem~\ref{thm:non_existence} implies that such ARE can only be attained for a negligible subset of the parameter space. As we shall see next, messages obtained by comparison against a sequence of thresholds cannot attain the optimal efficiency of expect perhaps on a single point of $\Theta$. 
+
+\subsection{Threshold Detection}
+Assume now that each $M_i$ is of the form
 \begin{equation}
 \label{eq:threshold_message}
 M_i = \sgn(t_i - X_i) = \begin{cases} 1 & X_i< t_i, \\
 -1 & X_i > t_i,
 \end{cases}  
 \end{equation}
-where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th detector applied by the encoder on it sample $X_i$. The \emph{density} $\lambda_n$ of the set of threshold values $\mathcal T_n  \triangleq \left\{t_1,\ldots,t_n \right\}$ is defined as their empirical distribution, i.e., for an interval $I \subset \mathbb R$, 
+where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th encoder. In other words, the detection region of $M_i$ is $A_i = (t_i,\infty)$ and $\mathbb P(X_i \in A_i) = F \left( M_i(t_i-\theta) \right)$. It follows that
+\begin{equation}
+L_n(A_1,\ldots,A_n;\theta) = \frac{1}{n} \sum_{i=1}^n \frac{ \left(f(t_i-\theta) \right)^2 }{F\left(t_i-\theta \right) F\left(\theta - t_i \right) }  = \frac{1}{n} \sum_{i=1}^n \eta(t_i - \theta).
+\label{eq:Ln_threshold}
+\end{equation}
+A natural condition for the existence of the limit \eqref{eq:Ln_threshold} as $n\to \infty$ is that the empirical distribution of the threshold values converges to a probability measure. Specifically, for an interval $I \subset \mathbb R$ define
 \[
-\lambda_n(I) = \frac{ \card \left( \mathcal T_n \cap I \right)}{n}.
+\lambda_n(I) = \frac{ \card \left( I \cap \{t_1,t_2,\ldots \} \right)}{n}. 
 \]
-We further assume that $\lambda_n$ converges (weakly) to a probability measure $\lambda(dt)$ on $\mathbb R$. For example, this convergence occurs whenever $t_1,\ldots,t_n$ are drawn independently from the probability distribution $\lambda(dt)$. 
- \\
+Theorem~\ref{thm:LAN1} implies:
+\begin{cor} \label{cor:LAN_thresh}
+Let $\{t_n\}_{n=1}^\infty$ be a sequence of threshold values such that $\lambda_n$ converges (weakly) to a probability measure $\lambda(dt)$ on $\mathbb R$. Then $\left\{ M_i = \sgn(X_i - t_i) \right\}_{i=1}^n$ is a LAN family with precision parameter
+\[
+\kappa(\theta) = \int_{\mathbb R} \eta(t-\theta) \lambda(dt). 
+\]
+\end{cor}
 
-\subsection{Local Asymptotic Minimax Estimation}
+Due to local asymptotic normality of $\{M_n\}_{n=1}^\infty$, the maximum likelihood estimator (ML) of $\theta$ from $M_1,\ldots,M_n$, denoted here by 
+$\hat{\theta}^{ML}_n$, is local asymptotic minimax in the sense that 
+\[
+\sqrt{n} \left( \hat{\theta}^{ML}_n - \theta \right) \overset{D}{\longrightarrow} \mathcal{N} \left(0, 1/\kappa(\theta) \right). 
+\]
+It follows that when the density of the threshold values converges to a probability measure, the ARE of the ML estimator is $\kappa(\theta)\sigma^2$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. We note that $\hat{\theta}^{ML}_n$ is given by the root of 
+\begin{equation}
+\label{eq:ML}
+\sum_{i=1}^n M_i \frac{f \left( t_i-\theta\right) }{F \left(M_i  (t_i-\theta)\right) },  
+\end{equation}
+which is the derivative of the log-likelihood function. This root is unique since the log-likelihood function is concave. Furthermore, for any $n \in \mathbb R$, we have that $\hat{\theta}^{ML}_n  \in [t_{(1)}, t_{(n)}]$ where $t_{(i)}$ denotes the $i$th element of $\{t_1,t_2\ldots\}$. Therefore, if $\{t_1,t_2\ldots\}$ is bounded (for example $\{t_1,t_2\ldots\} \subset \Theta$), then 
+\[
+\lim_{n\to \infty} n\left(\hat{\theta}^{ML}_n - \theta \right)  = 1/\kappa(\theta), 
+\] 
+so that the ML estimator attains the local asymptotic MSE of Corollary~\ref{cor:LA_minimax}. \par
+%
+Since $\eta(x)$ attains its maximum at the origin, we conclude that
+\[
+\kappa(\theta) \leq \sup_{t\in \mathbb R} \eta \left( t-\theta\right) = \eta(0).
+\]
+This upper bound on $\kappa(\theta)$ implies that the ARE of any distributed estimator based on a sequence of threshold detectors does not exceed $\eta(0)\sigma^2$, a fact that agrees with the lower bound under adaptive estimation derived in Theorem~\ref{thm:adpative_lower_bound}. 
+%
+This upper bound on $\kappa(\theta)$ is attained only when $\lambda$ is the mass distribution at $\theta$. Since $\theta$ is apriori unknown, we conclude that estimation in the distributed setting using threshold detection is strictly sub-optimal compared to the adaptive setting. In other words, the ability to choose the threshold values in an adaptive manner based on previous messages strictly improves relative efficiency compared to a non-adaptive threshold selection.  \\
 
-In order to estimate $\theta$ from the messages $M^n$, we consider the maximum likelihood (ML) estimator. The log-likelihood function of $\theta$ is given by
-\[
-l(M^n  |\theta ) =  \sum_{i=1}^n \log F \left( M_i \left( t_i - \theta \right) \right). 
-\]
-Since $F(x)$ is a log concave function, the log-likelihood function has a unique maximizer $\hat{\theta}_n$ which is the ML estimator. Specifically, the ML estimator $\hat{\theta}_{ML}$ is the unique root of 
-\[
-\sum_{i=1}^n M_i \frac{f \left( t_i-\theta\right) }{F \left(M_i  (t_i-\theta)\right) } 
-\]
+%We conclude that when the density of the threshold values converges to a probability measure, the ARE of the ML is $\kappa(\theta)$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. 
 
-Next, we show that under the assumptions above the sequence of messages $M^n$ defines a local asymptotic normal (LAN) family of probability distributions. As a result, we conclude that the ML estimator in estimating $\theta$ from $M^n$ satisfies a local asymptotic minimax property with respect to the \emph{precision} parameter of this LAN family \cite{van2000asymptotic}. 
-\begin{thm} \label{thm:LAN}
-Let $f(x)$ be a log-concave, symmetric, and twice differentiable probability density function. Consider the sequence $M^n$ of threshold detectors 
-\[
-M_i = \sgn(X_i - t_i),\quad i=1,\ldots,n,
-\]
-with threshold density converges to a probability measure $\lambda$. The the following two statements hold:
-\begin{itemize}
-\item[(i)] Any estimator ${\theta}_n$ of $\theta$ which is a function of $M^n$ satisfies
-\[
-\liminf_{c\rightarrow \infty}\, \liminf_{n\rightarrow \infty} \sup_{\tau\,:\,| \tau - \theta| \leq \frac{c}{\sqrt{n}} }  n \mathbb E \left({\theta}_n - \tau \right)^2 \geq 1/K(\theta),
-\]
-where 
-\[
-K(\theta) \triangleq \int \eta\left(t-\theta \right) \lambda(dt),
-\]
-and 
-\[
- \eta(x) \triangleq \frac{ f^2\left( x \right)}{ F\left( x \right) \left(1-F(x) \right)}. 
-\]
-\item[(ii)] The asymptotic distribution of the ML estimator $\hat{\theta}_n$ is given by
-\[
-\sqrt{n}(\hat{\theta}_n - \theta) \overset{D}{\rightarrow} \mathcal N\left(0,1/K(\theta) \right).
-\]
-\end{itemize}
-\end{thm}
-
-\begin{rem}
-The condition that $\lambda_n(dt)$ converges weakly to $\lambda(dt)$ can be relaxed to the condition that for any $\theta \in \Theta$, 
-\[
-\frac{1}{n} \sum_{i=1}^n  \eta \left( t_i-\theta \right)  
-\]
-converges to $K(\theta)$.
-\end{rem}
-
-\begin{proof}
-See Appendix. 
-\end{proof}
-
-It follows from Theorem~\ref{thm:LAN} that the asymptotic MSE of the ML estimator is $1/(nK(\theta))$, and that this MSE is asymptotically minimal with respect to all local alternative estimators for $\theta$. In particular, we conclude that the ARE of any estimator based on threshold detection is $K(\theta)\sigma^2$. \par
-It follows from Proposition~\ref{prop:eta} that $\eta(x)$ attains its maximum at the origin. Since the thresholds density $\lambda$ integrates to $1$, it follows that
-\[
-K(\theta) \leq \sup_{t\in \mathbb R} \eta \left( t-\theta\right)  = \eta(0) = 4f^2(0).
-\]
-This upper bound on $K(\theta)$ implies that the ARE of any distributed estimator is not smaller than $(2f(0)\sigma)^2$, a fact that agrees with the lower bound under adaptive estimation derived in Theorem~\ref{thm:adpative_lower_bound}. Furthermore, 
-since this upper bound on $K(\theta)$ is attained whenever the density $\lambda$ is the mass distribution at $\theta$ which is unknown apriori, Theorem~\ref{thm:LAN} implies that estimation in the  distributed setting using threshold detection is strictly sub-optimal compared to the adaptive setting. In other words, the ability to adaptively choose the threshold value strictly improves the relative efficiency compared to a non-adaptive threshold selection. \\
-
-In what follow, we consider the asymptotic threshold density $\lambda(dt)$ that minimize the asymptotic MSE under the worst choice of $\theta \in \Theta$, or, what is the same, the expected value of $\mathbb E\left [1/K(\theta) \right]$ under the least favorable prior $\pi(\theta)$. 
-%As we shall see, even with an optimal selection of the threshold density, the minimax risk increases linearly in $b$ as in Example~\ref{ex:uniform_density}. 
+%
+We conclude this section by considering the density of the threshold values that maximizes the ARE $\kappa(\theta)$ under the worst choice of $\theta \in \Theta$.
 
 \subsection{Minimax Threshold Density}
-%Assume that $\theta = [-b,b]$ and consider
-%\begin{equation} \label{eq:variational}
-%K^\star(b) = \sup_{\lambda} \min_{\theta \in [-b,b]}  {K(\theta)} = \int \eta\left( t-\theta \right) \lambda (dt), 
-%\end{equation}
-%where the supremum is over all probability measure $\lambda$ on $\mathbb R$.
-The distribution $\lambda(dt)$ that minimizes the asymptotic MSE $K(\theta)$ over the worst choice of $\theta$ in $\Theta = [-b,b]$ is given as the solution to the following optimization problem:
+The distribution $\lambda(dt)$ that maximizes $\kappa(\theta)$, and thus minimizes $1/\kappa(\theta)$, over the worst choice of $\theta$ in $\Theta = (-T,T)$ is given as the solution to the following optimization problem:
 \begin{align}
 \label{eq:var_cvx_minimax}
 \begin{split}
-\mathrm{maximize} \quad &  \min_{\theta \in [-b,b]} \int \eta(t-\theta) \lambda(dt)
+\mathrm{maximize} \quad &  \inf_{\theta \in (-T,T)} \int \eta(t-\theta) \lambda(dt)
 \\ 
 \mathrm{subject~to} 
 \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
 \end{split}
 \end{align}
-Denote the maximal value of the objective in \eqref{eq:var_cvx_minimax} by $K^\star(b)$. Since the objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda$, this problem can be solved using a convex program. By discretizing the interval $[-b,b]$ using $N_\theta$ values $\theta_1,\ldots,\theta_{N_\theta}$ and the real line using $N_\lambda$ values $\lambda_1,\ldots,\lambda_{N_\lambda}$, the discrete version of \eqref{eq:var_cvx_minimax} is the following linear program (LP) in the variables $K \in \mathbb R$ and $\lambda \in \mathbb R^{N_\lambda}$:
-\begin{align}
-\label{eq:cvx_minimax}
-\begin{split}
-\mathrm{maximize} \quad &  K \\ 
-\mathrm{subject~to} 
-\quad &  K \leq \mathbf H\lambda \\
-& \lambda \geq 0,\quad   \mathbf 1^T\lambda  \leq 1,
-\end{split}
-\end{align}
-where $\mathbf H_{i,j} = \eta(t_i - \theta_j)$, $i=1,\ldots,N_\lambda$, $j = 1,\ldots,N_\theta$. 
-\begin{rem}
-The number of variables in \eqref{eq:cvx_minimax} is $N_\lambda+1$ and number of constraints is $1 + N_\lambda + N_\theta$. Since an LP has an optimal solution at which the number of constraints for which equality holds is no smaller than the number of variables \cite{papadimitriou1998combinatorial}, there exists an optimal $\lambda$ with support over no more than $N_{\theta}$ points. Therefore, in approximating the solution of \eqref{eq:var_cvx_minimax} using 
-\eqref{eq:cvx_minimax}, it is enough to take $N_\lambda = N_\theta$.
-\end{rem} 
+The objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda(dt)$ and hence this problem can be solved using a convex program. We denote by $\kappa^\star(T)$ the maximal value of \eqref{eq:var_cvx_minimax} and by $\lambda^\star(dt)$ the density that achieves this maximum.  
+%
+%By discretizing the interval $[-b,b]$ using $N_\theta$ values $\theta_1,\ldots,\theta_{N_\theta}$ and the real line using $N_\lambda$ values $\lambda_1,\ldots,\lambda_{N_\lambda}$, the discrete version of \eqref{eq:var_cvx_minimax} is the following linear program (LP) in the variables $K \in \mathbb R$ and $\lambda \in \mathbb R^{N_\lambda}$:
+%\begin{align}
+%\label{eq:cvx_minimax}
+%\begin{split}
+%\mathrm{maximize} \quad &  K \\ 
+%\mathrm{subject~to} 
+%\quad &  K \leq \mathbf H\lambda \\
+%& \lambda \geq 0,\quad   \mathbf 1^T\lambda  \leq 1,
+%\end{split}
+%\end{align}
+%where $\mathbf H_{i,j} = \eta(t_i - \theta_j)$, $i=1,\ldots,N_\lambda$, $j = 1,\ldots,N_\theta$. 
+%\begin{rem}
+%The number of variables in \eqref{eq:cvx_minimax} is $N_\lambda+1$ and number of constraints is $1 + N_\lambda + N_\theta$. Since an LP has an optimal solution at which the number of constraints for which equality holds is no smaller than the number of variables \cite{papadimitriou1998combinatorial}, there exists an optimal $\lambda$ with support over no more than $N_{\theta}$ points. Therefore, in approximating the solution of \eqref{eq:var_cvx_minimax} using 
+%\eqref{eq:cvx_minimax}, it is enough to take $N_\lambda = N_\theta$.
+%\end{rem} 
 
-Figure~\ref{fig:minimax_support} illustrates $\lambda^\star$ obtained as the solution to \eqref{eq:cvx_minimax} and the function $\mathbf H \lambda^\star$ for the case of $f(x)$ the standard  normal density. The minimal asymptotic ML risk $K^\star$ is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $b$. Also illustrated in these Figures is the MSE obtained when the threshold values are uniformly distribution over $\Theta = [-b,b]$, i.e., 
-$\lambda(dt) = dt/(2b)$. In this case we have
+Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$. The minimal asymptotic risk $\kappa^\star(\theta)$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $T$. Also illustrated in these Figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = (-T,T)$, namely
 \begin{align}
-& K_{\unif} \triangleq \min_{\theta \in [-b,b]} \frac{1}{2b}\int_{-b}^{b} \eta\left(t-\theta\right) dt \nonumber
+& \kappa_{\unif} \triangleq \min_{\theta \in (-T,T)} \frac{1}{2T}\int_{-T}^T \eta\left(t-\theta\right) dt \nonumber
  \\
 & = 
-\frac{1}{2b}\int_{-b}^{b} \eta\left(t\pm b\right) dt
-= \frac{1}{2b}\int_{0}^{2b} \eta(t) dt = \frac{1}{4b}\int_{-2b}^{2b} \eta(t) dt, \label{eq:uniform_risk}
+\frac{1}{2T}\int_{-T}^{T} \eta\left(t\pm T\right) dt
+= \frac{1}{2T}\int_{0}^{2T} \eta(t) dt  \label{eq:uniform_risk}. 
 \end{align}
-so the ARE under a uniform distribution equals $\sigma^2 K_\unif$. \\
+From Corollary~\ref{cor:LAN_thresh}, we conclude that the ARE under a uniform distribution is $\kappa_\unif \sigma^2$. \\
 
 \begin{figure}
 \begin{center}
@@ -771,8 +980,8 @@ ymax = 1,
 samples=10, 
 xlabel= {$dt$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
-title = {$\sigma/b = 1/2$},
+xticklabels={-$T$, 0, $T$},
+title = {$\sigma/T = 1/2$},
 ytick={0,0.1,1},
 %ylabel = {$\lambda(dt)$},
 yticklabels={0,0.1,1},
@@ -784,7 +993,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.5.csv};
 
-\addplot[color = green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.5.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.5.csv};
 
 \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.5.csv};
 
@@ -800,9 +1009,9 @@ ymin = 0,
 ymax = 0.6,
 samples=10, 
 xlabel= {$dt$},
-title = {$\sigma/b = 1/5$},
+title = {$\sigma/T = 1/5$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,0.5},
 ylabel = {$\lambda(dt)$},
 yticklabels={0,0.5},
@@ -814,7 +1023,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.2.csv};
 
-\addplot[color = green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.2.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.2.csv};
 
 \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.2.csv};
 
@@ -831,8 +1040,8 @@ ymax = 0.3,
 samples=10, 
 xlabel= {$dt$},
 xtick={-0.5,0,0.5},
-title = {$\sigma / b = 1/10$},
-xticklabels={-$b$, 0, $b$},
+title = {$\sigma / T = 1/10$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,0.2},
 %ylabel = {$\lambda(dt)$},
 yticklabels={0,0.2},
@@ -844,7 +1053,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.1.csv};
 
-\addplot[color = green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.1.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.1.csv};
 
 \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.1.csv};
 
@@ -860,9 +1069,9 @@ ymin = 0,
 ymax = 0.15,
 samples=10, 
 xlabel= {$dt$},
-title = {$\sigma / b = 1/20$},
+title = {$\sigma / T = 1/20$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,0.1},
 ylabel = {$\lambda(dt)$},
 yticklabels={0,0.1},
@@ -874,7 +1083,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 \addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.05.csv};
 
-\addplot[color = green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.05.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.05.csv};
 
 \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.05.csv};
 
@@ -884,8 +1093,10 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{tikzpicture}
 
 \caption{\label{fig:minimax_support}
-The optimal density $\lambda^\star$ (blue) that minimizes the maximum asymptotic ML risk for $f(x)$ a standard normal density $\Theta = [-b,b]$, and various values of $\sigma$. %$\lambda^\star$ in these figures is obtained by solving \eqref{eq:cvx_minimax}. 
-The continuous curve (red) represents the asymptotic risk for a fixed $\theta \in [-b,b]$ under the optimal density, so its maximal value is minimax risk. The dashed curve is the asymptotic risk a fixed $\theta \in [-b,b]$ under a uniform distribution over $[-b,b]$, so its maximal value is given by \eqref{eq:uniform_risk}. }
+Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x)$ the normal density with variance $\sigma^2$. 
+%Here the parameter space is $\Theta = (-T,T)$.  
+%$\lambda^\star$ in these figures is obtained by solving \eqref{eq:cvx_minimax}. 
+The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in [-T,T]$ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta$ under a uniform distribution over $\Theta$ and its minimal value the inverse of \eqref{eq:uniform_risk}. }
 \end{center}
 \end{figure}
 
@@ -895,12 +1106,13 @@ The continuous curve (red) represents the asymptotic risk for a fixed $\theta \i
 \begin{tikzpicture}[scale = 1]
 \begin{axis}[
 width=8cm, height=6cm,
-xmin = 0, xmax=2, 
+xmin = 0, xmax=2.5, 
+xmode = log,
 restrict y to domain = 0:100,
 ymin = 0,
 ymax = 1,
 samples=1, 
-xlabel= {$\sigma/b$},
+xlabel= {$\sigma/T$},
 %xtick={-0.5,0,0.5},
 %xticklabels={-$$, 0, $b$},
 ytick={0,0.637,1},
@@ -912,18 +1124,23 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = red, smooth] plot table [x = x, y = y, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
-\addlegendentry{$\lambda^\star(dt)$};
+\addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{optimal threshold density};
 
-\addplot[color = green, smooth, dashed, line width = 0.5pt] plot table [x = x, y = z, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
-\addlegendentry{$dt/(2b)$};
+\addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{uniform threshold desnity};
 \end{axis}
 \end{tikzpicture}
-\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/b$ for $P_X = \mathcal N(\theta,\sigma^2)$. The dashed curve represents the minimal ARE under a uniform threshold density given by $\sigma^2/K_{\unif}$, where $K_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
+\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x)$ the centered normal density with variance $\sigma^2$ and $\Theta = (-T,T)$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
 \end{center}
 \end{figure}
 
 
+%We have seen that using threshold detection, an ARE $\eta(0)\sigma^2$ can only be attained at a single point in $\Theta$. Next, we prove that with any set of messages obtained via a distributed strategy, there exits at least one $\theta \in \Theta$ such that the estimator of $\theta$ has ARE strictly smaller than $\eta(0)\sigma^2$. 
+
+
+\begin{comment}
+\subsection{Asymptotic Bayes Risk}
 \begin{figure}
 \begin{center}
 \begin{tikzpicture}[scale = 0.55]
@@ -1030,15 +1247,12 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{axis}
 \end{tikzpicture}
 
-
 \caption{\label{fig:opt_density}
-The threshold density $\lambda(dt)$ that minimizes the asymptotic Bayes risk \eqref{eq:cvx_average} for a uniform prior with $\sigma/\sigma_\theta=1,2,3,4$, where $\sigma_\theta^2=b^2/3$ is the variance of the prior. 
+Optimal threshold density $\lambda^\star(dt)$ that minimizes the asymptotic Bayes risk \eqref{eq:cvx_average} for a uniform prior with $\sigma/\sigma_\theta=1,2,3,4$, where $\sigma_\theta^2=b^2/3$ is the variance of the prior. 
 }
 \end{center}
 \end{figure}
 
-
-\subsection{Asymptotic Bayes Risk}
  We consider now the problem of minimizing the asymptotic Bayes risk $
 R_{\pi,\lambda} \triangleq \mathbb E  K^{-1}(\theta)$ over all probability measures $\lambda(dt)$ with support in $\mathbb R$. This optimization problem can be written as follows:
 \begin{align}
@@ -1051,23 +1265,6 @@ R_{\pi,\lambda} \triangleq \mathbb E  K^{-1}(\theta)$ over all probability measu
 We denote by $R^\star_{\pi}$ the minimal value of the objective function in \eqref{eq:cvx_average}. Since the function $x \rightarrow 1/x$ is convex for positive values, \eqref{eq:cvx_average} defines a convex optimization problem in $\lambda$ whose solution depends on the prior $\pi$. The solution to this problem is approximated by considering $\lambda$ and $\pi$ over a discrete set in a similar way that \eqref{eq:cvx_minimax} is obtained from \eqref{eq:var_cvx_minimax}. \par
 For the case of a normal distribution ($P_X = \mathcal N(\theta, \sigma^2)$) and a uniform prior ( $\pi(d\theta) =dt/(2b)$), the optimal asymptotic threshold density obtained as the solution to \eqref{eq:cvx_average} is illustrated in Fig.~\ref{fig:opt_density}, whereas Fig.~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
 \par
-%
-%\begin{figure}
-%\begin{center}
-%\begin{tikzpicture}
-%\node at (0,0) {\includegraphics[scale=0.5]{dist_bound_Gauss_prior}};
-%\node at (0,-2.5) {$\sigma/\sigma_\theta$};
-%\node[rotate = 90] at (-3.5,0) {(expected asymptotic risk)$/\sigma^2$};
-%\node at (1,0) {$\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$ };
-%%\node at (-2,-1.05) {$\frac{\pi}{2}$};
-%%\node[rotate = -45] at (-1.8,1.2) {\color{red} true };
-%%\node[rotate = -70] at (-0.5,0) {\color{blue} bound };
-%\end{tikzpicture}
-%\caption{Expected asymptotic risk $\mathbb E K^{-1}(\theta)$ in estimation from threshold detectors versus $\sigma/\sigma_\theta$ for a Gaussian prior with variance $\sigma_\theta^2$. The optimal asymptotic threshold density $\lambda$ (red) is obtained by solving \eqref{eq:cvx_average}. The bound (blue) is obtained using \eqref{eq:upper_bound}.
-%\label{fig:dist_bound_Gaussian}  }
-%\end{center}
-%\end{figure}
-%
 \begin{figure}
 \begin{center}
 
@@ -1125,9 +1322,9 @@ The function $x \rightarrow 1/x$ is convex for positive values, hence Jensen's i
 \[
 \left( \int \eta \left( t-\theta\right) \lambda(dt) \right)^{-1}  \leq \int  \frac{ \lambda(dt)}{ \eta \left( t-\theta\right)  }. 
 \]
-Therefore, the expected value of $K^{-1}(\theta)$ satisfies
+Therefore, the expected value of $\kappa^{-1}(\theta)$ satisfies
 \begin{align}
-\mathbb E  \frac{1}{K(\theta)}  \leq \int \int \frac{\pi(d\theta) \lambda(dt) }{\eta \left( t - \theta \right)}. \label{eq:upper_bound_proof}
+\mathbb E  \frac{1}{\kappa(\theta)}  \leq \int \int \frac{\pi(d\theta) \lambda(dt) }{\eta \left( t - \theta \right)}. \label{eq:upper_bound_proof}
 \end{align}
 The bound \eqref{eq:upper_bound} is obtained by taking $\lambda$ to be a mass distribution at any $\theta_0$ in the support of $\eta(x)$. Finally, \eqref{eq:bound_Taylor} is obtained by expanding $1/\eta(x)$ to a third order Taylor series around zero
 %\[
@@ -1136,10 +1333,10 @@ The bound \eqref{eq:upper_bound} is obtained by taking $\lambda$ to be a mass di
 and taking its expectation with respect to $\pi$ at $x=\theta_0-\theta$. 
 \end{proof}
 We note that the function $1/\eta(x)$ is quasi-convex and symmetric around zero, so taking $\theta_0 = \mathbb E \theta$ minimizes the RHS of \eqref{eq:upper_bound} among all $\theta_0$ in the support of $\eta(x)$.\par
-The bound \eqref{eq:upper_bound} is not trivial as long as the integral in the RHS of \eqref{eq:upper_bound} is finite, i.e., whenever the tail of $\pi(\theta)$ vanishes fast enough compared to $\eta(x)$. The expansion \eqref{eq:bound_Taylor} implies that this bound becomes tight whenever the support of the optimal distribution is a mass distribution at $\mathbb E \theta$, in which case the expected value of $K^{-1}(\theta)$ approaches $1/\eta(0) = 1/4f^2(0)$. 
+The bound \eqref{eq:upper_bound} is not trivial as long as the integral in the RHS of \eqref{eq:upper_bound} is finite, i.e., whenever the tail of $\pi(\theta)$ vanishes fast enough compared to $\eta(x)$. The expansion \eqref{eq:bound_Taylor} implies that this bound becomes tight whenever the support of the optimal distribution is a mass distribution at $\mathbb E \theta$, in which case the expected value of $\kappa^{-1}(\theta)$ approaches $1/\eta(0) = 1/4f^2(0)$. 
 
 \begin{example} \label{ex:bound}
-Consider the case $P_X = \mathcal N(\theta, \sigma^2)$. The bound in \eqref{eq:bound_Taylor} implies 
+In the normal case $P_X = \mathcal N(\theta, \sigma^2)$, the bound in \eqref{eq:bound_Taylor} implies 
 \[
 \frac{R^\star_\pi}{\sigma^2}  \leq \frac{\pi}{2} + \left( \frac{\pi}{2} -1 \right) \left( \frac{ \sigma_\theta}{\sigma} \right)^2 + O \left(  \frac{\sigma_\theta} { \sigma} \right)^3. 
 \]
@@ -1157,7 +1354,7 @@ It follows that the ARE approaches its maximal value of $2/\pi$ whenever $\sigma
 %we have 
 %\begin{align}
 %\label{eq:asymp}
-%\mathbb E [1/K(\theta)] = \frac{\pi}{2} + \left( \frac{\pi}{2} - 1\right) \left(\frac{\sigma_\theta}{\sigma} \right)^2 + o \left(\frac{1}{\sigma} \right)^3. 
+%\mathbb E [1/\kappa(\theta)] = \frac{\pi}{2} + \left( \frac{\pi}{2} - 1\right) \left(\frac{\sigma_\theta}{\sigma} \right)^2 + o \left(\frac{1}{\sigma} \right)^3. 
 %\end{align}
 %as $\sigma_\theta / \sigma \rightarrow 0$. 
 %\end{prop}
@@ -1167,11 +1364,17 @@ It follows that the ARE approaches its maximal value of $2/\pi$ whenever $\sigma
 %1/\eta(x) = \frac{\pi}{2} + \left(\frac{\pi}{2}-1 \right) x^2 + o(x^3).
 %\]
 %\end{proof}
+\end{comment}
 
 \section{Conclusions \label{sec:conclusions}}
-We considered the MSE risk in estimating the mean of a normal distribution from a sequence of bits obtained by encoding each sample from the distribution using a single bit. Under an adaptive encoding of the samples, we showed that the no estimator can attain asymptotic MSE or relative efficiency larger than that of the median of the samples. We also showed that this lower bound is tight by presenting an adaptive estimation procedure from this bit sequence that is as efficient as the median. We also consider a one-step optimal scheme that minimizes the MSE given any set of previously obtained bits. Numerical simulations shows that the one-step optimal scheme attains the optimal relative efficiency for the normal distribution. 
+We considered the MSE risk in estimating the mean of a symmetric and log-concave distributions from a sequence of bits, where each bit is obtained by encoding a single sample from this distribution. 
+%
+In an adaptive encoding setting, we showed that no estimator can attain asymptotic relative efficiency (ARE) larger than that of the median of the samples. We also showed that this bound is tight by presenting two adaptive encoding and estimation procedures that are as efficient as the median. 
+%We further showed that the optimal MSE and ARE can be attained using only a single adaptation. Namely, a single round of communication between {\color{red} the estimator and the encoder} . 
+We also characterized the one-step optimal scheme in this adaptive setting, i.e., the scheme that minimizes the MSE given any set of previously obtained bits. %Numerical simulations shows that the one-step optimal scheme attains the optimal relative efficiency for the normal distribution. 
 \par
-In the distributed setting, we considered the estimation from threshold detection under the assumption that the empirical distribution of the threshold values converges to a probability distribution. For this setting, we showed that the maximum likelihood estimator is local asymptotically minimax, and that the relative efficiency of this estimator is strictly smaller than that of the sample median.  \\
+In the distributed setting we provided conditions for local asymptotic normality of the encoded samples, and thus provided a local asymptotic minimax bound on the MSE and ARE under such conditions. We concluded that in this case, the optimal performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in the distributed setting. We further considered the special case of messages encoded using threshold detection rules. We characterized the performance of the optimal estimator from such messages using the density of these thresholds, and consider the threshold density that minimizes the minimax error.
+ \\
 
 %Interesting extension of our setting is to the case of estimating a $d$ dimensional vector of parameters rather than a scalar. An interesting questions in this extension is behavior of the MSE as a function of $d$. 
 %{\color{red} Shamir \cite{Shamir} showed that in hide-and-seek hypothesis testing problem, bitrate constraint may lead to a significant reduction in detection performance compared to the unrestricted case. This result is then applied to online learning, stochastic optimization and sparse PCA. Shamir's results shows that the penalty is in the dimension ($d/R$ instead of $lod(d)$). In our setting the dimension is $1$. \\}
@@ -1181,94 +1384,107 @@ In the distributed setting, we considered the estimation from threshold detectio
 %This research is supported in parts by...
 %Tsachy Weissman, Stefano Rini, Robert Gray.
 
-\appendix
 
+\onecolumn 
+
+\appendices
 
 \section{Proofs \label{app:proofs}}
-This appendix contains the proofs of Proposition~\ref{prop:eta}, Theorems \ref{thm:adpative_lower_bound}, \ref{thm:sgd}, \ref{thm:opt_one_step}, and \ref{thm:LAN}. 
 
-\subsection{Proof of Proposition~\ref{prop:eta}}
-(i) Since $f(x)$ is log-concave, so does $F(x)$. There exists $h(x)$ that is non-decreasing, concave, twice differntiable, such that $F(x) = e^{h(x)}$. In addition, $f(x) = h'(x)F(x)$ so $h'(x) \geq 0$, and $h'(x)$ is decreasing since $h''(x) \leq 0$ because $h(x)$ is concave. In fact, $h'(x) = f(x)/F(x)$ is non-constant for any $x$ in the support of $f(x)$, so $h'(x)$ is strictly decreasing in this support. It easily verified that
+\begin{lem} \label{lem:bound_intervals}
+Let $f(x)$ be a log-concave, symmetric, and differentiable density such that $\eta(x)$ is strongly unimodal. For any $x_1 > \ldots > x_n \in \mathbb R$, 
+\begin{equation}
+\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+\leq \max_i \eta(x_i). \label{eq:lem_bound_intervals}
+\end{equation}
+In particular, if $|x_i|>\epsilon > 0$ for all $i=1,\ldots,n$, then 
 \[
-\eta(x) = h'(x) h'(-x).
+\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+\leq \eta(\epsilon) < 0. 
 \]
-It follows that $\eta(x)$ is symmetric. We now show that $\eta(x)$ is decreasing for $x>0$. Let $0<x_1 < x_2$. Consider
-\begin{align}
-& \eta(x_2) - \eta(x_1) = h'(x_2)h'(-x_2) - h'(x_1)h'(-x_1) \nonumber \\
-&  =h'(x_2)h'(-x_1) \left(\frac{h'(-x_2)}{h'(-x_1)} - \frac{h'(x_1)}{h'(x_2)}  \right). \label{eq:eta_proof}
-\end{align}
-Now, because $h'(x)$ is decreasing, we have that $h'(x_1) \geq h'(x_2)$ and $h'(-x_2) \geq  h'(-x_1)$. If follows that the brackets in the RHS of \eqref{eq:eta_proof} are negative, whereas $h'(x_2) h'(-x_1)$ is non-negative since $h'(x)$ is non-negative. Hence $\eta(x_2) \leq \eta(x_1)$. It follows that $\eta(x)$ is a monotone decreasing function for $x>0$. It is left to show that it is strictly decreasing for $x>0$ in the support of $f(x)$. Since $h'(x)$ is strictly decreasing, $\eta(x)$ may be constant only for $x>0$ for which $h'(x)/h'(-x)$ is a constant. But for all such $x$s, $h'(x)$ is strictly increasing, $h'(-x)$ is strictly decreasing, and thus $h'(x)/h'(-x)$ is strictly increasing. \par
-(ii) Because $F(x)$ is differentiable, for any $a \in \mathbb R$ there exists $a\leq c \leq x$ such that 
-$F(x) = F(a) + f(c) (x-a)$. For $a=0$, and using the fact that $f(x)$ is non-increasing for $x>0$ we have
+\end{lem}
+
+\subsubsection*{Proof of Lemma~\ref{lem:bound_intervals}} 
+Denote 
 \[
-\frac{f(x)}{F(x)} = \frac{f(x)}{0.5 + f(c) x }  \leq \frac{f(x)}{f(c)} \frac{1}{x} \leq \frac{1}{x}.  
+\delta_n \triangleq \delta_n(x_1,\ldots,x_n) \triangleq \sum_{k=1}^{n} (-1)^{k+1} f(x_k),
 \]
-From symmetry of $f(x)$ we get that $f(-x)/F(-x) \leq 1/x$ for $x>0$. Finally, noting that $h(x)\rightarrow 0$ as $x\rightarrow \infty$, we conclude that for $x>0$, 
 \[
-\eta(x) = h'(-x)h'(x) \leq \frac{h(x)}{x} \leq \frac{1}{x}. 
+\Delta_n \triangleq \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{k=1}^n (-1)^{k+1} F(x_k),
 \]
+so 
+\[
+\eta(x) =  \frac{  \left(\delta_1(x) \right)^2}{\Delta_1(x)
+(1-\Delta_1(x))}
+= \frac{  \left( f (x) \right)^2}{ F(x)\left(1-F(x)\right)^2}. 
+\]
+We use induction on $n \in \mathbb N$ to show that the LHS of \eqref{eq:lem_bound_intervals} is bounded from above by $\max_i \eta(x_i)$. The case $n=1$ is trivial. Assume that 
+\begin{equation}
+\frac{ \left( \delta_n \right)^2} 
+{\Delta_n \left(1- \Delta_n \right) } \leq \max_i \eta(x_i)
+\label{eq:lem_bound_intervals_proof}
+\end{equation}
+for all integers up to $n = N-1$ and consider the case $n = N$. 
+%
+The maximal value of the LHS of \eqref{eq:lem_bound_intervals_proof} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
+\begin{align*}
+& g(x_1,\ldots, x_N) \triangleq  2 \log \delta_N -  \log \Delta_N -  \log \left(1 - \Delta_N  \right),
+\end{align*}
+ The derivative of $g(x_1,\ldots,x_N)$ with respect to $x_k$ is given by
+\[
+\frac{\partial  g}{\partial x_k} = \frac{2 (-1)^{k+1} f'(x_k)}{\delta_N} -\frac{(-1)^{k+1} f(x_k)}{\Delta_N } + \frac{(-1)^{k+1} f(x_k)}{1-\Delta_N },
+\]
+and we conclude that the gradient of $g$ vanishes if and only if
+\begin{equation}
+\label{eq:gradient_zero}
+\frac{f'(x_k)}{f(x_k)} = \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
+\end{equation}
+%
+Since $f(x)$ is log-concave, symmetric, and differentiable, we may write $f(x) = e^{c(x)}$ where $c(x)$ is concave, symmetric, and differentiable. We have 
+\[
+\frac{f'(x)}{f(x)} = c'(x), \quad x\in \mathbb R,
+\]
+which is anti-symmetric, non-negative for $x<0$,  non-positive for $x>0$, and non-increasing since $c(x)$ is concave. Therefore, if $c'(x_i) = c'(x_{i+1})$ for some $i =1,\ldots,N-1$, then either (1) $x_i = x_{i+1}$ or (2) $c'(x)$ is the zero function. Since (2) violates the assumption that $f(x)$ is a density function, we conclude that $c'(x)$ is an injection. 
+%
+As a result, \eqref{eq:gradient_zero} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_proof} equals $\eta(x_1) = \max_i \eta(x_i)$ hence the statement holds. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$, or  $x_i, x_{i+1}$ for some $i$. It is left to consider the cases:
+\begin{itemize}
+\item[(1)]  $x_N \to -\infty$.
+\item[(2)] $x_1 \to \infty$.
+\end{itemize}
+Under case (1) we have
+\begin{align*}
+\lim_{x_N \to -\infty} \frac{  \delta_N^2} 
+{\Delta_N \left(1- \Delta_N \right) }
+ = \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}f(x_k) \right)^2} 
+{\left( \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k)  \right)} ,
+\end{align*}
+which is smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis. Under case (2) we have
+\begin{align*}
+&  \lim_{x_1 \to \infty}
+\frac{ \delta_N} 
+{\Delta_N\left(1- \Delta_N \right) } \\
+=
+& \frac{ \left(  \sum_{k=2}^{N} (-1)^{k+1}f(x_k) \right)} 
+{\left( 1 + \sum_{k=2}^{N} (-1)^{k+1} F(x_k) \right) \left(1- 1 - \sum_{k=2}^{N} (-1)^{k+1} F(x_k)  \right) }  \\
+& = \frac{ \left(  -\sum_{m=1}^{N} (-1)^{m+1}f(x'_m) \right)^2 } 
+{\left( 1 - \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m}) \right)\left( \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m})  \right) },
+\end{align*}
+where $x'_{m} = x_{m+1}$. The last expression is also smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis.  \QEDA \\
 
 \subsection*{Proof of Theorem~\ref{thm:adpative_lower_bound}}
 
-We first prove the following two lemmas:
-\begin{lem} \label{lem:bound_intervals}
-Let $f(x)$ be a log-concave, symmetric, and differentiable pdf. Denote by $F(x)$ the corresponding CDF. Then for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, we have 
-\begin{equation}
-\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
-{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)  } \leq 4f^2(0). \label{eq:bound_intervals}
-\end{equation}
-\end{lem}
-
+We first prove the following lemma:
 \begin{lem} \label{lem:fisher_bound}
-Let $X$ be a random variable with a symmetric, log-concave, and continuously differentiable density function $f(x)$. Assume that for a Borel measurable $A$, 
+Let $X$ be a random variable with a symmetric, log-concave, and continuously differentiable density function $f(x)$ such that $\eta(x)$ is unimodal. For a Borel measurable $A$ set, 
 \[
 M(X) = \begin{cases} 1,& X \in A, \\
 -1, & X \notin A.
 \end{cases}
 \]
-Then the Fisher information of $M$ with respect to $\theta$ is bounded from above by $4f^2(0)$.
+Then the Fisher information of $M$ with respect to $\theta$ is bounded from above by $\eta(0)$.
 \end{lem}
-
-
-
-\subsubsection*{Proof of Lemma~\ref{lem:bound_intervals}} 
-We now use induction on $n \in \mathbb N$ to show that the LHS of \eqref{eq:bound_intervals} is bounded from above by $\eta(0)$. \par
-The case $n=1$ it follows from Proposition~\ref{prop:eta}. 
-Assume now that \eqref{eq:bound_intervals} holds for all integers up to some $n = N-1$ and consider the case $n = N$. The maximal value of the LHS of \eqref{eq:bound_intervals} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
-\begin{align*}
-& g(x_1,\ldots, x_N) \triangleq 2 \log \left(  \sum_{k=1}^{N} (-1)^{k+1} f(x_k) \right) - \\
-&  \log
-\left( \sum_{k=1}^N (-1)^{k+1} F(x_k) \right)
--\log \left(1 -  \sum_{k=1}^N (-1)^{k+1} F(x_k) \right) \\
-& = 2 \log \delta_N - \log \Delta_N - \log \left(1 - \Delta_N  \right),
-\end{align*}
-where we denoted $\delta_N \triangleq \sum_{k=1}^{N} (-1)^{k+1} f(x_k)$ and $\Delta_N =  \sum_{k=1}^N (-1)^{k+1} F(x_k)$. The derivative of $g(x_1,\ldots,x_N)$ with respect to $x_k$ is given by
-\[
-\frac{\partial  g}{\partial x_k} = \frac{2 (-1)^{k+1} f'(x_k)}{\delta_N} -\frac{(-1)^{k+1} f(x_k)}{\Delta_N } + \frac{(-1)^{k+1} f(x_k)}{1-\Delta_N }.
-\]
-We conclude that the gradient of $g$ vanishes if and only if
-\begin{equation}
-\label{eq:gradient_zero}
-\frac{f'(x_k)}{f(x_k)} = \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
-\end{equation}
-From the case $n=1$ and for $x$ in the support of $f(x)$, we have
-\[
-\frac{f'(x)}{f(x)} = h''(x)+\left(h'(x)\right)^2 < 0 . 
-\]
-As a result, $\frac{f'(x)}{f(x)}$ is one to one and \eqref{eq:gradient_zero} implies $x_1 = \ldots = x_N$. If $N$ is odd then for $x_1=\ldots =x_N$ we have that the LHS of \eqref{eq:bound_intervals} equals $\eta(x_1)$ which was shown to be smaller than $\eta(0)$. If $N$ is even, then for any constant $c$ the limit of the LHS of \eqref{eq:bound_intervals} as $(x_1,\ldots,x_N)\rightarrow (c,\ldots,c)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:bound_intervals} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:bound_intervals} is maximized at the borders, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches plus or minus infinity. For simplicity we only consider the cases where $x_N$ goes to minus infinity or $x_1$ goes to plus infinity (the general case where the first $m$ coordinates goes to infinity or the last $m$ to minus infinity is obtained using similar arguments). Assume first $x_N \rightarrow -\infty$. Then the LHS of \eqref{eq:bound_intervals} equals
-\begin{align*}
-\frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}f(x_k) \right)^2} 
-{\left( \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k)  \right) } ,
-\end{align*}
-which is smaller than $\eta(0)$ by the induction hypothesis. Assume now that $x_1 \rightarrow \infty$. Then the LHS of
-\eqref{eq:bound_intervals} equals
-\begin{align*}
-& \frac{ \left(  \sum_{k=2}^{N} (-1)^{k+1}f(x_k) \right)^2} 
-{\left( 1 + \sum_{k=2}^{N} (-1)^{k+1} F(x_k) \right)\left(1- 1 - \sum_{k=2}^{N} (-1)^{k+1} F(x_k)  \right) }  \\
-& = \frac{ \left(  -\sum_{m=1}^{N} (-1)^{m+1}f(x'_m) \right)^2} 
-{\left( 1 - \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m}) \right)\left( \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m})  \right) },
-\end{align*}
-where $x'_{m} = x_{m+1}$. The last expression is also smaller than $\eta(0)$ by the induction hypothesis. \QEDA \\
 
 \subsubsection*{Proof of Lemma~\ref{lem:fisher_bound}}
 The Fisher information of $M$ with respect to $\theta$ is given by
@@ -1303,7 +1519,7 @@ so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as
 \end{align}
 It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in \mathbb R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than $4f^2(0)$.  \QEDA \\
 
-We now consider the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$, we first note that without loss of generality, each message $M_i$ can is of the form
+We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$, we first note that without loss of generality, each message $M_i$ can is of the form
 \begin{equation}
 \label{eq:general_messages}
 M_i = \begin{cases}
@@ -1311,7 +1527,9 @@ X_i \in A_i & 1, \\
 X_i \notin A_i & -1,
 \end{cases} 
 \end{equation}
-where $A_i \subset \mathbb R$ is a Borel measurable set. Indeed, any measurable function $M(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = M^{-1}(1)$. Consider the conditional distribution $P({M^n|\theta})$ of $M^n$ given $\theta$. We have 
+where $A_i \subset \mathbb R$ is a Borel measurable set. 
+%Indeed, any measurable function $M(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = M^{-1}(1)$.
+Consider the conditional distribution $P({M^n|\theta})$ of $M^n$ given $\theta$. We have 
 \begin{align}
 P\left( M^n | \theta \right) & =  \prod_{i=1}^n P\left(M_i | \theta, M^{i-1} \right), \label{eq:adpt_lower_bound_proof:1}
 \end{align}
@@ -1365,13 +1583,13 @@ Using the notation above, we set $\varphi(x) = \sgn(x)$ and $Z_i = X_i - \theta$
 \psi(x) & = \mathbb E \sgn(x+ Z_1) = \int_{-\infty}^\infty \sgn(x+z) f(z) dz \\
 & = \int_{-x}^\infty f(z) dz -\int_{-\infty}^{-x} f(z) dz. 
 \end{align*}
-Using the symmetry of $f(x)$ around zero, it follows that $\psi'(x) = 2f(x)$ and thus $\psi'(0) = 2f(0)$. It is now easy to verify that the rest of the conditions in Thm.~\ref{thm:polyak_juditsky} are fulfilled for any $\lambda > 0$. Since 
+Using the symmetry of $f(x)$ around zero, it follows that $\psi'(x) = 2f(x)$ and thus $\psi'(0) = 2f(0)$. It is now easy to verify that the rest of the conditions in Theorem~\ref{thm:polyak_juditsky} are fulfilled for any $\lambda > 0$. Since 
 \[
 \frac{\chi(0)}{\psi'^2(0)} = \frac{1}{4 f^2(0)},
 \]
-Thm.~\ref{thm:sgd}-(i) follows from Thm.~\ref{thm:polyak_juditsky}.  \\
+Theorem~\ref{thm:sgd}-(i) follows from Theorem~\ref{thm:polyak_juditsky}.  \\
 
-In order to prove Thm.~\ref{thm:sgd}-(ii), we consider:
+In order to prove part (ii) of Theorem~\ref{thm:sgd} we use the following result from \cite{polyak1990new}:
 \begin{thm}{ \cite[Thm. 2]{polyak1990new}} \label{thm:polyak_new}
 Let
 \begin{align} \label{eq:polyak_new_measurements}
@@ -1380,7 +1598,7 @@ U_n = U_{n-1} - \gamma_n \varphi(Y_n), & Y_n = g'(U_{n-1})+Z_n \\
 \bar{U}_n= \frac{1}{n} \sum_{i=1}^n U_n, & n=1,2,\ldots.
 \end{cases}
 \end{align}
-Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \mathbb R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Thm.~\ref{thm:polyak_juditsky}-(iii) and satisfies the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
+Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \mathbb R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Theorem~\ref{thm:polyak_juditsky}-(iii) and satisfies the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
 and there exits $K_3$ such that 
 \[
 \mathbb E \left[ | \varphi(x+Z_1) |^4 \right] \leq K_3(1+|x|^4). 
@@ -1391,7 +1609,7 @@ V_n \triangleq \mathbb E \left[ \left(\bar{U}_n-x^\star \right)^2 \right] = n^{-
 \]
 \end{thm}
 
-We now use Thm.~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = -\sgn(-x)$, $Z_n = \theta-X_n$ and $U_n = \theta_n$. From \eqref{eq:polyak_new_measurements} we have
+We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = -\sgn(-x)$, $Z_n = \theta-X_n$ and $U_n = \theta_n$. From \eqref{eq:polyak_new_measurements} we have
 \begin{align*} 
 \theta_n & = \theta_{n-1} + \gamma_n \sgn(\theta-\theta_{n-1} - Z_n )  \\
 & = \theta_{n-1} + \gamma_n \sgn(X_n-\theta_{n-1} ),
@@ -1401,7 +1619,7 @@ so the estimator $\hat{\theta}_n$ defined by $\hat{\theta}_n$ equals to the one 
 \mathbb E \left[ | \varphi(x+Z_1) |^4 \right] = 1 \leq K_3(1+|x|^4)
 \]
 for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
-the conditions in Thm.~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Thm.~\ref{thm:polyak_new} implies 
+the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies 
 \[
 n V_n = \mathbb E \left[ \left(\hat{\theta}_n-\theta \right)^2 \right]  = \frac{1}{4 f^2(0)} + o(1).
 \]
@@ -1463,137 +1681,326 @@ the fact that $h^+(x)$ is monotonically decreasing follows from similar argument
 \end{align*}
 and since non of these functions are constant, monotonicity of $h^+(x)$ and $h^-(x)$ implies that they must meet at some $x\in \mathbb R$. \QEDA
 
-
-\subsection*{Proof of Theorem~\ref{thm:LAN}}
-We will prove that $P_\theta(m_i) = \mathbb P(M_i = m_i)$, $\i=1,\ldots,n$ is a local asymptotic normal (LAN) family  with \emph{precision} parameter $K(\theta)$. The statements in the theorem then follows from the local asymptotic minimax theorem of LAN families \cite{van2000asymptotic}. \\
-
-The probability mass distribution of $M^n$ is given by
-\[
-P_\theta(m^n) =  \prod_{i=1}^n F \left( m_i (t_i - \theta)\right), \quad m^n \in \{-1,1\}^n.
-\]
-Consider the log-likelihood ratio under a sequence of local alternatives $\theta' = \theta + h/\sqrt{n}$ for some $h\in \mathbb R$:
+\subsection*{Proof of Theorem~\ref{thm:LAN1}}
+The log probability mass distribution of $M^n=(M_1,\ldots,M_n)$ is given by
+\begin{align*}
+& \log \Prob_\theta(m^n) = \sum_{i=1}^n \left( \frac{m_i+1}{2} \log  \Prob(X_i\in A_i) + 
+\frac{1-m_i}{2} \log \Prob(X_i\in A_i) \right), \quad m^n \in \{-1,1\}^n. 
+\end{align*}
+Consequently, 
 \begin{align}
-\log \frac{ P_{\theta + \frac{h}{\sqrt{n}}}(m^n)} { P_\theta (m^n) }& =  \sum_{i=1}^n \log \left( F \left( m_i (t_i - \theta - h/\sqrt{n} ) \right)\right)  - \sum_{i=1}^n \log \left( F \left( m_i (t_i - \theta) \right) \right). \label{eq:LAN_proof1}
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(m^n)} { \Prob_\theta (m^n) } = \sum_{i=1}^n    \frac{m_i+1}{2} 
+\log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)} + 
+\sum_{i=1}^n  \frac{1-m_i}{2} 
+\log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}. 
+\label{eq:LAN_proof1}
 \end{align}
-Since $f(x)$ is differentiable, $\log F(x)$ is twice differentiable and we may write
+For each $i=1,\ldots,n$, write 
 \[
-\log F(x+t) = \log F(x) + \frac{f(x)}{F(x)}h - \frac{t^2}{2}\left( \frac{f'(x)}{F(x)} - \frac{f^2(x)}{F^2(x)} \right) + o(t^2).
+A_i = \bigcup_{k=1}^{K_i} \left(t_{i,k},t_{i,k+1} \right),
 \]
-Therefore, \eqref{eq:LAN_proof1} can be written as
+where $t_{i,1}<\ldots<t_{i,K_i}$ and, with a slight abuse of notation, $t_{i,1}$ and $t_{i,K_i}$ may also be $-\infty$ or $+\infty$, respectively. Thus
 \[
-- h \sum_{i=1}^n  \frac{m_i}{\sqrt{n} }  \frac{ f \left(m_i (t_i-\theta) \right)} {F \left( m_i (t_i-\theta) \right) }  - \frac{h^2}{2 n} \sum_{i=1}^n  \left( \frac{f' \left(m_i (t_i-\theta) \right) }{F\left(m_i (t_i-\theta)\right) }- \frac{ f^2\left(m_i (t_i-\theta) \right)}{F^2\left(m_i (t_i-\theta) \right)}   \right) + o(1/n)
-\] 
-
-The proof is completed by proving the following two lemmas:
-\begin{lem} \label{lem:LAN1}
+\Prob_{\theta}(X_i \in A_i) = \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta).
+\]
+In particular, since $f$ is differentible, $\Prob_{\theta}(X_i \in A_i)$ is twice differentiable, and we may write
+\begin{align*}
+\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)  = \Prob_{\theta} (X_i \in A_i) + \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \frac{h}{\sqrt{n}} + o(h), 
+\end{align*}
+and thus
+\begin{align*}
+& \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)} = \log \left(1 + \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \frac{h}{\sqrt{n}} + o(h) \right) \\
+& = \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \frac{h}{\sqrt{n}} - \frac{h}{2n} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2 + o(h^2). 
+\end{align*}
+Similarly, we have
+\begin{align*}
+& \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)} \\
+& = \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \frac{h}{\sqrt{n}} - \frac{h}{2n} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \right)^2 + o(h^2). 
+\end{align*}
+From \eqref{eq:LAN_proof1} we obtain
+\begin{align*}
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(m^n)} { \Prob_\theta (m^n) }   = \frac{h}{\sqrt{n}} \sum_{i=1}^n  
+\left( 
+\frac{m_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  + 
+ \frac{1-m_i}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}   \right) \\
+ & - \frac{h^2}{2n} 
+ \sum_{i=1}^n 
+\left( 
+ \frac{m_i+1}{2} 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2
++ 
+ \frac{1-m_i}{2} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \right)^2 \right) + o(h^2) \\
+\end{align*}
+%
+Noting that 
+\[
+\frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)} = \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)},
+\]
+the proof is completed by proving the following two claims:
+\begin{itemize}
+\item[I.] 
 For $i=1,\ldots,n$ denote 
 \[
-U_i = -M_i \frac{ f \left( M_i (t_i - \theta) \right)}{ F \left( M_i (t_i - \theta)\right) }. 
+U_i = \frac{M_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  + 
+ \frac{1-M_i}{2}  \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}. 
 \]
 Then 
 \[
-\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0, K(\theta) \right). 
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0, \kappa(\theta) \right). 
 \]
-\end{lem}
-\begin{lem} \label{lem:LAN2}
-For $i=1,\ldots,n$ denote
+\item[II.]
+For $i=1,\ldots,n$ denote 
 \[
-V_i =  -\left[ \frac{f' \left(M_i (t_i-\theta) \right) }{F\left(M_i (t_i-\theta)\right) }- \frac{ f^2\left(M_i (t_i-\theta) \right)}{F^2\left(M_i (t_i-\theta) \right)} \right] .
+V_i =  \frac{M_i-1}{2} 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2
++ 
+ \frac{1-M_i}{2} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}  \right)^2.
 \]
 Then 
 \[
-\frac{1}{n} \sum_{i=1}^n V_i \overset{a.s.}{\rightarrow} K(\theta). 
+\frac{1}{n} \sum_{i=1}^n V_i \overset{a.s.}{\rightarrow} \kappa(\theta). 
 \]
-\end{lem}
-
-\subsubsection*{Proof of Lemma~\ref{lem:LAN1}} 
+\end{itemize}
+\subsubsection*{Proof of Claim I}
 First note that 
 \begin{align*}
-\mathbb E  [U_i] & = \mathbb E\left[ \mathbb E  [U_i|M_i] \right] \\
-& =  -\frac{f(t_i-\theta)}{F(t_i-\theta)} \mathbb P (M_i=1) + \frac{f(\theta-t_i)}{F(\theta-t_i)} \mathbb P (M_i=-1) \\
-& = -f(t_i-\theta) + f(\theta-t_i) = 0.
+\mathbb E  [U_i] & = 
+ \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}   \Prob (M_i=1)   + 
+ \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}   \Prob (M_i=-1)  = 0. 
 \end{align*}
 In addition,
+\begin{align*}
+& \mathbb E U_i^2 = 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2  \Prob (M_i=1)   + 
+\left( \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}  \right)^2 \Prob (M_i=-1) \\
+& =
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i)} +  
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{1-\Prob_{\theta}(X_i \in A_i)} \\
+ & =  
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i) \left(1-\Prob_{\theta}(X_i \in A_i) \right)} 
+\end{align*}
+Therefore
 \[
-\mathbb E U_i^2 = \frac{ f^2 \left( t_i-\theta \right) } { F \left( t_i-\theta \right) \left(1- F \left( t_i-\theta \right) \right)},
+\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2 = L_n(A_1,\ldots,A_n) \overset{a.s.}{\longrightarrow} \kappa(\theta)
 \]
-and therefore
-\[
-\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2 \rightarrow K(\theta).
-\]
-
-We now verify that the sequence $\{ U_i,\,i=1,2,\ldots \}$ satisfies Lyaponov's condition for his version of the central limit time: for any $\delta>0$ we have that 
-\[
-\mathbb E \left| U_i \right|^{2+\delta} = \left( \frac{f^{2+\delta} \left(t_i-\theta \right)  }{F^{2+\delta} \left( t_i-\theta \right)} + \frac{f^{2+\delta} \left(t_i-\theta \right)  }{1-F^{2+\delta} \left(t_i-\theta\right)} \right),
-\]
+for any $\theta \in \Theta$ such that the limit above exists. We now verify that the sequence $\{ U_i,\,i=1,2,\ldots \}$ satisfies Lyaponov's condition for his version of the central limit time: for any $\delta>0$ we have that 
+\begin{align*}
+& \mathbb E \left| U_i \right|^{2+\delta} =
+ \frac{ \left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(\Prob_{\theta}(X_i \in A_i))^{1+\delta}} +  
+  \frac{ \left|\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}} 
+\end{align*}
 and
 \begin{equation}
 \frac{\sum_{i=1}^n \mathbb E \left| U_i \right|^{2+\delta} } { \left( \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta} = 
-\frac{ \frac{1}{n^{1+\delta}} \sum_{i=1}^n \mathbb E U_i^{2+\delta} }{ \left(\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta}. 
+\frac{ \frac{1}{n^{1+\delta}} \sum_{i=1}^n \mathbb E |U_i|^{2+\delta} }{ \left(\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta}. 
 \label{eq:Lyaponov}
 \end{equation}
-The functions $\log F(x)$ and $\log (1-F(x)) = \log F(-x)$ are differentiable, so that $f(x)/F(x)$, $f(x)/(1-F(x))$, and hence $\left(f(x)/F(x)\right)^{2+\delta}$ and $\left(f(x)/(1-F(x)) \right)^{2+\delta}$ are integrable. As $n$ goes to infinity, we have
+Next, we claim that there exits $\delta>0$ and $K>0$, that are independent of $n$, such that
+\begin{align}
+\frac{1}{n} \sum_{i=1}^n \mathbb E  |U_i|^{2+\delta}  < M \label{eq:Lyaponov_num}
+\end{align} 
+for all $n$ large enough. To see this, note that
+\begin{align*}
+& \mathbb E |U_i|^{2+\delta} = 
+ \frac{ \left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(\Prob_{\theta}(X_i \in A_i))^{1+\delta}} +  
+  \frac{ \left|\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}  \\
+  &  = \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} } 
+  \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \\
+  &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}, 
+\end{align*}
+where the last transition is because 
 \[
-\frac{1}{n}\sum_{i=1}^n \mathbb E \left| U_i \right|^{2+\delta}  \rightarrow  \int \left( \frac{ f^{2+\delta} \left(t-\theta\right)}{F^{2+\delta}\left(t-\theta\right)} + \frac{ f^{2+\delta} \left(t-\theta\right)}{1-F^{2+\delta} \left(t-\theta\right)} \right) \lambda(dt),
+ \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \leq 1. 
 \]
-from which we conclude that the numerator in \eqref{eq:Lyaponov} goes to zero. Since the denumerator in \eqref{eq:Lyaponov} goes to $K^\delta(\theta)$, the entire expression goes to zero and hence Lyaponov's condition is satisfied. From Lyaponov's central limit theorem we conclude that 
+We now use the fact that each $A_i$ is a finite union of interval and consider the following lemma, proof of which is given in the appendix:
+\begin{lem} \label{lem:bound_intervals_delta}
+Let $f(x)$ be a log-concave, symmetric, and differentiable PDF such that $\eta(x)$ is unimodal.  There exists $\delta>0$ such that for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, 
+\begin{equation}
+\frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^{2+\delta} }
+{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)^{1+\delta} \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)^{1+\delta} } 
+\leq  2^\delta f^{2+\delta}(0). 
+\label{eq:lem_bound_intervals_delta}
+\end{equation}
+\end{lem}
+
+Lemma~\ref{lem:bound_intervals_delta} implies 
+\begin{align*}
+  &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}} = \frac{\left| \sum_{k=1}^{K_i} (-1)^k f(x_{i,k}-\theta) \right|^{2+\delta} }
+  { \left( \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta) \right)^{1+\delta} \left( 1 - \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta) \right)^{1+\delta}} \\
+  & \leq 2^\delta f^{2+\delta}(0). 
+\end{align*}
+In particular, we conclude that 
 \[
-\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0,K(\theta) \right). 
+\frac{1}{n} \sum_{i=1}^n \mathbb E |U_i|^{2+\delta} \leq 2^\delta f^{2+\delta}(0), 
 \]
-\QEDA
+and thus for any $\delta>0$ the numerator of \eqref{eq:Lyaponov}, as well as the entire expression, goes to zero. From Lyaponov's central limit theorem we conclude that 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0,\kappa(\theta) \right). 
+\]
 
-\subsubsection*{Proof of Lemma~\ref{lem:LAN2}} 
-
+\subsubsection*{Proof of Claim II} 
 We have:
 \begin{align*}
-\mathbb E V_i  & = \left[ \frac{ f^2\left(t_i-\theta \right)}{F\left( t_i-\theta \right)} - f' \left(t_i-\theta \right)  \right] 
-+ \left[ \frac{ f^2\left(\theta-t_i \right)}{F\left( \theta - t_i \right)} - f' \left( \theta - t_i \right) \right] \\
-& = \frac{f^2(\theta - t_i)}{F(\theta-t_i)F(t_i-\theta)} = \eta(\theta - t_i).
+\mathbb E V_i  & = 
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i)}  
++ 
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{1-\Prob_{\theta}(X_i \in A_i)}  \\
+ & = 
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i) \left( 1-\Prob_{\theta}(X_i \in A_i) \right)}  
 \end{align*}
-where above we used the facts  $f'(-x) = -f'(x)$ and $F(x)+F(-x)=1$. We conclude that:
+ We conclude that:
+\begin{equation} \label{eq:LAN_limit_cond}
+\frac{1}{n} \sum_{i=1}^n \mathbb E V_i =   L_n(A_1,\ldots,A_n)  \to \kappa(\theta)
+\end{equation}
+Since the $V_i$s are independent of each other, Kolmogorov's law of large numbers implies
+%(e.g. \cite[Theorem 10.2.3]{sen1994large}) 
 \[
-\frac{1}{n} \sum_{i=1}^n \mathbb E V_i =  \frac{1}{n} \sum_{i=1}^n  \frac{f^2\left( t_i-\theta \right)} { F \left( t_i - \theta \right)\left(1-F \left( t_i - \theta \right) \right)} \rightarrow K(\theta).  
+\frac{1}{n} \sum_{i=1}^n  V_i \overset{a.s.}{\longrightarrow} \kappa(\theta)
 \]
-Finally, it follows from Kolmogorov's law of large numbers (e.g. \cite[Thm. 10.2.3]{sen1994large}) that
-\[
-\frac{1}{n} \sum_{i=1}^n \mathbb E V_i \overset{a.s.}{\rightarrow} K(\theta). 
-\]
+for any $\theta \in \Theta$ for which the limit \eqref{eq:LAN_limit_cond} exists.
+
 \QEDA
+
+
+\subsubsection*{Proof of Lemma~\ref{lem:bound_intervals_delta}} 
+Denote 
+\[
+\delta_n \triangleq \delta_n(x_1,\ldots,x_n) \triangleq \sum_{k=1}^{n} (-1)^{k+1} f(x_k),
+\]
+\[
+\Delta_n \triangleq \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{k=1}^n (-1)^{k+1} F(x_k),
+\]
+and 
+\[
+\eta_\delta(x) \triangleq  \frac{  \left(\delta_1(x) \right)^{2+\delta}}{  \left(\Delta_1(x)  \right)^{1+\delta}
+(1-\Delta_1(x))^{1+\delta}}
+= \frac{  \left( f (x) \right)^{2+\delta}}{ \left(F(x) \right)^{1+\delta}(1-F(x))^{1+\delta}}. 
+\]
+The proof is by induction on $n$. For the case $n=1$ the LHS of \eqref{eq:lem_bound_intervals_delta} equals $\eta_\delta(x)$. Note that $\eta_\delta(0) = 2^\delta f^{2+\delta}(0)$, so it is enough to prove that $\eta_\delta(0)$ attains it maximum at $x=0$. We have $\eta_\delta(x) = \eta^{1+\delta}(x)/f^\delta(x)$, and thus
+\[
+\log \eta_\delta'(x) = (1+\delta) \frac{\eta'(x)}{\eta(x)} - \delta \frac{f'(x)}{f(x)}. 
+\]
+By Assumption~\ref{assump:failure_rate} both terms above are negative for $x>0$, so that $\log \eta_\delta'(x) \leq 0$ if and only if
+\begin{equation} \label{eq:delta_proof_cond}
+(1+\delta) \left| \frac{\eta'(x)}{\eta(x)} \right| \geq \delta \left| \frac{f'(x)}{f(x)} \right|, \qquad x>0.
+\end{equation}
+Also by Assumption~\ref{assump:failure_rate}, for $x>0$ we have
+\[
+0 > (\log \eta(x))' = \frac{h'(x)}{h(x)}-\frac{h'(-x)}{h(-x)},
+\]
+so that \eqref{eq:delta_proof_cond} is satisfies for $\delta>0$ small enough. 
+
+
+Next, assume that 
+\begin{equation}
+\frac{ \left( \delta_n \right)^{2+\delta}} 
+{\left(\Delta_n \right)^{1+\delta}\left(1- \Delta_n \right)^{1+\delta} } \leq \eta_\delta(0) = 2^\delta f^{2+\delta}(0) . 
+\label{eq:lem_bound_intervals_delta_proof}
+\end{equation}
+for all integers up to $n = N-1$ and consider the case $n = N$. 
+%If $x_{i+1} = x_i$ for some $i=1,\ldots,N-1$, then then the indices $i$ and $i+1$ may  be removed from all sums in \eqref{eq:lem_bound_intervals}, what brings us to the case $n = N-2$. Therefore, we may assume that $x_1 < \ldots < x_n$. 
+%
+The maximal value of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
+\begin{align*}
+& g(x_1,\ldots, x_N) \triangleq  (2+\delta) \log \delta_N - (1+\delta) \log \Delta_N - (1+\delta) \log \left(1 - \Delta_N  \right),
+\end{align*}
+ The derivative of $g(x_1,\ldots,x_N)$ with respect to $x_k$ is given by
+\[
+\frac{\partial  g}{\partial x_k} = \frac{(2+\delta) (-1)^{k+1} f'(x_k)}{\delta_N} -\frac{(1+\delta)(-1)^{k+1} f(x_k)}{\Delta_N } + \frac{(1+\delta)(-1)^{k+1} f(x_k)}{1-\Delta_N }.
+\]
+We conclude that the gradient of $g$ vanishes if and only if
+\begin{equation}
+\label{eq:gradient_zero_delta}
+\frac{f'(x_k)}{f(x_k)} = \frac{\delta_N(1+\delta)}{2+\delta} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
+\end{equation}
+From the same reason as in the proof of Lemma~\ref{lem:bound_intervals}, \eqref{eq:gradient_zero_delta} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_delta_proof} equals $\eta_\delta(x_1)$ which was shown to be smaller than $\eta_\delta(\epsilon)$. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_delta_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$,  $x_i, x_{i+1} = -\epsilon$ for some $i$, or $x_i, x_{i+1} = \epsilon$ for some $i$. It is therefore enough to consider the cases:
+\begin{itemize}
+\item[(1)]  $x_N \to -\infty$.
+\item[(2)] $x_1 \to \infty$.
+\end{itemize}
+Assume first $x_N \rightarrow -\infty$. Then 
+\begin{align*}
+\frac{ \left( \delta_N \right)^{2+\delta}} 
+{\left(\Delta_N \right)^{1+\delta}\left(1- \Delta_N \right)^{1+\delta}  }
+ = \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}f(x_k) \right)^{2+\delta}} 
+{\left( \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k) \right)^{1+\delta}\left(1- \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k)  \right)^{1+\delta} } ,
+\end{align*}
+which is smaller than $\eta_\delta(0)$ by the induction hypothesis. Assume now that $x_1 \rightarrow \infty$. Then 
+\begin{align*}
+& \frac{ \left( \delta_N \right)^{2+\delta}} 
+{\left(\Delta_N \right)^{1+\delta}\left(1- \Delta_N \right)^{1+\delta}  } \\
+=
+& \frac{ \left(  \sum_{k=2}^{N} (-1)^{k+1}f(x_k) \right)^{2+\delta}} 
+{\left( 1 + \sum_{k=2}^{N} (-1)^{k+1} F(x_k) \right)^{1+\delta}\left(1- 1 - \sum_{k=2}^{N} (-1)^{k+1} F(x_k)  \right)^{1+\delta} }  \\
+& = \frac{ \left(  -\sum_{m=1}^{N} (-1)^{m+1}f(x'_m) \right)^{2+\delta}} 
+{\left( 1 - \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m}) \right)^{1+\delta}\left( \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m})  \right)^{1+\delta} },
+\end{align*}
+where $x'_{m} = x_{m+1}$ for $m=1,\ldots, N-1$. The last expression is smaller than $\eta_{\delta}(0)$ by the induction hypothesis.  \QEDA \\
+
+
+\subsection*{Proof of Theorem~\ref{thm:non_existence}}
+
+Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta) = \eta(0)$. 
+%
+Since $M_1,M_2,\ldots$ satisfy the conditions in Theorem~\ref{thm:LAN1}, for $\theta \in \Xi$ if and only if
+\begin{equation}
+\label{eq:non_existence_proof}
+\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0). 
+\end{equation}
+By assumption, we have $M_i^{-1} = A_i$ where $A_i$ can be expressed as
+\[
+A_i = \cup_{i=1}^K (a_{i,k},b_{i,k}), 
+\]
+where $a_{i,1} \leq b_{i,1} \leq \ldots \leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values $-\infty$ and $\infty$, respectively. Denote
+\[
+\mathcal B_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\}.
+\]
+For any $\theta$ and $\epsilon>0$, denote 
+\[
+S_n(\theta, \epsilon) \triangleq \left\{ i\leq n \,:\, (\theta-\epsilon,\theta+\epsilon) \cap \mathcal B_i \neq \emptyset \right\}
+\]
+In words, $S_n$ contains all integers smaller than $n$ in which an $\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals consisting $A_i$. 
+%
+We now claim that 
+if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for such $\theta$ we have
+\begin{align}
+& L_n(A_1,\ldots,A_n; \theta) \nonumber \\
+& = \frac{1}{n} \sum_{i \in S_n(\epsilon,\theta)}  
+\frac{ \left(\sum_{k=1}^{K}  f(\theta - b_{i,k})- f(\theta - a_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
+& 
++ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(b_{i,k}-\theta) - f(a_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
+& \overset{(a)}{\leq}
+\frac{\card\left(S_n(\theta,\epsilon)\right)}{n} \eta(0) + \frac{n-\card\left(S_n(\theta,\epsilon) \right) }{n} \eta(\epsilon) 
+ \label{eq:non_existence_proof1}
+\end{align}
+where $(a)$ follows from Lemma~\ref{lem:bound_intervals} and the fact that for $i \in S_n(\theta, \epsilon)$, 
+\[
+\max\left\{ \max_k \eta(b_{i,k}-\theta) , \max_k \eta(a_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
+\]
+Unless  $\card \left(S_n(\theta, \epsilon) \right)/n \to 1$, \eqref{eq:non_existence_proof1}, and thus $L_n(A_1,\ldots,A_n ; \theta)$, are bounded from above by a constant that is smaller then $\eta(0)$ in contradiction to the fact that $\theta \in \Xi$. \par
+For $k\in \mathbb N$, assume by contradiction that there exists $N \geq 2K + 1$ distinct elements
+$\theta_1,\ldots,\theta_N \in \Xi$. Since each $A_i$ consists of at most $K$ intervals, we have that 
+\begin{equation}
+\label{eq:few_optimality_points_proof}
+\card (\cup_{i=1}^n \mathcal B_i) \leq 2 n K. 
+\end{equation}
+Fix $\epsilon>0$ such that 
+\[
+\epsilon < \frac{1}{2}\min_{i\neq j} |\theta_i - \theta_j|. 
+\]
+Since for each $\theta \in \Theta$ we have $S_n(\theta, \epsilon) \to 1$, there exists $n$ large enough such that 
+\[
+\card \left(S_n(\theta_i, \epsilon) \right) \geq n \left(1-\frac{1}{2N} \right)
+\]
+for all $i=1,\ldots,N$. However, $S_n(\theta_1,\epsilon), \ldots S_n(\theta_N,\epsilon)$ are disjoint, so the cardinallity of their union is at least $n\left(1-\frac{1}{2N} \right)N$ which is grater than $2nK + n/2$ in contradiction to \eqref{eq:few_optimality_points_proof}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,/Users/Alon1/LaTex/bibtex/sampling}
-
-
-\section{Related Results in Source Coding}
-The estimation problem we consider can be seen as the quantization, compression or encoding of the samples, and the  decoding of the parameter $\theta$ from the encoded version of the sample. Therefore, this problem is closely related to various setting in coding and information theory. The goal of this section is to illustrates this connection and review related results that are relevant in our case. 
-
-%As opposed to the aforementioned line of works, we focus on estimation of samples taken from a single distribution in the finite blocklength performance. We are interested in particular in addition restrictions on the communication and information sharing between the encoders. For example, our main focus is the case where the observer must communicate a single bit upon drawing from the distribution. This is in contrast to the asymptotic setting where the observer can encode the outcome of $n$ draws at once using a single $n$ bit message. Alternately, such setting can be seen as having $n$ different observers, each is capable of observing a single realization and transmit a single bit. 
-
-%{\color{red} The Van Trees inequality was extended to the estimation of multiple parameters in \cite{bobrovsky1987}. It is closely related with the }
-
-
-\subsection{Statistical Inference under Communication Constraints}
-The works \cite{han1987hypothesis, zhang1988estimation, 720540} consider various problems of statistical inference under multiterminal lossy compression. In the setting of \cite{han1987hypothesis, zhang1988estimation, 720540}, each terminal $I$ observes $n$ samples from the distribution and is allotted $nR_i$ bits to communicate its estimate.% Consequently, our case (iii) is obtained from this setting by taking $n=1$, $R_i=1$, and number of terminals grow with $n$. 
-The main focus of these works is the difference between inference with communication constraint and the unconstrained vanilla statistical estimation setting, as the number of samples $n$ goes to infinity subject to a total finite rate constraint. Our case (i) can be seen as a special case of this setting where with a single terminal and $R_1 = 1$. However, as explained in \cite[Sec. III]{720540}, in this setting the unconstrained inference performance is always attained when all samples are taken from the same distribution. Indeed, in an i.i.d setting the \emph{type} of the sample \cite{csiszar1998method} is a sufficient statistics for any estimation task, and the latter can be described using a number of codewords polynomial in $n$ regardless of the distribution of the samples. For this reason, attention is given in these works to inference problems involving multiple distributions observed at different locations, hence the name \emph{multiterminal}. 
-
-\subsection{Sigma-Delta Encoding}
-
-and covariance function \cite[Eq. 25]{53738}
-\[
-R(k) = \mathbb E M_{n+k} M_n = \theta^2 + O \left( \frac{1}{\sigma \sqrt{ k} } \right). 
-\]
-{\color{red} This is not enough to deduce convergence. Need to go over the paper and check if rate of convergence can be deduced. Also do simulations BEFORE that. \\
-
-What is the error in estimating the mean of stationary ergodic process ? 
-}
-Since the SDM is a special case of the sequential scheme, we conclude that the MSE of any SDM with a noisy DC signal is bounded from below by $n^{-1} \sigma^2 \pi/2 $.
-
-%Even with such arguably simple setting, we will see that the performance limit in the estimating task based on single bit observations provides an interesting setting for discussion that bridges classical works in statistics, coding theory, information theory and optimization. 
-
-\subsection*{Source coding}
-With a full access to the sample as in setting (i), the problem of encoding and estimating $\theta$ is reduced to the MSE attained by a scalar quantizer adjusted to the sufficient statistics of the sample. Setting (ii) includes as a special case the sigma-delta modulation (SDM) analog-to-digital conversion scheme with a constant input $\theta$ corrupted by Gaussian noise $Z_i$, as was considered in \cite{53738}. While it was shown there that the output of the modulator converges to the true constant input, the rate of this convergence was not analyzed and cannot be derived directly from the results of \cite{53738}. As a corollary from the results in this paper we conclude that the rate of convergence of a SDM to a constant input signal is at most $\sigma^2\pi/2$ over the number of feedback iterations. Finally, the remote multiterminal source coding setting of \cite{berger1996ceo} corresponds to the case of $n$ rate-constrained encoders, each observing a noisy version of an information source. The difference between this setting and ours is that in ours the parameter of interest is not an information source. By assuming a prior distribution on this parameter, the CEO provides a lower bound on the estimation error in the fully distributed setting (iii). This lower bound can be attained if we were to consider the average error in multiple independent realizations of our problem rather than a single realization as we do here. \\
+\bibliography{/Users/kipnisal/LaTex/bibtex/IEEEfull,/Users/kipnisal/LaTex/bibtex/sampling}
 
 \end{document}
 
@@ -1641,7 +2048,7 @@ We note that although the CEO lower bound was derived by the MSE attainable assu
 The bound provided by the CEO in Prop.~\ref{prop:ceo_lower_bound} implies that the relative efficiency in the distributed scheme is at most $4/3$. Since this number is smaller than the relative efficiency of the adaptive scheme, this proposition does not provide new information on the relative efficiency. It does, however, provides the intuition that the limiting factor in estimating $\theta$ is the strict bit-constraint and or the lack of concentration of probability distributions over blocks, rather than distributed estimation. \\
 
 
-We note that the same first order expression for the CEO distortion is achieved by a particular encoding scheme derived in \cite{KipnisRini2017}, assuming rate of $1$ bits per source symbol at each encoder, i.e.,  $R_1=\ldots = R_n = 1$, rather than a total of $n$ bits on average allocated among the $n$ encoders used in the proof. Indeed, the it follows from \cite[Eq. ?]{KipnisRini2017} that the following distortion is achievable for the CEO
+We note that the same first order expression for the CEO distortion is achieved by a particular encoding scheme derived in \cite{KipnisRini2017}, assuming rate of $1$ bits per source symbol at each encoder, i.e.,  $R_1=\ldots = R_n = 1$, rather than a total of $n$ bits on average allocated among the $n$ encoders used in the proof. Indeed, the it follows from \cite[Eq. ?]{KipnisRini2017} that the following distortion is achievable in the CEO problem:
 \[
 \sigma_\theta^2 \left( 1 + \sigma_\theta^2 n \frac{3}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   = \frac{4\sigma^2+\sigma_\theta^2}{3n} + O(n^{-2} \sigma_\theta^4)). 
 \]

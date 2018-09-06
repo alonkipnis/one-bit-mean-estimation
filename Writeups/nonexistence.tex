@@ -1,0 +1,175 @@
+%\documentclass[letterpaper]{IEEEtran}
+\documentclass[letterpaper, 10pt]{IEEEtran}      % Use this line for a4 paper
+
+%LatexiDiff ignore tikz:
+% $: latexdiff -c "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" old.tex new.tex > diff.tex
+
+%\IEEEoverridecommandlockouts                              %
+
+%\usepackage{mathcomSTEP}
+
+%\overrideIEEEmargins 
+%\IEEEoverridecommandlockouts                              % This command is only needed if 
+% you want to use the \thanks command
+
+%\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+\onecolumn
+
+\usepackage{mathptmx} 
+\usepackage{times} 
+\usepackage{amsmath} 
+\usepackage{amsbsy} 
+\usepackage{amssymb}
+%\usepackage{newtxtext, newtxmath}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{external,positioning,decorations.pathreplacing,shapes,arrows,patterns}
+
+%\tikzexternalize[mode=list and make]
+\usepackage{algorithmicx}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{pstool}
+\usepackage[latin1]{inputenc}
+\usetikzlibrary{arrows,shapes}
+\usepackage{xifthen}
+\usepackage{epic}
+%\usepackage{caption}
+\usepackage{epstopdf}
+
+\newtheorem{thm}{\bf{Theorem}}
+\newtheorem{cor}[thm]{\bf {Corollary}}
+\newtheorem{lem}[thm]{\bf {Lemma}}
+\newtheorem{prop}[thm]{\bf {Proposition}}
+\newtheorem{example}{\bf {Example}}
+\newtheorem{definition}{\bf {Definition}}
+\newtheorem{rem}{\bf {Remark}}
+
+\newcommand{\mmse}{\mathsf{mmse}}
+\newcommand{\unif}{\mathsf{unif}}
+\newcommand{\card}{\mathrm{card}}
+\newcommand{\ARE}{\mathsf{ARE}}
+\newcommand{\supp}{\mathrm{supp} }
+\renewcommand\vec[1]{\ensuremath\boldsymbol{#1}}
+\newenvironment{proof}{\paragraph*{Proof}}{\hfill$\square$ \newline}
+\newcommand{\sgn}{\mathrm{sgn} }
+\newcommand{\argmax}{\mathrm{argmax}}
+\newcommand*{\QEDA}{\hfill\ensuremath{\square}}
+
+
+
+\tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
+\tikzstyle{sint}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=0.8cm,thick ]
+\tikzstyle{sum}=[circle, fill=blue!10, draw=black,line width=1pt,minimum size = 0.5cm, thick ]
+\tikzstyle{ssum}=[circle, fill=blue!10,draw=black,line width=1pt,minimum size = 0.1cm]
+\tikzstyle{int1}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=1cm,thick ]
+\tikzstyle{enc}=[draw, fill=blue!10, minimum height = 2.7cm, minimum width=1cm,thick ]
+\tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
+
+
+\title{\LARGE \bf Non-existence of a Uniformly Optimal Distributed Scheme}
+
+\begin{document}
+We consider the distributed encoding setting in which each single-bit message is independent of the other messages. 
+
+\subsection*{Definitions}
+\begin{equation} \label{eq:eta_def}
+\eta(\theta) \triangleq \frac{f^2(\theta)} {F(\theta)\left(1-F(\theta)\right)},
+\end{equation}
+where $f$ and $F$ are the PDF and CDF of a log-concave distribution, respectively. 
+\begin{prop} \label{prop:eta}
+Let $f(x)$ be log-concave, symmetric and differntiable PDF. Then 
+\begin{itemize}
+\item[(i)] The function
+\[
+\eta(x) = \frac{f^2(x)}{F(x) \left(1-F(x) \right)}
+\]
+is symmetric and strictly decreasing for any $x>0$ in the support of $f(x)$. In particular, $
+\eta(x) \leq \eta(0) = 4f^2(0)$. 
+\item[(ii)] $\eta(x)$ goes to $0$ as $|x|$ goes to infinity. 
+\end{itemize}
+\end{prop}
+
+
+\subsection*{Local Asymptotic Normality of Messages}
+We first provides conditions under which the messages $M_1,M_2,\ldots$ constitute a local asymptotic normal family. 
+\begin{thm} \label{thm:LAN1}
+Let 
+\[
+M_n = \begin{cases} 1 & X_n \in A_n, \\
+-1 & X_n \notin A_n,
+\end{cases} \quad n\in \mathbb N,
+\]
+where $\{A_n\}_{n=1}^\infty$ is a sequence of Borel sets. Assume that as $n$ goes to infinity, for any $\theta \in \Theta$,
+\begin{equation}
+\label{eq:precision_general}
+\frac{1}{n} \sum_{i=1}^n \frac{ \left(\frac{d}{d \theta} \Pr(X_i \in A_i) \right)^2 }{ \Pr(X_i \in A_i) \Pr(X_i \notin A_i) }
+\end{equation}
+converges to a positive number $K(\theta)$ denoted as the \emph{precision parameter}. Then for any $\theta \in \Theta$ and $h\in \mathbb R$,
+\begin{align*}
+& \log  \frac{ \mathbb P_{\theta+h/\sqrt{n}} (M_1,\ldots,M_n) }{
+\mathbb P_{\theta} (M_1,\ldots,M_n)} \\
+& \overset{D}{\longrightarrow} \mathcal N\left(-\frac{1}{2} h^2 K(\theta), h^2 K(\theta) \right). 
+\end{align*}
+\end{thm}
+
+\subsection*{Non-existence of Uniformly Optimal Strategy}
+We now show that no distributed estimation scheme can attain normalized risk of $1/\eta(0)$ for all $\theta \in \Theta$. 
+
+\begin{thm} \label{thm:non_existence}
+Let $M_1,M_2,\ldots $ be a sequence satisfying the condition in Theorem~\ref{thm:LAN1}. Let $\Xi \subset \Theta $ be the set of points for which there exists an estimator $\hat{\theta}_n = \hat{\theta}(M_1,\ldots,M_n)$ such that
+\[
+\lim_{n\to \infty} \mathbb E \left[ n \left(\theta - \hat{\theta}_n \right)^2 \right] = 1/\eta(0). 
+\]
+Then $\Xi$ has Lebesgue measure zero. 
+\end{thm}
+
+\begin{proof}
+The proof requires the following lemmas:
+\begin{lem} \label{lem:eta_epsilon_bound}
+Let $\epsilon>0$ and
+$x_1,\ldots,x_m \in \mathbb R$. If $\{x_1,\ldots,x_m\} \cap (-\epsilon,\epsilon) = \emptyset$, then 
+\[
+\frac{ \left( \sum_{i=1}^m (-1)^{i+1} f(x_i) \right)^2}{ \left(\sum_{i=1}^m (-1)^{i+1} F(x_i) \right) \left( 1- \sum_{i=1}^m (-1)^{i+1} F(x_i) \right)} \leq \eta(\epsilon).
+\]
+\end{lem}
+\subsubsection*{Proof of Lemma~\ref{lem:eta_epsilon_bound}}
+By induction on $m$. \\
+
+Theorem~\ref{thm:LAN1} says that $M_1,M_2,\ldots$ defines a LAN family with precision parameter $K(\theta)$. The local asymptotic minimax property of estimators in LAN models implies that for any estimator $\hat{\theta}_n =\hat{\theta}_n(M_1,\ldots,M_n)$ and $\delta>0$, there exists $n$ large enough such that 
+\[
+\mathbb E \left[n(\theta - \hat{\theta}_n)^2  \right] + \delta \geq \frac{1}{K(\theta)} ,
+\] 
+where $K(\theta)$ is the precision parameter \eqref{eq:precision_general}. It follows that for all $\theta \in \Xi$ we have $K(\theta)=1/\eta(0)$. 
+%
+%Let $\theta \in \Xi$ and let $\hat{\theta}_n$ be an estimator such that $n\mathbb E (\hat{\theta}_n-\theta)^2 \to 1/\eta(0)$. 
+%
+It follows from Proposition~\ref{prop:eta} that if $\epsilon>0$, then $\eta(\epsilon) < \eta(0)$. Since the only defining property of the sequence of messages $\{M_i\}_{i=1}^\infty$ is the precision parameter $K(\theta)$, we may assume without loss of generality that each $A_i$ is a finite union of $M_i$  intervals
+\begin{equation}
+\label{eq:finite_union}
+A_i = \bigcup_{k=1}^{M_i} (b_{i,k}, a_{i,k}),
+\end{equation}
+where $b_{i,k+1} > a_{i,k+1} > b_{i,k} > a_{i,k}$ for every $i$ and $k$. Indeed, for any sequence of Borel measurable sets $\{A_i\}_{i=1}^\infty$ for which  \eqref{eq:precision_general} converge to $K(\theta)$ for any $\theta \in \Theta$, has a sequence $\{A'_i\}_{i=1}^\infty$ converging to the same limit in which $A'_i$ is of the form \eqref{eq:finite_union}. With this assumption, \eqref{eq:precision_general} is given by
+\begin{equation}
+\label{eq:precision_general2}
+\frac{1}{n}\sum_{i=1}^n \frac{  \left( \sum_{k=1}^{M_i} f(b_{i,k})-f(a_{i,k}) \right)^2}{ \sum_{k=1}^{M_i} \left( F(b_{i,k})-F(a_{i,k}) \right) \left( 1-\sum_{k=1}^{M_i} \left( F(b_{i,k})-F(a_{i,k}) \right)\right)}
+\end{equation}
+Next, Lemma~\ref{lem:eta_epsilon_bound} implies that for any $\theta$ such that $K(\theta) \to \eta(0)$, any interval of the form $(\theta-\epsilon,\theta+\epsilon)$ contains an infinite number of elements from $\{ a_{i,k},b_{i,k},\, i\in \mathbb N, k = 1,\ldots,M_i \}$ (otherwise, there exists $\rho>0$ such that 
+\[
+\{ a_{i,k},b_{i,k},\, i\in \mathbb N, k = 1,\ldots,M_i \} \cap (-\rho+\theta,\theta+\rho) = \emptyset,
+\]
+so that Lemma~\ref{lem:eta_epsilon_bound} implies $K(\theta) \leq \eta(\rho) < \eta(0)$). We conclude that each point in $\Xi$ is a limit points for the set 
+\begin{align}
+\label{eq:endpoint_set}
+& \left\{b_{i,k},a_{i,k},\, k=1,\ldots,M_i,i=1,\ldots, \mathbb N  \right\} = \bigcup_{i\in \mathbb N} \bigcup_{k=1}^{M_i} \{ a_{i,k},b_{i,k}\}. 
+\end{align}
+However, \eqref{eq:endpoint_set} is a countable union of countable sets, and hence has no interior point (by Baire's Category Theorem). In particular, it Lebesgue measure is zero. 
+\end{proof}
+
+\end{document}
