@@ -32,43 +32,45 @@
 \citation{zhang2013information}
 \citation{zhang1988estimation}
 \citation{han2018distributed}
+\citation{}
 \citation{DBLP:journals/corr/abs-1802-08417}
 \citation{zhang1988estimation}
 \citation{han2018distributed}
+\citation{xu2017information}
 \citation{ibragimov1956composition}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Centralized encoding using one bit per sample on average.}}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Centralized one-bit encoding: encoder sends $n$ bits after observing $n$ samples.}}{3}}
 \newlabel{fig:centralized}{{1}{3}}
 \newlabel{sec:problem}{{II}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Problem Formulation }{3}}
 \citation{lehmann2006theory}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Adaptive single-bit encoding: the $n$th encoder delivers a single bit message which is a function of its private sample $X_n$ and the previous messages $M_1,\ldots  ,M_{n-1}$.}}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Adaptive one-bit encoding: the $n$th encoder delivers a single bit message which is a function of its private sample $X_n$ and the previous messages $M_1,\ldots  ,M_{n-1}$.}}{4}}
 \newlabel{fig:sequential}{{2}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Distributed single-bit encoding: the single-bit message produced by each encoder is only a function of its private sample $X_i$.}}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Distributed one-bit encoding: the one-bit message produced by each encoder is only a function of its private sample $X_i$.}}{4}}
 \newlabel{fig:distributed}{{3}{4}}
 \newlabel{eq:error_def}{{1}{4}}
-\newlabel{eq:eta_def}{{2}{4}}
 \citation{bagnoli2005log}
 \citation{Samford1953}
 \citation{hammersley1950estimating}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  The function $\eta (x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi (x)$ the standard normal density.  }}{5}}
 \newlabel{fig:eta}{{4}{5}}
+\newlabel{eq:eta_def}{{2}{5}}
 \newlabel{eq:eta_h}{{3}{5}}
 \newlabel{assump:failure_rate}{{1}{5}}
 \newlabel{sec:preliminary}{{III}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Simple Bounds }{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Consistent Estimation}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {III} Consisten Estimation and Of-the-shelf Bounds }{5}}
 \citation{berger1996ceo}
 \citation{chen2004upper}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Consistent Estimation}{6}}
 \newlabel{eq:estimator_naive}{{4}{6}}
 \newlabel{sec:ceo}{{\unhbox \voidb@x \hbox {III-B}}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Multiterminal Source Coding }{6}}
 \newlabel{prop:ceo_lower_bound}{{1}{6}}
 \newlabel{eq:ceo_bound}{{6}{6}}
-\newlabel{eq:ceo_optimal_sumrate}{{7}{6}}
-\newlabel{eq:ceo_optimal_sumrate2}{{8}{6}}
 \citation{KipnisRini2017}
 \citation{tsybakov2008introduction}
 \citation{gill1995applications}
+\newlabel{eq:ceo_optimal_sumrate}{{7}{7}}
+\newlabel{eq:ceo_optimal_sumrate2}{{8}{7}}
 \newlabel{sec:sequential}{{IV}{7}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Adaptive Estimation }{7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Maximal efficiency in adaptive setting}{7}}
@@ -81,7 +83,7 @@
 \newlabel{thm:sgd}{{3}{8}}
 \newlabel{eq:conditions1}{{12}{8}}
 \newlabel{eq:conditions2}{{13}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Optimality using a Single Interaction}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Optimality using a Single Interaction}{9}}
 \citation{1619423}
 \citation{1619423}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}One-step optimal estimation}{10}}
@@ -92,16 +94,16 @@
 \newlabel{lem:unique}{{6}{10}}
 \newlabel{eq:lem_fixed_point}{{17}{10}}
 \newlabel{lem:adaptive}{{7}{10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Normalized empirical risk $n\left (\mathaccentV {hat}05E{\theta }_n-\theta \right )^2$ versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta $ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \delimiter "4262304 \sqrt  {n} \delimiter "5263305 $ samples for its first stage.  }}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta $ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \delimiter "4262304 \sqrt  {n} \delimiter "5263305 $ samples for its first stage.  }}{11}}
 \newlabel{fig:adaptive_error}{{5}{11}}
 \newlabel{eq:density_update}{{18}{11}}
 \newlabel{eq:estimator_update}{{19}{11}}
 \newlabel{eq:message_update}{{20}{11}}
 \newlabel{sec:distributed}{{V}{11}}
 \@writefile{toc}{\contentsline {section}{\numberline {V}Distributed Estimation }{11}}
-\newlabel{thm:LAN1}{{8}{11}}
-\newlabel{eq:precision_general}{{21}{11}}
 \citation{van2000asymptotic}
+\newlabel{thm:LAN1}{{8}{12}}
+\newlabel{eq:precision_general}{{21}{12}}
 \newlabel{eq:LAN_lim}{{22}{12}}
 \newlabel{cor:LA_minimax}{{9}{12}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}Non-existence of a Uniformly Optimal Strategy}{12}}
@@ -111,15 +113,15 @@
 \newlabel{eq:Ln_threshold}{{24}{13}}
 \newlabel{cor:LAN_thresh}{{11}{13}}
 \newlabel{eq:ML}{{25}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Optimal threshold density $\lambda ^\star (dt)$ (blue) that maximizes the ARE for $f(x)$ the normal density with variance $\sigma ^2$. The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in [-T,T]$ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta $ under a uniform distribution over $\Theta $ and its minimal value the inverse of \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 27\hbox {}\unskip \@@italiccorr )}}. }}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Optimal threshold density $\lambda ^\star (dt)$ (blue) that maximizes the ARE for $f(x) = \mathcal  N(\theta ,\sigma ^2)$ and $\theta \in \Theta = [-T,T]$. The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in \Theta $ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta $ under a uniform distribution of threshold values over $\Theta $, hence its minimal value is the inverse of \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 27\hbox {}\unskip \@@italiccorr )}}. }}{14}}
 \newlabel{fig:minimax_support}{{6}{14}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Minimax ARE versus $\sigma /T$ for $f(x)$ the centered normal density with variance $\sigma ^2$ and $\Theta = (-T,T)$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta $ given by $K_{\mathsf  {unif}}\sigma ^2$, where $\kappa _{\mathsf  {unif}}$ is given by \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 27\hbox {}\unskip \@@italiccorr )}}. }}{14}}
-\newlabel{fig:minimax_ARE}{{7}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}Minimax Threshold Density}{14}}
 \newlabel{eq:var_cvx_minimax}{{26}{14}}
 \newlabel{eq:uniform_risk}{{27}{14}}
-\newlabel{sec:conclusions}{{VI}{15}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusions }{15}}
+\newlabel{sec:conclusions}{{VI}{14}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusions }{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Minimax ARE versus $\sigma /T$ for $f(x) = \mathcal  N(\theta ,\sigma ^2)$ and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta $ given by $K_{\mathsf  {unif}}\sigma ^2$, where $\kappa _{\mathsf  {unif}}$ is given by \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces 27\hbox {}\unskip \@@italiccorr )}}. }}{15}}
+\newlabel{fig:minimax_ARE}{{7}{15}}
 \newlabel{app:proofs}{{A}{16}}
 \@writefile{toc}{\contentsline {section}{Appendix\nobreakspace  A: Proofs }{16}}
 \newlabel{lem:bound_intervals}{{12}{16}}
@@ -186,18 +188,19 @@
 \bibcite{zhang1988estimation}{23}
 \bibcite{han2018distributed}{24}
 \bibcite{DBLP:journals/corr/abs-1802-08417}{25}
-\bibcite{ibragimov1956composition}{26}
-\bibcite{lehmann2006theory}{27}
-\bibcite{bagnoli2005log}{28}
-\bibcite{Samford1953}{29}
-\bibcite{hammersley1950estimating}{30}
-\bibcite{chen2004upper}{31}
-\bibcite{KipnisRini2017}{32}
-\bibcite{tsybakov2008introduction}{33}
-\bibcite{gill1995applications}{34}
-\bibcite{polyak1992acceleration}{35}
-\bibcite{polyak1990new}{36}
-\bibcite{1619423}{37}
-\bibcite{van2000asymptotic}{38}
-\bibcite{van2004detection}{39}
-\bibcite{1056489}{40}
+\bibcite{xu2017information}{26}
+\bibcite{ibragimov1956composition}{27}
+\bibcite{lehmann2006theory}{28}
+\bibcite{bagnoli2005log}{29}
+\bibcite{Samford1953}{30}
+\bibcite{hammersley1950estimating}{31}
+\bibcite{chen2004upper}{32}
+\bibcite{KipnisRini2017}{33}
+\bibcite{tsybakov2008introduction}{34}
+\bibcite{gill1995applications}{35}
+\bibcite{polyak1992acceleration}{36}
+\bibcite{polyak1990new}{37}
+\bibcite{1619423}{38}
+\bibcite{van2000asymptotic}{39}
+\bibcite{van2004detection}{40}
+\bibcite{1056489}{41}

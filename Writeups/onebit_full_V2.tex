@@ -75,25 +75,16 @@
 \tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
 
 
-\title{\LARGE \bf Mean Estimation from Single-Bit Measurements}
-%
-%\author{
-%\IEEEauthorblockN{Alon Kipnis}
-%\IEEEauthorblockA{Department of Electrical Engineering \\
-%Stanford University\\
-%Stanford, CA\\}
-%\and
-%\IEEEauthorblockN{John C. Duchi}
-%\IEEEauthorblockA{Department of Statistics \\
-%and Department of Electrical Engineering \\
-%Stanford University\\
-%Stanford, CA\\}
-%\and
-%\IEEEauthorblockN{Andrea J. Goldsmith}
-%\IEEEauthorblockA{Department of Electrical Engineering \\
-%Stanford University\\
-%Stanford, CA\\}
-%}
+\author{
+    \IEEEauthorblockN{John C. Duchi\IEEEauthorrefmark{1}\IEEEauthorrefmark{2} and
+Alon Kipnis\IEEEauthorrefmark{1} \\}
+    \IEEEauthorblockA{\IEEEauthorrefmark{1}Stanford University, Department of Statistics \\}
+    \IEEEauthorblockA{\IEEEauthorrefmark{2}Stanford University, Department of Electrical Engineering. }
+}
+
+\title{\LARGE \bf Mean Estimation from One-Bit Measurements}
+
+
 
 \begin{document}
 \graphicspath{{../Figs/}}
@@ -102,18 +93,17 @@
 \pagestyle{empty}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-We consider the problem of estimating the mean of a symmetric log-concave distribution under the following constraint: only a single bit per sample from this distribution is available to the estimator. We study the mean squared error (MSE) risk in this estimation as a function of the number of samples, and hence number of bits, from this distribution. Under an adaptive setting in which each bit is a function of the current sample and the previously observed bits, we show that the optimal relative efficiency compared to the sample mean is the efficiency of the median. For example, in estimating the mean of a normal distribution, a constraint of one bit per sample incurs a penalty of $\pi/2$ in sample size compared to the unconstrained case. 
+We consider the problem of estimating the mean of a symmetric log-concave distribution under the following constraint: only a single bit per sample from this distribution is available to the estimator. We study the mean squared error (MSE) risk in this estimation as a function of the number of samples, and hence the number of bits, from this distribution. Under an adaptive setting in which each bit is a function of the current sample and the previously observed bits, we show that the optimal relative efficiency compared to the sample mean is the efficiency of the median. For example, in estimating the mean of a normal distribution, a constraint of one bit per sample incurs a penalty of $\pi/2$ in sample size compared to the unconstrained case. 
 %
-We also consider a distributed setting where each one bit message is only a function of a single sample. We derive lower bounds on the MSE in this setting, and show that the optimal efficiency can only be attained at a finite number of points in the parameter space. 
+We also consider a distributed setting where each one-bit message is only a function of a single sample. We derive lower bounds on the MSE in this setting, and show that the optimal efficiency can only be attained at a finite number of points in the parameter space. 
 %
-Finally, we analyze a distributed setting where the bits are obtained by comparing each sample against a prescribed threshold, and consider the threshold density that minimizes the maximal MSE. 
+Finally, we analyze a distributed setting where the bits are obtained by comparing each sample against a prescribed threshold. Consequently, we consider the threshold density that minimizes the maximal MSE. 
 %
-Our results indicates that estimating the mean from one bit measurements is equivalent to estimating the sample median from these measurements. In the adaptive case, this estimate can be done with vanishing error for any point in the parameter space. In the distributed case, this estimate can be done with vanishing error only for a finite number of possible values for the unknown mean. 
+Our results indicate that estimating the mean from one-bit measurements is equivalent to estimating the sample median from these measurements. In the adaptive case, this estimate can be done with vanishing error for any point in the parameter space. In the distributed case, this estimate can be done with vanishing error only for a finite number of possible values for the unknown mean. 
 %
-%Therefore, our results indicates that, rather surprisingly, parametric estimation from the coarsest form of quantization incurs only a multiplicative penalty factor on the number of measurements. For example, this factor is $\pi/2$ for the normal distribution. 
+%Therefore, our results indicate that, rather surprisingly, parametric estimation from the coarsest form of quantization incurs only a multiplicative penalty factor on the number of measurements. For example, this factor is $\pi/2$ for the normal distribution. 
 \end{abstract}
 
 %{\color{red}  See LASSO results in http://arxiv.org/abs/1506.02181v1}
@@ -124,12 +114,12 @@ Our results indicates that estimating the mean from one bit measurements is equi
 \label{sec:Intro}
 Estimating parameters from data collected and processed by multiple units may be limited due to communication constraints between these units. 
 %
-For example, this scenario arises in sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In these situations, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number, but also by the available bandwidth for communicating between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by this constraint on communication, and what are the fundamental performance limits in estimating a parameter subject to such restriction. \par
-This paper answers this question in a particular setting: the estimation of the mean $\theta$ of a symmetric log-concave distribution with a finite variance, under the constraint that only a single bit can be communicated on each sample from this distribution. As it turns out, the ability to share information before committing on each single-bit message dramatically affects the performance in estimating $\theta$. We therefore distinguish among three settings:
+For example, this scenario arises in sensor arrays where information is collected at multiple physical locations and transmitted to a central estimation unit. In these situations, the ability to estimate a particular parameter from the data is dictated not only by the quality of observations and their number but also by the available bandwidth for communicating between the sensors and the central estimator. The question that we ask is to what extent a parametric estimation task is affected by this constraint on communication, and what are the fundamental performance limits in estimating a parameter subject to such restriction. \par
+This paper answers this question in a particular setting: the estimation of the mean $\theta$ of a symmetric log-concave distribution with finite variance, under the constraint that only a single bit can be communicated on each sample from this distribution. As it turns out, the ability to share information before committing on each one-bit message dramatically affects the performance in estimating $\theta$. We, therefore, distinguish among three settings:
 \begin{itemize}
- \item[(i)\,\,] \emph{Centralized} encoding: all $n$ encoders confer and produce a single $n$ bit message. 
- \item[(ii)\,] \emph{Adaptive} or \emph{sequential} encoding: the $n$th encoder observes the $n$th sample and the $n-1$ previous messages (bits).
- \item[(iii)] \emph{Distributed} encoding: the $n$th message is only a function of the $n$th observation.
+ \item[(i)\,\,] \emph{Centralized} encoding (Fig.~\ref{fig:centralized}): all $n$ encoders confer and produce a single $n$ bit message. 
+ \item[(ii)\,] \emph{Adaptive} or \emph{sequential} encoding (Fig.~\ref{fig:sequential}): the $n$th encoder observes the $n$th sample and the $n-1$ previous messages (bits).
+ \item[(iii)] \emph{Distributed} encoding (Fig.~\ref{fig:distributed}): the $n$th message is only a function of the $n$th observation.
  \end{itemize}
 Evidently, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). Below are three application examples for each of settings (i)-(iii) above, respectively:
 \begin{itemize}
@@ -140,45 +130,45 @@ Evidently, as far as information sharing is concerned, settings (iii) is a more 
 %
 We measure the performance in estimating $\theta$ by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting compared to asymptotically normal estimators whose variances decreases as $\sigma^2/n+o(n^{-1})$. Estimators of this form include the empirical mean of the samples, and, under some conditions, the optimal Bayes estimator. \par
 %
-In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per measurement constraint is useful in bounding from below the excess risk in estimating a signal from its noisy measurements. Namely, the excess MSE or ARE we derive serves as the most optimistic estimate for the risk in estimating a signal that varies in time or space under the one bit per measurement constraint. Such situtations are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \\
+In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per measurement constraint is useful in bounding from below the excess risk in estimating a signal from its noisy measurements. Namely, the excess MSE or ARE we derive serves as the most optimistic estimate for the risk in estimating a signal that varies in time or space under the one bit per measurement constraint. Such situations are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \\
 
 
 % given a prior distribution on the space $\Theta$ where $\theta$ resides. \\
 
 In setting (i), the estimator can evaluate the optimal mean estimator (e.g., the sample mean in the Gaussian case) and then quantize it using $n$ bits. Since the accuracy in describing the empirical mean decreases exponentially in $n$, the error due to quantization is negligible compared to the MSE in estimating the mean. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. 
 %
-In this paper we show that a similar results does not hold in setting (ii): the ARE of any adaptive estimation scheme is at most the ARE of the sample median. Specifically, when the samples are drawn from the normal distribution, this ARE equals $\pi/2$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $\pi/2 \approx 1.57$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE is tight by providing an estimator that attains it. % This estimator is obtained by averaging the results of a series of comparisons of the samples against certain thresholds. 
+In this paper we show that a similar result does not hold in setting (ii): the ARE of any adaptive estimation scheme is at most the ARE of the sample median. Specifically, when the samples are drawn from the normal distribution, this ARE equals $\pi/2$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $\pi/2 \approx 1.57$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE is tight by providing an estimator that attains it. % This estimator is obtained by averaging the results of a series of comparisons of the samples against certain thresholds. 
 %This estimator is can be seen as a stochastic gradient descent procedure for minimizing the absolute error, hence it attains the asymptotic MSE of the sample median. % Interestingly, our estimator attains \eqref{eq:median_MSE} regardless of the particular realization of $\theta$ or the radius of the parameter space from which it is taken.
 %
 Clearly, the penalty on the sample size in setting (iii) is at least as large as that in setting (ii). 
 Unlike in setting (ii), we show that there is no distributed estimation scheme that is uniformly optimal in the sense that it attains the ARE of the sample median for all $\theta$ in the parameter space. 
 % Instead, in setting (iii) we restrict ourselves to estimators from messages obtained by comparison against a prescribed value (that may be different for each sample). We show that the maximum likelihood (ML) estimator for $\theta$ from these messages is asymptotically local minimax, and its asymptotic variance is strictly greater than the variance of the median. Thus, at least when limited to threshold detection, the ability to adapt the threshold allows for a more efficient estimation. %This is in contrast to the \\ counterpart of our setting where $\theta$ is taken from a finite space 
 
-We note that although the ARE in setting (i) is $1$, this scheme already poses a non-trivial challenge for the design and analysis of an optimal encoding and estimation procedures. Indeed, the standard technique to encode an unknown random quantity using $n$ bits is equivalent to the design of a scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration exploitation trade-off arises in this case. 
+We note that although the ARE in setting (i) is $1$, this scheme already poses a non-trivial challenge for the design and analysis of an optimal encoding and estimation procedures. Indeed, the standard technique to encode an unknown random quantity using $n$ bits is equivalent to the design of a scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration-exploitation trade-off arises in this case. 
 %Note that the only missing parameter in our setting is the mean, which, under setting (i), is known to the encoder with uncertainty interval proportional to $\sigma/\sqrt{n}$. 
 Therefore, while uncertainty due to quantization decreases exponentially in the number of bits $n$, hence the ARE is $1$, an exact expression for the MSE in this setting is still difficult to derive. \par
 %
-The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$ may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal one-bit message given the previous messages, this characterization does not necessarily  leads to an upper bound on the ARE. Instead, our result on the maximal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using an appropriate information inequality. \par
-In addition to encoding and estimation schemes that leads to optimal results, we also consider two additional ``natural'' schemes. Specifically, in setting (ii) we consider the one-bit optimal scheme, i.e., the case of a greedy encoder that given the $n$th sample and the previous $n-1$ bits, provides a bit that minimizes the $n$-step MSE. In setting (iii) we also consider the case where the messages are obtained by comparing each sample against a prescribed threshold. This threshold may be different across samples and is assumed deterministic (independent of the data). 
+The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$ may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal one-bit message given the previous messages, this characterization does not necessarily lead to an upper bound on the ARE. Instead, our result on the maximal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using an appropriate information inequality. \par
+In addition to encoding and estimation schemes that lead to optimal results, we also consider two additional ``natural'' schemes. Specifically, in setting (ii) we consider the one-bit optimal scheme, i.e., the case of a greedy encoder that given the $n$th sample and the previous $n-1$ bits, provides a bit that minimizes the $n$-step MSE. In setting (iii) we also consider the case where the messages are obtained by comparing each sample against a prescribed threshold. This threshold may be different across samples and is assumed deterministic (independent of the data). 
 
-%Finally, we show that an estimator that attains asymptotic MSE of $\sigma^2\pi/(2n)$ is obtained as a special case of \cite[Thm. 4]{polyak1992acceleration}. In addition to these two results, we also derive the one-step optimal strategy in which the message sent at step $i$th is designed to minimize the MSE given this message and the previous $i-1$ messages. Furthermore, we demonstrates numerically that the MSE under this strategy converges to $\pi \sigma^2/(2n)$.\\ 
+%Finally, we show that an estimator that attains asymptotic MSE of $\sigma^2\pi/(2n)$ is obtained as a special case of \cite[Thm. 4]{polyak1992acceleration}. In addition to these two results, we also derive the one-step optimal strategy in which the message sent at step $i$th is designed to minimize the MSE given this message and the previous $i-1$ messages. Furthermore, we demonstrate numerically that the MSE under this strategy converges to $\pi \sigma^2/(2n)$.\\ 
 
 
 \subsection*{Related Works}
-As the variance $\sigma^2$ goes to zero, the task of finding $\theta$ using one-bit queries in the adaptive setting (ii) is solved by a bisection style method over the parameter space. Therefore, the general case of non-zero variance is a reminiscent of the noisy binary search problem with possibly infinite number of unreliable tests \cite{cicalese2002least, Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous parameter space, a more closely related problem is that of one-bit analog-to-digital conversion of a constant input corrupted by a Gaussian noise. Using a SDM, Wong and Gray \cite{53738} showed that the output of the modulator converges to the true constant input almost surely, so that a SDM provides a consistent estimator for setting (ii). The rate of this convergence, however, was not analyzed and cannot be derived from the results of \cite{53738}. In particular, our results for setting (ii) imply that the asymptotic rate of convergence of the MSE in SDM to a constant input under an additive white Gaussian nosie is at most $\sigma^2\pi/2$ over the number of feedback iterations. Baraniuk et. al \cite{baraniuk2017exponential} also considered adaptive one-bit measurements in the context of analog-to-digital conversion, although without noise at the input. By establishing the lower bound of $\sigma^2\pi/2n$ on the MSE, we show that the main results of \cite{baraniuk2017exponential}, an exponential MSE decaying rate, does not hold in the noisy setting. Stated otherwise, the MSE in the setting of \cite{baraniuk2017exponential} may decay exponentially up to the noise level, after which it decays at most as $\sigma^2\pi/2n$. \par
+As the variance $\sigma^2$ goes to zero, the task of finding $\theta$ using one-bit queries in the adaptive setting (ii) is solved by a bisection style method over the parameter space. Therefore, the general case of non-zero variance is reminiscent of the noisy binary search problem with a possibly infinite number of unreliable tests \cite{cicalese2002least, Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous parameter space, a more closely related problem is that of one-bit analog-to-digital conversion of a constant input corrupted by Gaussian noise. Using an SDM, Wong and Gray \cite{53738} showed that the output of the modulator converges to the true constant input almost surely, so that an SDM provides a consistent estimator for setting (ii). The rate of this convergence, however, was not analyzed and cannot be derived from the results of \cite{53738}. In particular, our results for setting (ii) imply that the asymptotic rate of convergence of the MSE in SDM to a constant input under an additive white Gaussian noise is at most $\sigma^2\pi/2$ over the number of feedback iterations. Baraniuk et. al \cite{baraniuk2017exponential} also considered adaptive one-bit measurements in the context of analog-to-digital conversion, although without noise at the input. By establishing the lower bound of $\sigma^2\pi/2n$ on the MSE, we show that the main results of \cite{baraniuk2017exponential}, an exponential MSE decaying rate, does not hold in the noisy setting. Stated otherwise, the MSE in the setting of \cite{baraniuk2017exponential} may decay exponentially up to the noise level, after which it decays at most as $\sigma^2\pi/2n$. \par
 %
 One-bit measurements in the distributed setting (iii) was considered in \cite{904560,4244748, 6882252, chen2010performance, 5184907}, but without optimizing the encoders and their detection rules. Consequently, the performance derived in these works are not optimal. 
  % analyzed the estimation from distributed quantized measurements when the same detection rule is applied by all encoders. However, the error criterion considered in these works is the Fisher information rather than the MSE risk or ARE criterion. \par
 %Once the decision rule of each encoder is fixed, the optimal estimation of $\theta$ is determined using the maximum a posteriori probability rule. Hence, the distributed setting is reduced to finding the optimal decision rule of each encoder.
-The work of \cite{52470} addresses the counterpart of our setting (iii) in the case of hypothesis testing, although the results there cannot be extended to parametric estimation. When the parameter space $\Theta$ is finite, Tsitsiklist \cite{tsitsiklis1988decentralized} showed that when the cardinality of $\Theta$ is at most $M$ and the probability of error criterion is used, then no more than $M(M-1)/2$ different detection rules are necessary in order to attain probability of error decreasing exponentially with the optimal exponent. %That is, beyond $M(M-1)/2$ some decision rules can be repeated without lossing optimality.
-Furthermore, in a version of this problem for the adaptive sestting \cite{5751320}, it was shown that, with a specific two-stages feedback, there is no gain in feedback compared to the fully distributed setting. Our results implies that the ARE in the distributed setting with threshold detection rules is strictly larger than that in the adaptive setting, suggesting that the case of a finite $\Theta$ is very different than the case where $\Theta$ is an open set.\par
+The work of \cite{52470} addresses the counterpart of our setting (iii) in the case of hypothesis testing, although the results there cannot be extended to parametric estimation. When the parameter space $\Theta$ is finite, Tsitsiklist \cite{tsitsiklis1988decentralized} showed that when the cardinality of $\Theta$ is at most $M$ and the probability of error criterion is used, then no more than $M(M-1)/2$ different detection rules are necessary in order to attain probability of error decreasing exponentially with the optimal exponent. %That is, beyond $M(M-1)/2$ some decision rules can be repeated without losing optimality.
+Furthermore, in a version of this problem for the adaptive setting \cite{5751320}, it was shown that, with specific two-stage feedback, there is no gain in feedback compared to the fully distributed setting. Our results imply that they ARE in the distributed setting with threshold detection rules is strictly larger than that in the adaptive setting, suggesting that the case of a finite $\Theta$ is very different from the case where $\Theta$ is an open set.\par
 %
-As we explain in detail in Section~ \ref{sec:preliminary}, the remote multiterminal source coding problem, also known as the CEO problem \cite{berger1996ceo, viswanathan1997quadratic, oohama1998rate, prabhakaran2004rate}, leads to a lower bounds on the MSE in setting (iii). For the case of a Gaussian distribution, this lower bound bounds the ARE to be at most $3/4$. Thus, while this bound on the ARE provides no new information compared to the upper bound of $2/\pi$ we derive for setting (ii), it shows that the distributed nature of the problem is not a limiting factor in achieving MSE close to optimal even under the one bit per sample constraint. 
+As we explain in detail in Section~ \ref{sec:preliminary}, the remote multiterminal source coding problem, also known as the CEO problem \cite{berger1996ceo, viswanathan1997quadratic, oohama1998rate, prabhakaran2004rate}, leads to lower bounds on the MSE in setting (iii). For the case of a Gaussian distribution, this lower bound bounds the ARE to be at most $3/4$. Thus, while this bound on the ARE provides no new information compared to the upper bound of $2/\pi$ we derive for setting (ii), it shows that the distributed nature of the problem is not a limiting factor in achieving MSE close to optimal even under the one bit per sample constraint. 
  \par
 % 
 Finally, we note that our settings (ii) and (iii) can be obtained as special cases of 
 \cite{zhang2013information} 
-that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then we derive here for cases (ii) and (iii). Looser bounds can also be obtained from \cite{zhang1988estimation, han2018distributed} that considered inference and distributed estimation under data compression constraint \cite{DBLP:journals/corr/abs-1802-08417, zhang1988estimation, han2018distributed}. \\
+that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then we derive here for cases (ii) and (iii). Looser bounds can also be obtained from \cite{zhang1988estimation, han2018distributed, } that considered inference and distributed estimation under data compression constraint \cite{DBLP:journals/corr/abs-1802-08417, zhang1988estimation, han2018distributed, xu2017information}. \\
 %in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
 The remainder of this paper is organized as follows. In Section~\ref{sec:problem} we describe the problem and useful notation. In Section~\ref{sec:preliminary} we provide two simple bounds on the efficiency and MSE. Our main results for the adaptive and distributed cases are given in Sections~\ref{sec:sequential} and \ref{sec:distributed}, respectively. In Section~\ref{sec:conclusions} we provide concluding remarks. 
@@ -203,7 +193,7 @@ The remainder of this paper is organized as follows. In Section~\ref{sec:problem
 \draw[->, line width=2pt] (est) -- (dest);
 \end{tikzpicture}
 \end{center}
-\caption{\label{fig:centralized} Centralized encoding using one bit per sample on average.}
+\caption{\label{fig:centralized} Centralized one-bit encoding: encoder sends $n$ bits after observing $n$ samples.}
 \end{figure}
 
 
@@ -248,7 +238,7 @@ The remainder of this paper is organized as follows. In Section~\ref{sec:problem
 \draw[->, line width=2pt] (est) -- (dest);
 \end{tikzpicture}
 \end{center}
-\caption{\label{fig:sequential} Adaptive single-bit encoding: the $n$th encoder delivers a single bit message which is a function of its private sample $X_n$ and the previous messages $M_1,\ldots,M_{n-1}$.}
+\caption{\label{fig:sequential} Adaptive one-bit encoding: the $n$th encoder delivers a single bit message which is a function of its private sample $X_n$ and the previous messages $M_1,\ldots,M_{n-1}$.}
 \end{figure}
 
 
@@ -287,7 +277,7 @@ The remainder of this paper is organized as follows. In Section~\ref{sec:problem
 \draw[->, line width=2pt] (est) -- (dest);
 \end{tikzpicture}
 \end{center}
-\caption{\label{fig:distributed} Distributed single-bit encoding: the single-bit message produced by each encoder is only a function of its private sample $X_i$.}
+\caption{\label{fig:distributed} Distributed one-bit encoding: the one-bit message produced by each encoder is only a function of its private sample $X_i$.}
 \end{figure}
 Let $f(x)$ be a symmetric and log-concave density function with a finite second moment $\sigma^2$. For $\theta \in \Theta$, denote by $P_X$ the probability distribution with density $f\left( x-\theta \right)$. Therefore, $P_X$ is an absolutely continuous log-concave distribution with mean $\theta$ and variance $\sigma^2$. Symmetry and log-concavity of $f(x)$ imply that $P_X$ is strongly unimodal with its mode at $x =\theta$ \cite{ibragimov1956composition}. We further assume that the \emph{parameter space} $\Theta$ is a closed interval of the real line. 
 \par
@@ -313,7 +303,7 @@ where the expectation is taken with respect to the distribution of $X^n$ and, wh
 %\end{equation}
 %can be obtained from $R_n$ by assuming a particular least favorable prior distribution on the parameter space $\Theta$ \cite{casella1981}. 
 %
-The main problem we consider is the minimal value of \eqref{eq:error_def} as a function of $n$ under different choices of the encoding functions in cases (i), (ii), and (iii). \\
+The main problems we consider in this paper are the minimal value of \eqref{eq:error_def}, as a function of $n$ and $f(x)$, under different choices of the encoding functions in cases (i), (ii), and (iii). \\
 
 We give particular attention to the ARE of estimators with respect to an asymptotically normal efficient estimator that is not subject to the bit constraint. Specifically, let $\{a_n,\,n\in \mathbb N\}$ be a sequence such that 
 \[
@@ -343,9 +333,9 @@ where
 \[
 h(x) \triangleq \frac{f(x)}{1-F(x)} = \frac{f(x)}{F(-x)}
 \]
-is the \emph{hazard} function (a.k.a. \emph{failure rate} or \emph{force of mortality}), which is a monotone increasing function of since $f(x)$ is log-concave \cite{bagnoli2005log}. 
+is the \emph{hazard} function (a.k.a. \emph{failure rate} or \emph{force of mortality}), which is a monotone increasing function since $f(x)$ is log-concave \cite{bagnoli2005log}. 
 %
-For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that $\eta(x)$ is a strictly decreasing function of $|x|$, as shown in Fig.~\ref{fig:eta}. 
+For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that $\eta(x)$ is a strictly decreasing function of $|x|$, as illustrated in Fig.~\ref{fig:eta}. 
 %
 In this paper we only consider the normal distribution and other log-concave symmetric distributions for which this property of $\eta(x)$ holds. Specifically, we require the following:
 \begin{assump} \label{assump:failure_rate}
@@ -424,13 +414,13 @@ The function $\eta(x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi(x)$ the standard no
 \end{center}
 \end{figure}
 
-\section{Simple Bounds \label{sec:preliminary}}
-On a first impression it may not be clear whether consistent estimation of the mean is even possible in the adaptive and centralized settings. On the other hand, it may seem as if estimation in these cases is trivial as in the centralized setting (i). 
+\section{ Consisten Estimation and Of-the-shelf Bounds \label{sec:preliminary}}
+On a first impression, it may not be clear whether consistent estimation of the mean is even possible in the adaptive and centralized settings. On the other hand, it may seem as if estimation in these cases is trivial as in the centralized setting (i). 
 %
-In this section we settle such skepticism by providing simple lower and upper bounds to the relative efficiency under setting (iii). We show that:
+We next settle such skepticism by deriving lower and upper bounds to the relative efficiency under setting (iii). We show that:
 \begin{itemize}
 \item[I.] A consistent estimator with an asymptotically normal distribution always exists in setting (iii), and hence in setting (ii). 
-\item[II.] For the normal distribution, the ARE in setting (iii) is at most $3/4$. Namely, all estimators in this case are strictly inferior compared to the sample mean. 
+\item[II.] For the normal distribution, the ARE in setting (iii) is at most $3/4$. Namely, under setting (iii), all estimators are strictly inferior compared to the sample mean. 
 \end{itemize}
 
 \subsection{Consistent Estimation}
@@ -460,14 +450,17 @@ It is suggested that lower variance can be obtained by an estimator of the form 
 % variance equals to $1/\eta(0)n + o(1)$. We also show in Section~\ref{sec:sequential} that no estimator can attain variance that is asymptotically smaller than $1/\eta(0)n$, so that the ARE of any estimator in settings (ii) and (iii) is at least $\eta(0) \sigma^2$. 
 
 \subsection{Multiterminal Source Coding \label{sec:ceo}}
-The CEO setting includes $n$ encoders, each has access to a noisy version of a random sequence \cite{berger1996ceo}. 
-% $\left\{ U_j,\,j=1,2,\ldots \right\}$. 
-The $i$th encoder observes $k$ noisy samples and transmit $R_i k$ bits to a central estimator. \par
-Assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding (setting (iii) in the Introduction) corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. As a result, a lower bound on the MSE in estimating $\theta$ in the distributed encoding setting is given by the MSE in the optimal coding scheme for the CEO. Note that the difference between the CEO setting and ours lays in the privilege of each of the encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realization, rather than a single realization using a single bit in ours. 
+The CEO setting considers the estimation of a sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_i$ is available at $n$ terminals. At each terminal $i$, an encoder observes the $k$ noisy samples
+\[
+X_{i,j} = \theta_j + Z_{i,j},\qquad j=1,\ldots,k, \qquad i = 1,\ldots,n,
+\]
+and transmits $R_i k$ bits to a central estimator  \cite{berger1996ceo}.  \par
+%
+Assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding in Fig.~\ref{fig:distributed} corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. As a result, a lower bound on the MSE in estimating $\theta$ in the distributed encoding setting is given by the minimal MSE in the CEO setting as $k \to \infty$. Note that the difference between the CEO setting and ours lays in the privilege of each of the encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realizations, rather than a single realization using a single bit in ours. 
  \par
-An optimal scheme for the CEO and its corresponding MSE is known only for the case where the prior on $\theta$, as well as the noise corrupting it at each location, are Gaussian. Namely, the Gaussian CEO is obtained from our setting when the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. Consequently, a lower bound the MSE in our distributed setting is obtained by considering the minimal MSE in the Gaussian CEO as the number of terminals goes to infinity. This leads to the following proposition:
+An optimal scheme for the CEO and its corresponding MSE is known only for the case where the prior on $\theta$, as well as the noise corrupting it at each location, are Gaussian. Namely, the Gaussian CEO is obtained from our setting when the $i$th encoder uses $R_i=1$ bits to transmit a message that is a function of $X_i = \theta + \sigma Z_i$, where $Z_i$ is standard normal. Consequently, a lower bound on the MSE in our distributed setting is obtained by considering the minimal MSE in the Gaussian CEO as the number of encoders $n$ goes to infinity. This leads to the following proposition:
 \begin{prop} \label{prop:ceo_lower_bound}
-Assume that $\Theta = \mathbb R$ and that $\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$. Then any estimator $\hat{\theta}_n$ of $\theta$ in the distributed setting satisfies
+Assume that $\Theta = \mathbb R$ and $\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$. Then any estimator $\hat{\theta}_n$ of $\theta$ in the distributed setting satisfies
 \begin{equation} \label{eq:ceo_bound}
  n\mathbb E \left( \theta - \theta_n \right)^2 \geq \frac{4\sigma^2}{3} + O(n^{-1}),
 \end{equation}
@@ -475,15 +468,16 @@ where the expectation is with respect to $\theta$ and $X^n$.
 \end{prop}
 
 \begin{proof}
-We consider the expression \cite[Eq. 10]{chen2004upper} that gives the minimal distortion $D^\star$ in the CEO with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$:
+We consider the minimal distortion $D^\star$ in the Gaussian CEO setting with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$
+from \cite[Eq. 10]{chen2004upper}:
 \begin{equation} \label{eq:ceo_optimal_sumrate}
 R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
 \end{equation}
-Assuming $R_\Sigma = n$ and $L=n$, we get
+For the special case of $R_\Sigma = n$ and $L=n$, we get
 \begin{equation} \label{eq:ceo_optimal_sumrate2}
 n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
 \end{equation}
-The value of $D^\star$ that satisfies the equation above describes the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed encoding setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
+$D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describing the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, this $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting of Fig.~\ref{fig:distributed}. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
 \[
 D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
 \]
@@ -498,7 +492,7 @@ From the formulation of the CEO problem, it follows that the difference between 
 distinguishes between the CEO problem with one bit per encoder and the mean estimation problem from one-bit measurements in the distributed setting of Fig.~\ref{fig:distributed}. 
 
 \section{Adaptive Estimation \label{sec:sequential}}
-The first main results of this paper, as described in Theorem~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be larger than $\eta(0)\sigma^2$, which is the ARE of the median of the sample $X_1,\ldots,X_n$. Next, we provide a particular adaptive estimation scheme that attains this maximal efficiency. Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the message $M_i$ that minimizes the MSE given $X_i$ and the previous $i-1$ messages is chosen. %Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $\eta(0)\sigma^2$. 
+The first main results of this paper, as described in Theorem~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be larger than $\eta(0)\sigma^2$, which is the ARE of the median of the sample $X_1,\ldots,X_n$. Next, we provide a particular adaptive estimation scheme that attains this maximal efficiency. Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the chosen message $M_i$  minimizes the MSE given $X_i$ and the previous $i-1$ messages. %Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $\eta(0)\sigma^2$. 
 
 \subsection{Maximal efficiency in adaptive setting}
 Our first result asserts that the ARE of any adaptive encoding and estimation scheme is bounded from above by $\eta(0)\sigma^2$. %This result follows from the following theorem:
@@ -515,7 +509,7 @@ is the Fisher information with respect to a location model in $\theta$.
 \end{thm}
 
 \subsubsection*{Sketch of Proof}
-The main idea in the proof is to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality \cite[Thm. 2.13]{tsybakov2008introduction},\cite{gill1995applications} which bounds from below the MSE of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in the Appendix.\\
+The main idea in the proof is to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality \cite[Thm. 2.13]{tsybakov2008introduction},\cite{gill1995applications} which bounds from below the MSE of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in the Appendix.\\
 
 Theorem~\ref{thm:adpative_lower_bound} implies that any estimator $\hat{\theta}_n$ from any adaptive encoding scheme satisfies
 \[
@@ -654,10 +648,10 @@ By Slutsky's theorem we get
 \end{proof}
 %
 
-To conclude the adaptive estimation setting, we now consider estimation from one bit messages obtained via an encoding scheme that is one-step optimal. %Namely, each message obtained by employing the optimal the decision rule given the prior distribution and the previous messages.
+To conclude the adaptive estimation setting, we now consider estimation from one-bit messages obtained via an encoding scheme that is one-step optimal. %Namely, each message obtained by employing the optimal the decision rule given the prior distribution and the previous messages.
 
 \subsection{One-step optimal estimation}
-We now consider an estimation scheme that posses the property of \emph{one-step optimality}: at each step $n$, the $n$th encoder designs the detection region $M_n^{-1}(1)$ such that the MSE given $M^n$ is minimal. In other word, this scheme designs the messages in a greedy manner, such that the MSE at step $n$ is minimal given the current state of the estimation described by $M^{n-1}$. \\
+We now consider an estimation scheme that posses the property of \emph{one-step optimality}: at each step $n$, the $n$th encoder designs the detection region $M_n^{-1}(1)$ such that the MSE given $M^n$ is minimal. In other words, this scheme designs the messages in a greedy manner, such that the MSE at step $n$ is minimal given the current state of the estimation described by $M^{n-1}$. \\
 
 The following theorem determine the message, i.e., the decision rule $(M^{n-1},X_n)\rightarrow M_n$, that minimizes the next step MSE:
 \begin{thm}[optimal one-step estimation] \label{thm:opt_one_step}
@@ -748,13 +742,13 @@ The normalized MSE of the estimator defined by \eqref{eq:estimator_update} and \
 \begin{tikzpicture}[scale = 0.6]
 \begin{axis}[
 width=10cm, height=6cm,
-xmin = 0, xmax=1000, 
+xmin = 0, xmax=800, 
 restrict y to domain = 0:3,
 ymin = 0,
 ymax = 3.4,
 samples=10, 
 xlabel= $n$,
-%ylabel = $n\mathbb E \left[\left(\theta - \hat{\theta}_n \right)^2 \right]$,
+ylabel = {$n\mathbb E \left[\left(\theta - \hat{\theta}_n \right)^2 \right]$},
 %xtick={-3,-2,-1,0,1,2,3},
 %xticklabels={-3,-2,-1,0,1,2,3},
 ytick={0,1,1.57},
@@ -766,13 +760,13 @@ xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 
-\addplot[color = blue, solid, smooth] plot table [x = n, y = SGD, col sep=comma] {../SimRes/sim_res.csv};
+\addplot[color = blue, solid, smooth] plot table [x = itr, y = SGD, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{asymptotically optimal};
 
-\addplot[color = red, solid, smooth] plot table [x = n, y = Bayes, col sep=comma] {../SimRes/sim_res.csv};
+\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{one step optimal};
 
-\addplot[color = green!30!black, solid, smooth] plot table [x = n, y = split, col sep=comma] {../SimRes/sim_res.csv};
+\addplot[color = green!30!black, solid, smooth] plot table [x = itr, y = split, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{single interaction};
 
 \end{axis}
@@ -782,7 +776,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 %\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left(\hat{\theta}_n - \theta \right)^2$};
 %\node[scale = 0.7] at (0,-2.4) {$n$};
 %\end{tikzpicture}
-\caption{Normalized empirical risk $n\left(\hat{\theta}_n-\theta\right)^2$ versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
+\caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
 \label{fig:adaptive_error}  }
 \end{center}
 \end{figure}
@@ -799,7 +793,7 @@ where $\alpha > 0$ is a parameter of the modulator that is determined by the max
 \end{comment}
 
 \section{Distributed Estimation \label{sec:distributed}}
-We now consider the distributed encoding setting described in Fig.~\ref{fig:distributed} (Setting (iii) in the Introduction). In this setting each single-bit message $M_i$ is only a function of its private sample $X_i$, and hence $M_i$ characterized by its \emph{detection region}, defined as 
+We now consider the distributed encoding setting described in Fig.~\ref{fig:distributed} (Setting (iii) in the Introduction). In this setting each one-bit message $M_i$ is only a function of its private sample $X_i$, and hence $M_i$ characterized by its \emph{detection region}, defined as 
 \[
 A_i = \left\{ x \in \mathbb R \,:\, M_i(x) = 1 \right\}.
 \]
@@ -869,11 +863,10 @@ Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is 
 \begin{proof}
 See Appendix. 
 \end{proof}
-%Theorem ~\ref{thm:non_existence} implies that for any distributed encoding scheme with messages defining a LAN family, and whose number of connected components is uniformly bounded, the set of point with MSe 
 
-We next consider the case where each detection region is a half open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain, in this case, existence of a density for the sequence of threshold is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
+We next consider the case where each detection region is a half-open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain next, the existence of a density for the sequence of thresholds is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
 
-%In the adaptive setting, it follows from Theorem~\ref{thm:sgd} that messages of this kind with appropriately chosen thresholds leads to an estimator with the optimal ARE of $\eta(0)sigma^2$. However, Theorem~\ref{thm:non_existence} implies that such ARE can only be attained for a negligible subset of the parameter space. As we shall see next, messages obtained by comparison against a sequence of thresholds cannot attain the optimal efficiency of expect perhaps on a single point of $\Theta$. 
+%In the adaptive setting, it follows from Theorem~\ref{thm:sgd} that messages of this kind with appropriately chosen thresholds lead to an estimator with the optimal ARE of $\eta(0)sigma^2$. However, Theorem~\ref{thm:non_existence} implies that such ARE can only be attained for a negligible subset of the parameter space. As we shall see next, messages obtained via a comparison against a sequence of thresholds cannot attain the optimal efficiency one more than a single point of $\Theta$. 
 
 \subsection{Threshold Detection}
 Assume now that each $M_i$ is of the form
@@ -930,11 +923,11 @@ This upper bound on $\kappa(\theta)$ is attained only when $\lambda$ is the mass
 We conclude this section by considering the density of the threshold values that maximizes the ARE $\kappa(\theta)$ under the worst choice of $\theta \in \Theta$.
 
 \subsection{Minimax Threshold Density}
-The distribution $\lambda(dt)$ that maximizes $\kappa(\theta)$, and thus minimizes $1/\kappa(\theta)$, over the worst choice of $\theta$ in $\Theta = (-T,T)$ is given as the solution to the following optimization problem:
+The distribution $\lambda(dt)$ that maximizes $\kappa(\theta)$, and thus minimizes $1/\kappa(\theta)$, over the worst choice of $\theta$ in $\Theta = [-T,T]$ is given as the solution to the following optimization problem:
 \begin{align}
 \label{eq:var_cvx_minimax}
 \begin{split}
-\mathrm{maximize} \quad &  \inf_{\theta \in (-T,T)} \int \eta(t-\theta) \lambda(dt)
+\mathrm{maximize} \quad &  \inf_{\theta \in [-T,T]} \int \eta(t-\theta) \lambda(dt)
 \\ 
 \mathrm{subject~to} 
 \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
@@ -958,9 +951,9 @@ The objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda(dt)$
 %\eqref{eq:cvx_minimax}, it is enough to take $N_\lambda = N_\theta$.
 %\end{rem} 
 
-Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$. The minimal asymptotic risk $\kappa^\star(\theta)$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $T$. Also illustrated in these Figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = (-T,T)$, namely
+Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$. The minimal asymptotic risk $\kappa^\star(\theta)$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $T$. Also illustrated in these Figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = [-T,T]$, namely
 \begin{align}
-& \kappa_{\unif} \triangleq \min_{\theta \in (-T,T)} \frac{1}{2T}\int_{-T}^T \eta\left(t-\theta\right) dt \nonumber
+& \kappa_{\unif} \triangleq \min_{\theta \in [-T,T]} \frac{1}{2T}\int_{-T}^T \eta\left(t-\theta\right) dt \nonumber
  \\
 & = 
 \frac{1}{2T}\int_{-T}^{T} \eta\left(t\pm T\right) dt
@@ -1093,10 +1086,9 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{tikzpicture}
 
 \caption{\label{fig:minimax_support}
-Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x)$ the normal density with variance $\sigma^2$. 
-%Here the parameter space is $\Theta = (-T,T)$.  
-%$\lambda^\star$ in these figures is obtained by solving \eqref{eq:cvx_minimax}. 
-The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in [-T,T]$ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta$ under a uniform distribution over $\Theta$ and its minimal value the inverse of \eqref{eq:uniform_risk}. }
+Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \mathcal N(\theta,\sigma^2)$ and $\theta \in \Theta = [-T,T]$.
+%
+The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in \Theta$ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta$ under a uniform distribution of threshold values over $\Theta$, hence its minimal value is the inverse of \eqref{eq:uniform_risk}. }
 \end{center}
 \end{figure}
 
@@ -1131,12 +1123,12 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addlegendentry{uniform threshold desnity};
 \end{axis}
 \end{tikzpicture}
-\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x)$ the centered normal density with variance $\sigma^2$ and $\Theta = (-T,T)$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
+\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x) = \mathcal N(\theta,\sigma^2)$  and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
 \end{center}
 \end{figure}
 
 
-%We have seen that using threshold detection, an ARE $\eta(0)\sigma^2$ can only be attained at a single point in $\Theta$. Next, we prove that with any set of messages obtained via a distributed strategy, there exits at least one $\theta \in \Theta$ such that the estimator of $\theta$ has ARE strictly smaller than $\eta(0)\sigma^2$. 
+%We have seen that using threshold detection, an ARE $\eta(0)\sigma^2$ can only be attained at a single point in $\Theta$. Next, we prove that with any set of messages obtained via a distributed strategy, there exists at least one $\theta \in \Theta$ such that the estimator of $\theta$ has ARE strictly smaller than $\eta(0)\sigma^2$. 
 
 
 \begin{comment}
@@ -1367,17 +1359,18 @@ It follows that the ARE approaches its maximal value of $2/\pi$ whenever $\sigma
 \end{comment}
 
 \section{Conclusions \label{sec:conclusions}}
-We considered the MSE risk in estimating the mean of a symmetric and log-concave distributions from a sequence of bits, where each bit is obtained by encoding a single sample from this distribution. 
+We considered the MSE risk in estimating the mean of a symmetric and log-concave distribution from a sequence of bits, where each bit is obtained by encoding a single sample from this distribution. 
 %
 In an adaptive encoding setting, we showed that no estimator can attain asymptotic relative efficiency (ARE) larger than that of the median of the samples. We also showed that this bound is tight by presenting two adaptive encoding and estimation procedures that are as efficient as the median. 
 %We further showed that the optimal MSE and ARE can be attained using only a single adaptation. Namely, a single round of communication between {\color{red} the estimator and the encoder} . 
-We also characterized the one-step optimal scheme in this adaptive setting, i.e., the scheme that minimizes the MSE given any set of previously obtained bits. %Numerical simulations shows that the one-step optimal scheme attains the optimal relative efficiency for the normal distribution. 
+We also characterized the one-step optimal scheme in this adaptive setting, i.e., the scheme that minimizes the risk given any set of previously obtained bits. %Numerical simulations show that the one-step optimal scheme attains the optimal relative efficiency for the normal distribution. 
 \par
-In the distributed setting we provided conditions for local asymptotic normality of the encoded samples, and thus provided a local asymptotic minimax bound on the MSE and ARE under such conditions. We concluded that in this case, the optimal performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in the distributed setting. We further considered the special case of messages encoded using threshold detection rules. We characterized the performance of the optimal estimator from such messages using the density of these thresholds, and consider the threshold density that minimizes the minimax error.
+In the distributed setting we provided conditions for local asymptotic normality of the encoded samples, which implies asymptotic minimax bound on both the risk and ARE. 
+%
+We conclude that under such conditions, the optimal estimation performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in the distributed setting. 
+%
+We further considered the special case of messages obtained by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such messages using the density of these thresholds, and consider the threshold density that minimizes the minimax risk.
  \\
-
-%Interesting extension of our setting is to the case of estimating a $d$ dimensional vector of parameters rather than a scalar. An interesting questions in this extension is behavior of the MSE as a function of $d$. 
-%{\color{red} Shamir \cite{Shamir} showed that in hide-and-seek hypothesis testing problem, bitrate constraint may lead to a significant reduction in detection performance compared to the unrestricted case. This result is then applied to online learning, stochastic optimization and sparse PCA. Shamir's results shows that the penalty is in the dimension ($d/R$ instead of $lod(d)$). In our setting the dimension is $1$. \\}
 
 
 %\section*{ACKNOWLEDGMENT}
@@ -1519,7 +1512,7 @@ so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as
 \end{align}
 It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in \mathbb R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than $4f^2(0)$.  \QEDA \\
 
-We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ single-bit messages with respect to $\theta$, we first note that without loss of generality, each message $M_i$ can is of the form
+We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$, we first note that without loss of generality, each message $M_i$ can is of the form
 \begin{equation}
 \label{eq:general_messages}
 M_i = \begin{cases}
@@ -1629,7 +1622,7 @@ n V_n = \mathbb E \left[ \left(\hat{\theta}_n-\theta \right)^2 \right]  = \frac{
 In this subsection we prove Lemmas~\ref{lem:adaptive} and~\ref{lem:unique} which together implies Theorem~\ref{thm:opt_one_step}. 
 
 \subsubsection*{Proof of Lemma \ref{lem:adaptive}}
-Any single-bit message $M(u) \in \{0,1\}$ is characterized by two decision region $A_1 = M^{-1}(1)$ and $A_{-1} = M^{-1}(-1)$, so that $\mathbb E \left[ U | M(U) \right]$ assumes only two values: $\mu_1 = \mathbb E \left[ U | M(U) = 1 \right]$ and $\mu_{-1} = \mathbb E \left[ U | M(U) = -1 \right]$. We claim that a necessary condition for $M(u)$ to be optimal is that the sets $A_1$ and $A_{-1}$ are the Voronoi sets on $\mathbb R$ corresponding to the points $\mu_1$ and $\mu_{-1}$, respectively, modulo a set of measure $P(du)$ zero. Indeed, assume by contradiction that for such an optimal partition there exists a set $B \subset A_{1}$ with $\mathbb P (U \in B) >0$ such that $\left( b-\mu_{1} \right)^2 > \left( b- \mu_{-1} \right)^2$. The expected square error in this partition satisfies:
+Any one-bit message $M(u) \in \{0,1\}$ is characterized by two decision region $A_1 = M^{-1}(1)$ and $A_{-1} = M^{-1}(-1)$, so that $\mathbb E \left[ U | M(U) \right]$ assumes only two values: $\mu_1 = \mathbb E \left[ U | M(U) = 1 \right]$ and $\mu_{-1} = \mathbb E \left[ U | M(U) = -1 \right]$. We claim that a necessary condition for $M(u)$ to be optimal is that the sets $A_1$ and $A_{-1}$ are the Voronoi sets on $\mathbb R$ corresponding to the points $\mu_1$ and $\mu_{-1}$, respectively, modulo a set of measure $P(du)$ zero. Indeed, assume by contradiction that for such an optimal partition there exists a set $B \subset A_{1}$ with $\mathbb P (U \in B) >0$ such that $\left( b-\mu_{1} \right)^2 > \left( b- \mu_{-1} \right)^2$. The expected square error in this partition satisfies:
 \begin{align*}
 & \int_{\mathbb R} \left( u - \mathbb E[U|M(u)]  \right)^2 P(du) =  \\
 & \int_{A_1} (u- \mu_1)^2 P(du) + \int_{A_{-1}} (u- \mu_{-1})^2 P(du) \\
@@ -2056,7 +2049,5 @@ As a result, we conclude that the above lower bound cannot be strengthen if we c
 
 %Comnet on appearance of $\sigma_\theta^2$ as a second order term. 
 
-\end{document}
-
-
 \end{comment}
+\end{document}

@@ -157,6 +157,11 @@ Y.~Han, A.~{\"{O}}zg{\"{u}}r, and T.~Weissman, ``Geometric lower bounds for
   \url{http://arxiv.org/abs/1802.08417}
 \BIBentrySTDinterwordspacing
 
+\bibitem{xu2017information}
+A.~Xu and M.~Raginsky, ``Information-theoretic lower bounds on bayes risk in
+  decentralized estimation,'' \emph{IEEE Transactions on Information Theory},
+  vol.~63, no.~3, pp. 1580--1600, 2017.
+
 \bibitem{ibragimov1956composition}
 I.~A. Ibragimov, ``On the composition of unimodal distributions,'' \emph{Theory
   of Probability \& Its Applications}, vol.~1, no.~2, pp. 255--260, 1956.
