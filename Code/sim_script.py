@@ -34,7 +34,7 @@ for i in range(nMonte) :
     err_var_split += (th-np.array(th_hat_split))**2
     
     #SGD
-    th_hat_grad = grad_descent(y, g0 = 0.68)
+    th_hat_grad = grad_descent(y, g0 = 0.75)
     err_grad += th-np.array(th_hat_grad)
     err_var_grad += (th-np.array(th_hat_grad))**2
     
