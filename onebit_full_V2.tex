@@ -85,9 +85,8 @@ Alon Kipnis\IEEEauthorrefmark{1} \\}
 \title{\LARGE \bf Mean Estimation from One-Bit Measurements}
 
 
-
 \begin{document}
-\graphicspath{{../Figs/}}
+\graphicspath{{./Figs/}}
 \maketitle
 \thispagestyle{empty}
 \pagestyle{empty}
@@ -124,13 +123,13 @@ This paper answers this question in a particular setting: the estimation of the 
 Evidently, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). Below are three application examples for each of settings (i)-(iii) above, respectively:
 \begin{itemize}
 \item {\bf Signal acquisition:} a quantity is measured $n$ times at different instances, and the results are averaged in order to reduce measurement noise. The averaged result is then stored using one of $n$ states. 
-\item {\bf Analog-to-digital conversion:} in sigma-delta modulation, an analog signal is converted into a sequence of bits by sampling it at a very high rate and then using one-bit threshold detector combined with a feedback loop to update an accumulated error state. Therefore, the MSE in tracking an analog signal using a SDM falls under our setting (ii) when we assume that the signal at the input to the modulator is a constant (direct current) corrupted by, say, thermal noise \cite{53738}. Since the sampling rates in SDM are usually many times more than the bandwidth of its input, analyzing SDM under a constant input provides meaningful lower bound even for non-constant signals.
+\item {\bf Analog-to-digital conversion:} A sigma-delta modulator (SDM) converts an analog signal into a sequence of bits by sampling the signal at a very high rate and then using one-bit threshold detector combined with a feedback loop to update an accumulated error state \cite{1092194}. Therefore, the MSE in tracking an analog signal using a SDM falls under our setting (ii) when we assume that the signal at the input to the modulator is a constant (direct current) corrupted by, say, thermal noise \cite{53738}. Since the sampling rates in SDM are usually many times more than the bandwidth of its input, analyzing SDM under a constant input provides meaningful lower bound even for non-constant signals.
 \item {\bf Differential privacy:} -- a business entity is interested in estimating the average income of its clients. In order to keep this information as confidential as possible, each client independently provides an answer to a yes/no question related to its income.
 \end{itemize}
 %
 We measure the performance in estimating $\theta$ by the mean squared error (MSE) risk. We are interested in particular in the \emph{asymptotic relative efficiency} (ARE) of estimators in the constrained setting compared to asymptotically normal estimators whose variances decreases as $\sigma^2/n+o(n^{-1})$. Estimators of this form include the empirical mean of the samples, and, under some conditions, the optimal Bayes estimator. \par
 %
-In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per measurement constraint is useful in bounding from below the excess risk in estimating a signal from its noisy measurements. Namely, the excess MSE or ARE we derive serves as the most optimistic estimate for the risk in estimating a signal that varies in time or space under the one bit per measurement constraint. Such situations are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \\
+In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per measurement constraint is useful in bounding from below the excess risk in estimating a signal from its noisy measurements. Namely, the excess MSE or ARE we derive serves as the most optimistic estimate for the risk in estimating under the one-bit per measurement constraint a signal changing over time or space. Such estimation settings are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \\
 
 
 % given a prior distribution on the space $\Theta$ where $\theta$ resides. \\
@@ -140,8 +139,7 @@ In setting (i), the estimator can evaluate the optimal mean estimator (e.g., the
 In this paper we show that a similar result does not hold in setting (ii): the ARE of any adaptive estimation scheme is at most the ARE of the sample median. Specifically, when the samples are drawn from the normal distribution, this ARE equals $\pi/2$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $\pi/2 \approx 1.57$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE is tight by providing an estimator that attains it. % This estimator is obtained by averaging the results of a series of comparisons of the samples against certain thresholds. 
 %This estimator is can be seen as a stochastic gradient descent procedure for minimizing the absolute error, hence it attains the asymptotic MSE of the sample median. % Interestingly, our estimator attains \eqref{eq:median_MSE} regardless of the particular realization of $\theta$ or the radius of the parameter space from which it is taken.
 %
-Clearly, the penalty on the sample size in setting (iii) is at least as large as that in setting (ii). 
-Unlike in setting (ii), we show that there is no distributed estimation scheme that is uniformly optimal in the sense that it attains the ARE of the sample median for all $\theta$ in the parameter space. 
+Clearly, the penalty on the sample size in setting (iii) is at least as large as that in setting (ii). Furthermore, we show that, unlike in setting (ii), there is no distributed estimation scheme that is uniformly optimal in the sense that it attains the ARE of the sample median for all $\theta$ in the parameter space. 
 % Instead, in setting (iii) we restrict ourselves to estimators from messages obtained by comparison against a prescribed value (that may be different for each sample). We show that the maximum likelihood (ML) estimator for $\theta$ from these messages is asymptotically local minimax, and its asymptotic variance is strictly greater than the variance of the median. Thus, at least when limited to threshold detection, the ability to adapt the threshold allows for a more efficient estimation. %This is in contrast to the \\ counterpart of our setting where $\theta$ is taken from a finite space 
 
 We note that although the ARE in setting (i) is $1$, this scheme already poses a non-trivial challenge for the design and analysis of an optimal encoding and estimation procedures. Indeed, the standard technique to encode an unknown random quantity using $n$ bits is equivalent to the design of a scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration-exploitation trade-off arises in this case. 
@@ -168,7 +166,7 @@ As we explain in detail in Section~ \ref{sec:preliminary}, the remote multitermi
 % 
 Finally, we note that our settings (ii) and (iii) can be obtained as special cases of 
 \cite{zhang2013information} 
-that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then we derive here for cases (ii) and (iii). Looser bounds can also be obtained from \cite{zhang1988estimation, han2018distributed, } that considered inference and distributed estimation under data compression constraint \cite{DBLP:journals/corr/abs-1802-08417, zhang1988estimation, han2018distributed, xu2017information}. \\
+that consider adaptive and distributed estimation protocols for $m$ machines, each has access to $n/m$ independent samples. The main result of \cite{zhang2013information} are bounds on the estimation error as a function of the number of bits $R$ each machine uses for communication. The specialization of their result to our setting, by taking $m=n$ and $R=1$, leads to looser lower bounds then the ones we derive in this paper for cases (ii) and (iii). Looser bounds can also be obtained from works considering general inference and distributed estimation problems under data compression constraint \cite{DBLP:journals/corr/abs-1802-08417, zhang1988estimation, han2018distributed, xu2017information}. \\
 %in MIMO detection in wireless communication \cite{singh2009limits}. \\
 
 The remainder of this paper is organized as follows. In Section~\ref{sec:problem} we describe the problem and useful notation. In Section~\ref{sec:preliminary} we provide two simple bounds on the efficiency and MSE. Our main results for the adaptive and distributed cases are given in Sections~\ref{sec:sequential} and \ref{sec:distributed}, respectively. In Section~\ref{sec:conclusions} we provide concluding remarks. 
@@ -373,7 +371,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, solid, smooth] plot table [x = x, y = y, col sep=comma] {../Figs/eta.csv};
+\addplot[color = blue, solid, smooth] plot table [x = x, y = y, col sep=comma] {./Figs/eta.csv};
 \addlegendentry{$\eta(x)$};
 \addplot[domain = -5:5, samples = 50, color = red, solid, smooth]  {exp(-x^2/2) / sqrt(2*3.14159)};
 \addlegendentry{$\phi(x)$};
@@ -401,7 +399,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, solid, smooth] plot table [x = x, y = logy, col sep=comma] {../Figs/eta.csv};
+\addplot[color = blue, solid, smooth] plot table [x = x, y = logy, col sep=comma] {./Figs/eta.csv};
 \addlegendentry{$\log \eta(x)$};
 \addplot[domain = -5:5, samples = 30, color = red, solid, smooth]  {-(x)^2/2 -0.9189};
 \addlegendentry{$\log \phi(x)$};
@@ -760,13 +758,13 @@ xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
 
-\addplot[color = blue, solid, smooth] plot table [x = itr, y = SGD, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
+\addplot[color = blue, solid, smooth] plot table [x = itr, y = SGD, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{asymptotically optimal};
 
-\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
+\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{one step optimal};
 
-\addplot[color = green!30!black, solid, smooth] plot table [x = itr, y = split, col sep=comma] {../SimRes/sim_res_nMonte5000.csv};
+\addplot[color = green!30!black, solid, smooth] plot table [x = itr, y = split, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
 \addlegendentry{single interaction};
 
 \end{axis}
@@ -984,11 +982,11 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.5.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.5.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.5.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.5.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
 \end{axis}
 \end{tikzpicture}
@@ -1014,11 +1012,11 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.2.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.2.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.2.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.2.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
 \end{axis}
 \end{tikzpicture}
@@ -1044,11 +1042,11 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.1.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.1.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.1.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.1.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
 \end{axis}
 \end{tikzpicture}
@@ -1074,11 +1072,11 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {../Figs/minmax_lmd_b0.5_sig0.05.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.05.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {../Figs/minimax_th_b0.5_sig0.05.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {../Figs/minimax_th_b0.5_sig0.05.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
 
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
@@ -1116,10 +1114,10 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
+\addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
 \addlegendentry{optimal threshold density};
 
-\addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {../Figs/minmax_ARE_b0.5.csv};
+\addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
 \addlegendentry{uniform threshold desnity};
 \end{axis}
 \end{tikzpicture}
@@ -1156,7 +1154,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/unif_Bayes_lmd_b0.5_sig1.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig1.csv};
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
 \end{axis}
 \end{tikzpicture}
@@ -1182,7 +1180,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/unif_Bayes_lmd_b0.5_sig2.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig2.csv};
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
 \end{axis}
 \end{tikzpicture}
@@ -1208,7 +1206,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/unif_Bayes_lmd_b0.5_sig3.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig3.csv};
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
 \end{axis}
 \end{tikzpicture}
@@ -1234,7 +1232,7 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {../Figs/unif_Bayes_lmd_b0.5_sig4.csv};
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig4.csv};
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
 \end{axis}
 \end{tikzpicture}
@@ -1280,9 +1278,9 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = red, smooth] plot table [x = x, y = Runif, col sep=comma] {../Figs/unif_Bayes_Risk.csv};
+\addplot[color = red, smooth] plot table [x = x, y = Runif, col sep=comma] {./Figs/unif_Bayes_Risk.csv};
 %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-\addplot[color = red, smooth, dashed, line width = 0.5pt] plot table [x = x, y = Rbound, col sep=comma] {../Figs/unif_Bayes_Risk.csv};
+\addplot[color = red, smooth, dashed, line width = 0.5pt] plot table [x = x, y = Rbound, col sep=comma] {./Figs/unif_Bayes_Risk.csv};
 \addplot[color = black, dashed] {3.14159 / 2};
 \end{axis}
 \end{tikzpicture}
