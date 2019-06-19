@@ -1679,7 +1679,7 @@ The proof of part (i) of Theorem~\ref{thm:normal_expansion} requires the followi
 \label{lem:Polyak_expansion}
 Consider the process $\{\Delta_i^1 \}_{i=0}^\infty$ defined by
 \[
-\Delta^1_i = \Delta^1_{i-1} - \gamma_i (A \Delta_{i-1}+ \xi_i),\qquad \Delta_{0}^1 = c.
+\Delta^1_i = \Delta^1_{i-1} - \gamma_i (A \Delta_{i-1}+ \xi_i),\quad i=1,2\ldots.
 \]
 Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} hold. Then 
 \begin{equation}
@@ -1822,7 +1822,7 @@ Since both $\sqrt{n}G_n$ and $\sqrt{n}J_n$ are the sum of $n$ i.i.d. random vari
 \frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx & h^2 I_\theta 
 \end{pmatrix}  \right)
 \]
-Le Cam's third lemma \cite[Exm. 6.7]{van2000asymptotic} implies that under $P_{\theta+h/\sqrt{n}}$, 
+Le Cam's third lemma \cite[Exm. 6.7]{van2000asymptotic} implies that under $\Prob^n_{h/\sqrt{n}}$, 
 \[
 \sqrt{n}\bar{\Delta}_n \overset{d}{\to} \Ncal\left(\frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx,  \frac{\chi(0)}{\psi'^2(0)} \right).
 \]
