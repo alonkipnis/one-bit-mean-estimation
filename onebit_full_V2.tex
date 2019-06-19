@@ -1,4 +1,3 @@
-%\documentclass[letterpaper]{IEEEtran}
 \documentclass[letterpaper, 11pt]{IEEEtran}      % Use this line for a4 paper
 
 %LatexiDiff ignore tikz:
@@ -31,6 +30,7 @@
 \usepackage{tikz}
 \usetikzlibrary{external,positioning,decorations.pathreplacing,shapes,arrows,patterns}
 
+\usepackage[hidelinks]{hyperref}
 %\tikzexternalize[mode=list and make]
 \usepackage{algorithmicx}
 \usepackage{pgfplots}
@@ -53,6 +53,10 @@
 \newtheorem{assump}{\bf {Assumptions}}
 
 \newcommand{\mmse}{\mathsf{mmse}}
+\newcommand{\ex}[1]{\ensuremath{\mathbb{E}\left[ #1\right]}}
+
+\newcommand{\Var}[1]{\ensuremath{\mathrm{Var} \left[ #1\right]}}
+
 \newcommand{\unif}{\mathsf{unif}}
 \newcommand{\card}{\mathrm{card}}
 \newcommand{\ARE}{\mathsf{ARE}}
@@ -64,6 +68,7 @@
 \newcommand{\argmax}{\mathrm{argmax}}
 \newcommand*{\QEDA}{\hfill\ensuremath{\square}}
 \newcommand{\CEO}{\mathsf{CEO}}
+\newcommand{\Ncal}{\mathcal{N}}
 
 \tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
 \tikzstyle{sint}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=0.8cm,thick ]
@@ -201,7 +206,7 @@ enc1.center, yshift = 0.cm] (end) {$B_1,\ldots,B_{n-1}$};
 \node[int1, right of = source3, node distance = 1.2cm] (enc3) {Enc n};  
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
-%\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim {\mathcal N} \left(\theta, \sigma^2 \right)$};
+%\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim {\Ncal} \left(\theta, \sigma^2 \right)$};
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
 
 \node[int1, right of = enc2, node distance = 2.1cm ] (est) {Est};
@@ -315,7 +320,7 @@ The main problems we consider in this paper are the minimal value of \eqref{eq:e
 
 We give particular attention to the ARE of estimators with respect to an asymptotically normal efficient estimator that is not subject to the bit constraint. Specifically, let $\{a_n,\,n\in \mathbb N\}$ be a sequence such that 
 \[
-\sqrt{a_n}\left(\hat{\theta}_n - \theta\right) \overset{D}{\longrightarrow} \mathcal N(0, \sigma^2).
+\sqrt{a_n}\left(\hat{\theta}_n - \theta\right) \overset{d}{\longrightarrow} \Ncal(0, \sigma^2).
 \]
 Then the ARE of $\hat{\theta}_n$ with respect to an unconstrained efficient estimator for $\theta$ is defined as \cite[Def. 6.6.6]{lehmann2006theory}
 \[
@@ -422,7 +427,7 @@ The function $\eta(x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi(x)$ the standard no
 \end{center}
 \end{figure}
 
-\section{Consisten Estimation and Existing Bounds \label{sec:preliminary}}
+\section{Consistent Estimation and Off-the-shelf Bounds \label{sec:preliminary}}
 %On a first impression, it may not be clear whether consistent estimation of the mean is even possible in the adaptive and centralized settings. On the other hand, it may seem as if estimation in these cases is trivial as in the centralized setting (i). 
 %
 We next settle such skepticism by deriving lower and upper bounds to the relative efficiency under setting (iii). 
@@ -440,24 +445,23 @@ B_i = \mathbf 1_{X_i>\theta_0},
 \]
 where $\mathbf 1_A$ is the indicator of the event $A$. We have
 \[
-p_n \triangleq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),  
+P_n \triangleq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),  
 \]
 so that 
 \begin{equation}
 \label{eq:estimator_naive}
-\hat{\theta}_n = \theta_0 + F^{-1}\left( p_n \right)
+\hat{\theta}_n = \theta_0 + F^{-1}\left( P_n \right)
 \end{equation}
-is a consistent estimator for $\theta$ in the distributed setting of Figure~\ref{fig:setup}-(iii), where we note that $F(x)$ is invertible over the support of $f(x)$ which is a connected set. Furthermore, the variance of $p_n$ is $F(\theta-\theta_0)F(\theta_0-\theta)$, and hence the delta method implies that $\hat{\theta}_n$ is asymptotically normal with variance 
+is a consistent estimator for $\theta$ in the distributed setting of Figure~\ref{fig:setup}-(iii), where we note that $F(x)$ is invertible over the support of $f(x)$ which is a connected set due to log-concavity. Furthermore, the variance of $P_n$ is $F(\theta-\theta_0)F(\theta_0-\theta)$, and hence the delta method implies that $\hat{\theta}_n$ is asymptotically normal with variance 
 \begin{equation} 
-\frac{1}{
-\eta(\theta-\theta_0)} = \frac{F(\theta-\theta_0)F(\theta_0-\theta)}{f^2(\theta-\theta_0)}. 
+ \frac{F(\theta-\theta_0)F(\theta_0-\theta)}{f^2(\theta-\theta_0)} = \frac{1}{
+\eta(\theta-\theta_0)}.
 \end{equation}
 In particular, the ARE of $\hat{\theta}_n$ equals $\eta(\theta - \theta_0)\sigma^2$. In other words, for a prescribed accuracy, $\hat{\theta}_n$ of  \eqref{eq:estimator_naive} estimates $\theta$ with sample size that is $\eta(\theta- \theta_0)  \sigma^2$ times the samples size required for the sample mean. \par
 %
 %
-Assumption~\ref{assump:failure_rate} implies that for  all $n$ large enough the ARE of $\hat{\theta}_n$ of \eqref{eq:estimator_naive} is never greater than $\eta(0)$, which is the ARE of the sample median. This ARE is attained only when $\theta_0 = \theta$, although $\theta$ is unknown apriori. Since $\eta(x)$ vanishes as $|x|\rightarrow \infty$, the ARE of $\hat{\theta}_n$ may be very small when $\theta$ is away from $\theta_0$. As an example, when $f(x)$ is a normal density, the ARE of $\hat{\theta}_n$ is $\approx 0.07$ when $\theta_0$ is $2.33$ standard deviations from $\theta$. Therefore, the estimator $\hat{\theta}_n$ has little practical value unless the radius of $\Theta$ is small compared to the standard deviation. \par 
-It is suggested that lower variance can be obtained by an estimator of the form \eqref{eq:estimator_naive} if, after observing a batch of the single bit messages, one can update the threshold value $\theta_0$. Such a scheme falls within the adaptive setting of Figure~\ref{fig:setup}-(ii) which we consider in Section~\ref{sec:sequential}. \\
-% variance equals to $1/\eta(0)n + o(1)$. We also show in Section~\ref{sec:sequential} that no estimator can attain variance that is asymptotically smaller than $1/\eta(0)n$, so that the ARE of any estimator in settings (ii) and (iii) is at least $\eta(0) \sigma^2$. 
+Assumption~\ref{assump:failure_rate} implies that for  all $n$ large enough the ARE of $\hat{\theta}_n$ of \eqref{eq:estimator_naive} is never greater than $\eta(0)$, which is the ARE of the sample median. This ARE is attained only when $\theta_0 = \theta$, whereas $\theta$ is apriori unknown. Since $\eta(x)$ vanishes as $|x|\rightarrow \infty$, the ARE of $\hat{\theta}_n$ may be very small when $\theta$ is away from $\theta_0$. As an example, when $f(x)$ is a normal density, the ARE of $\hat{\theta}_n$ is less than $\approx 0.14$ when $\theta_0$ is $2$ standard deviations from $\theta$. Therefore, the estimator $\hat{\theta}_n$ has little practical value unless the radius of $\Theta$ is small compared to the standard deviation. \par 
+It is suggested that we can attain lower variance in estimation by updating the threshold value $\theta_0$ in \eqref{eq:estimator_naive} after observing one or a batch of the single bit messages. Schemes with such adaptation fall within the adaptive setting of Figure~\ref{fig:setup}-(ii) which we consider in Section~\ref{sec:sequential}. \\
 
 \subsection{Multiterminal Source Coding \label{sec:ceo}}
 The CEO setting considers the estimation of a sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_i$ is available at $n$ terminals. At each terminal $i$, an encoder observes the $k$ noisy samples
@@ -466,7 +470,7 @@ X_{i,j} = \theta_j + Z_{i,j},\qquad j=1,\ldots,k, \qquad i = 1,\ldots,n,
 \]
 and transmits $R_i k$ bits to a central estimator  \cite{berger1996ceo}. The central estimator produces an estimates $\hat{\theta}_1,\ldots,\hat{\theta}_k$ with the goal of minimizing the average MSE:
 \[
-D_{CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - \hat{\theta}_j \right)^2 \right]. 
+MSE_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - \hat{\theta}_j \right)^2 \right]. 
 \]
 Note that any distributed encoding scheme using one-bit per sample can be replicated $k$ times and thus leads to a legitimate encoding and estimation scheme for the CEO problem with $R_1=\ldots=R_n = 1$. It follows that, assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. 
 %
@@ -474,15 +478,15 @@ Consequently, a lower bound on the MSE in estimating $\theta$ in the distributed
  \par
 When the prior on $\theta$ and the noise corrupting it at each location are Gaussian, the optimal encoding scheme and its asymptotic risk as $k\to \infty$ were fully characterized in \cite{prabhakaran2004rate}. Furthermore, the work of \cite{chen2004upper} provided an expression for MSE attained in the CEO setting under Gaussian priors. Adapting to our setting, this expression provides the following proposition:
 \begin{prop} \label{prop:ceo_lower_bound}
-Assume that $\Theta = \mathbb R$ and $\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$. Then any estimator $\hat{\theta}_n$ of $\theta$ in the distributed setting satisfies
+Assume that $\Theta = \mathbb R$ and $\pi(\theta) = \Ncal(0,\sigma_\theta^2)$. Then any estimator $\hat{\theta}_n$ of $\theta$ in the distributed setting satisfies
 \begin{equation} \label{eq:ceo_bound}
- n\mathbb E \left( \theta - \theta_n \right)^2 \geq \frac{4\sigma^2}{3} + O(n^{-1}),
+ n\mathbb E \left( \theta - \theta_n \right)^2 \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
 \end{equation}
 where the expectation is with respect to $\theta$ and $X^n$.
 \end{prop}
 
 \begin{proof}
-See Appendix. 
+See Appendix~\ref{app:proof:prop_ceo_lower_bound}.
 \end{proof}
 
 From the formulation of the CEO problem, it follows that the difference between the MSE lower bound \eqref{eq:ceo_bound} and the actual MSE in the distributed setting (case (iii)) is attributed to the ability to perform coding over blocks. Namely, each encoder in the CEO setting may encode an arbitrary number of $k$ independent realizations of $\theta$ using $k$ bits, versus only one realization with one bit in ours. In other words, it is the ability to exploit the geometry of a high-dimensional product probability space that distinguishes between the CEO problem with one bit per encoder on average and the mean estimation problem from one-bit measurements in the distributed setting. 
@@ -505,7 +509,7 @@ is the Fisher information with respect to a location model in $\theta$.
 \end{thm}
 
 \subsubsection*{Sketch of Proof}
-The main idea in the proof is to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in the Appendix.\\
+The main idea in the proof is to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in Appendix~\ref{proof:thm:adpative_lower_bound}.\\
 
 Theorem~\ref{thm:adpative_lower_bound} implies that any estimator $\hat{\theta}_n$ from any adaptive encoding scheme satisfies
 \[
@@ -530,12 +534,12 @@ B_n = B_n (X_n,\theta_{n-1}) =\sgn (X_n - \theta_{n-1}).
 \end{equation}
 Define the $n$th step estimation as
 \begin{equation} \label{eq:sgd_est}
-\hat{\theta}_n =  \frac{1}{n} \sum_{i=1}^n  \theta_i. 
+\bar{\theta}_n =  \frac{1}{n} \sum_{i=1}^n  \theta_i. 
 \end{equation}
 
 We have the following results:
 \begin{thm} \label{thm:sgd}
-Consider the sequence $\left\{\hat{\theta}_n,\, n\in \mathbb N \right\}$ defined by \eqref{eq:sgd_est}. 
+Consider the sequence $\left\{\bar{\theta}_n,\, n\in \mathbb N \right\}$ defined by \eqref{eq:sgd_est}. 
 \begin{enumerate}
 \item[(i)] Assume that $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
 \begin{equation} \label{eq:conditions1}
@@ -547,26 +551,39 @@ Consider the sequence $\left\{\hat{\theta}_n,\, n\in \mathbb N \right\}$ defined
 \end{equation}
 (e.g., $\gamma_n = n^{-\beta}$ for $\beta \in (0,1)$). Then
 \[
-\sqrt{n} \left( \hat{\theta}_n - \theta \right) \overset{d}{\rightarrow} \mathcal N \left(0,  1/\eta(0) \right).
+\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left(0,\frac{1}{\eta(0)}\right).
 \]
-\item[(ii)] Assume that in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
+\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with finite Fisher information for location
+\[
+I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)}  \right)^2 f(x) dx < \infty.
+\]
+%(or that $f(x-\theta)$ is differentiable in quadratic mean).  
+For $\theta \in \Theta$, $h\in \mathbb R$ and $n$ large enough such that $\theta+h/\sqrt{n} \in \Theta$, let $P^n_{\theta,h,n}$ be the measure with density $f(x-\theta - h/\sqrt{n})$. Then 
+\begin{align}
+\label{eq:sgd_part2}
+\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
+\end{align}
+under $P^n_{\theta,h,n}$. 
+\item[(iii)] Assume that, in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
 \begin{equation} \label{eq:conditions2}
 \begin{cases}
 \gamma_n = o(n^{-2/3}), &  \\
 \sum_{n=1}^\infty \gamma_n = \infty.  & \\
 \end{cases}
 \end{equation}
-(e.g., $\gamma_n = n^{-\beta}$ with $2/3<\beta<1$). Then
+(e.g., $\gamma_n = n^{-\beta}$ with $\beta \in (2/3,1)$). Then
 \[
-\lim_{n\rightarrow \infty} n\mathbb E \left[ \left(\theta-\hat{\theta}_n \right)^2 \right] = \frac{1}{\eta(0)}. 
+\lim_{n\to \infty} n \ex{\left( \bar{\theta}_n - \theta \right)^2} = \frac{1}{\eta(0)}. 
 \]
 \end{enumerate}
 \end{thm}
 
 \subsubsection*{Proof}
-The asymptotic behavior of \eqref{eq:sgd_est} follows from \cite[Thm. 4]{polyak1992acceleration} and \cite[Thm. 2]{polyak1990new}. The details are in the Appendix. \\
+See Appendix~\ref{proof:thm:sgd}. \\
 
-Theorem~\ref{thm:sgd} implies that the estimator $\hat{\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}. The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. 
+Theorem~\ref{thm:sgd} implies that the estimator $\hat{\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}. Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
+%
+The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. 
  \par
 %Note that $\theta_0$ is not explicitly defined in equation \eqref{eq:sgd_est}. A reasonable initialization for $\theta_0$ is $\theta_0 = \mathbb E [\theta]$, although Theorem~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$.  \\
 In the encoding and estimating procedure \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, each one-bit message $B_n$ depends on its private sample as well as the current gradient descent estimate $\theta_{n-1}$. In this sense, each encoder in this algorithm interacts with previous one by using the current estimate.
@@ -602,11 +619,11 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 \draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
 
 \node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
-\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {Enc$(\hat{\theta}_1)$};  
+\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {Enc$(\hat{\theta}_{n_1})$};  
 \draw[->,line width = 2pt] (sourceB) -- (enc1B); 
 
 \node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
-\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {Enc$(\hat{\theta}_1)$};  
+\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {Enc$(\hat{\theta}_{n_1})$};  
 \draw[->,line width = 2pt] (source3B) -- (enc3B); 
 \node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
 
@@ -629,7 +646,7 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 }
 \end{figure}
 
-\subsection{Optimality using a Single Interaction}
+\subsection{Optimality using Single Threshold Adaptation}
 In Section~\ref{sec:preliminary} we considered an estimator that is based on messages of the form 
 \[
 B_i = \mathbf 1_{X_i > \theta_0},\qquad i=1,\ldots,n,
@@ -662,7 +679,7 @@ Let
 \]
 and assume that $n_1(n) \rightarrow \infty$ and $n_1(n)/n \rightarrow 0$. Then:
 \begin{align*}
- \sqrt{n} \left( \hat{\theta}_{n_2} - \theta  \right)^2  \overset{D}{\longrightarrow}  \mathcal N\left( 0, 1/\eta(0) \right).
+ \sqrt{n} \left( \hat{\theta}_{n_2} - \theta  \right)^2  \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
 \end{align*}
 \end{thm}
 %
@@ -675,7 +692,7 @@ p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}.
 From the central limit theorem
 \begin{align*}
 & \sqrt{n} \left( p_{n_2}(t) - F( \theta - t) \right)  = \sqrt{\frac{n}{n_2}} \sqrt{n_2} \left(  p_{n_2}(t) - F(\theta - t) \right) \\
-& \overset{D}{\rightarrow} \mathcal N\left( 0, V(t) \right),
+& \overset{d}{\rightarrow} \Ncal\left( 0, V(t) \right),
 \end{align*}
 where
 \[
@@ -685,7 +702,7 @@ Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ we obtain
 \begin{align*}
 & \sqrt{n} \left( t + F^{-1}(\hat{p}_{n_2}(t)) - \theta \right) \\
 &= \sqrt{n} \left( g(\hat{p}_{n_2}(t)) - g \left(F(\theta-t) \right)  \right) \\
-& \overset{D}{\to} \mathcal N\left(0, 
+& \overset{d}{\to} \Ncal\left(0, 
 1/\eta(\theta-t) \right).
 \end{align*}
 %where this convergence is uniform in $t$ since all moments of $F^{-1}(\hat{p}_{n_2})$ exists. 
@@ -701,7 +718,7 @@ By Slutsky's theorem we get
 \begin{align*}
 & \sqrt{n}\left(\hat{\theta}_{n_2} - \theta\right) \\
 & = \sqrt{n} \left( \hat{\theta}_{n_1} + F^{-1}(\hat{p}_{n_2}(\hat{\theta}_{n_1})) - \theta \right)  \\
-& \overset{D}{\to} \mathcal N\left( 0, 
+& \overset{d}{\to} \Ncal\left( 0, 
 1/\eta(0) \right). 
 \end{align*}
 \end{proof}
@@ -792,9 +809,14 @@ For any $\theta$, $f(x)$ and a sequence of sets $A_1,A_2,\ldots$ such that (i)-(
 \begin{align*}
 & \log  \frac{ \mathbb P_{\theta+h/\sqrt{n}} (B_1,\ldots,B_n) }{
 \mathbb P_{\theta} (B_1,\ldots,B_n)} \\
-& \overset{D}{\longrightarrow} \mathcal N\left(-\frac{1}{2} h^2 \kappa(\theta), h^2 \kappa(\theta) \right).
+& \overset{d}{\longrightarrow} \Ncal\left(-\frac{1}{2} h^2 \kappa(\theta), h^2 \kappa(\theta) \right).
 \end{align*} 
 \end{thm}
+
+\begin{proof}
+See Appendix~\ref{proof:thm:LAN1}. 
+\end{proof}
+
 Theorem~\ref{thm:LAN1} provides conditions under which $B_1,\ldots,B_n$ defines a LAN family with a precision parameter given by the limit in \eqref{eq:LAN_lim}. 
 %
 Among these conditions, (iii) is arguably the strongest and hardest to verify. As we show in Section~\ref{subsec:threshold} below, this condition is satisfied, for example, when $A_1, \ldots,A_n$ are half lines whose starting points are drawn independently from some probability measure on $\mathbb R$. Similar ideas imply that condition (iii) holds whenever we choose the intervals consisting each $A_i$ according to some pre-specified distribution. \par
@@ -807,7 +829,7 @@ Let $\hat{\theta}_n$ be an estimator of $\theta \in \Theta$ from $B_1,\ldots,B_n
 \\
 & \qquad \qquad \qquad \qquad \geq \mathbb E \left[ L (Z/\sqrt{\kappa(\theta)}) \right],
 \end{align*}
-where $Z \sim \mathcal N(0,1)$. In particular, for $L(x) = x^2$, 
+where $Z \sim \Ncal(0,1)$. In particular, for $L(x) = x^2$, 
 \begin{align*}
 \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  n \mathbb E  \left( \hat{\theta}_{n} - \tau \right)^2 \geq 1/\kappa(\theta).
 \end{align*}
@@ -825,7 +847,7 @@ Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is 
 \end{thm}
 
 \begin{proof}
-See Appendix. 
+See Appendix~\ref{proof:non_existence}
 \end{proof}
 
 We next consider the case where each detection region is a half-open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain next, the existence of a density for the sequence of thresholds is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
@@ -860,7 +882,7 @@ The condition that $\lambda_n$ converges to a probability measure is satisfies, 
 Due to local asymptotic normality of $\{B_n\}_{n=1}^\infty$, the maximum likelihood estimator (ML) of $\theta$ from $B_1,\ldots,B_n$, denoted here by 
 $\hat{\theta}^{ML}_n$, is local asymptotic minimax in the sense that 
 \[
-\sqrt{n} \left( \hat{\theta}^{ML}_n - \theta \right) \overset{D}{\longrightarrow} \mathcal{N} \left(0, 1/\kappa(\theta) \right). 
+\sqrt{n} \left( \hat{\theta}^{ML}_n - \theta \right) \overset{d}{\longrightarrow} \mathcal{N} \left(0, 1/\kappa(\theta) \right). 
 \]
 It follows that when the density of the threshold values converges to a probability measure, the ARE of the ML estimator is $\kappa(\theta)\sigma^2$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. We note that $\hat{\theta}^{ML}_n$ is given by the root of 
 \begin{equation}
@@ -1050,7 +1072,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{tikzpicture}
 
 \caption{\label{fig:minimax_support}
-Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \mathcal N(\theta,\sigma^2)$ and $\theta \in \Theta = [-T,T]$.
+Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \Ncal(\theta,\sigma^2)$ and $\theta \in \Theta = [-T,T]$.
 %
 The continuous curve (red) represents the reciprocal of the asymptotic risk for at a fixed $\theta \in \Theta$ under the optimal density, so the minimax risk is the inverse of its minimal value. The dashed curve (green) is the reciprocal of the asymptotic risk for a fixed $\theta$ under a uniform distribution of threshold values over $\Theta$, hence its minimal value is the inverse of \eqref{eq:uniform_risk}. }
 \end{center}
@@ -1087,7 +1109,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addlegendentry{uniform threshold desnity};
 \end{axis}
 \end{tikzpicture}
-\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x) = \mathcal N(\theta,\sigma^2)$  and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
+\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x) = \Ncal(\theta,\sigma^2)$  and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
 \end{center}
 \end{figure}
 
@@ -1215,7 +1237,7 @@ R_{\pi,\lambda} \triangleq \mathbb E  K^{-1}(\theta)$ over all probability measu
 \mathrm{subject~to} \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) =1. 
 \end{split}
 \end{align}
-We denote by $R^\star_{\pi}$ the minimal value of the objective function in \eqref{eq:cvx_average}. Since the function $x \rightarrow 1/x$ is convex for positive values, \eqref{eq:cvx_average} defines a convex optimization problem in $\lambda$ whose solution depends on the prior $\pi$. The solution to this problem is approximated by considering $\lambda$ and $\pi$ over a discrete set. On Figure~\ref{fig:opt_density} we illustrate the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distributon ($P_X = \mathcal N(\theta, \sigma^2)$) and the prior on $\theta$ is uniform over $\Theta = [-b,b]$. Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
+We denote by $R^\star_{\pi}$ the minimal value of the objective function in \eqref{eq:cvx_average}. Since the function $x \rightarrow 1/x$ is convex for positive values, \eqref{eq:cvx_average} defines a convex optimization problem in $\lambda$ whose solution depends on the prior $\pi$. The solution to this problem is approximated by considering $\lambda$ and $\pi$ over a discrete set. On Figure~\ref{fig:opt_density} we illustrate the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distributon ($P_X = \Ncal(\theta, \sigma^2)$) and the prior on $\theta$ is uniform over $\Theta = [-b,b]$. Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
 \par
 \begin{figure}
 \begin{center}
@@ -1246,7 +1268,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addplot[color = black, dashed] {3.14159 / 2};
 \end{axis}
 \end{tikzpicture}
-\caption{Asymptotic Bayes risk $R_{\pi}^\star$ in estimating the mean of a normal distribution ($P_X = \mathcal N(\theta, \sigma^2)$under an optimal threshold distribution $\lambda^\star$ for $\pi$ the uniform distribution over $\Theta = [-0.5,0.5]$. 
+\caption{Asymptotic Bayes risk $R_{\pi}^\star$ in estimating the mean of a normal distribution ($P_X = \Ncal(\theta, \sigma^2)$under an optimal threshold distribution $\lambda^\star$ for $\pi$ the uniform distribution over $\Theta = [-0.5,0.5]$. 
 %
 %versus $\sigma/\sigma_\theta = 2\sqrt{3}\sigma$.
 The distribution $\lambda^\star$ is the minimizer of \eqref{eq:cvx_average}. It is illustrated for various cases in Fig.~\ref{fig:opt_density}. The dashed curve represents the upper bound \eqref{eq:upper_bound}. 
@@ -1254,7 +1276,7 @@ The distribution $\lambda^\star$ is the minimizer of \eqref{eq:cvx_average}. It 
 \end{center}
 \end{figure}
 
-As can be seen in Fig.~\ref{fig:opt_density} for the case $P_X = \mathcal N(\theta ,\sigma^2)$ and a uniform $\pi$, when the radius of $\Theta$ is small compared to $\sigma$, the optimal distribution $\lambda^\star$ is a mass distribution. In this case, the ML estimator reduces to the estimator $\hat{\theta}_n$ of \eqref{eq:estimator_naive}. As the following proposition shows, the Bayes risk for this choice of $\lambda$ is maximal, and thus provides an upper bound on the Bayes risk under any $\lambda$. 
+As can be seen in Fig.~\ref{fig:opt_density} for the case $P_X = \Ncal(\theta ,\sigma^2)$ and a uniform $\pi$, when the radius of $\Theta$ is small compared to $\sigma$, the optimal distribution $\lambda^\star$ is a mass distribution. In this case, the ML estimator reduces to the estimator $\hat{\theta}_n$ of \eqref{eq:estimator_naive}. As the following proposition shows, the Bayes risk for this choice of $\lambda$ is maximal, and thus provides an upper bound on the Bayes risk under any $\lambda$. 
  \eqref{eq:cvx_average}. 
 \begin{prop}\label{prop:upper_bound}
 For any prior $\pi(d\theta)$ and $\theta_0$ in the support of $\eta(x)$ we have
@@ -1288,7 +1310,7 @@ We note that the function $1/\eta(x)$ is quasi-convex and symmetric around zero,
 The bound \eqref{eq:upper_bound} is not trivial as long as the integral in the RHS of \eqref{eq:upper_bound} is finite, i.e., whenever the tail of $\pi(\theta)$ vanishes fast enough compared to $\eta(x)$. The expansion \eqref{eq:bound_Taylor} implies that this bound becomes tight whenever the support of the optimal distribution is a mass distribution at $\mathbb E \theta$, in which case the expected value of $\kappa^{-1}(\theta)$ approaches $1/\eta(0) = 1/4f^2(0)$. 
 
 \begin{example} \label{ex:bound}
-In the normal case $P_X = \mathcal N(\theta, \sigma^2)$, the bound in \eqref{eq:bound_Taylor} implies 
+In the normal case $P_X = \Ncal(\theta, \sigma^2)$, the bound in \eqref{eq:bound_Taylor} implies 
 \[
 \frac{R^\star_\pi}{\sigma^2}  \leq \frac{\pi}{2} + \left( \frac{\pi}{2} -1 \right) \left( \frac{ \sigma_\theta}{\sigma} \right)^2 + O \left(  \frac{\sigma_\theta} { \sigma} \right)^3. 
 \]
@@ -1317,18 +1339,16 @@ We further considered the special case of messages obtained by comparing against
 
 \onecolumn 
 
-\appendices
+\appendix
 
-\section{Proofs \label{app:proofs}}
+\section{}
 
+\subsection{Proof of Proposition~\ref{prop:ceo_lower_bound}
+\label{app:proof:prop_ceo_lower_bound}}
 
- 
+First, we note that when $f(x) = \Ncal(0,\sigma^2)$ and $\pi(\theta) = \Ncal(0,\sigma_\theta^2)$, our distributed setting reduces to the Gaussian CEO problem with $R_1=\ldots = R_n =1$ and $k=1$. Therefore, any MSE attained in our distributed setting is also attained by the CEO and thus the optimal CEO strategy (with arbitrary $k$) provides a lower bound to the MSE in our setting. \\
 
-\subsection{Proof of Proposition~\ref{prop:ceo_lower_bound}}
-
-First, we note that when $f(x) = \mathcal N(0,\sigma^2)$ and $\pi(\theta) = \mathcal N(0,\sigma_\theta^2)$, our distributed setting reduces to the Gaussian CEO problem with $R_1=\ldots = R_n =1$ and $k=1$. Therefore, any MSE attained in our distributed setting is also attained by the CEO and thus the optimal CEO strategy (with arbitrary $k$) provides a lower bound to the MSE in our setting. \\
-
-Consider the minimal distortion $D^\star$ in the Gaussian CEO setting with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$
+Consider the minimal MSE $D^\star$ in the Gaussian CEO setting with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$
 from \cite[Eq. 10]{chen2004upper}:
 \begin{equation} \label{eq:ceo_optimal_sumrate}
 R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
@@ -1337,34 +1357,35 @@ For the special case of $R_\Sigma = n$ and $L=n$, we get
 \begin{equation} \label{eq:ceo_optimal_sumrate2}
 n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
 \end{equation}
-$D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describing the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, this $D^\star$ provides a lower bound to the CEO distortion with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
+$D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describing the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, this $D^\star$ provides a lower bound to the CEO MSE with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
 \[
 D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
 \]
-We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the CEO distortion while enforcing the condition $R_1=\ldots = R_n = 1$. Indeed, an upper bound for the CEO distortion under the condition $R_1=\ldots = R_n = 1$ follows from \cite{KipnisRini2017}, and leads to
+We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the CEO MSE while enforcing the condition $R_1=\ldots = R_n = 1$. Indeed, an upper bound for the CEO MSE under the condition $R_1=\ldots = R_n = 1$ follows from \cite{KipnisRini2017}, and leads to
 \[
 D^\star \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
 \frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + O(n^{-2}),
 \]
 which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ is small. 
 
+\subsection{Proof of Lemma~\ref{lem:bound_intervals_delta} \label{proof:lem:bound_intervals_delta}}  
 
-\begin{lem} \label{lem:bound_intervals}
-Let $f(x)$ be a log-concave, symmetric, and differentiable density such that $\eta(x)$ is strongly unimodal. For any $x_1 > \ldots > x_n \in \mathbb R$, 
-\begin{equation}
-\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
-{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
-\leq \max_i \eta(x_i). \label{eq:lem_bound_intervals}
-\end{equation}
-In particular, if $|x_i|>\epsilon > 0$ for all $i=1,\ldots,n$, then 
-\[
-\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
-{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
-\leq \eta(\epsilon) < 0. 
-\]
-\end{lem}
+%\begin{lem} \label{lem:bound_intervals}
+%Let $f(x)$ be a log-concave, symmetric, and differentiable density such that $\eta(x)$ is strongly unimodal. For any $x_1 > \ldots > x_n \in \mathbb R$, 
+%\begin{equation}
+%\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+%{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+%\leq \max_i \eta(x_i). \label{eq:lem_bound_intervals}
+%\end{equation}
+%In particular, if $|x_i|>\epsilon > 0$ for all $i=1,\ldots,n$, then 
+%\[
+%\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+%{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+%\leq \eta(\epsilon) < 0. 
+%\]
+%\end{lem}
 
-\subsubsection*{Proof of Lemma~\ref{lem:bound_intervals}} 
+
 Denote 
 \[
 \delta_n \triangleq \delta_n(x_1,\ldots,x_n) \triangleq \sum_{k=1}^{n} (-1)^{k+1} f(x_k),
@@ -1378,7 +1399,7 @@ so
 (1-\Delta_1(x))}
 = \frac{  \left( f (x) \right)^2}{ F(x)\left(1-F(x)\right)^2}. 
 \]
-We use induction on $n \in \mathbb N$ to show that the LHS of \eqref{eq:lem_bound_intervals} is bounded from above by $\max_i \eta(x_i)$. The case $n=1$ is trivial. Assume that 
+We use induction on $n \in \mathbb N$ to show that the LHS of \eqref{eq:lem_bound_intervals_delta} is bounded from above by $\max_i \eta(x_i)$. The case $n=1$ is trivial. Assume that 
 \begin{equation}
 \frac{ \left( \delta_n \right)^2} 
 {\Delta_n \left(1- \Delta_n \right) } \leq \max_i \eta(x_i)
@@ -1431,7 +1452,9 @@ which is smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis. Under ca
 \end{align*}
 where $x'_{m} = x_{m+1}$. The last expression is also smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis.  \QEDA \\
 
-\subsection*{Proof of Theorem~\ref{thm:adpative_lower_bound}}
+\subsection{Proof of Theorem~\ref{thm:adpative_lower_bound}
+\label{proof:thm:adpative_lower_bound}
+}
 
 We first prove the following lemma:
 \begin{lem} \label{lem:fisher_bound}
@@ -1477,7 +1500,7 @@ so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as
 {1- \left( \sum_{j=1}^k F \left(  b_j-\theta \right) - F \left( a_j-\theta \right)  \right) } 
 \label{eq:lemma_J}
 \end{align}
-It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in \mathbb R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than $4f^2(0)$.  \QEDA \\
+It follows from Lemma~\ref{lem:bound_intervals_delta} that for any $\theta \in \mathbb R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than $4f^2(0)$.  \QEDA \\
 
 We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$, we first note that without loss of generality, each message $B_i$ can is of the form
 \begin{equation}
@@ -1507,32 +1530,41 @@ where $I_\theta (B_i|B^{i-1})$ is the Fisher information of the distribution of 
 
 \QEDA
 
-\subsection*{Proof of Theorem~\ref{thm:sgd}}
-The algorithm given in \eqref{eq:sgd_alg} and \eqref{eq:sgd_est} is a special case of a more general class of estimation procedures given in \cite{polyak1992acceleration} and \cite{polyak1990new}. Specifically, (i) in Theorem~\ref{thm:sgd} follows from the following simplified version of \cite[Thm. 4]{polyak1992acceleration}:
+\subsection{Proof of Theorem~\ref{thm:sgd}
+\label{proof:thm:sgd}
+}
+The algorithm given in \eqref{eq:sgd_alg} and \eqref{eq:sgd_est} is a special case of a more general class of estimation procedures given in \cite{polyak1992acceleration} and \cite{polyak1990new}. 
+
+\subsubsection*{Proof of (i)}
+%Specifically, (i) in Theorem~\ref{thm:sgd} 
+Consider the following simplified version of \cite[Thm. 4]{polyak1992acceleration}:
 \begin{thm}{\cite[Thm. 4]{polyak1992acceleration}} \label{thm:polyak_juditsky}
 Let 
 \[
 X_i = \theta + Z_i,\quad i=1,\ldots,n,
 \]
 where the $Z_i$s are i.i.d. with zero means and finite variances. Define
-\begin{align*}
+\begin{align}
+\begin{split}
 \theta_i & = \theta_{i-1} + \gamma_i \varphi(X_i - \theta_{i-1}), \\
-\hat{\theta}_n & = \frac{1}{n} \sum_{i=0}^{n-1} \theta_i, 
-\end{align*}
+\bar{\theta}_n & = \frac{1}{n} \sum_{i=0}^{n-1} \theta_i, 
+\end{split}
+\label{eq:Polyak_Juditsky_alg}
+\end{align}
 where in addition, assume the following: 
 \begin{enumerate}
 \item[(i)] There exits $K_1$ such that $\left| \varphi(x) \right| \leq K_1(1+|x|)$ for all $x\in \mathbb R$.
 \item[(ii)] The sequence $\left\{ \gamma_i \right\}_{i=1}^\infty$ satisfies conditions \eqref{eq:conditions1}.
-\item[(iii)] The function $\psi(x) \triangleq \mathbb E \varphi(x+Z_1)$ is differentiable at zero with $\psi'(0)>0$, and satisfies $\psi(0)=0$ and $x\psi(x) >0$ for all $x\neq 0$.
+\item[(iii)] The function $\psi(x) \triangleq \ex{ \varphi(x+Z_1)}$ is differentiable at zero with $\psi'(0)>0$, and satisfies $\psi(0)=0$ and $x\psi(x) >0$ for all $x\neq 0$.
 Moreover, assume that there exists $K_2$ and $0<\lambda \leq 1$ such that
 \begin{equation}
 \label{eq:Polyak_Juditsky_cond3}
 \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}.
 \end{equation}
 \item[(iv)] The function 
-$\chi(x) \triangleq \mathbb E \varphi^2(x+Z_1)$ is continuous at zero. 
+$\chi(x) \triangleq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
 \end{enumerate}
-Then $\hat{\theta}_n \rightarrow \theta$ almost surely and $ \sqrt{n}(\hat{\theta}_n - \theta)$ converges in distribution to $\mathcal N(0,V)$, where
+Then $\bar{\theta}_n \rightarrow \theta$ almost surely and $ \sqrt{n}(\hat{\theta}_n - \theta)$ converges in distribution to $\Ncal(0,V)$, where
 \[
 V = \frac{ \chi(0)} {\psi'^2(0)}. 
 \]
@@ -1540,17 +1572,70 @@ V = \frac{ \chi(0)} {\psi'^2(0)}.
 
 Using the notation above, we set $\varphi(x) = \sgn(x)$ and $Z_i = X_i - \theta$. We have that $\chi(x) = \mathbb E \sgn^2(x+Z_1) = 1$, so $\chi(0) = 1$. In addition,
 \begin{align*}
-\psi(x) & = \mathbb E \sgn(x+ Z_1) = \int_{-\infty}^\infty \sgn(x+z) f(z) dz \\
+\psi(x) & = \ex{ \sgn(x+ Z_1) }= \int_{-\infty}^\infty \sgn(x+z) f(z) dz \\
 & = \int_{-x}^\infty f(z) dz -\int_{-\infty}^{-x} f(z) dz. 
 \end{align*}
 Using the symmetry of $f(x)$ around zero, it follows that $\psi'(x) = 2f(x)$ and thus $\psi'(0) = 2f(0)$. It is now easy to verify that the rest of the conditions in Theorem~\ref{thm:polyak_juditsky} are fulfilled for any $\lambda > 0$. Since 
 \[
-\frac{\chi(0)}{\psi'^2(0)} = \frac{1}{4 f^2(0)},
+\frac{\chi(0)}{\psi'^2(0)} = \frac{1}{4 f^2(0)} = \frac{1}{\eta(0)},
 \]
-Theorem~\ref{thm:sgd}-(i) follows from Theorem~\ref{thm:polyak_juditsky}.  \\
+it follows from Theorem~\ref{thm:polyak_juditsky} that
+\[
+\sqrt{n}\left(\hat{\theta}_n-\theta \right) \overset{d}{\to} \Ncal \left(0, 1/ \eta(0)\right). 
+\]
 
-In order to prove part (ii) of Theorem~\ref{thm:sgd} we use the following result from \cite{polyak1990new}:
-\begin{thm}{ \cite[Thm. 2]{polyak1990new}} \label{thm:polyak_new}
+\subsubsection*{Proof of (ii)}
+The proof requires the following refinement of Theorem~\ref{thm:polyak_juditsky}.
+\begin{thm} \label{thm:normal_expansion}
+Let $\Delta_i = \theta_i - \theta$ and $\bar{\Delta_i} = \frac{1}{n} \sum_{i=1}^n \bar{\Delta}_i$. 
+Assume that, in addition to Assumptions (i)-(iv) of Theorem~\ref{thm:polyak_juditsky}, there exists $K_1$ and $\lambda>0$ such that
+\begin{equation}
+\ex{\left| \varphi(Z_1) - \varphi(x+Z_1)  \right|} \leq K_1 |x|^{1+\lambda}
+\label{eq:PJ_additional_cond}. 
+\end{equation}
+Then:
+\begin{itemize}
+\item[(i)] \begin{equation}
+\sqrt{n} \bar{\Delta}_n = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{p.n}(1). \label{eq:normal_expansion_lem}
+\end{equation}
+where $o_{p,n}(1)$ converges in probability to $0$ as $n\to \infty$.
+\item[(ii)] If $Z_1$ has continuously differentiable density $f(x)$ with finite location Fisher information 
+\[
+I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)} \right)^2 f(x) dx,
+\]
+then
+\[
+\sqrt{n} \left( \bar{\Delta}_n \right) \overset{d}{\to} \Ncal\left( \frac{1}{\psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx  , \frac{\chi(0)}{\psi'^2(0)} \right)
+\]
+under the local alternative $Z_1,\ldots,Z_n \sim P^n_{h/\sqrt{n}}$ with density $f^n(x-h/\sqrt{n})$.
+\end{itemize}
+\end{thm}
+The proof of Theorem~\ref{thm:normal_expansion} is given in Subsection~\ref{proof:thm:normal_expansion} below. \\
+
+In our setting, the condition \eqref{eq:PJ_additional_cond} holds since
+\begin{align*}
+& %\varphi(Z_1) - \varphi(x+Z_1) = 
+\sgn(Z_1) - \sgn(x + Z_1) \\
+& = \begin{cases}
+2 & Z_1 > 0,\, x+Z_1<0, \\
+-2 & Z_1 <0, \, x+Z_1>0, \\
+0 & \text{otherwise}. 
+\end{cases}
+\end{align*}
+Consequently, 
+\begin{align*}
+\ex{ \left| \varphi(Z_1) - \varphi(x+Z_1) \right| }  \leq \Prob\left( |Z_1| < x  \right) \leq f(0) |x|, 
+\end{align*}
+In addition, by anti symmetry of $f'(x)$ around $x=0$, 
+\[
+\int_{\mathbb R} \varphi(x) f'(x) dx = \int_{\mathbb R} \sgn(x) f'(x) dx = 2\int_0^\infty f'(x) dx = 2f(0). 
+\]
+Theorem~\ref{thm:normal_expansion}, applied to the setting of Theorem~\ref{thm:sgd}, implies \eqref{eq:sgd_part2}. 
+
+\subsubsection*{Proof of (iii)}
+%In order to prove part (ii) of Theorem~\ref{thm:sgd} 
+Consider the following result from \cite{polyak1990new}:
+\begin{thm}{\cite[Thm. 2]{polyak1990new}} \label{thm:polyak_new}
 Let
 \begin{align} \label{eq:polyak_new_measurements}
 \begin{cases}
@@ -1558,34 +1643,196 @@ U_n = U_{n-1} - \gamma_n \varphi(Y_n), & Y_n = g'(U_{n-1})+Z_n \\
 \bar{U}_n= \frac{1}{n} \sum_{i=1}^n U_n, & n=1,2,\ldots.
 \end{cases}
 \end{align}
-Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \mathbb R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Theorem~\ref{thm:polyak_juditsky}-(iii) and satisfies the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
+Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \mathbb R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution with a density for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Theorem~\ref{thm:polyak_juditsky}-(iii) and satisfy the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
 and there exits $K_3$ such that 
 \[
 \mathbb E \left[ | \varphi(x+Z_1) |^4 \right] \leq K_3(1+|x|^4). 
 \]
-Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions  \eqref{eq:conditions1} and \eqref{eq:conditions2}. Then
+Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions \eqref{eq:conditions1} and \eqref{eq:conditions2}. Then
 \[
 V_n \triangleq \mathbb E \left[ \left(\bar{U}_n-x^\star \right)^2 \right] = n^{-1}\frac{\chi(0)} { (\psi'(0))^2 (g''(x^\star))^2 } + o(n^{-1}).
 \]
 \end{thm}
 
-We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = -\sgn(-x)$, $Z_n = \theta-X_n$ and $U_n = \theta_n$. From \eqref{eq:polyak_new_measurements} we have
+We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$. From \eqref{eq:polyak_new_measurements} we have
 \begin{align*} 
-\theta_n & = \theta_{n-1} + \gamma_n \sgn(\theta-\theta_{n-1} - Z_n )  \\
-& = \theta_{n-1} + \gamma_n \sgn(X_n-\theta_{n-1} ),
+U_n & = U_{n-1} + \gamma_n \sgn(\theta-U_{n-1} - Z_n )  \\
+& = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
 \end{align*}
-so the estimator $\hat{\theta}_n$ defined by $\hat{\theta}_n$ equals to the one defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}. Note that
+so the estimator $\bar{U}_n$ equals to the one defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}. Note that
 \[
 \mathbb E \left[ | \varphi(x+Z_1) |^4 \right] = 1 \leq K_3(1+|x|^4)
 \]
 for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
-the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies 
+the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies that for any $\theta \in \mathbb R$, 
 \[
-n V_n = \mathbb E \left[ \left(\hat{\theta}_n-\theta \right)^2 \right]  = \frac{1}{4 f^2(0)} + o(1).
+n V_n = n \mathbb E \left[ \left(\hat{\theta}_n-\theta \right)^2 \right]  = \frac{1}{4 f^2(0)} + o(1).
 \]
-\QEDA
+{\color{red}
 
-\subsection*{Proof of Theorem~\ref{thm:LAN1}}
+\subsection{Proof of Theorem~\ref{thm:normal_expansion}
+\label{proof:thm:normal_expansion}
+}
+\subsubsection*{Proof of (i)}
+The proof of part (i) of Theorem~\ref{thm:normal_expansion} requires the following two additional results from \cite{polyak1992acceleration}:
+\begin{lem}{\cite[Lem. 2]{polyak1992acceleration}}
+\label{lem:Polyak_expansion}
+Consider the process $\{\Delta_i^1 \}_{i=0}^\infty$ defined by
+\[
+\Delta^1_i = \Delta^1_{i-1} - \gamma_i (A \Delta_{i-1}+ \xi_i),\qquad \Delta_{0}^1 = c.
+\]
+Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} hold. Then 
+\begin{equation}
+\label{eq:Polyak_expansion}
+\sqrt{n} \bar{\Delta}_n^1 = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1} \Delta_i^1 = \frac{\alpha_n \Delta_0^1}{\sqrt{n} \gamma_0}  + \frac{1}{\sqrt{n} A} \sum_{i=1}^{n-1} \xi_i + \frac{1}{\sqrt{n}}\sum_{i=1}^{n-1} w_i^n \xi_i,
+\end{equation}
+where $\alpha_n$, and $w_i^n$ are real numbers such that $|\alpha_n| \leq K$ and $|w_i^n|\leq K$ for some $K< \infty$, and 
+\[
+\lim_{n\to \infty} \frac{1}{n} \sum_{i=1}^{n-1} |w_i^n| = 0. 
+\]
+\end{lem} 
+
+\begin{lem} \label{lem:PJ_converging_sum}
+Under the conditions of Theorem~\ref{thm:polyak_juditsky},
+\[
+\sum_{i=1}^\infty \frac{|\Delta_{i}|^{1+\lambda}}{\sqrt{i}} < \infty 
+\]
+almost surely. 
+\end{lem}
+Lemma~\ref{lem:PJ_converging_sum} follows from the proof of Theorem 2 in \cite{polyak1992acceleration}. 
+
+We separate the proof of part (i) into two steps.
+\subsubsection*{Step I}
+The expansion \eqref{eq:normal_expansion_lem} holds for the process  ${\bar{\Delta}^1_i}$ defined as follows:
+\begin{align} \label{eq:Polyak_expansion_lem1_alg}
+& \Delta_i^1  = \Delta_{i-1}^1 - \gamma_i \psi'(0) \Delta_{i-1}^1 - \gamma_i \varphi(Z_i), \qquad
+ \delta_0^1 = \Delta_0\\
+& \bar{\Delta}^1_i = \frac{1}{n}\sum_{i=0}^{n-1} \Delta^1_i.
+\end{align}
+
+In order to show this claim, use Lemma~\ref{lem:Polyak_expansion} with $A = \psi'(0)$ and $\xi_i = -\varphi(Z_i)$. The first expression on the RHS on \eqref{eq:Polyak_expansion} goes to zero in variance. In addition, 
+\begin{align*}
+& \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 }  = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
+& = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0. 
+\end{align*}
+We obtain
+\begin{equation}
+\sqrt{n} \bar{\Delta}^1_n = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{p.n}(1), \label{eq:Polyak_expansion_aux_process}
+\end{equation}
+
+\subsubsection*{Step II} $\bar{\Delta}_n$ and $\bar{\Delta}^1_n$ are asymptotically equivalent. \\
+
+From \eqref{eq:Polyak_Juditsky_alg} and \eqref{eq:Polyak_expansion_lem1_alg}, the difference $\delta_i = \Delta_i - \Delta_i^1$ satisfies the recursion
+\[
+\delta_i = \delta_{i-1} - \gamma_i \psi'(0) \delta_{i-1} + \gamma_i \left( \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i) \right),
+\]
+where $\delta_0 = 0$. Use Lemma~\ref{lem:Polyak_expansion} with $\xi_i =  \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i)$ to obtain
+\begin{align}
+& \sqrt{n}\bar{\delta}_n = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \xi_i  \\
+& = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \label{eq:PJ_proof1} \\
+& + 
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi(\Delta_{i-1})  + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i)
+\right) \label{eq:PJ_proof2}
+\end{align}
+For the term \eqref{eq:PJ_proof1} and using \eqref{eq:Polyak_Juditsky_cond3}, there exists $K_1$ and $K_2$ such that 
+\begin{align*}
+& \eqref{eq:PJ_proof1}
+\leq K_1 \sum_{i=1}^\infty \frac{1}{\sqrt{i}} \left| \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \right| \\
+& \leq K_2 \sum_{i=1}^\infty \frac{ |\Delta_i|^{1+\lambda}}{\sqrt{i}}. 
+\end{align*}
+
+Lemma~\ref{lem:PJ_converging_sum} shows that 
+\begin{align}
+\sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda}}{\sqrt{i}}  < \infty \label{eq:PJ_converging_sum},
+\end{align}
+hence the Kronecker lemma implies
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \to 0.
+\]
+For the term \eqref{eq:PJ_proof2}, set 
+\[
+\epsilon_i \triangleq \psi(\Delta_{i-1}) + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i).
+\]
+For $a>0$ and $n \in \mathbb N$, define the event
+\[
+A_{n,a} \triangleq \left\{ \sum_{i=1}^{n-1} \frac{|\epsilon_i|}{\sqrt{i}}  \geq a  \right\}. 
+\]
+By Markov's inequality, we have
+\begin{align}
+\ex{\mathbf 1_{A_{n,a}}   \mid \Delta_0,\ldots,\Delta_{n-1} } \leq \frac{1}{a} \sum_{i=1}^{n-1} \frac{ \ex{|\epsilon_i| \Delta_{i-1} \mid }}{\sqrt{i}}. \label{eq:PJ_proof_3}
+\end{align}
+Using \eqref{eq:Polyak_Juditsky_cond3} and \eqref{eq:PJ_additional_cond}, there exists $K'$ and $\lambda'>0$ such that
+\begin{align*}
+& \ex{ |\epsilon_i| | \Delta_{i-1}}  \leq |\psi(\Delta_{i-1})| + \left| \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i) \right|  \\
+& \leq K' |\Delta_{i-1}|^{1+\lambda}. 
+\end{align*}
+Plugging this bound in \eqref{eq:PJ_proof_3} and using Lemma~\ref{lem:PJ_converging_sum},we obtain 
+\[
+\Prob(A_{n,a}) = \ex{ \ex{\mathbf 1_{A_{n,a}}   \mid \Delta_0,\ldots,\Delta_{n-1} } } \leq  \frac{K''}{a}
+\]
+for some constant $K''$. It follows that for any $\epsilon$, we may choose $a$ large enough such that 
+\[
+\sup_{n} \Prob(A_{n,a}) < \epsilon.
+\]
+This implies that for any $\epsilon>0$,
+\[
+\Prob \left( \sum_{i=1}^\infty \frac{|\epsilon_i|}{\sqrt{i}} < \infty \right) \geq 1-\epsilon,
+\]
+and hence 
+\[
+\sum_{i=1}^\infty \frac{|\epsilon_i|}{\sqrt{i}} < \infty
+\]
+almost surely. The Kronecker lemma now implies 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left|\epsilon_i\right| \to 0,
+\]
+hence the term \eqref{eq:PJ_proof2} satisfies
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right) \epsilon_i \leq \frac{K'''}{\sqrt{n}} \sum_{i=1}^{n-1} |\epsilon_i| \to 0. 
+\]
+This conclude the proof of part (i).
+
+\subsubsection*{Part (ii)}
+Use \eqref{eq:normal_expansion_lem} to write
+\[
+\sqrt{n} \bar{\Delta}_n = G_n + o_{p,n}(1),
+\]
+where
+\[
+G_n \triangleq -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n} \varphi(Z_i). 
+\]
+From \cite[Exm. 7.8]{van2000asymptotic}, the location model $f(x-\theta)$ with continuously differentiable $f(x)$ is differentiable in quadratic mean with the score function $-f'(x-\theta)/f(x-\theta)$. This fact implies the following expansion \cite[Thm. 7.2]{van2000asymptotic}:
+\begin{align}
+\label{eq:PJ_LAN}
+& \log \frac{\Prob^n_{h/\sqrt{n}}}{\Prob^n_0} (Z_1,\ldots,Z_n) =  \log \prod_{i=1}^{n} \frac{f(Z_i-h/\sqrt{n})}  {f(X_i-\theta)} = h J_n - \frac{1}{2}h^2 I_{\theta} + o_{p,n}(1),
+\end{align}
+where 
+\[
+J_n \triangleq -\frac{1}{\sqrt{n}} \sum_{i=1}^n \frac{f'(Z_i)}{f(Z_i)} .
+\]
+We have
+\begin{align*}
+& \ex{ G_n J_n} = \frac{1}{\psi'(0)}\frac{1}{n} \sum_{i=1}^n \ex{ \varphi(Z_i) \frac{f'(Z_i)}{f(Z_i)} }  \\
+& = \frac{1}{ \psi'(0)} \ex{ \varphi(Z_1) \frac{f'(Z_1)}{f(Z_1)}} =  \frac{1}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx , 
+\end{align*}
+Since both $\sqrt{n}G_n$ and $\sqrt{n}J_n$ are the sum of $n$ i.i.d. random variables with zero mean and finite variance, we obtain, from the central limit theorem and Slutsky's theorem, that
+\[
+\left(\sqrt{n} \bar{\Delta}_n, \log \frac{\Prob^n_{h/\sqrt{n}}}{\Prob^n_0} \right) \overset{d}{\to} \Ncal \left( \left(0,-\frac{h^2}{2} I_\theta \right),  \begin{pmatrix}
+\frac{\chi(0)}{\psi'^2(0)} & \frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx \\
+\frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx & h^2 I_\theta 
+\end{pmatrix}  \right)
+\]
+Le Cam's third lemma \cite[Exm. 6.7]{van2000asymptotic} implies that under $P_{\theta+h/\sqrt{n}}$, 
+\[
+\sqrt{n}\bar{\Delta}_n \overset{d}{\to} \Ncal\left(\frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx,  \frac{\chi(0)}{\psi'^2(0)} \right).
+\]
+
+\QEDA
+}
+
+\subsection{Proof of Theorem~\ref{thm:LAN1}
+\label{proof:thm:LAN1}
+}
 The log probability mass distribution of $B^n=(B_1,\ldots,B_n)$ is given by
 \begin{align*}
 & \log \Prob_\theta(b^n) = \sum_{i=1}^n \left( \frac{b_i+1}{2} \log  \Prob(X_i\in A_i) + 
@@ -1650,7 +1897,7 @@ U_i = \frac{B_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Pro
 \]
 Then 
 \[
-\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0, \kappa(\theta) \right). 
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{d}{\rightarrow} \Ncal\left(0, \kappa(\theta) \right). 
 \]
 \item[II.]
 For $i=1,\ldots,n$ denote 
@@ -1718,7 +1965,7 @@ where the last transition is because
 \[
  \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \leq 1. 
 \]
-We now use the fact that each $A_i$ is a finite union of interval and consider the following lemma, proof of which is given in the appendix:
+We now use the fact that each $A_i$ is a finite union of interval and consider the following lemma, proof of which is given in Appendix~\ref{proof:lem:bound_intervals_delta}.
 \begin{lem} \label{lem:bound_intervals_delta}
 Let $f(x)$ be a log-concave, symmetric, and differentiable PDF such that $\eta(x)$ is unimodal.  There exists $\delta>0$ such that for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, 
 \begin{equation}
@@ -1742,7 +1989,7 @@ In particular, we conclude that
 \]
 and thus for any $\delta>0$ the numerator of \eqref{eq:Lyaponov}, as well as the entire expression, goes to zero. From Lyaponov's central limit theorem we conclude that 
 \[
-\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{D}{\rightarrow} \mathcal N\left(0,\kappa(\theta) \right). 
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{d}{\rightarrow} \Ncal\left(0,\kappa(\theta) \right). 
 \]
 
 \subsubsection*{Proof of Claim II} 
@@ -1767,7 +2014,6 @@ Since the $V_i$s are independent of each other, Kolmogorov's law of large number
 for any $\theta \in \Theta$ for which the limit \eqref{eq:LAN_limit_cond} exists.
 
 \QEDA
-
 
 \subsubsection*{Proof of Lemma~\ref{lem:bound_intervals_delta}} 
 Denote 
@@ -1820,7 +2066,7 @@ We conclude that the gradient of $g$ vanishes if and only if
 \label{eq:gradient_zero_delta}
 \frac{f'(x_k)}{f(x_k)} = \frac{\delta_N(1+\delta)}{2+\delta} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
 \end{equation}
-From the same reason as in the proof of Lemma~\ref{lem:bound_intervals}, \eqref{eq:gradient_zero_delta} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_delta_proof} equals $\eta_\delta(x_1)$ which was shown to be smaller than $\eta_\delta(\epsilon)$. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_delta_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$,  $x_i, x_{i+1} = -\epsilon$ for some $i$, or $x_i, x_{i+1} = \epsilon$ for some $i$. It is therefore enough to consider the cases:
+From the same reason as in the proof of Lemma~\ref{lem:bound_intervals_delta}, \eqref{eq:gradient_zero_delta} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_delta_proof} equals $\eta_\delta(x_1)$ which was shown to be smaller than $\eta_\delta(\epsilon)$. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_delta_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$,  $x_i, x_{i+1} = -\epsilon$ for some $i$, or $x_i, x_{i+1} = \epsilon$ for some $i$. It is therefore enough to consider the cases:
 \begin{itemize}
 \item[(1)]  $x_N \to -\infty$.
 \item[(2)] $x_1 \to \infty$.
@@ -1845,7 +2091,9 @@ which is smaller than $\eta_\delta(0)$ by the induction hypothesis. Assume now t
 where $x'_{m} = x_{m+1}$ for $m=1,\ldots, N-1$. The last expression is smaller than $\eta_{\delta}(0)$ by the induction hypothesis.  \QEDA \\
 
 
-\subsection*{Proof of Theorem~\ref{thm:non_existence}}
+\subsection{Proof of Theorem~\ref{thm:non_existence}
+\label{proof:thm:non_existence}
+}
 
 Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta) = \eta(0)$. 
 %
@@ -1880,7 +2128,7 @@ if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for suc
 \frac{\card\left(S_n(\theta,\epsilon)\right)}{n} \eta(0) + \frac{n-\card\left(S_n(\theta,\epsilon) \right) }{n} \eta(\epsilon) 
  \label{eq:non_existence_proof1}
 \end{align}
-where $(a)$ follows from Lemma~\ref{lem:bound_intervals} and the fact that for $i \in S_n(\theta, \epsilon)$, 
+where $(a)$ follows from Lemma~\ref{lem:bound_intervals_delta} and the fact that for $i \in S_n(\theta, \epsilon)$, 
 \[
 \max\left\{ \max_k \eta(b_{i,k}-\theta) , \max_k \eta(a_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
 \]
