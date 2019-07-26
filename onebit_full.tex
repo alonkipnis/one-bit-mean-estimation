@@ -71,6 +71,9 @@
 \newcommand{\CEO}{\mathsf{CEO}}
 \newcommand{\Ncal}{\mathcal{N}}
 
+\newcommand{\enc}{\mathsf{enc}}
+\newcommand{\est}{\mathsf{est}}
+
 \tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
 \tikzstyle{sint}=[draw, fill=blue!10, minimum height = 0.5cm, minimum width=0.8cm,thick ]
 \tikzstyle{sum}=[circle, fill=blue!10, draw=black,line width=1pt,minimum size = 0.5cm, thick ]
@@ -128,7 +131,7 @@ For example, this scenario arises in sensor arrays where information is collecte
  \node[below of = source, node distance = 1.5cm] (source2) {$X_2$};
 \node[below of = source2, node distance = 2.1cm] (source3) {$X_n$};
 
-\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc};  
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
 
 \draw[->,line width = 2pt] (source2) -- (enc2); 
 \draw[->,line width = 2pt] (source) -| (enc2); 
@@ -137,7 +140,7 @@ For example, this scenario arises in sensor arrays where information is collecte
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
 
 \draw[->,line width = 2pt] (source2) -- (enc2); 
-\node[int1, right of = enc2, node distance = 2.7cm ] (est) {Est};
+\node[int1, right of = enc2, node distance = 2.7cm ] (est) {$\est$};
 
 \draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {\small $B_1,\ldots,B_n$} (est);   
 
@@ -151,21 +154,21 @@ For example, this scenario arises in sensor arrays where information is collecte
 %
 \begin{tikzpicture}[node distance=2cm,auto]
   \node at (0,0) (source) {\small $X_1$} ;
-  \node[int1, right of = source, node distance = 1.2cm] (enc1) {Enc 1};  
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
 \draw[->,line width = 2pt] (source) -- (enc1); 
 
  \node[below of = source, node distance = 1.5cm] (source2) {\small $X_2$};
-\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc 2};  
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
 \draw[->,line width = 2pt] (source2) -- (enc2); 
 
 \node[below of = source2, node distance = 2.1cm] (source3) {\small $X_n$};
-\node[int1, right of = source3, node distance = 1.2cm] (enc3) {Enc n};  
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
 %\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim P_X$};
 
-\node[int1, right of = enc2, node distance = 3cm ] (est) {Est};
+\node[int1, right of = enc2, node distance = 3cm ] (est) {$\est$};
 \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
 \draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$B_2$} (est);   
 
@@ -195,21 +198,21 @@ enc1.center, yshift = 0.cm] (end) {$B_1,\ldots,B_{n-1}$};
 %
 \begin{tikzpicture}[node distance=2cm,auto]
   \node at (0,0) (source) {$X_1$} ;
-  \node[int1, right of = source, node distance = 1.2cm] (enc1) {Enc 1};  
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
 \draw[->,line width = 2pt] (source) -- (enc1); 
 
  \node[below of = source, node distance = 1.5cm] (source2) {$X_2$};
-\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc 2};  
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
 \draw[->,line width = 2pt] (source2) -- (enc2); 
 
 \node[below of = source2, node distance = 2.1cm] (source3) {$X_n$};
-\node[int1, right of = source3, node distance = 1.2cm] (enc3) {Enc n};  
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
 %\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim {\Ncal} \left(\theta, \sigma^2 \right)$};
 \node[below of = source2, node distance = 0.5cm] {$\vdots$};
 
-\node[int1, right of = enc2, node distance = 2.1cm ] (est) {Est};
+\node[int1, right of = enc2, node distance = 2.1cm ] (est) {$\est$};
 \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
 
 \draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$B_2$} (est);   
@@ -519,7 +522,7 @@ and
 Next, we present an adaptive encoding and estimation scheme that attains the maximal ARE of $\eta(0)\sigma^2$. 
 
 \subsection{Asymptotically optimal estimator}
-Let $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ be a strictly positive sequence. Consider the following estimator ${\theta}_n$ for $\theta$:  
+Let $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ be a strictly positive sequence. Consider the following estimator ${\theta}_n$ for $\theta$:  
 \begin{equation}
 \label{eq:sgd_alg}
 \theta_n = \theta_{n-1} +  \gamma_n B_n, \quad n = 1,2,\ldots,
@@ -535,9 +538,9 @@ Define the $n$th step estimation as
 
 We have the following results:
 \begin{thm} \label{thm:sgd}
-Consider the sequence $\left\{\bar{\theta}_n,\, n\in \mathbb N \right\}$ defined by \eqref{eq:sgd_est}. 
+Consider the sequence $\left\{\bar{\theta}_n \right\}_{n\in \mathbb N}$ defined by \eqref{eq:sgd_est}. 
 \begin{enumerate}
-\item[(i)] Assume that $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
+\item[(i)] Assume that $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ satisfies
 \begin{equation} \label{eq:conditions1}
 \begin{cases}
 \frac{\gamma_n - \gamma_{n+1}}{\gamma_n} = o(\gamma_n), &  \\
@@ -556,21 +559,16 @@ Consider the sequence $\left\{\bar{\theta}_n,\, n\in \mathbb N \right\}$ defined
 I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)}  \right)^2 f(x) dx < \infty.
 \]
 %(or that $f(x-\theta)$ is differentiable in quadratic mean).  
-Then the estimator $\bar{\theta}_n$ is regular in the following sense: For $\theta \in \Theta$, $h\in \mathbb R$ and $n$ large enough such that $\theta+h/\sqrt{n} \in \Theta$, let $P^n_{\theta,h,n}$ be the measure with density $f(x-\theta - h/\sqrt{n})$. Then 
-\begin{align}
-\label{eq:sgd_part2}
-\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
-\end{align}
-under $P^n_{\theta,h,n}$. Consequently, for any bounded, symmetric, and quasi-convex function $L$, 
-\begin{align*}
-& \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right]
+Then for any bounded, symmetric, and quasi-convex function $L$, 
+\begin{align} 
+& \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right] \nonumber 
 \\
-& \qquad \qquad \qquad \qquad \geq \mathbb E \left[ L (Z/\sqrt{\eta(0)}) \right],
-\end{align*}
+& \qquad \qquad \qquad \qquad = \mathbb E \left[ L (Z/\sqrt{\eta(0)}) \right], \label{eq:attaining_LAM}
+\end{align}
 where $Z \sim \Ncal(0,1)$. 
 %
 %
-\item[(iii)] Assume that, in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n,\, n\in \mathbb N \right\}$ satisfies
+\item[(iii)] Assume that, in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ satisfies
 \begin{equation} \label{eq:conditions2}
 \begin{cases}
 \gamma_n = o(n^{-2/3}), &  \\
@@ -589,7 +587,7 @@ See Appendix~\ref{proof:thm:sgd}. \par
 
 Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
 %
-The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. 
+The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. In particular, parts (i) and (ii) of Theorem~\ref{thm:sgd} provides conditions under which $\bar{\theta}$ is asymptotically normal and local asymptotically minimax, in the sense that it attains the local asymptotic minimax bound \cite{van2000asymptotic}. Part (iii) provides an additional condition under which $\bar{\theta}$ also converges in its second moment. 
  \par
 %Note that $\theta_0$ is not explicitly defined in equation \eqref{eq:sgd_est}. A reasonable initialization for $\theta_0$ is $\theta_0 = \mathbb E [\theta]$, although Theorem~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$.  \\
 In the encoding and estimating procedure \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, each one-bit message $B_n$ depends on its private sample as well as the current gradient descent estimate $\theta_{n-1}$. In this sense, each encoder in this algorithm interacts with previous one by using the current estimate.
@@ -602,7 +600,7 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 \begin{center}
 \begin{tikzpicture}[node distance=2cm,auto]
   \node at (0,0) (source) {$X_1$} ;
-  \node[int1, right of = source, node distance = 1.2cm] (enc1) {Enc};  
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
 \draw[->,line width = 2pt] (source) -- (enc1); 
 
 % \node[below of = source, node distance = 1cm] (source2) {$X_2$};
@@ -610,13 +608,13 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 %\draw[->,line width = 2pt] (source2) -- (enc2); 
 
 \node[below of = source, node distance = 1.7cm] (source3) {$X_{n_1}$};
-\node[int1, right of = source3, node distance = 1.2cm] (enc3) {Enc};  
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
 
 \draw[->,line width = 2pt] (source3) -- (enc3); 
 
 \node[below of = source, node distance = 0.5cm] {$\vdots$};
 
-\node[int1, right of = enc3, node distance = 2.1cm ] (est) {Est 1};
+\node[int1, right of = enc3, node distance = 2.1cm ] (est) {$\est_1$};
 
 \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
 
@@ -625,30 +623,30 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 \draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
 
 \node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
-\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {Enc$({\theta}_{n_1})$};  
+\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {$\enc$};  
 \draw[->,line width = 2pt] (sourceB) -- (enc1B); 
 
 \node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
-\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {Enc$({\theta}_{n_1})$};  
+\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {$\enc$};  
 \draw[->,line width = 2pt] (source3B) -- (enc3B); 
 \node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
 
-\node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {Est 2};
+\node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {$\est_2$};
 
-\draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.8cm] {$B_{n_1+1}$} (estB);
+\draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.5cm] {$B_{n_1+1}$} (estB);
 \draw[->,line width = 2pt] (enc3B) -- node[above] {$B_n$} (estB);
 
 \draw[->,line width = 1pt] (est.east) node[above, xshift  =0.5cm] {${\theta}_{n_1}$} -| (enc1B.north);
 
 %\draw[->,line width = 1pt] (enc1B) -- (enc3B);
 
-\draw[->,line width = 1pt] (est.east) -| +(1,-0.5) -- +(1,-2) -| (enc3B.north);
-
-
+\draw[->,line width = 0.5pt] (est.east) -| +(1.3,-0.5) -- +(1.3,-2.5) -| (enc3B.north);
 
 %\draw[->,line width = 1pt] (enc1B)  -- node[right] {${\theta}_{n_1}$} (enc3B);
 
-\draw[->,line width = 1pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
+\draw[->,line width = 0.5pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
+\node[below of = enc1B, node distance = 0.5cm] {$\vdots$};
+
 \end{tikzpicture}
 \end{center}
 \caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
@@ -788,7 +786,7 @@ B_i = \begin{cases} 1 & X_i \in A_i, \\
 -1 & X_i \notin A_i,
 \end{cases} \quad i\in \mathbb N,
 \]
-where the detection region $A_i$ is a Borel set that is independent of $X_1,\ldots,X_n$.\\
+where the detection region $A_i$ is a Borel set that is independent of $X_1,\ldots,X_n$.\par
 
 As a first step, we provide conditions under which the messages $B_1,B_2,\ldots$ define a local asymptotic normal family. 
 
@@ -831,7 +829,7 @@ Theorem~\ref{thm:LAN1} provides conditions under which $B_1,\ldots,B_n$ defines 
 %
 Among these conditions, (iii) is arguably the strongest and hardest to verify. As we show in Section~\ref{subsec:threshold} below, this condition is satisfied, for example, when $A_1, \ldots,A_n$ are half lines whose starting points are drawn independently from some probability measure on $\mathbb R$. Similar ideas imply that condition (iii) holds whenever we choose the intervals consisting each $A_i$ according to some pre-specified distribution. \par
 %
-An important conclusion of  Theorem~\ref{thm:LAN1} follows from the local asymptotic minimax property of estimators in LAN models (e.g. \cite{van2000asymptotic}):
+An important conclusion of  Theorem~\ref{thm:LAN1} follows from the local asymptotic minimax property of estimators in LAN models \cite{van2000asymptotic}):
 \begin{cor} \label{cor:LA_minimax}
 Let ${\theta}_n$ be an estimator of $\theta \in \Theta$ from $B_1,\ldots,B_n$ with detection regions $A_1,\ldots,A_n$ such that conditions (i)-(iii) of Theorem~\ref{thm:LAN1} hold. Then for any symmetric and quasi-convex function $L$, 
 \begin{align*}
@@ -955,7 +953,7 @@ Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(
 \frac{1}{2T}\int_{-T}^{T} \eta\left(t\pm T\right) dt
 = \frac{1}{2T}\int_{0}^{2T} \eta(t) dt  \label{eq:uniform_risk}. 
 \end{align}
-From Corollary~\ref{cor:LAN_thresh}, we conclude that the ARE under a uniform distribution is $\kappa_\unif \sigma^2$. \\
+From Corollary~\ref{cor:LAN_thresh}, we conclude that the ARE under a uniform distribution is $\kappa_\unif \sigma^2$. \par
 
 \begin{figure}
 \begin{center}
@@ -1338,8 +1336,7 @@ In the distributed setting we provided conditions for local asymptotic normality
 %
 We conclude that under such conditions, the optimal estimation performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in the distributed setting. 
 %
-We further considered the special case of messages obtained by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such messages using the density of these thresholds, and consider the threshold density that minimizes the minimax risk.
- \\
+We further considered the special case of messages obtained by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such messages using the density of these thresholds, and consider the threshold density that minimizes the minimax risk. 
 
 
 %\section*{ACKNOWLEDGMENT}
@@ -1595,7 +1592,27 @@ it follows from Theorem~\ref{thm:polyak_juditsky} that
 \]
 
 \subsubsection*{Proof of (ii)}
-The proof requires the following refinement of Theorem~\ref{thm:polyak_juditsky}.
+We first show that the estimator $\bar{\theta}_n$ is regular in the following sense: For $\theta \in \Theta$, $h\in \mathbb R$ and $n$ large enough such that $\theta+h/\sqrt{n} \in \Theta$, let $\Prob_{\theta,n}$ be a product probability measure on $\mathbb R^n$ with density $f(x-\theta - h/\sqrt{n})$ in each of its $n$ coordinates. Then 
+\begin{align}
+\label{eq:sgd_part2}
+\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
+\end{align}
+under $\Prob_{\theta,n}$. Under the assumption that $f(x)$ is continuously differentiable with finite Fisher information for location, the model $\{Z_n+ \theta\}_{n \in \mathbb N}$ is differentiable in quadratic mean \cite[Exm. 7.8]{van2000asymptotic} and hence local asymptotically normal (LAN) in the sense that
+\[
+\log \left(\frac{\Prob_{\theta,n}(X^n)}{\Prob_{\theta} (X^n) }\right) = h \eta^{-1/2}(0) Z - \frac{1}{2} h^2 \eta^{-1}(0)  + o_{p,n}(1),
+\]
+where $Z\sim \Ncal(0,1)$ and $o_{p,n}(1) \to 0$ as $n\to \infty$ under $\Prob_{\theta}$. 
+ The random variable $L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)
+$ is bounded, and hence 
+\[
+\ex{ L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)} \to \ex{L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)}
+\]
+
+Any regular estimators in a LAN model satisfies \eqref{eq:attaining_LAM} \cite{beran1995role}, hence the proof of (ii) follows once we establish the regularity of $\bar{\theta}_n$. \\
+
+%Any estimator satisfying \eqref{eq:sgd_part2} also satisfies \eqref{eq:attaining_LAM} \cite[P. 157]{ibragimov2013statistical}. 
+
+The proof of the regularity of $\bar{\theta}_n$ requires the following refinement of Theorem~\ref{thm:polyak_juditsky}.
 \begin{thm} \label{thm:normal_expansion}
 Set $\Delta_i = \theta_i - \theta$ and
 $\bar{\Delta_i} = \frac{1}{n} \sum_{i=1}^n \Delta_i$. Assume that, in addition to Assumptions (i)-(iv) of Theorem~\ref{thm:polyak_juditsky}, there exists $K_1$ and $\lambda>0$ such that
@@ -1621,6 +1638,7 @@ under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h/\sqrt{n}}$ with dens
 \end{itemize}
 \end{thm}
 The proof of Theorem~\ref{thm:normal_expansion} is given in Subsection~\ref{proof:thm:normal_expansion} below. \\
+
 
 We have, 
 \begin{align*}
@@ -1678,6 +1696,8 @@ the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were v
 \[
 V_n = \mathbb E \left[ \left({\theta}_n-\theta \right)^2 \right]  = \frac{1}{4n f^2(0)} + o(n^{-1}).
 \]
+
+
 {\color{red}
 
 \subsection{Proof of Theorem~\ref{thm:normal_expansion}
