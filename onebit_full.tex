@@ -507,8 +507,9 @@ I_0 = \mathbb E \left( \frac{d}{d\theta} \log \pi (\theta) \right)^2
 is the Fisher information with respect to a location model in $\theta$. 
 \end{thm}
 
-\subsubsection*{Sketch of Proof}
-The main idea in the proof is to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. Once this bound is achieved, the result follows by using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in Appendix~\ref{proof:thm:adpative_lower_bound}.\par
+\subsubsection*{Proof}
+%We first bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. The result then follows using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in
+See Appendix~\ref{proof:thm:adpative_lower_bound}.\par
 
 Theorem~\ref{thm:adpative_lower_bound} implies that any estimator ${\theta}_n$ from any adaptive encoding scheme satisfies
 \[
@@ -585,7 +586,7 @@ where $Z \sim \Ncal(0,1)$.
 \subsubsection*{Proof}
 See Appendix~\ref{proof:thm:sgd}. \par
 
-Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$, defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}, attains the maximal ARE as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
+Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$ defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} attains the maximal ARE, as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
 %
 The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. In particular, parts (i) and (ii) of Theorem~\ref{thm:sgd} provides conditions under which $\bar{\theta}$ is asymptotically normal and local asymptotically minimax, in the sense that it attains the local asymptotic minimax bound \cite{van2000asymptotic}. Part (iii) provides an additional condition under which $\bar{\theta}$ also converges in its second moment. 
  \par
@@ -654,14 +655,14 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 }
 \end{figure}
 
-\subsection{Optimality using One Round of Threshold Adaptation}
+\subsection{Maximal Efficiency using One Round of Threshold Adaptation}
 In Section~\ref{sec:preliminary} we considered an estimator that is based on binary messages of the form 
 \[
 B_i = \mathbf 1_{X_i > \theta_0},\qquad i=1,\ldots,n,
 \]
 and deduced that it is asymptotically normal with variance $1/\eta(\theta-\theta_0)$.
 %
-We now show that a similar encoding leads to an asymptotically normal estimator attaining the lower variance bound $1/\eta(0)$, provided we allow to  update the threshold value $\theta_0$ at least once. 
+We now show that a similar encoding leads to an asymptotically normal estimator attaining the lower variance bound $1/\eta(0)$, provided we allow to  update the threshold value $\theta_0$ based on previously observed bits at least once. 
 %
 In this procedure we separate the sample into two disjoint sets: $X_1,\ldots,X_{n_1}$ and $X_{n_1+1},\ldots,X_n$ for some $n_1 < n$.
 We first use the estimator \eqref{eq:estimator_naive} to obtain an estimate ${\theta}_{n_1}$ based on $B_1,\ldots,B_{n_1}$, and then use ${\theta}_{n_1}$ as the new threshold value to obtain messages $B_{n_1+1}, \ldots, B_n$. Figure~\ref{fig:one_round} illustrates a diagram of this procedure. 
@@ -687,7 +688,7 @@ Let
 \]
 and assume that $n_1(n) \rightarrow \infty$ and $n_1(n)/n \rightarrow 0$. Then:
 \begin{align*}
- \sqrt{n} \left( {\theta}_{n_2} - \theta  \right)^2  \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
+ \sqrt{n} \left( {\theta}_{n_2} - \theta  \right) \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
 \end{align*}
 \end{thm}
 %
@@ -706,7 +707,7 @@ where
 \[
 V(t) \triangleq F(\theta - t) F \left( t - \theta\right). 
 \]
-Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ we obtain
+Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ implies
 \begin{align*}
 & \sqrt{n} \left( t + F^{-1}(\hat{p}_{n_2}(t)) - \theta \right) \\
 &= \sqrt{n} \left( g(\hat{p}_{n_2}(t)) - g \left(F(\theta-t) \right)  \right) \\
@@ -714,21 +715,22 @@ Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ we obtain
 1/\eta(\theta-t) \right).
 \end{align*}
 %where this convergence is uniform in $t$ since all moments of $F^{-1}(\hat{p}_{n_2})$ exists. 
-By the law of large numbers we also have
+On the other hand, by the law of large numbers,
 \[
 p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
 \]
-so that ${\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity, and thus 
+so that ${\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity and thus 
 \[
 \eta( {\theta}_{n_1}-\theta) \overset{a.s.}{\rightarrow} \eta(0). 
 \]
-By Slutsky's theorem we get
+Finally,
 \begin{align*}
 & \sqrt{n}\left({\theta}_{n_2} - \theta\right) \\
 & = \sqrt{n} \left( {\theta}_{n_1} + F^{-1}(\hat{p}_{n_2}({\theta}_{n_1})) - \theta \right)  \\
 & \overset{d}{\to} \Ncal\left( 0, 
-1/\eta(0) \right). 
+1/\eta(0) \right) 
 \end{align*}
+by Slutsky's theorem.
 \end{proof}
 %
 
@@ -776,7 +778,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{figure}
 
 \section{Distributed Estimation \label{sec:distributed}}
-We now consider the distributed encoding setting in Figure~\ref{fig:setup}-(iii). In this setting each one-bit message $B_i$ is only a function of its private sample $X_i$, and hence $B_i$ characterized by its \emph{detection region}, defined as 
+In this section, we now consider the distributed encoding setting in Figure~\ref{fig:setup}-(iii) where  each one-bit message $B_i$ is only a function of its private sample $X_i$. In this case, the $i$th encoder is fully characterized its \emph{detection region}, defined as 
 \[
 A_i = \left\{ x \in \mathbb R \,:\, B_i(x) = 1 \right\}.
 \]
@@ -1276,7 +1278,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addplot[color = black, dashed] {3.14159 / 2};
 \end{axis}
 \end{tikzpicture}
-\caption{Asymptotic Bayes risk $R_{\pi}^\star$ in estimating the mean of a normal distribution ($P_X = \Ncal(\theta, \sigma^2)$under an optimal threshold distribution $\lambda^\star$ for $\pi$ the uniform distribution over $\Theta = [-0.5,0.5]$. 
+\caption{Asymptotic Bayes risk $R_{\pi}^\star$ in estimating the mean of a normal distribution ($P_X = \Ncal(\theta, \sigma^2)$ under an optimal threshold distribution $\lambda^\star$, when the prior $\pi$ is the uniform distribution over $\Theta = [-0.5,0.5]$. 
 %
 %versus $\sigma/\sigma_\theta = 2\sqrt{3}\sigma$.
 The distribution $\lambda^\star$ is the minimizer of \eqref{eq:cvx_average}. It is illustrated for various cases in Fig.~\ref{fig:opt_density}. The dashed curve represents the upper bound \eqref{eq:upper_bound}. 
@@ -1306,7 +1308,7 @@ The function $x \rightarrow 1/x$ is convex for positive values, hence Jensen's i
 \]
 Therefore, the expected value of $\kappa^{-1}(\theta)$ satisfies
 \begin{align}
-\mathbb E  \frac{1}{\kappa(\theta)}  \leq \int \int \frac{\pi(d\theta) \lambda(dt) }{\eta \left( t - \theta \right)}. \label{eq:upper_bound_proof}
+\ex{  \frac{1}{\kappa(\theta)}}  \leq \int \int \frac{\pi(d\theta) \lambda(dt) }{\eta \left( t - \theta \right)}. \label{eq:upper_bound_proof}
 \end{align}
 The bound \eqref{eq:upper_bound} is obtained by taking $\lambda$ to be a mass distribution at any $\theta_0$ in the support of $\eta(x)$. Finally, \eqref{eq:bound_Taylor} is obtained by expanding $1/\eta(x)$ to a third order Taylor series around zero
 %\[
@@ -1314,7 +1316,7 @@ The bound \eqref{eq:upper_bound} is obtained by taking $\lambda$ to be a mass di
 %\]
 and taking its expectation with respect to $\pi$ at $x=\theta_0-\theta$. 
 \end{proof}
-We note that the function $1/\eta(x)$ is quasi-convex and symmetric around zero, so taking $\theta_0 = \mathbb E \theta$ minimizes the RHS of \eqref{eq:upper_bound} among all $\theta_0$ in the support of $\eta(x)$.\par
+We note that the function $1/\eta(x)$ is quasi-convex and symmetric around zero, so the choice $\theta_0 = \ex{ \theta}$ minimizes the RHS of \eqref{eq:upper_bound} among all $\theta_0$ in the support of $\eta(x)$.\par
 The bound \eqref{eq:upper_bound} is not trivial as long as the integral in the RHS of \eqref{eq:upper_bound} is finite, i.e., whenever the tail of $\pi(\theta)$ vanishes fast enough compared to $\eta(x)$. The expansion \eqref{eq:bound_Taylor} implies that this bound becomes tight whenever the support of the optimal distribution is a mass distribution at $\mathbb E \theta$, in which case the expected value of $\kappa^{-1}(\theta)$ approaches $1/\eta(0) = 1/4f^2(0)$. 
 
 \begin{example} \label{ex:bound}
