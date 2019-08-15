@@ -1639,10 +1639,7 @@ then
 under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h/\sqrt{n}}$ with density $f^n(x-h/\sqrt{n})$.
 \end{itemize}
 \end{thm}
-The proof of Theorem~\ref{thm:normal_expansion} is given in Subsection~\ref{proof:thm:normal_expansion} below. \\
-
-
-We have, 
+The proof of Theorem~\ref{thm:normal_expansion} is given in Subsection~\ref{proof:thm:normal_expansion} below. We now use this theorem to show regularity of $\bar{\theta}_n$. We have, 
 \begin{align*}
 & %\varphi(Z_1) - \varphi(x+Z_1) = 
 \sgn(Z_1) - \sgn(x + Z_1) \\
@@ -1713,7 +1710,7 @@ Consider the process $\{\Delta_i^1 \}_{i=0}^\infty$ defined by
 \[
 \Delta^1_i = \Delta^1_{i-1} - \gamma_i (A \Delta_{i-1}+ \xi_i),\quad i=1,2\ldots.
 \]
-Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} hold. Then 
+Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} holds. Then 
 \begin{equation}
 \label{eq:Polyak_expansion}
 \sqrt{n} \bar{\Delta}_n^1 = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1} \Delta_i^1 = \frac{\alpha_n \Delta_0^1}{\sqrt{n} \gamma_0}  + \frac{1}{\sqrt{n} A} \sum_{i=1}^{n-1} \xi_i + \frac{1}{\sqrt{n}}\sum_{i=1}^{n-1} w_i^n \xi_i,
