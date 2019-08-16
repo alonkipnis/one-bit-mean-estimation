@@ -555,7 +555,7 @@ Consider the sequence $\left\{\bar{\theta}_n \right\}_{n\in \mathbb N}$ defined 
 \]
 %
 %
-\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with finite Fisher information for location
+\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with a finite location Fisher information, namely
 \[
 I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)}  \right)^2 f(x) dx < \infty.
 \]
@@ -1599,7 +1599,7 @@ We first show that the estimator $\bar{\theta}_n$ is regular in the following se
 \label{eq:sgd_part2}
 \sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
 \end{align}
-under $\Prob_{\theta,n}$. Under the assumption that $f(x)$ is continuously differentiable with finite Fisher information for location, the model $\{Z_n+ \theta\}_{n \in \mathbb N}$ is differentiable in quadratic mean \cite[Exm. 7.8]{van2000asymptotic} and hence local asymptotically normal (LAN) in the sense that
+under $\Prob_{\theta,n}$. Under the assumption that $f(x)$ is continuously differentiable with a finite location Fisher information, the model $\{Z_n+ \theta\}_{n \in \mathbb N}$ is differentiable in quadratic mean \cite[Exm. 7.8]{van2000asymptotic} and hence local asymptotically normal (LAN) in the sense that
 \[
 \log \left(\frac{\Prob_{\theta,n}(X^n)}{\Prob_{\theta} (X^n) }\right) = h \eta^{-1/2}(0) Z - \frac{1}{2} h^2 \eta^{-1}(0)  + o_{p,n}(1),
 \]
@@ -1609,12 +1609,9 @@ $ is bounded, and hence
 \[
 \ex{ L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)} \to \ex{L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)}
 \]
-
-Any regular estimators in a LAN model satisfies \eqref{eq:attaining_LAM} \cite{beran1995role}, hence the proof of (ii) follows once we establish the regularity of $\bar{\theta}_n$. \\
-
-%Any estimator satisfying \eqref{eq:sgd_part2} also satisfies \eqref{eq:attaining_LAM} \cite[P. 157]{ibragimov2013statistical}. 
-
-The proof of the regularity of $\bar{\theta}_n$ requires the following refinement of Theorem~\ref{thm:polyak_juditsky}.
+Any regular estimators in a LAN model satisfies \eqref{eq:attaining_LAM} \cite{beran1995role}, hence in order to prove (ii) it is left to show that $\bar{\theta}_n$ is regular. For this purpose, 
+we use the following refinement of Theorem~\ref{thm:polyak_juditsky}, proof of which is given in Subsection~\ref{proof:thm:normal_expansion} below.
+%
 \begin{thm} \label{thm:normal_expansion}
 Set $\Delta_i = \theta_i - \theta$ and
 $\bar{\Delta_i} = \frac{1}{n} \sum_{i=1}^n \Delta_i$. Assume that, in addition to Assumptions (i)-(iv) of Theorem~\ref{thm:polyak_juditsky}, there exists $K_1$ and $\lambda>0$ such that
@@ -1632,14 +1629,14 @@ where $o_{p,n}(1)$ converges in probability to $0$ as $n\to \infty$.
 \[
 I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)} \right)^2 f(x) dx,
 \]
-then
+then for any converging sequence $h_n \to h$,
 \[
-\sqrt{n} \left( \bar{\Delta}_n \right) \overset{d}{\to} \Ncal\left( \frac{-1}{\psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx  , \frac{\chi(0)}{\psi'^2(0)} \right)
+\sqrt{n} \left( \bar{\Delta}_n \right) \overset{d}{\to} \Ncal\left( \frac{-h}{\psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx  , \frac{\chi(0)}{\psi'^2(0)} \right)
 \]
-under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h/\sqrt{n}}$ with density $f^n(x-h/\sqrt{n})$.
+under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h_n/\sqrt{n}}$ with density $\prod_{i=1}^n f(x_i-h_n/\sqrt{n})$.
 \end{itemize}
 \end{thm}
-The proof of Theorem~\ref{thm:normal_expansion} is given in Subsection~\ref{proof:thm:normal_expansion} below. We now use this theorem to show regularity of $\bar{\theta}_n$. We have, 
+We now use this theorem to show regularity of $\bar{\theta}_n$. We have, 
 \begin{align*}
 & %\varphi(Z_1) - \varphi(x+Z_1) = 
 \sgn(Z_1) - \sgn(x + Z_1) \\
@@ -1655,7 +1652,7 @@ It follows that
 \end{align*}
 hence condition \eqref{eq:PJ_additional_cond} is fulfilled. In addition, by anti symmetry of $f'(x)$ around $x=0$, 
 \[
-\int_{\mathbb R} \varphi(x) f'(x) dx = \int_{\mathbb R} \sgn(x) f'(x) dx = 2\int_0^\infty f'(x) dx = 2f(0) = \psi'(0). 
+\int_{\mathbb R} \varphi(x) f'(x) dx = \int_{\mathbb R} \sgn(x) f'(x) dx = 2\int_0^\infty f'(x) dx = -2f(0) = -\psi'(0). 
 \]
 Theorem~\ref{thm:normal_expansion}, applied to the setting of Theorem~\ref{thm:sgd}, implies \eqref{eq:sgd_part2}. 
 
@@ -1715,7 +1712,7 @@ Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} holds.
 \label{eq:Polyak_expansion}
 \sqrt{n} \bar{\Delta}_n^1 = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1} \Delta_i^1 = \frac{\alpha_n \Delta_0^1}{\sqrt{n} \gamma_0}  + \frac{1}{\sqrt{n} A} \sum_{i=1}^{n-1} \xi_i + \frac{1}{\sqrt{n}}\sum_{i=1}^{n-1} w_i^n \xi_i,
 \end{equation}
-where $\alpha_n$, and $w_i^n$ are real numbers such that $|\alpha_n| \leq K$ and $|w_i^n|\leq K$ for some $K< \infty$, and 
+where $\alpha_n$ and $w_i^n$ are real numbers such that $|\alpha_n| \leq K$ and $|w_i^n|\leq K$ for some $K< \infty$, and 
 \[
 \lim_{n\to \infty} \frac{1}{n} \sum_{i=1}^{n-1} |w_i^n| = 0. 
 \]
@@ -1732,14 +1729,14 @@ Lemma~\ref{lem:PJ_converging_sum} follows from the proof of Theorem 2 in \cite{p
 
 We separate the proof of part (i) into two steps.
 \subsubsection*{Step I}
-The expansion \eqref{eq:normal_expansion_lem} holds for the process  ${\bar{\Delta}^1_i}$ defined as follows:
+The expansion \eqref{eq:normal_expansion_lem} holds for the process  $\{\bar{\Delta}^1_i\}_{i=1}^\infty$ defined as follows:
 \begin{align} \label{eq:Polyak_expansion_lem1_alg}
 & \Delta_i^1  = \Delta_{i-1}^1 - \gamma_i \psi'(0) \Delta_{i-1}^1 - \gamma_i \varphi(Z_i), \qquad
  \delta_0^1 = \Delta_0\\
 & \bar{\Delta}^1_i = \frac{1}{n}\sum_{i=0}^{n-1} \Delta^1_i.
 \end{align}
 
-In order to show this claim, use Lemma~\ref{lem:Polyak_expansion} with $A = \psi'(0)$ and $\xi_i = -\varphi(Z_i)$. The first expression on the RHS on \eqref{eq:Polyak_expansion} goes to zero in variance. In addition, 
+In order to prove this claim, use Lemma~\ref{lem:Polyak_expansion} with $A = \psi'(0)$ and $\xi_i = -\varphi(Z_i)$. The first expression on the RHS on \eqref{eq:Polyak_expansion} goes to zero in variance. In addition, 
 \begin{align*}
 & \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 }  = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
 & = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0. 
@@ -1833,8 +1830,9 @@ G_n \triangleq -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n} \varphi(Z_i
 From \cite[Exm. 7.8]{van2000asymptotic}, the location model $f(x-\theta)$ with continuously differentiable $f(x)$ is differentiable in quadratic mean with the score function $-f'(x-\theta)/f(x-\theta)$. This fact implies the following expansion \cite[Thm. 7.2]{van2000asymptotic}:
 \begin{align}
 \label{eq:PJ_LAN}
-& \log \frac{\Prob^n_{h/\sqrt{n}}}{\Prob^n_0} (Z_1,\ldots,Z_n) =  \log \prod_{i=1}^{n} \frac{f(Z_i-h/\sqrt{n})}  {f(X_i-\theta)} = h J_n - \frac{1}{2}h^2 I_{\theta} + o_{p,n}(1),
+& \log \frac{\Prob^n_{h_n/\sqrt{n}}}{\Prob^n_0} (Z_1,\ldots,Z_n) =  \log \prod_{i=1}^{n} \frac{f(Z_i-h_n/\sqrt{n})}  {f(X_i-\theta)} = h J_n - \frac{1}{2}h^2 I_{\theta} + o_{p,n}(1),
 \end{align}
+for any converging sequence $h_n \to h$, 
 where 
 \[
 J_n \triangleq -\frac{1}{\sqrt{n}} \sum_{i=1}^n \frac{f'(Z_i)}{f(Z_i)} .
