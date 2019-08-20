@@ -479,7 +479,7 @@ When the prior on $\theta$ and the noise corrupting it at each location are Gaus
 \begin{prop} \label{prop:ceo_lower_bound}
 Assume that $\Theta = \mathbb R$ and $\pi(\theta) = \Ncal(0,\sigma_\theta^2)$ where $\sigma_\theta^2 \in \mathbb R$ is arbitrary. Then any estimator ${\theta}_n$ of $\theta$ in the distributed setting satisfies
 \begin{equation} \label{eq:ceo_bound}
- n\mathbb E \left( \theta - \theta_n \right)^2 \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
+ n \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
 \end{equation}
 where the expectation is with respect to $\theta$ and $X^n$.
 \end{prop}
@@ -513,14 +513,15 @@ See Appendix~\ref{proof:thm:adpative_lower_bound}.\par
 
 Theorem~\ref{thm:adpative_lower_bound} implies that any estimator ${\theta}_n$ from any adaptive encoding scheme satisfies
 \[
-n\mathbb E\left[ (\theta-\theta_n)^2 \right] \leq  \frac{1}{4f^2(0)}+O(n^{-1}),
+n\mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{1}{4f^2(0)}+O(n^{-1}),
 \]
 and 
 \[
 \ARE({\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
 \]
-
-Next, we present an adaptive encoding and estimation scheme that attains the maximal ARE of $\eta(0)\sigma^2$. 
+It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to any other loss functions using a more subtle version of the Van Tress inequality provided in \cite{efroimovich1980information}. See also \cite{DBLP:journals/corr/abs-1902-08582}. \par
+%
+Next, we provide an adaptive encoding and estimation scheme that attains the maximal ARE of $\eta(0)\sigma^2$. 
 
 \subsection{Asymptotically optimal estimator}
 Let $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ be a strictly positive sequence. Consider the following estimator ${\theta}_n$ for $\theta$:  
