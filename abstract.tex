@@ -1,0 +1,32 @@
+% -*- Mode: latex -*- %
+\begin{abstract}
+  We consider the problem of estimating the mean of a symmetric log-concave
+  distribution under constraint that only a single bit per sample
+  from this distribution is available to the estimator. We study the mean
+  squared error as a function of the
+  sample size (and hence number of bits).
+  We consider three settings: first, a centralized setting, where
+  an encoder may release $n$ bits given a sample of size $n$, and for
+  which there is no asymptotic penalty for quantization; second, an adaptive
+  setting  in which each bit is a function of the current
+  observation and previously recorded bits, where we show that
+  the optimal relative
+  efficiency compared to the sample mean is precisely
+  the efficiency of the median; lastly, we show that in
+  a distributed setting where each bit is only a function
+  of a local sample, no estimator can achieve optimal efficiency
+  uniformly over the parameter space.
+  We additionally complement our results in the adaptive setting
+  by showing that \emph{one} round of adaptivity is sufficient
+  to achieve optimal mean-square error.
+  %% single sample. We show that the optimal efficiency of the adaptive
+  %% setting can be attained by splitting the sample into two parts and
+  %% allowing only a single adaptation. Otherwise, we show that no one sample
+  %% estimation procedure can attain the optimal efficiency uniformly over all
+  %% points in the parameter space.  Our results indicate that estimating the
+  %% mean from one-bit measurements is equivalent to estimating the sample
+  %% median from these measurements. In the adaptive case, this estimate can be
+  %% done with vanishing error for any point in the parameter space. In the
+  %% distributed case, this estimate can be done with vanishing error only for
+  %% a finite number of possible values for the unknown mean.
+\end{abstract}

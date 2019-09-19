@@ -1,0 +1,105 @@
+\begin{center}
+\begin{tikzpicture}[node distance=2cm,auto]
+
+  \node at (0,0) (source) {$X_1$} ;
+ \node[below of = source, node distance = 1.5cm] (source2) {$X_2$};
+\node[below of = source2, node distance = 2.1cm] (source3) {$X_n$};
+
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
+
+\draw[->,line width = 2pt] (source2) -- (enc2); 
+\draw[->,line width = 2pt] (source) -| (enc2); 
+\draw[->,line width = 2pt] (source3) -| (enc2); 
+
+\node[below of = source2, node distance = 0.5cm] {$\vdots$};
+
+\draw[->,line width = 2pt] (source2) -- (enc2); 
+\node[int1, right of = enc2, node distance = 2.7cm ] (est) {$\est$};
+
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {\small $B_1,\ldots,B_n$} (est);   
+
+\node[right of = est, node distance = 1.2cm] (dest) {\small ${\theta}_n$};
+%         \node [int1] (dec) [right of=dest, node distance = 1.5cm,  align=center] {\small Dec };
+%\node [int1] (enc) [right of = dec, node distance = 3cm]{Enc}; 
+%\draw[->,line width=2pt] (dec) -- (dest);
+\draw[->, line width=1pt] (est) -- (dest);
+\node at (2,-4.5) {(i) Centralized};
+\end{tikzpicture}
+%
+\begin{tikzpicture}[node distance=2cm,auto]
+  \node at (0,0) (source) {\small $X_1$} ;
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
+\draw[->,line width = 2pt] (source) -- (enc1); 
+
+ \node[below of = source, node distance = 1.5cm] (source2) {\small $X_2$};
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
+\draw[->,line width = 2pt] (source2) -- (enc2); 
+
+\node[below of = source2, node distance = 2.1cm] (source3) {\small $X_n$};
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
+\draw[->,line width = 2pt] (source3) -- (enc3); 
+
+\node[below of = source2, node distance = 0.5cm] {$\vdots$};
+%\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim P_X$};
+
+\node[int1, right of = enc2, node distance = 3cm ] (est) {$\est$};
+\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$B_2$} (est);   
+
+\draw[->] (enc1)+(0.7,0) -- +(0.7,-0.7) -| (enc2);
+
+%\draw[dashed,->] (enc2)+(0.7,0) -- +(0.7,-0.7) -| +(0,-1.2);
+\draw[->,line width = 2pt] (enc3) -| (est);   
+
+%\node[below of = mes2, node distance = 1.5cm] (mes3) {$B_1,\ldots,B_{n-1} $};
+
+\draw[->,line width = 2pt] (enc3) -| node[above, xshift = -1cm]  {$B_n$} (est);   
+
+%\draw[->] (mes3.west) -- +(0,-0.5) -| (enc3);
+
+\node[below right = 2.3cm and 0.7cm of 
+enc1.center, yshift = 0.cm] (end) {$B_1,\ldots,B_{n-1}$};
+
+\draw[->] (enc1)+(0.7,0) -- (end.west) -| (enc3);
+
+\node[right of = est, node distance = 1.2cm] (dest) {${\theta}_n$};
+%         \node [int1] (dec) [right of=dest, node distance = 1.5cm,  align=center] {\small Dec };
+%\node [int1] (enc) [right of = dec, node distance = 3cm]{Enc}; 
+%\draw[->,line width=2pt] (dec) -- (dest);
+\draw[->, line width=1pt] (est) -- (dest);
+\node at (2,-4.5) {(ii) Adaptive};
+\end{tikzpicture}
+%
+\begin{tikzpicture}[node distance=2cm,auto]
+  \node at (0,0) (source) {$X_1$} ;
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
+\draw[->,line width = 2pt] (source) -- (enc1); 
+
+ \node[below of = source, node distance = 1.5cm] (source2) {$X_2$};
+\node[int1, right of = source2, node distance = 1.2cm] (enc2) {$\enc$};  
+\draw[->,line width = 2pt] (source2) -- (enc2); 
+
+\node[below of = source2, node distance = 2.1cm] (source3) {$X_n$};
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
+\draw[->,line width = 2pt] (source3) -- (enc3); 
+
+%\node[above of = source3, node distance = 1cm] (dist) {$X_i \sim {\Ncal} \left(\theta, \sigma^2 \right)$};
+\node[below of = source2, node distance = 0.5cm] {$\vdots$};
+
+\node[int1, right of = enc2, node distance = 2.1cm ] (est) {$\est$};
+\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
+
+\draw[->,line width = 2pt] (enc2) -- node[above, xshift = 0cm] (mes2) {$B_2$} (est);   
+
+\draw[->,line width = 2pt] (enc3) -| (est);   
+
+\draw[->,line width = 2pt] (enc3) -| node[above, xshift = -1cm]  {$B_n$} (est);   
+
+\node[right of = est, node distance = 1.2cm] (dest) {${\theta}_n$};
+%         \node [int1] (dec) [right of=dest, node distance = 1.5cm,  align=center] {\small Dec };
+%\node [int1] (enc) [right of = dec, node distance = 3cm]{Enc}; 
+%\draw[->,line width=2pt] (dec) -- (dest);
+\draw[->, line width=1pt] (est) -- (dest);
+\node at (2,-4.5) {(iii) Distributed};
+\end{tikzpicture}
+\end{center}
