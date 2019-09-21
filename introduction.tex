@@ -27,32 +27,63 @@ We answer this question in a sylized version of this problem: the estimation
 of the mean $\theta$ of a symmetric log-concave distribution under the
 constraint that only a single bit can be communicated about each observation
 from this distribution.
-
-%% JCD: I am here. %%
-
-As it turns out, the ability to share information
-before committing on each one-bit message dramatically affects the
-performance in estimating $\theta$. We, therefore, distinguish among the
-three settings illustrated in Figure~\ref{fig:setup}
+Different information sharing schemes strongly affect the
+performance of estimators for $\theta$; we illustrate
+the three main settings we consider in Figure~\ref{fig:setup}.
+\begin{enumerate}[(i)]
+\item \emph{Centralized} encoding: all $n$ encoders confer and produce a
+  single message consists of $n$ bits.
+ \item \emph{Adaptive} or \emph{sequential} encoding: The $n$th encoder
+   observes the $n$th sample and the $n-1$ previous bits.
+ \item \emph{Distributed} encoding: The $n$th message is only a function of
+   the $n$th sample.
+\end{enumerate}
+The distributed setting~(iii) is the most restrictive; as it turns out,
+(ii) is slightly more restrictive than the fully centralized setting~(i),
+and in our setting, a variant of the adaptive setting~(ii)
+in which there is only \emph{one} round of adaptivity---as we make formal
+later---is enough to achieve the same efficiency as the fully sequential
+setting~(ii).
+Each setting has natural applications:
 \begin{itemize}
- \item[(i)\,\,] \emph{Centralized} encoding: all $n$ encoders confer and produce a single message consists of $n$ bits.
- \item[(ii)\,] \emph{Adaptive} or \emph{sequential} encoding: The $n$th encoder observes the $n$th sample and the $n-1$ previous bits.
- \item[(iii)] \emph{Distributed} encoding: The $n$th message is only a function of the $n$th sample.
- \end{itemize}
-Evidently, as far as information sharing is concerned, settings (iii) is a more restrictive version of (ii) which is more restrictive than (i). Below are three application examples for each of the settings (i)-(iii) above, respectively:
-\begin{itemize}
-\item {\bf Signal acquisition:} A quantity is measured $n$ times at different instances. The results are averaged in order to reduce measurement noise and the averaged result is then stored or communicated using $n$ bits. 
-\item {\bf Analog-to-digital conversion:} A sigma-delta modulator (SDM) converts an analog signal into a sequence of bits by sampling the signal at a very high rate and then using one-bit threshold detector combined with a feedback loop to update an accumulated error state \cite{1092194}. Therefore, the expected error in tracking an analog signal using an SDM falls under our setting (ii) when we assume that the signal at the input to the modulator is a constant (direct current) corrupted by, say, thermal noise \cite{53738}. Since the sampling rates in SDM are usually many times more than the bandwidth of its input, analyzing SDM under a constant input provides meaningful lower bound even for non-constant signals.
-\item {\bf Privacy:} A business entity is interested in estimating the average income of its clients. In order to keep this information as confidential as possible, each client independently provides an answer to a yes/no question related to its income.
+\item {\bf Signal acquisition (i):} A quantity is measured $n$ times at
+  different instances. The results are averaged in order to reduce
+  measurement noise and the averaged result is then stored or communicated
+  using $n$ bits.
+\item {\bf Analog-to-digital conversion (ii):} A sigma-delta modulator (SDM)
+  converts an analog signal into a sequence of bits by sampling the signal
+  at a very high rate and then using one-bit threshold detector combined
+  with a feedback loop to update an accumulated error state
+  \cite{1092194}. Therefore, the expected error in tracking an analog signal
+  using an SDM falls under our setting (ii) when we assume that the signal
+  at the input to the modulator is a constant (direct current) corrupted by,
+  say, thermal noise \cite{53738}. Since the sampling rates in SDM are
+  usually many times more than the bandwidth of its input, analyzing SDM
+  under a constant input provides meaningful lower bound even for
+  non-constant signals.
+\item {\bf Privacy (ii)--(iii):} A business entity is interested in
+  estimating the average income of its clients. In order to keep this
+  information as confidential as possible, each client independently
+  provides an answer to a yes/no question related to its
+  income~\cite{DuchiJoWa18}.
 \end{itemize}
-%
-We measure the performance in estimating $\theta$ by the quadratic risk. For an estimator with finite quadratic risk $R_n$, we are interested in particular in the limit
+
+Let us provide an informal description of our results and setting.  For an
+estimator $\theta_n$ with finite quadratic risk (mean squared error) $R_n =
+\E_\theta[(\theta_n - \theta)^2]$, letting $\sigma^2 = \var(X)$
+we are interested in particular in the
+limit (assuming it exists)
 \begin{equation}
-\label{eq:ARE_def}
-\lim_{n\to \infty} \frac{\sigma^2/n}{R_n},
+  \label{eq:ARE_def}
+  \lim_{n\to \infty} \frac{\sigma^2/n}{R_n},
 \end{equation}
-describing the \emph{asymptotic relative efficiency} (ARE) of this estimator compared to an estimator whose variance decreases as $\sigma^2/n+o(n^{-1})$. Estimators of this form include the empirical mean of the samples, and, under some conditions, the optimal Bayes estimator. \par
-%
+which describes the \emph{asymptotic relative efficiency} (ARE) of this
+estimator compared to an estimator whose variance decreases as
+$\sigma^2/n+o(n^{-1})$. Estimators of this form include the sample mean
+and, under some conditions, the optimal Bayes estimator.
+
+%% JCD: I AM HERE %%
+
 In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per sample constraint is useful in bounding from below the excess risk in estimating signals from thier noisy one-bit quanitzed noisy measurements. Specifically, the excess risk or ARE we derive serve as the most optimistic estimate for the risk in estimating under one-bit per measurement constraint signals changing over time or space. Such estimation settings are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \par
 
 % given a prior distribution on the space $\Theta$ where $\theta$ resides. \\
