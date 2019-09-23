@@ -1,0 +1,828 @@
+% -*- Mode: latex -*- %
+
+\section{}
+
+\subsection{Proof of Proposition~\ref{prop:ceo_lower_bound}
+\label{app:proof:prop_ceo_lower_bound}}
+
+First, we note that when $f(x) = \Ncal(0,\sigma^2)$ and $\pi(\theta) = \Ncal(0,\sigma_\theta^2)$, our distributed setting reduces to the Gaussian CEO problem with $R_1=\ldots = R_n =1$ and $k=1$. Therefore, any MSE attained in our distributed setting is also attained by the CEO and thus the optimal CEO strategy (with arbitrary $k$) provides a lower bound to the MSE in our setting. \\
+
+Consider the minimal MSE $D^\star$ in the Gaussian CEO setting with $L$ observers and under a total sum-rate $R_\Sigma = R_1 + \ldots +R_L$
+from \cite[Eq. 10]{chen2004upper}:
+\begin{equation} \label{eq:ceo_optimal_sumrate}
+R_{\Sigma} = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
+\end{equation}
+For the special case of $R_\Sigma = n$ and $L=n$, we get
+\begin{equation} \label{eq:ceo_optimal_sumrate2}
+n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
+\end{equation}
+$D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describing the MSE under an optimal allocation of the sum-rate $R_\Sigma = n$ among the $n$ encoders. Therefore, this $D^\star$ provides a lower bound to the CEO MSE with $R_1=\ldots,R_n = 1$ and hence a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering $D^\star$ in \eqref{eq:ceo_optimal_sumrate2} as $n\rightarrow \infty$, we see that 
+\[
+D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
+\]
+We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the CEO MSE while enforcing the condition $R_1=\ldots = R_n = 1$. Indeed, an upper bound for the CEO MSE under the condition $R_1=\ldots = R_n = 1$ follows from \cite{KipnisRini2017}, and leads to
+\[
+D^\star \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
+\frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + O(n^{-2}),
+\]
+which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ is small. 
+
+\subsection{Proof of Lemma~\ref{lem:bound_intervals_delta} \label{proof:lem:bound_intervals_delta}}  
+
+%\begin{lem} \label{lem:bound_intervals}
+%Let $f(x)$ be a log-concave, symmetric, and differentiable density such that $\eta(x)$ is strongly unimodal. For any $x_1 > \ldots > x_n \in \mathbb R$, 
+%\begin{equation}
+%\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+%{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+%\leq \max_i \eta(x_i). \label{eq:lem_bound_intervals}
+%\end{equation}
+%In particular, if $|x_i|>\epsilon > 0$ for all $i=1,\ldots,n$, then 
+%\[
+%\frac{ \left(  \sum_{k=1}^n (-1)^{k+1} f(x_k) \right)^2} 
+%{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)\left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+%\leq \eta(\epsilon) < 0. 
+%\]
+%\end{lem}
+
+
+Denote 
+\[
+\delta_n \triangleq \delta_n(x_1,\ldots,x_n) \triangleq \sum_{k=1}^{n} (-1)^{k+1} f(x_k),
+\]
+\[
+\Delta_n \triangleq \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{k=1}^n (-1)^{k+1} F(x_k),
+\]
+so 
+\[
+\eta(x) =  \frac{  \left(\delta_1(x) \right)^2}{\Delta_1(x)
+(1-\Delta_1(x))}
+= \frac{  \left( f (x) \right)^2}{ F(x)\left(1-F(x)\right)^2}. 
+\]
+We use induction on $n \in \mathbb N$ to show that the LHS of \eqref{eq:lem_bound_intervals_delta} is bounded from above by $\max_i \eta(x_i)$. The case $n=1$ is trivial. Assume that 
+\begin{equation}
+\frac{ \left( \delta_n \right)^2} 
+{\Delta_n \left(1- \Delta_n \right) } \leq \max_i \eta(x_i)
+\label{eq:lem_bound_intervals_proof}
+\end{equation}
+for all integers up to $n = N-1$ and consider the case $n = N$. 
+%
+The maximal value of the LHS of \eqref{eq:lem_bound_intervals_proof} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
+\begin{align*}
+& g(x_1,\ldots, x_N) \triangleq  2 \log \delta_N -  \log \Delta_N -  \log \left(1 - \Delta_N  \right),
+\end{align*}
+ The derivative of $g(x_1,\ldots,x_N)$ with respect to $x_k$ is given by
+\[
+\frac{\partial  g}{\partial x_k} = \frac{2 (-1)^{k+1} f'(x_k)}{\delta_N} -\frac{(-1)^{k+1} f(x_k)}{\Delta_N } + \frac{(-1)^{k+1} f(x_k)}{1-\Delta_N },
+\]
+and we conclude that the gradient of $g$ vanishes if and only if
+\begin{equation}
+\label{eq:gradient_zero}
+\frac{f'(x_k)}{f(x_k)} = \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
+\end{equation}
+%
+Since $f(x)$ is log-concave, symmetric, and differentiable, we may write $f(x) = e^{c(x)}$ where $c(x)$ is concave, symmetric, and differentiable. We have 
+\[
+\frac{f'(x)}{f(x)} = c'(x), \quad x\in \mathbb R,
+\]
+which is anti-symmetric, non-negative for $x<0$,  non-positive for $x>0$, and non-increasing since $c(x)$ is concave. Therefore, if $c'(x_i) = c'(x_{i+1})$ for some $i =1,\ldots,N-1$, then either (1) $x_i = x_{i+1}$ or (2) $c'(x)$ is the zero function. Since (2) violates the assumption that $f(x)$ is a density function, we conclude that $c'(x)$ is an injection. 
+%
+As a result, \eqref{eq:gradient_zero} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_proof} equals $\eta(x_1) = \max_i \eta(x_i)$ hence the statement holds. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$, or  $x_i, x_{i+1}$ for some $i$. It is left to consider the cases:
+\begin{itemize}
+\item[(1)]  $x_N \to -\infty$.
+\item[(2)] $x_1 \to \infty$.
+\end{itemize}
+Under case (1) we have
+\begin{align*}
+\lim_{x_N \to -\infty} \frac{  \delta_N^2} 
+{\Delta_N \left(1- \Delta_N \right) }
+ = \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}f(x_k) \right)^2} 
+{\left( \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k)  \right)} ,
+\end{align*}
+which is smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis. Under case (2) we have
+\begin{align*}
+&  \lim_{x_1 \to \infty}
+\frac{ \delta_N} 
+{\Delta_N\left(1- \Delta_N \right) } \\
+=
+& \frac{ \left(  \sum_{k=2}^{N} (-1)^{k+1}f(x_k) \right)} 
+{\left( 1 + \sum_{k=2}^{N} (-1)^{k+1} F(x_k) \right) \left(1- 1 - \sum_{k=2}^{N} (-1)^{k+1} F(x_k)  \right) }  \\
+& = \frac{ \left(  -\sum_{m=1}^{N} (-1)^{m+1}f(x'_m) \right)^2 } 
+{\left( 1 - \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m}) \right)\left( \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m})  \right) },
+\end{align*}
+where $x'_{m} = x_{m+1}$. The last expression is also smaller than $\max_i \eta_i(x_i)$ by the induction hypothesis.  \QEDA \\
+
+\subsection{Proof of Theorem~\ref{thm:adpative_lower_bound}
+\label{proof:thm:adpative_lower_bound}
+}
+
+We first prove the following lemma:
+\begin{lem} \label{lem:fisher_bound}
+Let $X$ be a random variable with a symmetric, log-concave, and continuously differentiable density function $f(x)$ such that $\eta(x)$ is unimodal. For a Borel measurable $A$ set, 
+\[
+M(X) = \begin{cases} 1,& X \in A, \\
+-1, & X \notin A.
+\end{cases}
+\]
+Then the Fisher information of $M$ with respect to $\theta$ is bounded from above by $\eta(0)$.
+\end{lem}
+
+\subsubsection*{Proof of Lemma~\ref{lem:fisher_bound}}
+When $f(x)$ is the normal density function, this lemma follows from \cite[Thm. 3]{Barnes2018}. The proof below is based on a different techique than in \cite{Barnes2018}, and is valid for any log-concave symmetric density satisfying Assumption~\ref{assump:failure_rate}. \\
+
+The Fisher information of $M$ with respect to $\theta$ is given by
+\begin{align}
+I_\theta & =  \mathbb E \left[ \left( \frac{d}{d\theta} \log P\left( M | \theta \right) \right)^2 |\theta \right] \nonumber \\
+& = \frac{ \left(\frac{d}{d\theta} P(M=1|\theta) \right)^2}{P(M=1| \theta)} + \frac{ \left(\frac{d}{d\theta} P(M=-1|\theta) \right)^2} {P(M=-1| \theta)} \nonumber \\
+& =  \frac{ \left( \frac{d}{d\theta} \int_A f \left( x-\theta\right)dx \right)^2} { P(M=1| \theta) } + \frac{ \left( \frac{d}{d\theta}\int_A f \left( x-\theta \right)dx \right)^2} { P(M=-1| \theta) } \nonumber \\ 
+& \overset{(a)}{=} \frac{ \left( - \int_A f' \left( x-\theta \right)dx \right)^2} { P(M=1| \theta) } + \frac{ \left(- \int_A f' \left( x-\theta \right)dx \right)^2} { P(M=-1| \theta) } \nonumber \\ 
+& = \frac{\left( \int_A f'\left( x-\theta \right) dx \right)^2 }{  P(M=1 | \theta) \left(1-P(M=1|\theta) \right)  }, \nonumber \\
+& = \frac{\left( \int_A f'\left( x-\theta \right) dx \right) \left( \int_A f'\left( x-\theta \right) dx \right)}{ \left( \int_A f \left( x-\theta \right) dx \right)  \left(1- \int_A f \left( x-\theta \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
+\end{align}
+where differentiation under the integral sign in $(a)$ is possible since $f(x)$ is differentiable with continuous derivative $f'(x)$. Regularity of the Lebesgue measure implies that for any $\epsilon>0$, there exists a finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that 
+\[
+\int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon,
+\]
+which implies that for any $\epsilon' > 0$, the set $A$ in \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of disjoint intervals without increasing $I_\theta$ by more than $\epsilon'$. It is therefore enough to proceed in the proof assuming that $A$ is of the form
+\[
+A = \cup_{j=1}^k (a_j,b_j),
+\]
+with $\infty \leq a_1 \leq \ldots a_k$, $b_1 \leq b_k \leq \infty$ and $a_j \leq b_j$ for $j=1,\ldots,k$. Under this assumption we have
+\begin{align*}
+\mathbb P(B_n=1| \theta) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
+& = \sum_{j=1}^k \left( F \left(b_j-\theta\right) -  F \left(a_j-\theta\right)  \right),
+\end{align*}
+so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as
+\begin{align}
+& =   \frac { \left( \sum_{j=1}^{k} f \left(a_j-\theta \right) - f \left( b_j-\theta \right)  \right)^2 } 
+{ \left( \sum_{j=1}^k F \left( b_j-\theta \right) - F \left( a_j-\theta \right)  \right) }  \nonumber \\
+& \times \frac {1} 
+{1- \left( \sum_{j=1}^k F \left(  b_j-\theta \right) - F \left( a_j-\theta \right)  \right) } 
+\label{eq:lemma_J}
+\end{align}
+It follows from Lemma~\ref{lem:bound_intervals_delta} that for any $\theta \in \mathbb R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than $4f^2(0)$.  \QEDA \\
+
+We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$, we first note that without loss of generality, each message $B_i$ can is of the form
+\begin{equation}
+\label{eq:general_messages}
+B_i = \begin{cases}
+X_i \in A_i & 1, \\
+X_i \notin A_i & -1,
+\end{cases} 
+\end{equation}
+where $A_i \subset \mathbb R$ is a Borel measurable set. 
+%Indeed, any measurable function $M(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = B^{-1}(1)$.
+Consider the conditional distribution $P({B^n|\theta})$ of $B^n$ given $\theta$. We have 
+\begin{align}
+P\left( B^n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B^{i-1} \right), \label{eq:adpt_lower_bound_proof:1}
+\end{align}
+where $P\left(B_i =1 | \theta, B^{i-1}  \right) = \mathbb P\left( X_i \in A_i\right)$, so that the Fisher information of $B^n$ with respect to $\theta$ is given by 
+\begin{align}
+I_\theta(B^n) = \sum_{i=1}^n I_\theta (B_i|B^{i-1}),
+\label{eq:fisher_information}
+\end{align}
+where $I_\theta (B_i|B^{i-1})$ is the Fisher information of the distribution of $B_i$ given $B^{i-1}$. From Lemma~\ref{lem:fisher_bound} it follows that $I_\theta (B_i|B^{i-1}) \leq 4f^2(0)$. The Van Trees inequality \cite{van2004detection, gill1995applications} now implies 
+\begin{align*}
+\mathbb E \left( \theta_n - \theta \right)^2 &  \geq \frac{1}{ \mathbb E I_\theta(B^n) + I_0} \\
+& = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B^{i-1} ) + I_0} \\
+& \geq \frac{1}{ 4f^2(0) n + I_0}.
+\end{align*}
+
+\QEDA
+
+\subsection{Proof of Theorem~\ref{thm:sgd}
+\label{proof:thm:sgd}
+}
+The algorithm given in \eqref{eq:sgd_alg} and \eqref{eq:sgd_est} is a special case of a more general class of estimation procedures given in \cite{polyak1992acceleration} and \cite{polyak1990new}. 
+
+\subsubsection*{Proof of (i)}
+%Specifically, (i) in Theorem~\ref{thm:sgd} 
+Consider the following simplified version of \cite[Thm. 4]{polyak1992acceleration}:
+\begin{thm}{\cite[Thm. 4]{polyak1992acceleration}} \label{thm:polyak_juditsky}
+Let 
+\[
+X_i = \theta + Z_i,\quad i=1,\ldots,n,
+\]
+where the $Z_i$s are i.i.d. with zero means and finite variances. Define
+\begin{align}
+\begin{split}
+\theta_i & = \theta_{i-1} + \gamma_i \varphi(X_i - \theta_{i-1}), \\
+\bar{\theta}_n & = \frac{1}{n} \sum_{i=0}^{n-1} \theta_i, 
+\end{split}
+\label{eq:Polyak_Juditsky_alg}
+\end{align}
+where in addition, assume the following: 
+\begin{enumerate}
+\item[(i)] There exits $K_1$ such that $\left| \varphi(x) \right| \leq K_1(1+|x|)$ for all $x\in \mathbb R$.
+\item[(ii)] The sequence $\left\{ \gamma_i \right\}_{i=1}^\infty$ satisfies conditions \eqref{eq:conditions1}.
+\item[(iii)] The function $\psi(x) \triangleq \ex{ \varphi(x+Z_1)}$ is differentiable at zero with $\psi'(0)>0$, and satisfies $\psi(0)=0$ and $x\psi(x) >0$ for all $x\neq 0$.
+Moreover, assume that there exists $K_2$ and $0<\lambda \leq 1$ such that
+\begin{equation}
+\label{eq:Polyak_Juditsky_cond3}
+\left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}.
+\end{equation}
+\item[(iv)] The function 
+$\chi(x) \triangleq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
+\end{enumerate}
+Then $\bar{\theta}_n \rightarrow \theta$ almost surely and $ \sqrt{n}({\theta}_n - \theta)$ converges in distribution to $\Ncal(0,V)$, where
+\[
+V = \frac{ \chi(0)} {\psi'^2(0)}. 
+\]
+\end{thm}
+
+Using the notation above, we set $\varphi(x) = \sgn(x)$ and $Z_i = X_i - \theta$. We have that $\chi(x) = \mathbb E \sgn^2(x+Z_1) = 1$, so $\chi(0) = 1$. In addition,
+\begin{align*}
+\psi(x) & = \ex{ \sgn(x+ Z_1) }= \int_{-\infty}^\infty \sgn(x+z) f(z) dz \\
+& = \int_{-x}^\infty f(z) dz -\int_{-\infty}^{-x} f(z) dz. 
+\end{align*}
+Using the symmetry of $f(x)$ around zero, it follows that $\psi'(x) = 2f(x)$ and thus $\psi'(0) = 2f(0)$. It is now easy to verify that the rest of the conditions in Theorem~\ref{thm:polyak_juditsky} are fulfilled for any $\lambda > 0$. Since 
+\[
+\frac{\chi(0)}{\psi'^2(0)} = \frac{1}{4 f^2(0)} = \frac{1}{\eta(0)},
+\]
+it follows from Theorem~\ref{thm:polyak_juditsky} that
+\[
+\sqrt{n}\left({\theta}_n-\theta \right) \overset{d}{\to} \Ncal \left(0, 1/ \eta(0)\right). 
+\]
+
+\subsubsection*{Proof of (ii)}
+We first show that the estimator $\bar{\theta}_n$ is regular in the following sense: For $\theta \in \Theta$, $h\in \mathbb R$ and $n$ large enough such that $\theta+h/\sqrt{n} \in \Theta$, let $\Prob_{\theta,n}$ be a product probability measure on $\mathbb R^n$ with density $f(x-\theta - h/\sqrt{n})$ in each of its $n$ coordinates. Then 
+\begin{align}
+\label{eq:sgd_part2}
+\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
+\end{align}
+under $\Prob_{\theta,n}$. Under the assumption that $f(x)$ is continuously differentiable with a finite location Fisher information, the model $\{Z_n+ \theta\}_{n \in \mathbb N}$ is differentiable in quadratic mean \cite[Exm. 7.8]{van2000asymptotic} and hence local asymptotically normal (LAN) in the sense that
+\[
+\log \left(\frac{\Prob_{\theta,n}(X^n)}{\Prob_{\theta} (X^n) }\right) = h \eta^{-1/2}(0) Z - \frac{1}{2} h^2 \eta^{-1}(0)  + o_{p,n}(1),
+\]
+where $Z\sim \Ncal(0,1)$ and $o_{p,n}(1) \to 0$ as $n\to \infty$ under $\Prob_{\theta}$. 
+ The random variable $L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)
+$ is bounded, and hence 
+\[
+\ex{ L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)} \to \ex{L\left(\sqrt{n} \left(\bar{\theta}_n - \tau \right) \right)}
+\]
+Any regular estimators in a LAN model satisfies \eqref{eq:attaining_LAM} \cite{beran1995role}, hence in order to prove (ii) it is left to show that $\bar{\theta}_n$ is regular. For this purpose, 
+we use the following refinement of Theorem~\ref{thm:polyak_juditsky}, proof of which is given in Subsection~\ref{proof:thm:normal_expansion} below.
+%
+\begin{thm} \label{thm:normal_expansion}
+Set $\Delta_i = \theta_i - \theta$ and
+$\bar{\Delta_i} = \frac{1}{n} \sum_{i=1}^n \Delta_i$. Assume that, in addition to Assumptions (i)-(iv) of Theorem~\ref{thm:polyak_juditsky}, there exists $K_1$ and $\lambda>0$ such that
+\begin{equation}
+\ex{\left| \varphi(Z_1) - \varphi(x+Z_1)  \right|} \leq K_1 |x|^{1+\lambda}
+\label{eq:PJ_additional_cond}. 
+\end{equation}
+Then:
+\begin{itemize}
+\item[(i)] \begin{equation}
+\sqrt{n} \bar{\Delta}_n = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{p.n}(1). \label{eq:normal_expansion_lem}
+\end{equation}
+where $o_{p,n}(1)$ converges in probability to $0$ as $n\to \infty$.
+\item[(ii)] If $Z_1$ has continuously differentiable density $f(x)$ with finite location Fisher information 
+\[
+I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)} \right)^2 f(x) dx,
+\]
+then for any converging sequence $h_n \to h$,
+\[
+\sqrt{n} \left( \bar{\Delta}_n \right) \overset{d}{\to} \Ncal\left( \frac{-h}{\psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx  , \frac{\chi(0)}{\psi'^2(0)} \right)
+\]
+under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h_n/\sqrt{n}}$ with density $\prod_{i=1}^n f(x_i-h_n/\sqrt{n})$.
+\end{itemize}
+\end{thm}
+We now use this theorem to show regularity of $\bar{\theta}_n$. We have, 
+\begin{align*}
+& %\varphi(Z_1) - \varphi(x+Z_1) = 
+\sgn(Z_1) - \sgn(x + Z_1) \\
+& = \begin{cases}
+2 & Z_1 > 0,\, x+Z_1<0, \\
+-2 & Z_1 <0, \, x+Z_1>0, \\
+0 & \text{otherwise}. 
+\end{cases}
+\end{align*}
+It follows that
+\begin{align*}
+\ex{ \left| \varphi(Z_1) - \varphi(x+Z_1) \right| }  \leq \Prob\left( |Z_1| < x  \right) \leq f(0) |x|, 
+\end{align*}
+hence condition \eqref{eq:PJ_additional_cond} is fulfilled. In addition, by anti symmetry of $f'(x)$ around $x=0$, 
+\[
+\int_{\mathbb R} \varphi(x) f'(x) dx = \int_{\mathbb R} \sgn(x) f'(x) dx = 2\int_0^\infty f'(x) dx = -2f(0) = -\psi'(0). 
+\]
+Theorem~\ref{thm:normal_expansion}, applied to the setting of Theorem~\ref{thm:sgd}, implies \eqref{eq:sgd_part2}. 
+
+\subsubsection*{Proof of (iii)}
+%In order to prove part (ii) of Theorem~\ref{thm:sgd} 
+Consider the following result from \cite{polyak1990new}:
+\begin{thm}{\cite[Thm. 2]{polyak1990new}} \label{thm:polyak_new}
+Let
+\begin{align} \label{eq:polyak_new_measurements}
+\begin{cases}
+U_n = U_{n-1} - \gamma_n \varphi(Y_n), & Y_n = g'(U_{n-1})+Z_n \\
+\bar{U}_n= \frac{1}{n} \sum_{i=1}^n U_n, & n=1,2,\ldots.
+\end{cases}
+\end{align}
+Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \mathbb R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution with a density for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Theorem~\ref{thm:polyak_juditsky}-(iii) and satisfy the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
+and there exits $K_3$ such that 
+\[
+\mathbb E \left[ | \varphi(x+Z_1) |^4 \right] \leq K_3(1+|x|^4). 
+\]
+Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions \eqref{eq:conditions1} and \eqref{eq:conditions2}. Then
+\[
+V_n \triangleq \mathbb E \left[ \left(\bar{U}_n-x^\star \right)^2 \right] = n^{-1}\frac{\chi(0)} { (\psi'(0))^2 (g''(x^\star))^2 } + o(n^{-1}).
+\]
+\end{thm}
+
+We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$. From \eqref{eq:polyak_new_measurements} we have
+\begin{align*} 
+U_n & = U_{n-1} + \gamma_n \sgn(\theta-U_{n-1} - Z_n )  \\
+& = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
+\end{align*}
+so the estimator $\bar{U}_n$ equals to the one defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}. Note that
+\[
+\mathbb E \left[ | \varphi(x+Z_1) |^4 \right] = 1 \leq K_3(1+|x|^4)
+\]
+for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
+the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies that for any $\theta \in \mathbb R$, 
+\[
+V_n = \mathbb E \left[ \left({\theta}_n-\theta \right)^2 \right]  = \frac{1}{4n f^2(0)} + o(n^{-1}).
+\]
+
+
+{\color{red}
+
+\subsection{Proof of Theorem~\ref{thm:normal_expansion}
+\label{proof:thm:normal_expansion}
+}
+\subsubsection*{Proof of (i)}
+The proof of part (i) of Theorem~\ref{thm:normal_expansion} requires the following two additional results from \cite{polyak1992acceleration}:
+\begin{lem}{\cite[Lem. 2]{polyak1992acceleration}}
+\label{lem:Polyak_expansion}
+Consider the process $\{\Delta_i^1 \}_{i=0}^\infty$ defined by
+\[
+\Delta^1_i = \Delta^1_{i-1} - \gamma_i (A \Delta_{i-1}+ \xi_i),\quad i=1,2\ldots.
+\]
+Assume that $A>0$ and condition (ii) of Theorem~\ref{thm:polyak_juditsky} holds. Then 
+\begin{equation}
+\label{eq:Polyak_expansion}
+\sqrt{n} \bar{\Delta}_n^1 = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1} \Delta_i^1 = \frac{\alpha_n \Delta_0^1}{\sqrt{n} \gamma_0}  + \frac{1}{\sqrt{n} A} \sum_{i=1}^{n-1} \xi_i + \frac{1}{\sqrt{n}}\sum_{i=1}^{n-1} w_i^n \xi_i,
+\end{equation}
+where $\alpha_n$ and $w_i^n$ are real numbers such that $|\alpha_n| \leq K$ and $|w_i^n|\leq K$ for some $K< \infty$, and 
+\[
+\lim_{n\to \infty} \frac{1}{n} \sum_{i=1}^{n-1} |w_i^n| = 0. 
+\]
+\end{lem} 
+
+\begin{lem} \label{lem:PJ_converging_sum}
+Under the conditions of Theorem~\ref{thm:polyak_juditsky},
+\[
+\sum_{i=1}^\infty \frac{|\Delta_{i}|^{1+\lambda}}{\sqrt{i}} < \infty 
+\]
+almost surely. 
+\end{lem}
+Lemma~\ref{lem:PJ_converging_sum} follows from the proof of Theorem 2 in \cite{polyak1992acceleration}. 
+
+We separate the proof of part (i) into two steps.
+\subsubsection*{Step I}
+The expansion \eqref{eq:normal_expansion_lem} holds for the process  $\{\bar{\Delta}^1_i\}_{i=1}^\infty$ defined as follows:
+\begin{align} \label{eq:Polyak_expansion_lem1_alg}
+& \Delta_i^1  = \Delta_{i-1}^1 - \gamma_i \psi'(0) \Delta_{i-1}^1 - \gamma_i \varphi(Z_i), \qquad
+ \delta_0^1 = \Delta_0\\
+& \bar{\Delta}^1_i = \frac{1}{n}\sum_{i=0}^{n-1} \Delta^1_i.
+\end{align}
+
+In order to prove this claim, use Lemma~\ref{lem:Polyak_expansion} with $A = \psi'(0)$ and $\xi_i = -\varphi(Z_i)$. The first expression on the RHS on \eqref{eq:Polyak_expansion} goes to zero in variance. In addition, 
+\begin{align*}
+& \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 }  = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
+& = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0. 
+\end{align*}
+We obtain
+\begin{equation}
+\sqrt{n} \bar{\Delta}^1_n = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{p.n}(1), \label{eq:Polyak_expansion_aux_process}
+\end{equation}
+
+\subsubsection*{Step II} $\bar{\Delta}_n$ and $\bar{\Delta}^1_n$ are asymptotically equivalent. \\
+
+From \eqref{eq:Polyak_Juditsky_alg} and \eqref{eq:Polyak_expansion_lem1_alg}, the difference $\delta_i = \Delta_i - \Delta_i^1$ satisfies the recursion
+\[
+\delta_i = \delta_{i-1} - \gamma_i \psi'(0) \delta_{i-1} + \gamma_i \left( \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i) \right),
+\]
+where $\delta_0 = 0$. Use Lemma~\ref{lem:Polyak_expansion} with $\xi_i =  \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i)$ to obtain
+\begin{align}
+& \sqrt{n}\bar{\delta}_n = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \xi_i  \\
+& = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \label{eq:PJ_proof1} \\
+& + 
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi(\Delta_{i-1})  + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i)
+\right) \label{eq:PJ_proof2}
+\end{align}
+For the term \eqref{eq:PJ_proof1} and using \eqref{eq:Polyak_Juditsky_cond3}, there exists $K_1$ and $K_2$ such that 
+\begin{align*}
+& \eqref{eq:PJ_proof1}
+\leq K_1 \sum_{i=1}^\infty \frac{1}{\sqrt{i}} \left| \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \right| \\
+& \leq K_2 \sum_{i=1}^\infty \frac{ |\Delta_i|^{1+\lambda}}{\sqrt{i}}. 
+\end{align*}
+
+Lemma~\ref{lem:PJ_converging_sum} shows that 
+\begin{align}
+\sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda}}{\sqrt{i}}  < \infty \label{eq:PJ_converging_sum},
+\end{align}
+hence the Kronecker lemma implies
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \to 0.
+\]
+For the term \eqref{eq:PJ_proof2}, set 
+\[
+\epsilon_i \triangleq \psi(\Delta_{i-1}) + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i).
+\]
+For $a>0$ and $n \in \mathbb N$, define the event
+\[
+A_{n,a} \triangleq \left\{ \sum_{i=1}^{n-1} \frac{|\epsilon_i|}{\sqrt{i}}  \geq a  \right\}. 
+\]
+By Markov's inequality, we have
+\begin{align}
+\ex{\mathbf 1_{A_{n,a}}   \mid \Delta_0,\ldots,\Delta_{n-1} } \leq \frac{1}{a} \sum_{i=1}^{n-1} \frac{ \ex{|\epsilon_i| \Delta_{i-1} \mid }}{\sqrt{i}}. \label{eq:PJ_proof_3}
+\end{align}
+Using \eqref{eq:Polyak_Juditsky_cond3} and \eqref{eq:PJ_additional_cond}, there exists $K'$ and $\lambda'>0$ such that
+\begin{align*}
+& \ex{ |\epsilon_i| | \Delta_{i-1}}  \leq |\psi(\Delta_{i-1})| + \left| \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i) \right|  \\
+& \leq K' |\Delta_{i-1}|^{1+\lambda}. 
+\end{align*}
+Plugging this bound in \eqref{eq:PJ_proof_3} and using Lemma~\ref{lem:PJ_converging_sum},we obtain 
+\[
+\Prob(A_{n,a}) = \ex{ \ex{\mathbf 1_{A_{n,a}}   \mid \Delta_0,\ldots,\Delta_{n-1} } } \leq  \frac{K''}{a}
+\]
+for some constant $K''$. It follows that for any $\epsilon$, we may choose $a$ large enough such that 
+\[
+\sup_{n} \Prob(A_{n,a}) < \epsilon.
+\]
+This implies that for any $\epsilon>0$,
+\[
+\Prob \left( \sum_{i=1}^\infty \frac{|\epsilon_i|}{\sqrt{i}} < \infty \right) \geq 1-\epsilon,
+\]
+and hence 
+\[
+\sum_{i=1}^\infty \frac{|\epsilon_i|}{\sqrt{i}} < \infty
+\]
+almost surely. The Kronecker lemma now implies 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left|\epsilon_i\right| \to 0,
+\]
+hence the term \eqref{eq:PJ_proof2} satisfies
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right) \epsilon_i \leq \frac{K'''}{\sqrt{n}} \sum_{i=1}^{n-1} |\epsilon_i| \to 0. 
+\]
+This conclude the proof of part (i).
+
+\subsubsection*{Part (ii)}
+Use \eqref{eq:normal_expansion_lem} to write
+\[
+\sqrt{n} \bar{\Delta}_n = G_n + o_{p,n}(1),
+\]
+where
+\[
+G_n \triangleq -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n} \varphi(Z_i). 
+\]
+From \cite[Exm. 7.8]{van2000asymptotic}, the location model $f(x-\theta)$ with continuously differentiable $f(x)$ is differentiable in quadratic mean with the score function $-f'(x-\theta)/f(x-\theta)$. This fact implies the following expansion \cite[Thm. 7.2]{van2000asymptotic}:
+\begin{align}
+\label{eq:PJ_LAN}
+& \log \frac{\Prob^n_{h_n/\sqrt{n}}}{\Prob^n_0} (Z_1,\ldots,Z_n) =  \log \prod_{i=1}^{n} \frac{f(Z_i-h_n/\sqrt{n})}  {f(X_i-\theta)} = h J_n - \frac{1}{2}h^2 I_{\theta} + o_{p,n}(1),
+\end{align}
+for any converging sequence $h_n \to h$, 
+where 
+\[
+J_n \triangleq -\frac{1}{\sqrt{n}} \sum_{i=1}^n \frac{f'(Z_i)}{f(Z_i)} .
+\]
+We have
+\begin{align*}
+& \ex{ G_n J_n} = \frac{1}{\psi'(0)}\frac{1}{n} \sum_{i=1}^n \ex{ \varphi(Z_i) \frac{f'(Z_i)}{f(Z_i)} }  \\
+& = \frac{1}{ \psi'(0)} \ex{ \varphi(Z_1) \frac{f'(Z_1)}{f(Z_1)}} =  \frac{1}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx , 
+\end{align*}
+Since both $\sqrt{n}G_n$ and $\sqrt{n}J_n$ are the sum of $n$ i.i.d. random variables with zero mean and finite variance, we obtain, from the central limit theorem and Slutsky's theorem, that
+\[
+\left(\sqrt{n} \bar{\Delta}_n, \log \frac{\Prob^n_{h/\sqrt{n}}}{\Prob^n_0} \right) \overset{d}{\to} \Ncal \left( \left(0,-\frac{h^2}{2} I_\theta \right),  \begin{pmatrix}
+\frac{\chi(0)}{\psi'^2(0)} & \frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx \\
+\frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx & h^2 I_\theta 
+\end{pmatrix}  \right)
+\]
+Le Cam's third lemma \cite[Exm. 6.7]{van2000asymptotic} implies that under $\Prob^n_{h/\sqrt{n}}$, 
+\[
+\sqrt{n}\bar{\Delta}_n \overset{d}{\to} \Ncal\left(\frac{-h}{ \psi'(0)} \int_{\mathbb R} \varphi(x) f'(x) dx,  \frac{\chi(0)}{\psi'^2(0)} \right).
+\]
+
+\QEDA
+}
+
+\subsection{Proof of Theorem~\ref{thm:LAN1}
+\label{proof:thm:LAN1}
+}
+The log probability mass distribution of $B^n=(B_1,\ldots,B_n)$ is given by
+\begin{align*}
+& \log \Prob_\theta(b^n) = \sum_{i=1}^n \left( \frac{b_i+1}{2} \log  \Prob(X_i\in A_i) + 
+\frac{1-b_i}{2} \log \Prob(X_i\in A_i) \right), \quad b^n \in \{-1,1\}^n. 
+\end{align*}
+Consequently, 
+\begin{align}
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b^n)} { \Prob_\theta (b^n) } = \sum_{i=1}^n    \frac{b_i+1}{2} 
+\log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)} + 
+\sum_{i=1}^n  \frac{1-b_i}{2} 
+\log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}. 
+\label{eq:LAN_proof1}
+\end{align}
+For each $i=1,\ldots,n$, write 
+\[
+A_i = \bigcup_{k=1}^{K_i} \left(t_{i,k},t_{i,k+1} \right),
+\]
+where $t_{i,1}<\ldots<t_{i,K_i}$ and, with a slight abuse of notation, $t_{i,1}$ and $t_{i,K_i}$ may also be $-\infty$ or $+\infty$, respectively. Thus
+\[
+\Prob_{\theta}(X_i \in A_i) = \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta).
+\]
+In particular, since $f$ is differentible, $\Prob_{\theta}(X_i \in A_i)$ is twice differentiable, and we may write
+\begin{align*}
+\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)  = \Prob_{\theta} (X_i \in A_i) + \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \frac{h}{\sqrt{n}} + o(h), 
+\end{align*}
+and thus
+\begin{align*}
+& \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)} = \log \left(1 + \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \frac{h}{\sqrt{n}} + o(h) \right) \\
+& = \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \frac{h}{\sqrt{n}} - \frac{h}{2n} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2 + o(h^2). 
+\end{align*}
+Similarly, we have
+\begin{align*}
+& \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)} \\
+& = \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \frac{h}{\sqrt{n}} - \frac{h}{2n} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \right)^2 + o(h^2). 
+\end{align*}
+From \eqref{eq:LAN_proof1} we obtain
+\begin{align*}
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b^n)} { \Prob_\theta (b^n) }   = \frac{h}{\sqrt{n}} \sum_{i=1}^n  
+\left( 
+\frac{b_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  + 
+ \frac{1-b_i}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}   \right) \\
+ & - \frac{h^2}{2n} 
+ \sum_{i=1}^n 
+\left( 
+ \frac{b_i+1}{2} 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2
++ 
+ \frac{1-b_i}{2} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}  \right)^2 \right) + o(h^2) \\
+\end{align*}
+%
+Noting that 
+\[
+\frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)} = \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)},
+\]
+the proof is completed by proving the following two claims:
+\begin{itemize}
+\item[I.] 
+For $i=1,\ldots,n$ denote 
+\[
+U_i = \frac{B_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  + 
+ \frac{1-B_i}{2}  \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}. 
+\]
+Then 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{d}{\rightarrow} \Ncal\left(0, \kappa(\theta) \right). 
+\]
+\item[II.]
+For $i=1,\ldots,n$ denote 
+\[
+V_i =  \frac{B_i-1}{2} 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2
++ 
+ \frac{1-B_i}{2} \left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}  \right)^2.
+\]
+Then 
+\[
+\frac{1}{n} \sum_{i=1}^n V_i \overset{a.s.}{\rightarrow} \kappa(\theta). 
+\]
+\end{itemize}
+\subsubsection*{Proof of Claim I}
+First note that 
+\begin{align*}
+\mathbb E  [U_i] & = 
+ \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}   \Prob (B_i=1)   + 
+ \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}   \Prob (B_i=-1)  = 0. 
+\end{align*}
+In addition,
+\begin{align*}
+& \mathbb E U_i^2 = 
+\left( \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  \right)^2  \Prob (B_i=1)   + 
+\left( \frac{-\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{1-\Prob_{\theta}(X_i \in A_i)}  \right)^2 \Prob (B_i=-1) \\
+& =
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i)} +  
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{1-\Prob_{\theta}(X_i \in A_i)} \\
+ & =  
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i) \left(1-\Prob_{\theta}(X_i \in A_i) \right)} 
+\end{align*}
+Therefore
+\[
+\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2 = L_n(A_1,\ldots,A_n) \overset{a.s.}{\longrightarrow} \kappa(\theta)
+\]
+for any $\theta \in \Theta$ such that the limit above exists. We now verify that the sequence $\{ U_i,\,i=1,2,\ldots \}$ satisfies Lyaponov's condition for his version of the central limit time: for any $\delta>0$ we have that 
+\begin{align*}
+& \mathbb E \left| U_i \right|^{2+\delta} =
+ \frac{ \left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(\Prob_{\theta}(X_i \in A_i))^{1+\delta}} +  
+  \frac{ \left|\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}} 
+\end{align*}
+and
+\begin{equation}
+\frac{\sum_{i=1}^n \mathbb E \left| U_i \right|^{2+\delta} } { \left( \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta} = 
+\frac{ \frac{1}{n^{1+\delta}} \sum_{i=1}^n \mathbb E |U_i|^{2+\delta} }{ \left(\frac{1}{n} \sum_{i=1}^n \mathbb E U_i^2  \right)^\delta}. 
+\label{eq:Lyaponov}
+\end{equation}
+Next, we claim that there exits $\delta>0$ and $K>0$, that are independent of $n$, such that
+\begin{align}
+\frac{1}{n} \sum_{i=1}^n \mathbb E  |U_i|^{2+\delta}  < M \label{eq:Lyaponov_num}
+\end{align} 
+for all $n$ large enough. To see this, note that
+\begin{align*}
+& \mathbb E |U_i|^{2+\delta} = 
+ \frac{ \left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(\Prob_{\theta}(X_i \in A_i))^{1+\delta}} +  
+  \frac{ \left|\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta}} {(1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}  \\
+  &  = \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} } 
+  \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \\
+  &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}, 
+\end{align*}
+where the last transition is because 
+\[
+ \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \leq 1. 
+\]
+We now use the fact that each $A_i$ is a finite union of interval and consider the following lemma, proof of which is given in Appendix~\ref{proof:lem:bound_intervals_delta}.
+\begin{lem} \label{lem:bound_intervals_delta}
+Let $f(x)$ be a log-concave, symmetric, and differentiable PDF such that $\eta(x)$ is unimodal.  There exists $\delta>0$ such that for any $x_1 \geq \ldots \geq x_n \in \mathbb R$, 
+\begin{equation}
+\frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^{2+\delta} }
+{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)^{1+\delta} \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right)^{1+\delta} } 
+\leq  2^\delta f^{2+\delta}(0). 
+\label{eq:lem_bound_intervals_delta}
+\end{equation}
+\end{lem}
+
+Lemma~\ref{lem:bound_intervals_delta} implies 
+\begin{align*}
+  &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}} = \frac{\left| \sum_{k=1}^{K_i} (-1)^k f(x_{i,k}-\theta) \right|^{2+\delta} }
+  { \left( \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta) \right)^{1+\delta} \left( 1 - \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta) \right)^{1+\delta}} \\
+  & \leq 2^\delta f^{2+\delta}(0). 
+\end{align*}
+In particular, we conclude that 
+\[
+\frac{1}{n} \sum_{i=1}^n \mathbb E |U_i|^{2+\delta} \leq 2^\delta f^{2+\delta}(0), 
+\]
+and thus for any $\delta>0$ the numerator of \eqref{eq:Lyaponov}, as well as the entire expression, goes to zero. From Lyaponov's central limit theorem we conclude that 
+\[
+\frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{d}{\rightarrow} \Ncal\left(0,\kappa(\theta) \right). 
+\]
+
+\subsubsection*{Proof of Claim II} 
+We have:
+\begin{align*}
+\mathbb E V_i  & = 
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i)}  
++ 
+ \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{1-\Prob_{\theta}(X_i \in A_i)}  \\
+ & = 
+  \frac{ \left(\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right)^2}{\Prob_{\theta}(X_i \in A_i) \left( 1-\Prob_{\theta}(X_i \in A_i) \right)}  
+\end{align*}
+ We conclude that:
+\begin{equation} \label{eq:LAN_limit_cond}
+\frac{1}{n} \sum_{i=1}^n \mathbb E V_i =   L_n(A_1,\ldots,A_n)  \to \kappa(\theta)
+\end{equation}
+Since the $V_i$s are independent of each other, Kolmogorov's law of large numbers implies
+%(e.g. \cite[Theorem 10.2.3]{sen1994large}) 
+\[
+\frac{1}{n} \sum_{i=1}^n  V_i \overset{a.s.}{\longrightarrow} \kappa(\theta)
+\]
+for any $\theta \in \Theta$ for which the limit \eqref{eq:LAN_limit_cond} exists.
+
+\QEDA
+
+\subsubsection*{Proof of Lemma~\ref{lem:bound_intervals_delta}} 
+Denote 
+\[
+\delta_n \triangleq \delta_n(x_1,\ldots,x_n) \triangleq \sum_{k=1}^{n} (-1)^{k+1} f(x_k),
+\]
+\[
+\Delta_n \triangleq \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{k=1}^n (-1)^{k+1} F(x_k),
+\]
+and 
+\[
+\eta_\delta(x) \triangleq  \frac{  \left(\delta_1(x) \right)^{2+\delta}}{  \left(\Delta_1(x)  \right)^{1+\delta}
+(1-\Delta_1(x))^{1+\delta}}
+= \frac{  \left( f (x) \right)^{2+\delta}}{ \left(F(x) \right)^{1+\delta}(1-F(x))^{1+\delta}}. 
+\]
+The proof is by induction on $n$. For the case $n=1$ the LHS of \eqref{eq:lem_bound_intervals_delta} equals $\eta_\delta(x)$. Note that $\eta_\delta(0) = 2^\delta f^{2+\delta}(0)$, so it is enough to prove that $\eta_\delta(0)$ attains it maximum at $x=0$. We have $\eta_\delta(x) = \eta^{1+\delta}(x)/f^\delta(x)$, and thus
+\[
+\log \eta_\delta'(x) = (1+\delta) \frac{\eta'(x)}{\eta(x)} - \delta \frac{f'(x)}{f(x)}. 
+\]
+By Assumption~\ref{assump:failure_rate} both terms above are negative for $x>0$, so that $\log \eta_\delta'(x) \leq 0$ if and only if
+\begin{equation} \label{eq:delta_proof_cond}
+(1+\delta) \left| \frac{\eta'(x)}{\eta(x)} \right| \geq \delta \left| \frac{f'(x)}{f(x)} \right|, \qquad x>0.
+\end{equation}
+Also by Assumption~\ref{assump:failure_rate}, for $x>0$ we have
+\[
+0 > (\log \eta(x))' = \frac{h'(x)}{h(x)}-\frac{h'(-x)}{h(-x)},
+\]
+so that \eqref{eq:delta_proof_cond} is satisfies for $\delta>0$ small enough. 
+
+
+Next, assume that 
+\begin{equation}
+\frac{ \left( \delta_n \right)^{2+\delta}} 
+{\left(\Delta_n \right)^{1+\delta}\left(1- \Delta_n \right)^{1+\delta} } \leq \eta_\delta(0) = 2^\delta f^{2+\delta}(0) . 
+\label{eq:lem_bound_intervals_delta_proof}
+\end{equation}
+for all integers up to $n = N-1$ and consider the case $n = N$. 
+%If $x_{i+1} = x_i$ for some $i=1,\ldots,N-1$, then then the indices $i$ and $i+1$ may  be removed from all sums in \eqref{eq:lem_bound_intervals}, what brings us to the case $n = N-2$. Therefore, we may assume that $x_1 < \ldots < x_n$. 
+%
+The maximal value of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is attained for the same $(x_1,\ldots,x_N) \in \mathbb R^N$ that attains the maximal value of 
+\begin{align*}
+& g(x_1,\ldots, x_N) \triangleq  (2+\delta) \log \delta_N - (1+\delta) \log \Delta_N - (1+\delta) \log \left(1 - \Delta_N  \right),
+\end{align*}
+ The derivative of $g(x_1,\ldots,x_N)$ with respect to $x_k$ is given by
+\[
+\frac{\partial  g}{\partial x_k} = \frac{(2+\delta) (-1)^{k+1} f'(x_k)}{\delta_N} -\frac{(1+\delta)(-1)^{k+1} f(x_k)}{\Delta_N } + \frac{(1+\delta)(-1)^{k+1} f(x_k)}{1-\Delta_N }.
+\]
+We conclude that the gradient of $g$ vanishes if and only if
+\begin{equation}
+\label{eq:gradient_zero_delta}
+\frac{f'(x_k)}{f(x_k)} = \frac{\delta_N(1+\delta)}{2+\delta} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N} \right),\quad k=1,\ldots,N.
+\end{equation}
+From the same reason as in the proof of Lemma~\ref{lem:bound_intervals_delta}, \eqref{eq:gradient_zero_delta} is satisfied if and only if $x_1 = \ldots = x_N$. For odd $N$ and $x_1=\ldots =x_N$, the LHS of \eqref{eq:lem_bound_intervals_delta_proof} equals $\eta_\delta(x_1)$ which was shown to be smaller than $\eta_\delta(\epsilon)$. For even $N$ and any constant $d$, the limit of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} as $(x_1,\ldots,x_N)\rightarrow (d,\ldots,d)$ exists and equals zero. Therefore, the maximum of the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is not attained at the line $x_1=\ldots=x_N)$. We now consider the possibility that the LHS of \eqref{eq:lem_bound_intervals_delta_proof} is maximized at the borders. That is, as one or more of the coordinates of $(x_1,\ldots,x_N)$ approaches $\pm \infty$,  or $\pm \epsilon$. As we assumed $x_1 \geq \ldots \geq x_N$, if $x_i = x_{i+1}$ for some $i$ than their contribution to \eqref{eq:lem_bound_intervals_delta_proof} is zero and thus this case reduces to the case $n= N-2$. A similar reduction holds if $x_N, x_{N-1} \to -\infty$, $x_1, x_2 \to \infty$,  $x_i, x_{i+1} = -\epsilon$ for some $i$, or $x_i, x_{i+1} = \epsilon$ for some $i$. It is therefore enough to consider the cases:
+\begin{itemize}
+\item[(1)]  $x_N \to -\infty$.
+\item[(2)] $x_1 \to \infty$.
+\end{itemize}
+Assume first $x_N \rightarrow -\infty$. Then 
+\begin{align*}
+\frac{ \left( \delta_N \right)^{2+\delta}} 
+{\left(\Delta_N \right)^{1+\delta}\left(1- \Delta_N \right)^{1+\delta}  }
+ = \frac{ \left(  \sum_{k=1}^{N-1} (-1)^{k+1}f(x_k) \right)^{2+\delta}} 
+{\left( \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k) \right)^{1+\delta}\left(1- \sum_{k=1}^{N-1} (-1)^{k+1} F(x_k)  \right)^{1+\delta} } ,
+\end{align*}
+which is smaller than $\eta_\delta(0)$ by the induction hypothesis. Assume now that $x_1 \rightarrow \infty$. Then 
+\begin{align*}
+& \frac{ \left( \delta_N \right)^{2+\delta}} 
+{\left(\Delta_N \right)^{1+\delta}\left(1- \Delta_N \right)^{1+\delta}  } \\
+=
+& \frac{ \left(  \sum_{k=2}^{N} (-1)^{k+1}f(x_k) \right)^{2+\delta}} 
+{\left( 1 + \sum_{k=2}^{N} (-1)^{k+1} F(x_k) \right)^{1+\delta}\left(1- 1 - \sum_{k=2}^{N} (-1)^{k+1} F(x_k)  \right)^{1+\delta} }  \\
+& = \frac{ \left(  -\sum_{m=1}^{N} (-1)^{m+1}f(x'_m) \right)^{2+\delta}} 
+{\left( 1 - \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m}) \right)^{1+\delta}\left( \sum_{m=1}^{N-1} (-1)^{m+1} F(x'_{m})  \right)^{1+\delta} },
+\end{align*}
+where $x'_{m} = x_{m+1}$ for $m=1,\ldots, N-1$. The last expression is smaller than $\eta_{\delta}(0)$ by the induction hypothesis.  \QEDA \\
+
+
+\subsection{Proof of Theorem~\ref{thm:non_existence}
+\label{proof:thm:non_existence}
+}
+
+Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta) = \eta(0)$. 
+%
+Since $B_1,B_2,\ldots$ satisfy the conditions in Theorem~\ref{thm:LAN1}, $\theta$ is in $\Xi$ if and only if
+\begin{equation}
+\label{eq:non_existence_proof}
+\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0). 
+\end{equation}
+By assumption, we have $B_i^{-1} = A_i$ where $A_i$ can be expressed as
+\[
+A_i = \cup_{i=1}^K (a_{i,k},b_{i,k}), 
+\]
+where $a_{i,1} \leq b_{i,1} \leq \ldots \leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values $-\infty$ and $\infty$, respectively. Denote
+\[
+\mathcal B_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\}.
+\]
+For any $\theta$ and $\epsilon>0$, denote 
+\[
+S_n(\theta, \epsilon) \triangleq \left\{ i\leq n \,:\, (\theta-\epsilon,\theta+\epsilon) \cap \mathcal B_i \neq \emptyset \right\}
+\]
+In words, $S_n$ contains all integers smaller than $n$ in which an $\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals consisting $A_i$. 
+%
+We now claim that 
+if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for such $\theta$ we have
+\begin{align}
+& L_n(A_1,\ldots,A_n; \theta) \nonumber \\
+& = \frac{1}{n} \sum_{i \in S_n(\epsilon,\theta)}  
+\frac{ \left(\sum_{k=1}^{K}  f(\theta - b_{i,k})- f(\theta - a_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
+& 
++ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(b_{i,k}-\theta) - f(a_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
+& \overset{(a)}{\leq}
+\frac{\card\left(S_n(\theta,\epsilon)\right)}{n} \eta(0) + \frac{n-\card\left(S_n(\theta,\epsilon) \right) }{n} \eta(\epsilon) 
+ \label{eq:non_existence_proof1}
+\end{align}
+where $(a)$ follows from Lemma~\ref{lem:bound_intervals_delta} and the fact that for $i \in S_n(\theta, \epsilon)$, 
+\[
+\max\left\{ \max_k \eta(b_{i,k}-\theta) , \max_k \eta(a_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
+\]
+Unless  $\card \left(S_n(\theta, \epsilon) \right)/n \to 1$, \eqref{eq:non_existence_proof1}, and thus $L_n(A_1,\ldots,A_n ; \theta)$, are bounded from above by a constant that is smaller then $\eta(0)$ in contradiction to the fact that $\theta \in \Xi$. \par
+For $k\in \mathbb N$, assume by contradiction that there exists $N \geq 2K + 1$ distinct elements
+$\theta_1,\ldots,\theta_N \in \Xi$. Since each $A_i$ consists of at most $K$ intervals, we have that 
+\begin{equation}
+\label{eq:few_optimality_points_proof}
+\card (\cup_{i=1}^n \mathcal B_i) \leq 2 n K. 
+\end{equation}
+Fix $\epsilon>0$ such that 
+\[
+\epsilon < \frac{1}{2}\min_{i\neq j} |\theta_i - \theta_j|. 
+\]
+Since for each $\theta \in \Theta$ we have $S_n(\theta, \epsilon) \to 1$, there exists $n$ large enough such that 
+\[
+\card \left(S_n(\theta_i, \epsilon) \right) \geq n \left(1-\frac{1}{2N} \right)
+\]
+for all $i=1,\ldots,N$. However, $S_n(\theta_1,\epsilon), \ldots S_n(\theta_N,\epsilon)$ are disjoint, so the cardinallity of their union is at least $n\left(1-\frac{1}{2N} \right)N$ which is grater than $2nK + n/2$ in contradiction to \eqref{eq:few_optimality_points_proof}. 
+

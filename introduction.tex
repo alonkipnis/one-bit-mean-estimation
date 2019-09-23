@@ -68,45 +68,111 @@ Each setting has natural applications:
   income~\cite{DuchiJoWa18}.
 \end{itemize}
 
-Let us provide an informal description of our results and setting.  For an
+Let us provide an informal description of our results and setting. For an
 estimator $\theta_n$ with finite quadratic risk (mean squared error) $R_n =
-\E_\theta[(\theta_n - \theta)^2]$, letting $\sigma^2 = \var(X)$
-we are interested in particular in the
-limit (assuming it exists)
+\E_\theta[(\theta_n - \theta)^2]$, we study the limit
 \begin{equation}
   \label{eq:ARE_def}
-  \lim_{n\to \infty} \frac{\sigma^2/n}{R_n},
+  \limsup_{n\to \infty} n R_n.
 \end{equation}
-which describes the \emph{asymptotic relative efficiency} (ARE) of this
-estimator compared to an estimator whose variance decreases as
-$\sigma^2/n+o(n^{-1})$. Estimators of this form include the sample mean
-and, under some conditions, the optimal Bayes estimator.
-
-%% JCD: I AM HERE %%
-
-In addition to the examples above, the excess risk in estimating a fixed parameter due to a one-bit per sample constraint is useful in bounding from below the excess risk in estimating signals from thier noisy one-bit quanitzed noisy measurements. Specifically, the excess risk or ARE we derive serve as the most optimistic estimate for the risk in estimating under one-bit per measurement constraint signals changing over time or space. Such estimation settings are considered in \cite{baraniuk2017exponential, jacques2013robust, plan2013one, li2017channel, choi2016near}. \par
+By comparing this quantity to achievable rates of convergence without
+communication constraints, we can evaluate the efficiency
+losses---asymptotic relative efficiency---of the estimator to appropriately
+optimal (unconstrained) estimators. (We shall be more formal in the sequel.)
+By lower bounding the quantity~\eqref{eq:ARE_def}, we also provide limits on
+estimation of single-bit-per-measurement constrained signals in more general
+settings~\cite{baraniuk2017exponential, jacques2013robust, plan2013one,
+  li2017channel, choi2016near}.
 
 % given a prior distribution on the space $\Theta$ where $\theta$ resides. \\
 
-In setting (i), the estimator can evaluate the optimal mean estimator (e.g., the sample mean in the Gaussian case) and then quantize it using $n$ bits. Since the accuracy in describing the empirical mean decreases exponentially in $n$, the error due to quantization is negligible compared to the quadratic risk in estimating the mean \cite{720540}. Therefore, the ARE in this setting is $1$. Namely, asymptotically, there is no loss in performance due to the communication constraint under centralized encoding. 
+In setting (i), the estimator can evaluate any optimal estimator of location
+(e.g., the sample mean if the data is Gaussian), then quantize it using
+$n$ bits. As the accuracy in describing the empirical mean decreases
+exponentially in $n$, the quantization error is negligible compared
+to the statistical error in mean estimation~\cite{720540}. That is,
+centralized encoding induces no asymptotic efficiency loss.
 %
-In this paper we show that a similar result does not hold in setting (ii): the ARE of any adaptive estimation scheme is at most the ARE of the sample median. Specifically, when the samples are drawn from the normal distribution, this ARE equals $2/\pi$, showing that the one-bit constraint increases the effective sample size in estimating $\theta$ by at least $\pi/2$ compared to estimating it without the bit constraint. We also show that this lower bound on the ARE is tight by providing an estimator that attains it. In fact, we show that only one adaptiveness, as illustrated in Figure~\ref{fig:one_round} is enough to achieve the optimal ARE. 
+The story is different in settings (ii) and (iii). Precisely, we show that
+in the adaptive setting~(ii), the optimal efficiency of a one-bit scheme is
+(asypmtotically) precisely that of the sample median, and that this
+efficiency is achievable. As a concrete example, when $X_i$ are
+i.i.d.\ Gaussian, we necessarily lose a factor of $\pi/2 \approx 1.57$ in
+the asymptotic risk; the one-bit constraint decreases the effective sample
+size by a factor of $\pi/2$ compared to estimating it without the bit
+constraint. It turns out that, in the settings we consider,
+only a \emph{single round} of adaptivity (see Fig.~\ref{fig:one_round} for
+an illustration) is sufficient to achieve optimal convergence rates.
 %
-Clearly, the penalty on the sample size in setting (iii) is at least as large as that in setting (ii). We show, however, that unlike in setting (ii), there is no distributed estimation scheme that is uniformly optimal in the sense that it attains the ARE of the sample median for all $\theta$ in the parameter space. This result is obtained by establishing local asymptotic normality of regularly enough encoding procedures for setting (iii), resulting in an exact characterization of the ARE of such procedures. To summarize our contributions, we establish that the optimal ARE in settings (i) is $1$, the optimal ARE in setting (ii) is ARE of the sample median, and no uniformly optimal procedure exists in setting (iii). 
+In distinction from setting (ii), in setting (iii) when the messages must be
+independent, there is no distributed estimation scheme that achieves the
+efficiency of the sample median uniformly over $\theta$.  We establish this
+result via Le Cam's local asyptotic normality theory, allowing us
+to provide exact characterizations of the asymptotic efficiency
+of suitably regular encoding schemes.
+%% To summarize our
+%% contributions, we establish that the optimal ARE in settings (i) is $1$, the
+%% optimal ARE in setting (ii) is ARE of the sample median, and no uniformly
+%% optimal procedure exists in setting (iii).
 
 % Instead, in setting (iii) we restrict ourselves to estimators from messages obtained by comparison against a prescribed value (that may be different for each sample). We show that the maximum likelihood (ML) estimator for $\theta$ from these messages is asymptotically local minimax, and its asymptotic variance is strictly greater than the variance of the median. Thus, at least when limited to threshold detection, the ability to adapt the threshold allows for a more efficient estimation. %This is in contrast to the \\ counterpart of our setting where $\theta$ is taken from a finite space 
 
-It is important to note that although the ARE in setting (i) is one, this scheme already poses a non-trivial challenge for the design and analysis of optimal encoding and estimation procedures. Indeed, representing an unknown random quantity using $n$ bits is equivalent to designing a $2^n$ levels scalar quantizer \cite{gray1998quantization}. However, the optimal design of this quantizer depends on the distribution of its input, which is the goal of our estimation problem and hence its exact value is unknown. As a result, a non-trivial exploration-exploitation trade-off arises even in setting (i). 
-%Note that the only missing parameter in our setting is the mean, which, under setting (i), is known to the encoder with uncertainty interval proportional to $\sigma/\sqrt{n}$. 
-Therefore, while uncertainty due to quantization decreases exponentially in the number of bits $n$, hence the ARE is $1$, it is still difficult to derive an exact expression for the MSE in this setting. 
+Our asymptotic setting is important in that it allows us to elide
+difficulties present in finite sample settings. For example, in setting~(i),
+developing an optimal quantizer at finite $n$ requires choosing a $2^n$
+level scalar quantizer, which is non-trivial~\cite{gray1998quantization}.
+In interactive and sequential settings (e.g.~(ii)), the situation is more
+challenging, as it is unclear whether any type of compositionality applies,
+in that an $n-1$-step optimal estimator may be only vaguely related to the
+$n$-step optimal estimator. Thus, to provide our lower bounds, we rely on
+stronger information-based inequalities, including the Van Trees
+inequality~\cite{Tsybakov09} and Le Cam's local asymptotic normality
+theory~\cite{LeCam86,LeCamYa00,VanDerVaart98}.
+
+%% It is important to note that although the ARE in setting (i) is one, this
+%% scheme already poses a non-trivial challenge for the design and analysis of
+%% optimal encoding and estimation procedures. Indeed, representing an unknown
+%% random quantity using $n$ bits is equivalent to designing a $2^n$ levels
+%% scalar quantizer \cite{gray1998quantization}. However, the optimal design of
+%% this quantizer depends on the distribution of its input, which is the goal
+%% of our estimation problem and hence its exact value is unknown. As a result,
+%% a non-trivial exploration-exploitation trade-off arises even in setting (i).
+%% %Note that the only missing parameter in our setting is the mean, which, under setting (i), is known to the encoder with uncertainty interval proportional to $\sigma/\sqrt{n}$. 
+%% Therefore, while uncertainty due to quantization decreases exponentially in
+%% the number of bits $n$, hence the ARE is $1$, it is still difficult to
+%% derive an exact expression for the MSE in this setting.
 %
-The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$ may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal one-bit message given the previous messages, this characterization does not necessarily lead to an upper bound on the ARE. Instead, our result on the maximal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using an appropriate information inequality. \par
+%% The situation is even more involved in the adaptive encoding setting (ii): an encoding and estimation strategy that is optimal for $n-1$ adaptive one-bit messages of a sample of size $n-1$ may not lead to a globally optimal strategy upon the recipient of the $n$th sample. Conversely, any one-step optimal strategy, in the sense that it finds the best one-bit message as a function of the current sample and the previous $n-1$ messages, is not guaranteed to be globally optimal. Therefore, while we characterize the optimal one-bit message given the previous messages, this characterization does not necessarily lead to an upper bound on the ARE. Instead, our result on the maximal ARE is obtained by bounding the Fisher information of any $n$ adaptive messages and using an appropriate information inequality. \par
 %
 %In addition to encoding and estimation schemes that lead to optimal results, we also consider two additional ``natural'' schemes. Specifically, in setting (ii) we consider the one-bit optimal scheme, i.e., the case of a greedy encoder that given the $n$th sample and the previous $n-1$ bits, provides a bit that minimizes the $n$-step MSE. In setting (iii) we also consider the case where the messages are obtained by comparing each sample against a prescribed threshold. This threshold may be different across samples and is assumed deterministic (independent of the data). 
 
-
 \subsection*{Related Works}
-When the variance $\sigma^2$ is negligible compared the to desired accuracy, the task of finding $\theta$ using one-bit queries in the adaptive setting (ii) is solved by a bisection style method over the parameter space. Therefore, the general case of non-zero variance is reminiscent of the noisy binary search problem with a possibly infinite number of unreliable tests \cite{cicalese2002least, Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous parameter space, a more closely related problem is that of one-bit analog-to-digital conversion of a constant input corrupted by Gaussian noise. Using an SDM, Wong and Gray \cite{53738} showed that the output of the modulator converges to the true constant input almost surely, so that an SDM provides a consistent estimator for setting (ii). The rate of this convergence, however, was not analyzed and cannot be derived from the results of \cite{53738}. In particular, our results for setting (ii) imply that the asymptotic rate of convergence of the MSE in SDM to a constant input under an additive white Gaussian noise is at most $\sigma^2\pi/2$ over the number of feedback iterations. Baraniuk et. al \cite{baraniuk2017exponential} also considered adaptive one-bit measurements in the context of analog-to-digital conversion, although without noise at the input. By establishing the lower bound of $\sigma^2\pi/2n$ on the MSE, we show that the main results of \cite{baraniuk2017exponential}, an exponential MSE decaying rate, does not hold in the noisy setting. Stated otherwise, the MSE in the setting of \cite{baraniuk2017exponential} may decay exponentially up to the noise level, after which it decays at most as $\sigma^2\pi/2n$. \par
+
+When the variance $\sigma^2$ is negligible compared the to desired accuracy,
+the task of finding $\theta$ using one-bit queries in the adaptive setting
+(ii) is solved by a bisection style method over the parameter
+space. Therefore, the general case of non-zero variance is reminiscent of
+the noisy binary search problem with a possibly infinite number of
+unreliable tests \cite{cicalese2002least,
+  Karp:2007:NBS:1283383.1283478}. However, since we assume a continuous
+parameter space, a more closely related problem is that of one-bit
+analog-to-digital conversion of a constant input corrupted by Gaussian
+noise. Using an SDM, Wong and Gray \cite{53738} showed that the output of
+the modulator converges to the true constant input almost surely, so that an
+SDM provides a consistent estimator for setting (ii). The rate of this
+convergence, however, was not analyzed and cannot be derived from the
+results of \cite{53738}. In particular, our results for setting (ii) imply
+that the asymptotic rate of convergence of the MSE in SDM to a constant
+input under an additive white Gaussian noise is at most $\sigma^2\pi/2$ over
+the number of feedback iterations. Baraniuk et. al
+\cite{baraniuk2017exponential} also considered adaptive one-bit measurements
+in the context of analog-to-digital conversion, although without noise at
+the input. By establishing the lower bound of $\sigma^2\pi/2n$ on the MSE,
+we show that the main results of \cite{baraniuk2017exponential}, an
+exponential MSE decaying rate, does not hold in the noisy setting. Stated
+otherwise, the MSE in the setting of \cite{baraniuk2017exponential} may
+decay exponentially up to the noise level, after which it decays at most as
+$\sigma^2\pi/2n$. \par
 %
 One-bit measurements in the distributed setting (iii) was considered in \cite{904560,4244748, 6882252, chen2010performance, 5184907}, but without optimizing the encoders and their detection rules. Consequently, the performance derived in these works are not optimal. 
  % analyzed the estimation from distributed quantized measurements when the same detection rule is applied by all encoders. However, the error criterion considered in these works is the Fisher information rather than the MSE risk or ARE criterion. \par
