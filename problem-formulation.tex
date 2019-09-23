@@ -1,47 +1,86 @@
 % -*- Mode: latex -*- %
 
-\section{Problem Formulation \label{sec:problem}}
+\section{Problem Formulation and Notation}
+\label{sec:problem}
 
-Let $f(x)$ be a symmetric and log-concave density function with a finite second moment $\sigma^2$. For $\theta \in \Theta$, denote by $P_X$ the probability distribution with density $f\left( x-\theta \right)$. Therefore, $P_X$ is an absolutely continuous log-concave distribution with mean $\theta$ and variance $\sigma^2$. Symmetry and log-concavity of $f(x)$ imply that $P_X$ is strongly unimodal (has a unique local maxima) with its mode at $x =\theta$ \cite{ibragimov1956composition}. We further assume that the \emph{parameter space} $\Theta$ is a closed interval of the real line. 
-\par
-In some situations it is useful to assume that $\theta$ is drawn once from the prior distribution $\pi$ on $\Theta$. In this case we assume that $\pi$ is an absolutely continuous distribution, and denote its density by $\pi(\theta)$, i.e., $\pi(d\theta) = \pi(\theta)d\theta$.  
-\par
-The random variables $X_1,\ldots,X_n$ represent $n$ independent samples from $P_X$. 
-We are interested in estimating $\theta$ from a set of $n$ binary messages $B_1,\ldots,B_n$, obtained from $X_1,\ldots,X_n$ under three possible scenarios illustrated in Figure~\ref{fig:setup}: 
-\begin{itemize}
-\item[(i)~~] Centralized $B_i(X_1,\ldots,X_n)$, $i=1,\ldots,n$.
-\item[(ii)~] Adaptive $B_i(X_i,B_1,\ldots,B_{i-1})$, $i=2,\ldots,n$.
-\item[(iii)] Distributed $B_i(X_i)$, $i=1,\ldots,n$.
-\end{itemize}
+Let $f : \R \to \R_+$ be a symmetric and log-concave probability density,
+which necessarily has finite second moment $\sigma^2$, and let $\Theta
+\subset \R$ be closed and convex.  For $\theta \in \R$, let $P_\theta$ be
+the probability distribution with density $f(x-\theta)$, so that $\theta$
+indexes the location family $\{P_\theta\}_{\theta \in \Theta}$.  The
+log-concavity and symmetry $f(x)$ imply that $P_\theta$ has a unique mean
+and median at $\theta$~\cite{ibragimov1956composition}.
+We observe a sample $X_1, \ldots, X_n \simiid P_\theta$, where $\theta$
+is unknown, and wish to estimate $\theta$ given only binary
+messages $B_1, \ldots, B_n \in \{0, 1\}$ about each $X_i$.
+We study this under three distinct computational scenarios, which
+we illustrate in Figure~\ref{fig:setup}:
+\begin{enumerate}[(i)]
+\item \label{item:centralized} Centralized, where $B_i =
+  B_i(X_1,\ldots,X_n)$, $i=1,\ldots,n$.
+\item \label{item:adaptive} Adaptive, where $B_i =
+  B_i(X_i,B_1,\ldots,B_{i-1})$, $i=2,\ldots,n$.
+\item \label{item:distributed}
+  Distributed, where $B_i = B_i(X_i)$, $i=1,\ldots,n$.
+\end{enumerate}
+\noindent
+We also consider a hybrid of the fully distributed setting (where the bits
+$B_i$ are independent) and the adaptive setting (where each bit $B_i$ may
+depend on the previous bits) to a \emph{one-step} adaptive setting, where
+the quantization scheme may be modified to depend on one fixed function of
+the previous information.
+\begin{enumerate}[(i')]
+\setcounter{enumi}{1}
+\item One-step adaptive, where for some function $g$ and
+  a (fixed) $t$, if $i \le t$ then
+  $B_i = B_i(X_i)$ while if $i > t$, then
+  $B_i = B_i(X_i, g(B_1, \ldots, B_t))$.
+\end{enumerate}
 
-The performance of an estimator ${\theta}_n \triangleq {\theta}_n(B^n)$ in any of these cases is measured according to the quadratic risk:
+We measure the performance of an estimator $\theta_n \defeq
+\theta_n(B_1^n)$ by one of a few notions. In the simplest case,
+we assume a prior $\pi$ on $\theta$ (which may be a point
+mass) and consider the quadratic risk
 \begin{equation}
-\label{eq:error_def}
-R_n \triangleq \mathbb E\left({\theta}_n - \theta \right)^2,
+  \label{eq:error_def}
+  R_n = R_n(\pi) \defeq \int \E_\theta\left({\theta}_n - \theta \right)^2
+  d\pi(\theta),
 \end{equation}
-where the expectation is taken with respect to the distribution of $X_1,\ldots,X_n$ and, whenever available, a prior distribution $\pi(\theta)$ over $\Theta$.  
-%It is well known that minmax estimation error 
-%\begin{equation}
-%R_n = \min \sup_{\theta \in \Theta}  \mathbb E\left[ \left({\theta}_n - \theta \right)^2 | \theta \right],
-%\end{equation}
-%can be obtained from $R_n$ by assuming a particular least favorable prior distribution on the parameter space $\Theta$ \cite{casella1981}. 
-%
-The main problems we consider in this paper are the minimal value of \eqref{eq:error_def}, as a function of $n$ and $f(x)$, under different choices of the encoding functions in cases (i), (ii), and (iii). \par
+where the expectation is taken with respect to the distribution of
+$X_1,\ldots,X_n \simiid P_\theta$.  The main problems we consider in this
+paper are the minimal value of the risk~\eqref{eq:error_def} as a function
+of the sample size $n$ and the density $f$, under different choices of the
+encoding functions in
+cases~\eqref{item:centralized}--\eqref{item:distributed}.
+The quadratic risk~\eqref{eq:error_def} may be infinite in some cases;
+we defer discussion of this case to later sections, as it is technically
+demanding and detracts from the presentation here.
 
-We give particular attention to the ARE of estimators with respect to an asymptotically normal efficient estimator that is not subject to the bit constraint. Specifically, let $\{a_n,\,n\in \mathbb N\}$ be a sequence such that 
+Now, let $\sigma_f^2 \defeq \E[\frac{f'(X)^2}{f(X)^2}]$ be the Fisher
+information for the location in the family $\{P_\theta\}$, which is finite
+when $f$ is log-concave and symmetric. We give particular attention to the
+asymptotic relative efficiency (ARE) of estimators with respect to
+asymptotically normal efficient estimators achieving the information
+bound~\cite{VanDerVaart98}. In this case,
+if $\{m(n), n \in \N\}$ is a sequence such that
+\begin{equation*}
+  \sqrt{m(n)} (\theta_n - \theta) \cd \normal(0, \sigma_f^2),
+\end{equation*}
+then the ARE of the estimator is~\cite[Def.~6.6.6]{LehmannCa98}
+\begin{equation*}
+  \ARE({\theta}_n) \defeq
+  \liminf_{n\rightarrow \infty} \frac{m(n)}{n}.
+\end{equation*}
+In the special case where there exists $V \in \mathbb R$ such that
 \[
-\sqrt{a_n}\left({\theta}_n - \theta\right) \overset{d}{\longrightarrow} \Ncal(0, \sigma^2).
+m(n) R_n =
+m(n) \mathbb E_\theta\left({\theta}_n - \theta \right)^2 = V + o(1),
 \]
-Then the ARE of ${\theta}_n$ with respect to an unconstrained efficient estimator for $\theta$ is defined as \cite[Def. 6.6.6]{lehmann2006theory}
-\[
-\ARE({\theta}_n) \triangleq
-\lim_{n\rightarrow \infty} \frac{a_n}{n}. 
-\]
-Note that in the special case where there exists $V \in \mathbb R$ such that
-\[
-a_n \mathbb E \left({\theta}_n - \theta \right)^2 = V + o(1),
-\]
-with $o(1)\to 0$ as $n\to \infty$, then the ARE of ${\theta}_n$ is finite and equals $\sigma^2/V$. \par
+the ARE of ${\theta}_n$ is $\sigma_f^2/V$, so that $\theta_n$ requires a
+sample $V / \sigma_f^2$-times larger than that of an efficient estimator for
+comparable accuracy to the (information) efficient estimator.
+
+%%% JCD: I AM HERE BUT STILL GOING THROUGH THINGS %%%
 
 In addition to the notation above, we also denote by $F(x)$ the cumulative distribution function of $X_i$, and define
 \begin{equation} \label{eq:eta_def}

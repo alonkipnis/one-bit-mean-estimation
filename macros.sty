@@ -10,7 +10,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{tikz}
 \usetikzlibrary{external,positioning,decorations.pathreplacing,shapes,arrows,patterns}
-
+\usepackage{enumerate}
 
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
 %\tikzexternalize[mode=list and make]
@@ -63,7 +63,14 @@
 \tikzstyle{int}=[draw, fill=blue!10, minimum height = 1cm, minimum width=1.5cm,thick ]
 
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
 \newcommand{\var}{\textup{Var}}
 \newcommand{\simiid}{\stackrel{\textup{iid}}{\sim}}
 \newcommand{\normal}{\mathcal{N}}
+
+\newcommand{\defeq}{\triangleq} % definition equals
+
+\newcommand{\cd}{\stackrel{d}{\rightsquigarrow}}  % Convergence in distribution
 
