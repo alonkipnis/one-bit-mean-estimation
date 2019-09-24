@@ -72,15 +72,17 @@ then the ARE of the estimator is~\cite[Def.~6.6.6]{LehmannCa98}
   \liminf_{n\rightarrow \infty} \frac{m(n)}{n}.
 \end{equation*}
 In the special case where there exists $V \in \mathbb R$ such that
-\[
+\begin{equation*}
 m(n) R_n =
 m(n) \mathbb E_\theta\left({\theta}_n - \theta \right)^2 = V + o(1),
-\]
+\end{equation*}
 the ARE of ${\theta}_n$ is $\sigma_f^2/V$, so that $\theta_n$ requires a
 sample $V / \sigma_f^2$-times larger than that of an efficient estimator for
 comparable accuracy to the (information) efficient estimator.
 
 %%% JCD: I AM HERE BUT STILL GOING THROUGH THINGS %%%
+
+
 
 In addition to the notation above, we also denote by $F(x)$ the cumulative distribution function of $X_i$, and define
 \begin{equation} \label{eq:eta_def}
@@ -92,9 +94,9 @@ where the last equality is due to symmetry of $f(x)$. We note that
 \eta(x) = h(x)h(-x) = f(x) \left( h(x) + h(-x) \right), 
 \end{equation}
 where 
-\[
+\begin{equation*}
 h(x) \triangleq \frac{f(x)}{1-F(x)} = \frac{f(x)}{F(-x)}
-\]
+\end{equation*}
 is the \emph{hazard} function (a.k.a. \emph{failure rate} or \emph{force of mortality}), which is a monotone increasing function since $f(x)$ is log-concave \cite{bagnoli2005log}. 
 %
 For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that $\eta(x)$ is a strictly decreasing function of $|x|$, as illustrated in Fig.~\ref{fig:eta}. 
@@ -105,9 +107,9 @@ In this paper we only consider the normal distribution and other log-concave sym
 \end{assump}
 %That is, Assumption~\ref{assump:failure_rate} says that $\eta'(x) < 0 $ for all $x>0$. 
 Under this assumption we have, 
-\[
+\begin{equation*}
 4f^2(x) \leq \eta(x) \leq \eta(0),
-\] 
+\end{equation*} 
 %
 where $\eta(0) = 4 f^2(0)$ is the asymptotic variance of the sample median. Combined with log-concavity of $f(x)$, Assumption~\ref{assump:failure_rate} implies that $\eta(x)$ vanishes as $|x|\rightarrow \infty$. \par
 %
