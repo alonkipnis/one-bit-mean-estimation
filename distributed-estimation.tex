@@ -21,7 +21,7 @@ L_n(A_1,\ldots,A_n;\theta) \triangleq \frac{1}{n} \sum_{i=1}^n \frac{ \left(\fra
 \end{equation}
 Consider the following conditions:
 \begin{itemize}
-\item [(i)\,\,] The pdf $f(x)$ of $X_n-\theta$ is a log-concave, differentiable and symmetric density function such that $\eta(x)$ is unimodal.
+\item [(i)\,\,] The pdf $f(x)$ of $X_n-\theta$ is log-concave, differentiable, symmetric,  and  there exists $\delta>0$ such that $\eta^{1+\delta}(x)/f^\delta(x)$ has a unique maximum at the origin.
 \item[(ii)\,] $A_n$ is a finite union of disjoint intervals.
 \item[(iii)] The limit 
 \begin{equation}
@@ -516,7 +516,7 @@ For any prior $\pi(d\theta)$ and $\theta_0$ in the support of $\eta(x)$ we have
 R_\pi^\star  \leq 
  \int \frac{\pi(d\theta)}{\eta \left( \theta_0 - \theta \right)},
 \end{equation}
-Furthermore, assuming that $\theta_0 = \mathbb E \theta$ and that $\pi$ has a finite third moment $\sigma_\theta^3$, we have: 
+Furthermore, assuming that $\theta_0 = \ex{\theta}$ and that $\pi$ has a finite third moment $\sigma_\theta^3$, we have: 
 \begin{equation}
 \label{eq:bound_Taylor}
 R^\star_\pi \leq \frac{1}{4 f^2(0)} + \left(\frac{1}{4 f^2(0)} \frac{-f''(0)}{f(0)} -1 \right) \sigma_\theta^2 + O(\sigma_\theta^3).
