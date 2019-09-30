@@ -1,13 +1,23 @@
 \section{Consistent Estimation and Off-the-shelf Bounds \label{sec:preliminary}}
-%
-In this section we adapt known results to derive lower and upper bounds on the relative efficiency under setting (iii). These bounds establish the following facts:
-\begin{itemize}
-\item[I.] A consistent estimator with an asymptotically normal distribution always exists in setting (iii), and hence in setting (ii). 
-\item[II.] For the normal distribution, the ARE in setting (iii) is at most $3/4$. Namely, under setting (iii), all estimators are strictly inferior compared to the sample mean. 
-\end{itemize}
+
+We begin our technical treatment by deriving a few
+bounds on the efficiency of estimators in
+setting~\eqref{item:distributed}. These bounds establish the
+following facts:
+\begin{enumerate}[1.]
+\item A consistent estimator with an asymptotically normal distribution
+  always exists in setting~\eqref{item:distributed}, and hence in the
+  adaptive settings~\eqref{item:adaptive} and
+  (\ref{item:one-step-adaptive}').
+\item For the normal distribution, the asymptotic relative
+  efficiency~\eqref{eqn:are-def} in the distributed
+  setting~\eqref{item:distributed} is at most $3/4$. No estimator can be as
+  efficient as the sample mean.
+\end{enumerate}
 
 \subsection{Consistent Estimation}
-Fix $\theta_0 \in \mathbb R$ and define the $i$th message by 
+The simplest estimator is simply to invert a quantile. Indeed,
+fix $\theta_0 \in \mathbb R$ and define the $i$th message by 
 \[
 B_i = \mathbf 1_{X_i>\theta_0}, 
 \]
@@ -20,41 +30,85 @@ so that
 \label{eq:estimator_naive}
 {\theta}_n = \theta_0 + F^{-1}\left( P_n \right)
 \end{equation}
-is a consistent estimator for $\theta$ in the distributed setting of Figure~\ref{fig:setup}-(iii), where we note that $F(x)$ is invertible over the support of $f(x)$ which is a connected set due to log-concavity. Furthermore, the variance of $P_n$ is $F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)$, and hence the delta method implies that ${\theta}_n$ is asymptotically normal with variance 
-\begin{equation} 
- \frac{F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)}{f^2(\theta-\theta_0)} = \frac{1}{
+is a consistent estimator for $\theta$ in the distributed setting of
+Figure~\ref{fig:setup}-(iii), where we note that $F$ is invertible over the
+support of $f$. As the variance of $P_n$ is
+$F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)$, a delta method
+calculation~\cite[Ch.~23]{VanDerVaart98} implies that ${\theta}_n$ is
+asymptotically normal with variance
+\begin{equation*}
+  \frac{F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)}{f^2(\theta-\theta_0)} = \frac{1}{
 \eta(\theta-\theta_0)}.
-\end{equation}
-In particular, the ARE of ${\theta}_n$ equals $\eta(\theta - \theta_0)\sigma^2$. In other words, for a prescribed accuracy, ${\theta}_n$ of  \eqref{eq:estimator_naive} estimates $\theta$ with sample size that is $\eta(\theta- \theta_0)  \sigma^2$ times the samples size required for the sample mean. \par
-%
-%
-Assumption~\ref{assump:failure_rate} implies that for  all $n$ large enough the ARE of ${\theta}_n$ of \eqref{eq:estimator_naive} is never greater than $\eta(0)$, which is the ARE of the sample median. This ARE is attained only when $\theta_0 = \theta$, whereas $\theta$ is apriori unknown. Since $\eta(x)$ vanishes as $|x|\rightarrow \infty$, the ARE of ${\theta}_n$ may be very small when $\theta$ is away from $\theta_0$. As an example, when $f(x)$ is a normal density, the ARE of ${\theta}_n$ is less than $\approx 0.14$ when $\theta_0$ is $2$ standard deviations from $\theta$. Therefore, the estimator ${\theta}_n$ has little practical value unless the radius of $\Theta$ is small compared to the standard deviation. \par 
-It is suggested that we can attain lower variance in estimation by updating the threshold value $\theta_0$ in \eqref{eq:estimator_naive} after observing one or a batch of the single bit messages. Schemes with such adaptation fall within the adaptive setting of Figure~\ref{fig:setup}-(ii) which we consider in Section~\ref{sec:sequential}. \par
+\end{equation*}
+In the Gaussian case where the $X_i \simiid \normal(\theta, \sigma^2)$, the
+ARE of ${\theta}_n$ is $\eta(\theta - \theta_0)\sigma^2$.
 
-\subsection{Multiterminal Source Coding \label{sec:ceo}}
-The CEO setting considers the estimation of a sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_i$ is available at $n$ terminals. At each terminal $i$, an encoder observes the $k$ noisy samples
+Assumption~\ref{assump:failure_rate} implies that the optimal asymptotic
+variance for an estimator of the form~\eqref{eq:estimator_naive} is $1 /
+\eta(0)$, the asymptotic of the sample median. Unfortunately, as $\theta$ is
+(by definition) \emph{a priori} unknown and $\eta(x)$ monotonically
+decreases in $|x|$, this naive estimator $\theta_n$ may be very inefficient
+when $\theta$ is far from the initial guess $\theta_0$. As an example, when
+$f$ is a the normal density, the ARE of ${\theta}_n$ is less than $0.15$
+when $|\theta_0 - \theta| \ge 2\sigma$, and more broadly, $\ARE(\theta_n)$
+asymptotes to $|\theta_0| \exp(-\theta_0^2 / 2) / \sqrt{2\pi}$ as $|\theta_0
+- \theta|$ gets large.  Yet that $\theta_0 = \theta$ minimizes this
+asymptotic variance, and $\eta$ is continuous, is suggestive: if we can use
+a suitably good initial estimate $\theta_n\init$ for $\theta$, it is
+possible that a one-step adaptive estimator
+(recall~(\ref{item:one-step-adaptive}')) may be asymptotically strong, as we
+see in Section~\ref{sec:sequential}.
+
+\subsection{Multiterminal Source Coding}
+\label{sec:ceo}
+
+A related problem is the CEO problem, which considers the estimation of a
+sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_i$
+is available at $n$ terminals. At each terminal $i$, an encoder observes the
+$k$ noisy samples
 \[
 X_{i,j} = \theta_j + Z_{i,j},\qquad j=1,\ldots,k, \qquad i = 1,\ldots,n,
 \]
-and transmits $r_i k$ bits to a central estimator  \cite{berger1996ceo}. The central estimator produces an estimates ${\theta}_1,\ldots,{\theta}_k$ with the goal of minimizing the quadratic risk:
+and transmits $r_i k$ bits to a central estimator~\cite{berger1996ceo}. The
+central estimator produces an estimates ${\theta}_1,\ldots,{\theta}_k$ with
+the goal of minimizing the quadratic risk:
 \[
 R_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - {\theta}_j \right)^2 \right]. 
 \]
 Note that any distributed encoding scheme using one-bit per sample can be replicated $k$ times and thus leads to a legitimate encoding and estimation scheme for the CEO problem with $r_1=\ldots=r_n = 1$. It follows that, assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. 
 %
-Consequently, a lower bound on the MSE in estimating $\theta$ in the distributed encoding setting is given by the minimal MSE in the CEO setting as $k \to \infty$. Note that the difference between the CEO setting and ours lays in the privilege of each of the encoders to describe $k$ realizations of $\theta$ using $k$ bits with MSE averaged over these realizations, rather than a single realization using a single bit in ours. 
- \par
-When the prior on $\theta$ and the noise corrupting it at each location are Gaussian, the optimal encoding scheme and its asymptotic risk as $k$ goes to infinity were fully characterized in \cite{prabhakaran2004rate}. Furthermore, the work of \cite{chen2004upper} provided an expression for quadratic risk attained in the CEO setting under Gaussian priors. Adapting to our setting, this expression provides the following proposition:
+Consequently, a lower bound on the MSE in estimating $\theta$ in the
+distributed encoding setting is given by the minimal MSE in the CEO setting
+as $k \to \infty$. Note that the difference between the CEO setting and ours
+lays in the privilege of each of the encoders to describe $k$ realizations
+of $\theta$ using $k$ bits with MSE averaged over these realizations, rather
+than a single realization using a single bit in ours.
+
+When the prior on $\theta$ and the noise corrupting it at each location are
+Gaussian, Prabhakaran et al.~\cite{prabhakaran2004rate} characterize the
+optimal encoding and its asymptotic risk as $k \to \infty$.  Chen et
+al.~\cite{chen2004upper} also provide an expression for the quadratic risk
+in the CEO setting under Gaussian priors. Adapting to our setting, this
+expression provides the following proposition:
 \begin{prop} \label{prop:ceo_lower_bound}
-Assume that $\Theta = \mathbb R$ and $\pi(\theta) = \Ncal(0,\sigma_\theta^2)$ where $\sigma_\theta^2 \in \mathbb R$ is arbitrary. Then any estimator ${\theta}_n$ of $\theta$ in the distributed setting satisfies
-\begin{equation} \label{eq:ceo_bound}
- n \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
-\end{equation}
-where the expectation is with respect to $\theta$ and $X^n$.
+  Assume that $\Theta = \mathbb R$ and $\pi(\theta) =
+  \Ncal(0,\sigma_\theta^2)$ where $\sigma_\theta^2 \in \mathbb R$ is
+  arbitrary. Then any estimator ${\theta}_n$ of $\theta$ in the distributed
+  setting satisfies
+  \begin{equation} \label{eq:ceo_bound}
+    n \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
+  \end{equation}
+  where the expectation is with respect to $\theta$ and $X^n$.
 \end{prop}
+\noindent
+See Appendix~\ref{app:proof:prop_ceo_lower_bound} for a proof.
 
-\begin{proof}
-See Appendix~\ref{app:proof:prop_ceo_lower_bound}.
-\end{proof}
-
-From the formulation of the CEO problem, it follows that the difference between the MSE lower bound \eqref{eq:ceo_bound} and the actual MSE in the distributed setting (case (iii)) is attributed to the ability to perform coding over blocks. Namely, each encoder in the CEO setting may encode an arbitrary number of $k$ independent realizations of $\theta$ using $k$ bits, versus only one realization with one bit in ours. In other words, it is the ability to exploit the geometry of a high-dimensional product probability space that distinguishes between the CEO problem with one bit per encoder on average and the mean estimation problem from one-bit measurements in the distributed setting. 
+As we shall see, this bound is loose: the difference between the MSE lower
+bound~\eqref{eq:ceo_bound} and the actual MSE in the distributed setting
+(case~\eqref{item:distributed}) occurs because in the CEO setting, each
+encoder may encode an arbitrary number of $k$ independent realizations of
+$\theta$ using $k$ bits; in our situation, $k = 1$. That blocking allows
+more efficient encoding and exploiting the high-dimensional geometry of the
+product probability space in the CEO problem is perhaps unsurprising, and
+our goal in the sequel will be to characterize the performance degradation
+one bit encoding engenders.

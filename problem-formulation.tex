@@ -31,7 +31,8 @@ the quantization scheme may be modified to depend on one fixed function of
 the previous information.
 \begin{enumerate}[(i')]
 \setcounter{enumi}{1}
-\item One-step adaptive, where for some function $g$ and
+\item \label{item:one-step-adaptive}
+  One-step adaptive, where for some function $g$ and
   a (fixed) $t$, if $i \le t$ then
   $B_i = B_i(X_i)$ while if $i > t$, then
   $B_i = B_i(X_i, g(B_1, \ldots, B_t))$.
@@ -67,112 +68,139 @@ if $\{m(n), n \in \N\}$ is a sequence such that
   \sqrt{m(n)} (\theta_n - \theta) \cd \normal(0, \sigma_f^2),
 \end{equation*}
 then the ARE of the estimator is~\cite[Def.~6.6.6]{LehmannCa98}
-\begin{equation*}
+\begin{equation}
+  \label{eqn:are-def}
   \ARE({\theta}_n) \defeq
   \liminf_{n\rightarrow \infty} \frac{m(n)}{n}.
-\end{equation*}
+\end{equation}
 In the special case where there exists $V \in \mathbb R$ such that
 \begin{equation*}
-m(n) R_n =
-m(n) \mathbb E_\theta\left({\theta}_n - \theta \right)^2 = V + o(1),
+  m(n) R_n =
+  m(n) \mathbb E_\theta\left({\theta}_n - \theta \right)^2 = V + o(1),
 \end{equation*}
 the ARE of ${\theta}_n$ is $\sigma_f^2/V$, so that $\theta_n$ requires a
 sample $V / \sigma_f^2$-times larger than that of an efficient estimator for
 comparable accuracy to the (information) efficient estimator.
 
-%%% JCD: I AM HERE BUT STILL GOING THROUGH THINGS %%%
+\subsection*{Notation and basic assumptions}
 
-
-
-In addition to the notation above, we also denote by $F(x)$ the cumulative distribution function of $X_i$, and define
-\begin{equation} \label{eq:eta_def}
-\eta(x) \triangleq \frac{f^2(x)}{F(x)(1-F(x))} =  \frac{f(x)f(-x)}{F(x)F(-x)}, 
-\end{equation}
-where the last equality is due to symmetry of $f(x)$. We note that 
-\begin{equation}
-\label{eq:eta_h}
-\eta(x) = h(x)h(-x) = f(x) \left( h(x) + h(-x) \right), 
-\end{equation}
-where 
+To describe our results and make them formal, we require some additional
+notation and one main assumption, which restricts the class of distributions
+we consider.  We use the typical notation that
+$F(x) = \int_{-\infty}^x f(t) dt$ is the cumulative distribution function
+of the $X_i$, and we let
 \begin{equation*}
-h(x) \triangleq \frac{f(x)}{1-F(x)} = \frac{f(x)}{F(-x)}
+  h(x) \triangleq \frac{f(x)}{1-F(x)} = \frac{f(x)}{F(-x)}
 \end{equation*}
-is the \emph{hazard} function (a.k.a. \emph{failure rate} or \emph{force of mortality}), which is a monotone increasing function since $f(x)$ is log-concave \cite{bagnoli2005log}. 
+be the \emph{hazard} function (or the \emph{failure rate} or \emph{force of
+  mortality}), which is monotone increasing as $f$ is
+log-concave~\cite{bagnoli2005log}. Given the centrality of the median
+to our efficiency bounds, it is unsurprising that the quantity
+\begin{equation}
+  \label{eq:eta_def}
+  \eta(x) \triangleq \frac{f^2(x)}{F(x)(1-F(x))}
+  \stackrel{(\star)}{=} \frac{f(x)f(-x)}{F(x)F(-x)}
+\end{equation}
+appears throughout our development. (Here equality~$(\star)$ is immediate by
+the symmetry of $f$.)  For $p \in (0, 1)$ and $x = F^{-1}(p)$,
+\begin{equation}
+  \label{eqn:variance-quantiles}
+  \frac{1}{\eta(x)} =
+  \frac{1}{\eta(F^{-1}(p))}
+  = \frac{p (1 - p)}{f(F^{-1}(p))^2}
+\end{equation}
+is of course the familiar asymptotic variance of the $p$th quantile of the
+sample $X_1^n$ (cf.~\cite{VanDerVaart98}, Ch.~21).
+
+For $f$ the normal density, it classical results~\cite{Samford1953,
+  hammersley1950estimating} show that that $\eta(x)$ is a strictly
+decreasing function of $|x|$, as we illustrate in Fig.~\ref{fig:eta}.
 %
-For $f(x)$ the normal density, it is shown in \cite{Samford1953} and \cite{hammersley1950estimating} that $\eta(x)$ is a strictly decreasing function of $|x|$, as illustrated in Fig.~\ref{fig:eta}. 
-%
-In this paper we only consider the normal distribution and other log-concave symmetric distributions for which this property of $\eta(x)$ holds. Specifically, we require the following:
-\begin{assump} \label{assump:failure_rate}
- $\eta(x)$ has a unique maximum (at the origin) and is a non-increasing function of $|x|$. 
-\end{assump}
-%That is, Assumption~\ref{assump:failure_rate} says that $\eta'(x) < 0 $ for all $x>0$. 
-Under this assumption we have, 
+We consider symmetric log-concave symmetric distributions sharing this
+property.  Specifically, we require the following.
+\begin{assumption} \label{assump:failure_rate}
+  The origin $x = 0$ uniquely maximizes $\eta(x)$, and $\eta(x)$ is
+  non-increasing in $|x|$.
+\end{assumption}
+Under this assumption,
 \begin{equation*}
-4f^2(x) \leq \eta(x) \leq \eta(0),
+  4 f^2(x) \leq \eta(x) \leq \eta(0),
 \end{equation*} 
 %
-where $\eta(0) = 4 f^2(0)$ is the asymptotic variance of the sample median. Combined with log-concavity of $f(x)$, Assumption~\ref{assump:failure_rate} implies that $\eta(x)$ vanishes as $|x|\rightarrow \infty$. \par
+where $\eta(0) = 4 f^2(0)$ is the asymptotic variance of the sample median
+(Eq.~\eqref{eqn:variance-quantiles} at $p = 1/2$).  Combined with
+log-concavity of $f(x)$, Assumption~\ref{assump:failure_rate} implies that
+$\eta(x)$ vanishes as $|x|\rightarrow \infty$.  Several distributions
+satisfy Assumption~\ref{assump:failure_rate}, including the generalized
+normal distributions with a shape parameter between $1$ and $2$ (including
+the normal and Laplace distributions). Symmetric log-concave distributions
+that failing Assumption~\ref{assump:failure_rate} include the uniform
+distribution and the generalized normal distribution with shape parameter
+greater than $2$. (See Appendix~\ref{sec:uniform-weirdos} for
+a brief discussion on the uniform distribution, which illustrates
+why some restriction of the class of distributions is necessary to
+develop our results; in brief, even one-step adaptive estimators
+with a single bit can achieve rates faster than the paramateric
+$\sqrt{n}$ convergence for location estimation in the uniform distribution.)
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[scale = 0.6]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -3, xmax=3, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 0.9,
+samples=10, 
+xlabel= $x$,
+xtick={-2,-1,0,1,2},
+xticklabels={-2,-1,0,1,2},
+ytick={0,0.3989423,0.6366198},
+yticklabels={0,$\frac{1}{\sqrt{2 \pi}}$,$2/\pi$},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, solid, smooth] plot table [x = x, y = y, col sep=comma] {./Figs/eta.csv};
+\addlegendentry{$\eta(x)$};
+\addplot[domain = -5:5, samples = 50, color = red, solid, smooth]  {exp(-x^2/2) / sqrt(2*3.14159)};
+\addlegendentry{$\phi(x)$};
+\addplot[domain = -5:5, samples = 50, color = black, solid, dashed]  {4*exp(-x^2) / (2*3.14159)};
+\addlegendentry{$4\phi^2(x)$};
+
+\end{axis}
+\end{tikzpicture}
 %
-Assumption~\ref{assump:failure_rate} is satisfied, for example, by the generalized normal distributions with a shape parameter between $1$ and $2$ (including normal and Laplace distributions). Symmetric log-concave distributions that do not satisfy Assumption~\ref{assump:failure_rate} include the uniform distribution and the generalized normal distribution with shape parameter greater than $2$.\par
-
-%% \begin{figure}
-%% \begin{center}
-%% \begin{tikzpicture}[scale = 0.6]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -3, xmax=3, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 0.9,
-%% samples=10, 
-%% xlabel= $x$,
-%% xtick={-2,-1,0,1,2},
-%% xticklabels={-2,-1,0,1,2},
-%% ytick={0,0.3989423,0.6366198},
-%% yticklabels={0,$\frac{1}{\sqrt{2 \pi}}$,$2/\pi$},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, solid, smooth] plot table [x = x, y = y, col sep=comma] {./Figs/eta.csv};
-%% \addlegendentry{$\eta(x)$};
-%% \addplot[domain = -5:5, samples = 50, color = red, solid, smooth]  {exp(-x^2/2) / sqrt(2*3.14159)};
-%% \addlegendentry{$\phi(x)$};
-%% \addplot[domain = -5:5, samples = 50, color = black, solid, dashed]  {4*exp(-x^2) / (2*3.14159)};
-%% \addlegendentry{$4\phi^2(x)$};
-
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.6]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -4, xmax=4, 
-%% restrict y to domain = -10:0,
-%% ymin = -10,
-%% samples=10, 
-%% xlabel= $x$,
-%% xtick={-3,-2,-1,0,1,2,3},
-%% xticklabels={-3,-2,-1,0,1,2,3},
-%% ytick={0,-0.45158,-0.919},
-%% yticklabels={0,,},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, solid, smooth] plot table [x = x, y = logy, col sep=comma] {./Figs/eta.csv};
-%% \addlegendentry{$\log \eta(x)$};
-%% \addplot[domain = -5:5, samples = 30, color = red, solid, smooth]  {-(x)^2/2 -0.9189};
-%% \addlegendentry{$\log \phi(x)$};
-%% \end{axis}
-%% \end{tikzpicture}
-%% \caption{
-%% The function $\eta(x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi(x)$ the standard normal density.
-%% \label{fig:eta}
-%% }
-%% \end{center}
-%% \end{figure}
+\begin{tikzpicture}[scale = 0.6]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -4, xmax=4, 
+restrict y to domain = -10:0,
+ymin = -10,
+samples=10, 
+xlabel= $x$,
+xtick={-3,-2,-1,0,1,2,3},
+xticklabels={-3,-2,-1,0,1,2,3},
+ytick={0,-0.45158,-0.919},
+yticklabels={0,,},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, solid, smooth] plot table [x = x, y = logy, col sep=comma] {./Figs/eta.csv};
+\addlegendentry{$\log \eta(x)$};
+\addplot[domain = -5:5, samples = 30, color = red, solid, smooth]  {-(x)^2/2 -0.9189};
+\addlegendentry{$\log \phi(x)$};
+\end{axis}
+\end{tikzpicture}
+\caption{
+The function $\eta(x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi(x)$ the standard normal density.
+\label{fig:eta}
+}
+\end{center}
+\end{figure}
