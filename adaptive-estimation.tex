@@ -64,10 +64,11 @@ Consider the sequence $\left\{\bar{\theta}_n \right\}_{n\in \mathbb N}$ defined 
 \]
 %
 %
-\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with a finite location Fisher information, namely
+\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with a finite Fisher information 
 \[
-I_\theta = \int_{\mathbb R} \left( \frac{f'(x)}{f(x)}  \right)^2 f(x) dx < \infty.
+\sigma_f^2 \triangleq \ex{\frac{f'(X)}{f(X)} } 
 \]
+for the location in the family $\{P_\theta\}$.
 %(or that $f(x-\theta)$ is differentiable in quadratic mean).  
 Then for any bounded, symmetric, and quasi-convex function $L$, 
 \begin{align} 
@@ -195,7 +196,7 @@ Let
 \[
 {\theta}_{n_2}  = {\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} B_i \right)
 \]
-and assume that $n_1(n) \rightarrow \infty$ and $n_1(n)/n \rightarrow 0$. Then:
+and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \rightarrow 1$. Then:
 \begin{align*}
  \sqrt{n} \left( {\theta}_{n_2} - \theta  \right) \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
 \end{align*}
@@ -203,43 +204,33 @@ and assume that $n_1(n) \rightarrow \infty$ and $n_1(n)/n \rightarrow 0$. Then:
 %
 %
 \begin{proof}
+By the law of large numbers,
+\[
+p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
+\]
+so that ${\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity. 
 For $t\in \mathbb R$, set
 \[
 p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}. 
 \]
-From the central limit theorem
+Since $n_2(n)/n \to 1$, the central limit theorem and Slutsky's theorem imply
 \begin{align*}
-& \sqrt{n} \left( p_{n_2}(t) - F( \theta - t) \right)  = \sqrt{\frac{n}{n_2}} \sqrt{n_2} \left(  p_{n_2}(t) - F(\theta - t) \right) \\
-& \overset{d}{\rightarrow} \Ncal\left( 0, V(t) \right),
+\sqrt{n} \left( p_{n_2}(t) - F( \theta - t) \right)   \overset{d}{\rightarrow} \sqrt{F(\theta - t) F \left( t - \theta\right)} Z,
 \end{align*}
-where
+where $Z \sim \Ncal(0,1)$. In addition, Slutsky's theorem imply
 \[
-V(t) \triangleq F(\theta - t) F \left( t - \theta\right). 
+\sqrt{F(\theta-\theta_{n_1}) F(\theta_{n_1} - \theta)} Z_1 \overset{d}{\rightarrow}  F(0) Z,  
 \]
-Applying the delta method to $p_{n_2}(t)$ with $g(x) = F^{-1}(x)$ implies
+hence 
+\[
+\sqrt{n} \left( p_{n_2}( \theta_{n_1}) - F( \theta - \theta_{n_1}) \right)  \overset{d}{\rightarrow} F(0) Z.
+\]
+Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
 \begin{align*}
-& \sqrt{n} \left( t + F^{-1}(\hat{p}_{n_2}(t)) - \theta \right) \\
-&= \sqrt{n} \left( g(\hat{p}_{n_2}(t)) - g \left(F(\theta-t) \right)  \right) \\
-& \overset{d}{\to} \Ncal\left(0, 
-1/\eta(\theta-t) \right).
+& \sqrt{n}\left( \theta_{n_2} - \theta \right) = \sqrt{n} \left( \theta_{n_1} + F^{-1}(p_{n_2}(\theta_{n_1})) - \theta \right) \\
+&= \sqrt{n} \left( g(p_{n_2}(\theta_{n_1})) - g \left(F(\theta-\theta_{n_1}) \right)  \right) \overset{d}{\to} \Ncal\left(0, 
+F^2(0)/ f^2(0) \right).
 \end{align*}
-%where this convergence is uniform in $t$ since all moments of $F^{-1}(\hat{p}_{n_2})$ exists. 
-On the other hand, by the law of large numbers,
-\[
-p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
-\]
-so that ${\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity and thus 
-\[
-\eta( {\theta}_{n_1}-\theta) \overset{a.s.}{\rightarrow} \eta(0). 
-\]
-Finally,
-\begin{align*}
-& \sqrt{n}\left({\theta}_{n_2} - \theta\right) \\
-& = \sqrt{n} \left( {\theta}_{n_1} + F^{-1}(\hat{p}_{n_2}({\theta}_{n_1})) - \theta \right)  \\
-& \overset{d}{\to} \Ncal\left( 0, 
-1/\eta(0) \right) 
-\end{align*}
-by Slutsky's theorem.
 \end{proof}
 %
 

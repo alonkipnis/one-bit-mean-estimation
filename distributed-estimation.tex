@@ -11,7 +11,7 @@ B_i = \begin{cases} 1 & X_i \in A_i, \\
 \]
 where the detection region $A_i$ is a Borel set that is independent of $X_1,\ldots,X_n$.\par
 
-As a first step, we provide conditions under which the messages $B_1,B_2,\ldots$ define a local asymptotic normal family. 
+As a first step, the following theorem provides conditions under which the messages $B_1,B_2,\ldots$ define a local asymptotic normal family. The proof of this theorem is in Appendix~\ref{proof:thm:LAN1}. 
 
 \begin{thm} \label{thm:LAN1}
 For $n \in \mathbb N$ and $A_n \subset \mathbb R$,  define
@@ -21,7 +21,7 @@ L_n(A_1,\ldots,A_n;\theta) \triangleq \frac{1}{n} \sum_{i=1}^n \frac{ \left(\fra
 \end{equation}
 Consider the following conditions:
 \begin{itemize}
-\item [(i)\,\,] The pdf $f(x)$ of $X_n-\theta$ is log-concave, differentiable, symmetric,  and  there exists $\delta>0$ such that $\eta^{1+\delta}(x)/f^\delta(x)$ has a unique maximum at the origin.
+\item [(i)\,\,] The pdf $f(x)$ of $X_n-\theta$ is log-concave, differentiable, and symmetric. Furthermore, there exists $\delta>0$ such that the function $\eta^{1+\delta}(x)/f^\delta(x)$ is non-increasing in $|x|$ and is uniquely maximized by the $x=0$. 
 \item[(ii)\,] $A_n$ is a finite union of disjoint intervals.
 \item[(iii)] The limit 
 \begin{equation}
@@ -43,16 +43,9 @@ For any $\theta$, $f(x)$ and a sequence of sets $A_1,A_2,\ldots$ such that (i)-(
 & \overset{d}{\longrightarrow} \Ncal\left(-\frac{1}{2} h^2 \kappa(\theta), h^2 \kappa(\theta) \right).
 \end{align*} 
 \end{thm}
-
-\begin{proof}
-See Appendix~\ref{proof:thm:LAN1}. 
-\end{proof}
-
-Theorem~\ref{thm:LAN1} provides conditions under which $B_1,\ldots,B_n$ defines a LAN family with a precision parameter given by the limit in \eqref{eq:LAN_lim}. 
+Theorem~\ref{thm:LAN1} provides conditions under which $B_1,\ldots,B_n$ defines a LAN family with a precision parameter given by the limit in \eqref{eq:LAN_lim}. Condition (i) is satisfied, for example, by the normal distribution with $\delta\leq 2$. Condition (iii) is arguably the strongest and hardest to verify. As we show in Section~\ref{subsec:threshold} below, this condition is satisfied, for example, when $A_1, \ldots,A_n$ are half lines whose starting points are drawn independently from some probability measure on $\mathbb R$. Similar ideas imply that condition (iii) holds whenever we choose the intervals consisting each $A_i$ according to some pre-specified distribution. \par
 %
-Among these conditions, (iii) is arguably the strongest and hardest to verify. As we show in Section~\ref{subsec:threshold} below, this condition is satisfied, for example, when $A_1, \ldots,A_n$ are half lines whose starting points are drawn independently from some probability measure on $\mathbb R$. Similar ideas imply that condition (iii) holds whenever we choose the intervals consisting each $A_i$ according to some pre-specified distribution. \par
-%
-An important conclusion of  Theorem~\ref{thm:LAN1} follows from the local asymptotic minimax property of estimators in LAN models \cite{van2000asymptotic}):
+An important conclusion of Theorem~\ref{thm:LAN1} follows from the local asymptotic minimax property of estimators in LAN models \cite{van2000asymptotic}):
 \begin{cor} \label{cor:LA_minimax}
 Let ${\theta}_n$ be an estimator of $\theta \in \Theta$ from $B_1,\ldots,B_n$ with detection regions $A_1,\ldots,A_n$ such that conditions (i)-(iii) of Theorem~\ref{thm:LAN1} hold. Then for any symmetric and quasi-convex function $L$, 
 \begin{align*}
@@ -66,20 +59,19 @@ where $Z \sim \Ncal(0,1)$. In particular, for $L(x) = x^2$,
 \end{align*}
 \end{cor}
 %
-Corollary~\ref{cor:LA_minimax} says that when the messages define a LAN model, no estimator can attain MSE smaller than $1/\kappa(\theta)n + O(1/n)$ where $\kappa(\theta)$ is the precision parameter of the model at $\theta$. This fact poses the upper bound of $\kappa(\theta)\sigma^2$ for the ARE of estimators in such models. \par
-
-Next, we show that under LAN no estimator can attain the optimal ARE of $\eta(0)\sigma^2$ uniformly for all $\theta \in \Theta$.
+Corollary~\ref{cor:LA_minimax} says that when the sequence of one-bit messages defines a LAN model with respect to $\theta$, no estimator can attain MSE smaller than $1/\kappa(\theta)n + O(1/n)$ where $\kappa(\theta)$ is the precision parameter of the model. Consequently, the ARE  in such case is at most $\kappa(\theta)\sigma^2$. Furthermore, as we show next, no estimator in this setting can attain the optimal ARE of $\eta(0)\sigma^2$ uniformly over $ \Theta$.
 
 \subsection{Non-existence of a Uniformly Optimal Strategy}
 We now show that under LAN models, the optimal minimal risk $1/\eta(0)$ can only be attained at a finite number of points within $\Theta$. This fact implies in particular that, unlike in the adaptive setting, no distributed estimation scheme has ARE of $\eta(0)\sigma^2$ for all $\theta \in \Theta$. 
 
 \begin{thm} \label{thm:non_existence}
-Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is a union of at most $K$ intervals. The number of points $\theta \in \Theta$ satisfying $\kappa(\theta) = \eta(0)$ is at most $2K$. 
+Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is the union of at most $K$ intervals. The number of points $\theta \in \Theta$ satisfying $\kappa(\theta) = \eta(0)$ is at most $2K$. 
 \end{thm}
 
 \begin{proof}
 See Appendix~\ref{proof:thm:non_existence}.
 \end{proof}
+
 
 We next consider the case where each detection region is a half-open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain next, the existence of a density for the sequence of thresholds is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
 
@@ -109,7 +101,7 @@ Let $\{t_n\}_{n=1}^\infty$ be a sequence of threshold values such that $\lambda_
 \kappa(\theta) = \int_{\mathbb R} \eta(t-\theta) \lambda(dt). 
 \]
 \end{cor}
-The condition that $\lambda_n$ converges to a probability measure is satisfies, for example, whenever the $t_1,\ldots,t_n$s are drawn independently from a probability distribution $\lambda(dt)$ on $\mathbb R$. \par
+The condition that $\lambda_n$ converges to a probability measure is satisfied, for example, whenever the $t_1,\ldots,t_n$s are drawn independently from a probability distribution $\lambda(dt)$ on $\mathbb R$. \par
 Due to local asymptotic normality of $\{B_n\}_{n=1}^\infty$, the maximum likelihood estimator (ML) of $\theta$ from $B_1,\ldots,B_n$, denoted here by 
 ${\theta}^{ML}_n$, is local asymptotic minimax in the sense that 
 \[
@@ -120,7 +112,7 @@ It follows that when the density of the threshold values converges to a probabil
 \label{eq:ML}
 \sum_{i=1}^n B_i \frac{f \left( t_i-\theta\right) }{F \left(B_i  (t_i-\theta)\right) },  
 \end{equation}
-which is the derivative of the log-likelihood function. This root is unique since the log-likelihood function is concave. Furthermore, for any $n \in \mathbb R$, we have that ${\theta}^{ML}_n  \in [t_{(1)}, t_{(n)}]$ where $t_{(i)}$ denotes the $i$th element of $\{t_1,t_2\ldots\}$. Therefore, if $\{t_1,t_2\ldots\}$ is bounded (for example $\{t_1,t_2\ldots\} \subset \Theta$), then 
+This root is unique since the log-likelihood function is concave. Furthermore, for any $n \in \mathbb R$, we have that ${\theta}^{ML}_n  \in [t_{(1)}, t_{(n)}]$ where $t_{(i)}$ denotes the $i$th element of $\{t_1,t_2\ldots\}$. Therefore, if $\{t_1,t_2\ldots\}$ is bounded (for example $\{t_1,t_2\ldots\} \subset \Theta$), then 
 \[
 \lim_{n\to \infty} n \ex{\left({\theta}^{ML}_n - \theta \right)^2}  = 1/\kappa(\theta), 
 \] 
@@ -132,7 +124,7 @@ Since $\eta(x)$ attains its maximum at the origin, we conclude that
 \]
 This upper bound on $\kappa(\theta)$ implies that the ARE of any distributed estimator based on a sequence of threshold detectors does not exceed $\eta(0)\sigma^2$, a fact that agrees with the lower bound under adaptive estimation derived in Theorem~\ref{thm:adpative_lower_bound}. 
 %
-This upper bound on $\kappa(\theta)$ is attained only when $\lambda$ is the mass distribution at $\theta$. Since $\theta$ is apriori unknown, we conclude that estimation in the distributed setting using threshold detection is strictly sub-optimal compared to the adaptive setting. In other words, the ability to choose the threshold values in an adaptive manner based on previous messages strictly improves relative efficiency compared to a non-adaptive threshold selection.  \par
+This upper bound on $\kappa(\theta)$ is attained only when $\lambda$ is the mass distribution at $\theta$. Since $\theta$ is apriori unknown, we conclude that estimation in the distributed setting using threshold detection is strictly sub-optimal compared to the adaptive setting. In other words, the ability to choose the threshold values in an adaptive manner based on previous messages necessarily improves relative efficiency compared to a non-adaptive threshold selection.  \par
 
 %We conclude that when the density of the threshold values converges to a probability measure, the ARE of the ML is $\kappa(\theta)$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. 
 
@@ -168,7 +160,7 @@ The objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda(dt)$
 %\eqref{eq:cvx_minimax}, it is enough to take $N_\lambda = N_\theta$.
 %\end{rem} 
 
-Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$. The minimal asymptotic risk $\kappa^\star(\theta)$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $T$. Also illustrated in these Figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = [-T,T]$, namely
+Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$. The minimal asymptotic risk $\kappa^\star(\theta)$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of the support size $T$. Also illustrated in these figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = [-T,T]$, namely
 \begin{align}
 & \kappa_{\unif} \triangleq \min_{\theta \in [-T,T]} \frac{1}{2T}\int_{-T}^T \eta\left(t-\theta\right) dt \nonumber
  \\
@@ -359,7 +351,7 @@ ymax = 1,
 samples=10, 
 xlabel= {$dt$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 title = {$\sigma/\sigma_{\theta} = 1$},
 ytick={0,1},
 %ylabel = {$\lambda(dt)$},
@@ -386,7 +378,7 @@ samples=10,
 xlabel= {$dt$},
 title = {$\sigma/\sigma_{\theta} = 2$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,1},
 ylabel = {$\lambda(dt)$},
 yticklabels={0,1},
@@ -412,7 +404,7 @@ samples=10,
 xlabel= {$dt$},
 xtick={-0.5,0,0.5},
 title = {$\sigma/\sigma_{\theta} = 3$},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,1},
 %ylabel = {$\lambda(dt)$},
 yticklabels={0,1},
@@ -438,7 +430,7 @@ samples=10,
 xlabel= {$dt$},
 title = {$\sigma/\sigma_{\theta} = 4$},
 xtick={-0.5,0,0.5},
-xticklabels={-$b$, 0, $b$},
+xticklabels={-$T$, 0, $T$},
 ytick={0,1},
 ylabel = {$\lambda(dt)$},
 yticklabels={0,1},
@@ -454,25 +446,24 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \end{tikzpicture}
 
 \caption{\label{fig:opt_density}
-Optimal threshold density $\lambda^\star(dt)$ that minimizes the asymptotic Bayes risk \eqref{eq:cvx_average} for a uniform prior with $\sigma/\sigma_\theta=1,2,3,4$, where $\sigma_\theta^2=b^2/3$ is the variance of the prior. 
+Optimal threshold density $\lambda^\star(dt)$ that minimizes the asymptotic Bayes risk \eqref{eq:cvx_average} for a uniform prior with $\sigma/\sigma_\theta=1,2,3,4$, where $\sigma_\theta^2=T^2/3$ is the variance of the prior. 
 }
 \end{center}
 \end{figure}
 
- We consider now the problem of minimizing the asymptotic Bayes risk $
-R_{\pi,\lambda} \triangleq \mathbb E  K^{-1}(\theta)$ over all probability measures $\lambda(dt)$ with support in $\mathbb R$. This optimization problem can be written as follows:
+When a prior $\pi$ on $\Theta$ is provided, one may be interested in the threshold density $\lambda$ minimizing the Bayes risk $R_n(\pi)$. The resulting minimization problem is 
 \begin{align}
 \label{eq:cvx_average}
 \begin{split}
-\mathrm{minimize} \quad & R_{\pi,\lambda} =  \int \frac{\pi(d\theta)}{ \int \eta \left( t-\theta\right) \lambda(dt)}. \\ 
-\mathrm{subject~to} \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) =1. 
+\mathrm{minimize} \quad & R_{\pi} =  \int \frac{\pi(d\theta)}{ \int \eta \left( t-\theta\right) \lambda(dt)}. \\ 
+\mathrm{subject~to} \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) =1, 
 \end{split}
 \end{align}
-We denote by $R^\star_{\pi}$ the minimal value of the objective function in \eqref{eq:cvx_average}. Since the function $x \rightarrow 1/x$ is convex for positive values, \eqref{eq:cvx_average} defines a convex optimization problem in $\lambda$ whose solution depends on the prior $\pi$. The solution to this problem is approximated by considering $\lambda$ and $\pi$ over a discrete set. On Figure~\ref{fig:opt_density} we illustrate the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distributon ($P_X = \Ncal(\theta, \sigma^2)$) and the prior on $\theta$ is uniform over $\Theta = [-b,b]$. Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
-\par
+which is convex in $\lambda$ since $x \rightarrow 1/x$, $x>0$, is convex. Figure~\ref{fig:opt_density}  illustrates the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distribution and $\pi$ is the uniform over $\Theta = [-T,T]$. %Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
+
+\iffalse
 \begin{figure}
 \begin{center}
-
 \begin{tikzpicture}[scale = 1]
 \begin{axis}[
 width=8cm, height=6cm,
@@ -548,3 +539,4 @@ In the normal case $P_X = \Ncal(\theta, \sigma^2)$, the bound in \eqref{eq:bound
 It follows that the ARE approaches its maximal value of $2/\pi$ whenever $\sigma_\theta/\sigma$ is small. The exact value of \eqref{eq:upper_bound} in this case, as well as the Bayes ARE with the optimal threshold density $\lambda^\star$ for a uniform $\pi$, are illustrated in Fig.~\ref{fig:dist_bound_uniform}. 
 %i.e., each encoder simply reports "$1$" or "$-1$" whenever $X_i$ is larger or smaller than $\theta_0$, respectively. Intuitively, an accurate estimation of $\theta$ in this case is possible only if a sufficient mix of ''$1$''s and ''$-1$''s is obtained from the sample. When $\sigma_\theta^2$ is high compared to $\simga^2$, one of the events $"1"$ or "$-1"$ becomes too rare to
 \end{example}
+\fi
