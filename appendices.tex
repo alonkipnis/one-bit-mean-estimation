@@ -210,18 +210,18 @@ X_i \notin A_i & -1,
 \end{equation}
 where $A_i \subset \R$ is a Borel measurable set. 
 %Indeed, any measurable function $(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = B^{-1}(1)$.
-Consider the conditional distribution $P({B^n|\theta})$ of $B^n$ given $\theta$. We have 
+Consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of $(B_1,\ldots,B_n)$ given $\theta$. We have 
 \begin{align}
-P\left( B^n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B^{i-1} \right), \label{eq:adpt_lower_bound_proof:1}
+P\left( B_1,\ldots,B_n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B_1,\ldots,B_{i-1} \right), \label{eq:adpt_lower_bound_proof:1}
 \end{align}
-where $P\left(B_i =1 | \theta, B^{i-1}  \right) = \mathbb P\left( X_i \in A_i\right)$, so that the Fisher information of $B^n$ with respect to $\theta$ is given by 
+where $P\left(B_i =1 | \theta, B_1,\ldots,B_{i-1}  \right) = \mathbb P\left( X_i \in A_i\right)$, so that the Fisher information of $B_1,\ldots,B_n$ with respect to $\theta$ is given by 
 \begin{align}
-I_\theta(B^n) = \sum_{i=1}^n I_\theta (B_i|B^{i-1}),
+I_\theta(B_1,\ldots,B_N) = \sum_{i=1}^n I_\theta (B_i|B_1,\ldots,B_{i-1}),
 \label{eq:fisher_information}
 \end{align}
-where $I_\theta (B_i|B^{i-1})$ is the Fisher information of the distribution of $B_i$ given $B^{i-1}$. From Lemma~\ref{lem:fisher_bound} it follows that $I_\theta (B_i|B^{i-1}) \leq 4f^2(0)$. The Van Trees inequality \cite{van2004detection, gill1995applications} now implies 
+where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the distribution of $B_i$ given $B_1,\ldots,B_{i-1}$. From Lemma~\ref{lem:fisher_bound} it follows that $I_\theta (B_i|B_{i-1},\ldots,B_1) \leq 4f^2(0)$. The Van Trees inequality \cite{van2004detection, gill1995applications} now implies 
 \begin{align*}
-\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B^n)} + I_0} \\
+\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B_1,\ldots,B_n)} + I_0} \\
 & = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B^{i-1} ) + I_0} \\
 & \geq \frac{1}{ 4f^2(0) n + I_0}.
 \end{align*}
@@ -233,11 +233,11 @@ where $I_\theta (B_i|B^{i-1})$ is the Fisher information of the distribution of 
 The following lemma is used in the proof Theorems~\ref{thm:adpative_lower_bound}, \ref{thm:LAN1}, and \ref{thm:non_existence}. 
 
 \begin{lem} \label{lem:bound_intervals_delta}
-Let $f(x)$ be log-concave, symmetric, and differentiable density function. Let $\delta\geq 0$. Assume that the origin $x=0$ uniquely maximizes the function
+Let $f(x)$ be log-concave, symmetric, and differentiable density function. Let $\delta\geq 0$. Assume that the function
 \[
 \eta_\delta(x) \triangleq  \eta^{1+\delta}(x)/f^\delta(x) = \frac{  \left( f(x) \right)^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}}
 \]
-and that $\eta_\delta(x)$ is non-increasing in $|x|$. For any $x_1 \ge \ldots \ge x_n \in \R^n$,
+is non-increasing in $|x|$. For any $x_1 \ge \ldots \ge x_n \in \R^n$,
 \begin{equation}
 \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} }
 {\left| \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{k=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} } 
@@ -763,14 +763,14 @@ Le Cam's third lemma \cite[Exm. 6.7]{van2000asymptotic} implies that under $\Pro
 \subsection{Proof of Theorem~\ref{thm:LAN1}
 \label{proof:thm:LAN1}
 }
-The log probability mass distribution of $B^n=(B_1,\ldots,B_n)$ is given by
+The log-probability mass distribution of $(B_1,\ldots,B_n)$ is given by
 \begin{align*}
-& \log \Prob_\theta(b^n) = \sum_{i=1}^n \left( \frac{b_i+1}{2} \log  \Prob(X_i\in A_i) + 
-\frac{1-b_i}{2} \log \Prob(X_i\in A_i) \right), \quad b^n \in \{-1,1\}^n. 
+& \log \Prob_\theta(b_1,\ldots,b_n) = \sum_{i=1}^n \left( \frac{b_i+1}{2} \log  \Prob(X_i\in A_i) + 
+\frac{1-b_i}{2} \log \Prob(X_i\in A_i) \right), \quad b_i \in \{-1,1\}, \quad i=1,\ldots,n. 
 \end{align*}
 Consequently, 
 \begin{align}
-& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b^n)} { \Prob_\theta (b^n) } = \sum_{i=1}^n    \frac{b_i+1}{2} 
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b_1,\ldots,b_n)} { \Prob_\theta (b_1,\ldots,b_n) } = \sum_{i=1}^n    \frac{b_i+1}{2} 
 \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)} + 
 \sum_{i=1}^n  \frac{1-b_i}{2} 
 \log \frac{\Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}. 
@@ -778,13 +778,13 @@ Consequently,
 \end{align}
 For each $i=1,\ldots,n$, write 
 \[
-A_i = \bigcup_{k=1}^{K_i} \left(t_{i,k},t_{i,k+1} \right),
+A_i = \bigcup_{k=1}^{K_i} \left(t_{i,2k-1},t_{i,2k} \right),
 \]
 where $t_{i,1}<\ldots<t_{i,K_i}$ and, with a slight abuse of notation, $t_{i,1}$ and $t_{i,K_i}$ may take the values $-\infty$ or $+\infty$, respectively. Thus
 \[
-\Prob_{\theta}(X_i \in A_i) = \sum_{k=1}^{K_i} (-1)^k F(x_{i,k}-\theta).
+\Prob_{\theta}(X_i \in A_i) = \sum_{k=1}^{K_i} (-1)^k F(t_{i,k}-\theta).
 \]
-In particular, since $f$ is differentible, $\Prob_{\theta}(X_i \in A_i)$ is twice differentiable, and we may write
+In particular, since $f$ is differentible in $\theta$, $\Prob_{\theta}(X_i \in A_i)$ is twice differentiable, and we may write
 \begin{align*}
 \Prob_{\theta+\frac{h}{\sqrt{n}}}(X_i \in A_i)  = \Prob_{\theta} (X_i \in A_i) + \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \frac{h}{\sqrt{n}} + o(h), 
 \end{align*}
@@ -800,7 +800,7 @@ Similarly, we have
 \end{align*}
 From \eqref{eq:LAN_proof1} we obtain
 \begin{align*}
-& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b^n)} { \Prob_\theta (b^n) }   = \frac{h}{\sqrt{n}} \sum_{i=1}^n  
+& \log \frac{ \Prob_{\theta + \frac{h}{\sqrt{n}}}(b_1,\ldots,b_n)} { \Prob_\theta (b_1,\ldots,b_n) }   = \frac{h}{\sqrt{n}} \sum_{i=1}^n  
 \left( 
 \frac{b_i+1}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i)}{\Prob_{\theta}(X_i \in A_i)}  + 
  \frac{1-b_i}{2}  \frac{\frac{d}{d\theta} \Prob_{\theta}(X_i \notin A_i)}{\Prob_{\theta}(X_i \notin A_i)}   \right) \\
@@ -876,9 +876,9 @@ and
 \frac{ \frac{1}{n^{1+\delta}} \sum_{i=1}^n \ex{ |U_i|^{2+\delta}} }{ \left(\frac{1}{n} \sum_{i=1}^n \ex{U_i^2 } \right)^\delta}. 
 \label{eq:Lyaponov}
 \end{equation}
-Next, we claim that there exits $\delta>0$ and $K>0$, that are independent of $n$, such that
+Next, we claim that there exits $\delta>0$ and $K(\delta)>0$, that are independent of $n$, such that
 \begin{align}
-\frac{1}{n} \sum_{i=1}^n \ex{ |U_i|^{2+\delta}}  < K \label{eq:Lyaponov_num}
+\frac{1}{n} \sum_{i=1}^n \ex{ |U_i|^{2+\delta}}  < K(\delta) \label{eq:Lyaponov_num}
 \end{align} 
 for all $n$ large enough. To see this, note that
 \begin{align*}
@@ -889,17 +889,13 @@ for all $n$ large enough. To see this, note that
   { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} } 
   \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}   \right) \\
   &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
-  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}, 
+  { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}}. 
 \end{align*}
-where the last transition is because 
-\[
- \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}  \right) \leq 1. 
-\]
-We now use the fact that each $A_i$ is a finite union of intervals. Under the assumption that there exists $\delta>0$ such that $\eta^{1+\delta}(x)/f^\delta(x)$ is maximized by the origin, we get
-\[
-\eta^{1+\delta}(x)/f^\delta(x) = \frac{(f(x))^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}} \leq 4^{1+\delta} (f(0))^{2+\delta}. 
-\]
-Lemma~\ref{lem:bound_intervals_delta} implies
+%where the last transition is because 
+%\[
+% \left( (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta} + (\Prob_{\theta}(X_i \in A_i))^{1+\delta}  \right) \leq 1. 
+%\]
+We now use the fact that each $A_i$ is a finite union of intervals. Under the assumption that there exists $\delta>0$ such that $\eta^{1+\delta}(x)/f^\delta(x)$ is uniquely maximized by the origin and is non-increasing in $|x|$, Lemma~\ref{lem:bound_intervals_delta} implies
 \begin{align*}
   &  \leq \frac{\left| \frac{d}{d\theta} \Prob_{\theta}(X_i \in A_i) \right|^{2+\delta} }
   { (\Prob_{\theta}(X_i \in A_i))^{1+\delta} (1-\Prob_{\theta}(X_i \in A_i))^{1+\delta}} = \frac{\left| \sum_{k=1}^{K_i} (-1)^k f(x_{i,k}-\theta) \right|^{2+\delta} }
@@ -910,7 +906,7 @@ It follows that
 \[
 \frac{1}{n} \sum_{i=1}^n \ex{ |U_i|^{2+\delta}} \leq 4^{1+\delta}(f(0))^{2+\delta}, 
 \]
-and thus the numerator of \eqref{eq:Lyaponov}, as well as the entire expression, goes to zero. From Lyaponov's central limit theorem we conclude that 
+and thus the numerator of \eqref{eq:Lyaponov}, as well as the entire expression, goes to zero. From Lyaponov's central limit theorem we obtain 
 \[
 \frac{1}{\sqrt{n}} \sum_{i=1}^n U_i \overset{d}{\rightarrow} \Ncal\left(0,\kappa(\theta) \right). 
 \]
@@ -955,11 +951,11 @@ A_i = \cup_{i=1}^K (a_{i,k},b_{i,k}),
 \]
 where $a_{i,1} \leq b_{i,1} \leq \ldots \leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values $-\infty$ and $\infty$, respectively. Denote
 \[
-\mathcal B_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\}.
+C_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\}.
 \]
 For any $\theta$ and $\epsilon>0$, denote 
 \[
-S_n(\theta, \epsilon) \triangleq \left\{ i\leq n \,:\, (\theta-\epsilon,\theta+\epsilon) \cap \mathcal B_i \neq \emptyset \right\}
+S_n(\theta, \epsilon) \triangleq \left\{ i\leq n \,:\, (\theta-\epsilon,\theta+\epsilon) \cap C_i \neq \emptyset \right\}
 \]
 In words, $S_n$ contains all integers smaller than $n$ in which an $\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals consisting $A_i$. 
 %

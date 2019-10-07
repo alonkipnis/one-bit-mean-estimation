@@ -1,0 +1,285 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{LesserOrTa03}
+\citation{LiWoHuSa02}
+\citation{FullerMi11}
+\@input{Figs/encoding-settings.aux}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}}
+\newlabel{sec:Intro}{{I}{1}{Introduction}{section.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Three encoding settings: (i) Centralized -- an encoder sends $n$ bits after observing $n$ samples. (ii) Adaptive (sequential) -- the $i$th encoder sends the bit $B_i$ depending on its private sample $X_i$ and previous bits $B_1,\ldots  ,B_{i-1}$. (iii) Distributed -- each encoder send the bit $B_i$ based on its private sample $X_i$ only.}}{1}{figure.1}}
+\newlabel{fig:setup}{{1}{1}{Three encoding settings: (i) Centralized -- an encoder sends $n$ bits after observing $n$ samples. (ii) Adaptive (sequential) -- the $i$th encoder sends the bit $B_i$ depending on its private sample $X_i$ and previous bits $B_1,\ldots ,B_{i-1}$. (iii) Distributed -- each encoder send the bit $B_i$ based on its private sample $X_i$ only}{figure.1}{}}
+\citation{1092194}
+\citation{53738}
+\citation{DuchiJoWa18}
+\citation{baraniuk2017exponential}
+\citation{jacques2013robust}
+\citation{plan2013one}
+\citation{li2017channel}
+\citation{choi2016near}
+\citation{720540}
+\citation{gray1998quantization}
+\citation{Tsybakov09}
+\citation{LeCam86}
+\citation{LeCamYa00}
+\citation{VanDerVaart98}
+\citation{53738}
+\citation{baraniuk2017exponential}
+\citation{DavenportPlVaWo15}
+\citation{PlanVe13}
+\citation{baraniuk2017exponential}
+\newlabel{eq:ARE_def}{{1}{2}{Introduction}{equation.1.1}{}}
+\citation{904560}
+\citation{4244748}
+\citation{6882252}
+\citation{chen2010performance}
+\citation{5184907}
+\citation{berger1996ceo}
+\citation{viswanathan1997quadratic}
+\citation{oohama1998rate}
+\citation{prabhakaran2004rate}
+\citation{zhang2013information}
+\citation{duchi2014optimality}
+\citation{GargMaNg14}
+\citation{BravermanGaMaNgWo16}
+\citation{DBLP:journals/corr/abs-1802-08417}
+\citation{zhang1988estimation}
+\citation{han2018distributed}
+\citation{xu2017information}
+\citation{Barnes2018}
+\citation{52470}
+\citation{tsitsiklis1988decentralized}
+\citation{5751320}
+\citation{ibragimov1956composition}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Problem Formulation and Notation}{3}{section.2}}
+\newlabel{sec:problem}{{II}{3}{Problem Formulation and Notation}{section.2}{}}
+\newlabel{item:centralized}{{i}{3}{Problem Formulation and Notation}{Item.4}{}}
+\newlabel{item:adaptive}{{ii}{3}{Problem Formulation and Notation}{Item.5}{}}
+\newlabel{item:distributed}{{iii}{3}{Problem Formulation and Notation}{Item.6}{}}
+\newlabel{item:one-step-adaptive}{{ii}{3}{Problem Formulation and Notation}{Item.7}{}}
+\newlabel{eq:error_def}{{2}{3}{Problem Formulation and Notation}{equation.2.2}{}}
+\citation{VanDerVaart98}
+\citation{LehmannCa98}
+\citation{bagnoli2005log}
+\citation{VanDerVaart98}
+\citation{Samford1953}
+\citation{hammersley1950estimating}
+\newlabel{eqn:are-def}{{3}{4}{Problem Formulation and Notation}{equation.2.3}{}}
+\newlabel{eq:eta_def}{{4}{4}{Notation and basic assumptions}{equation.2.4}{}}
+\newlabel{eqn:variance-quantiles}{{5}{4}{Notation and basic assumptions}{equation.2.5}{}}
+\newlabel{assump:failure_rate}{{A1}{4}{Notation and basic assumptions}{assumption.1}{}}
+\citation{VanDerVaart98}
+\citation{berger1996ceo}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  The function $\eta (x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi (x)$ the standard normal density.  }}{5}{figure.2}}
+\newlabel{fig:eta}{{2}{5}{The function $\eta (x) = f^2(x) / F(x)F(-x)$ for $f(x) = \phi (x)$ the standard normal density}{figure.2}{}}
+\newlabel{sec:preliminary}{{III}{5}{Consistent Estimation and Off-the-shelf Bounds}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Consistent Estimation and Off-the-shelf Bounds }{5}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Consistent Estimation}{5}{subsection.3.1}}
+\newlabel{eq:estimator_naive}{{6}{5}{Consistent Estimation}{equation.3.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Multiterminal Source Coding}{5}{subsection.3.2}}
+\newlabel{sec:ceo}{{\unhbox \voidb@x \hbox {III-B}}{5}{Multiterminal Source Coding}{subsection.3.2}{}}
+\citation{prabhakaran2004rate}
+\citation{chen2004upper}
+\newlabel{prop:CEO}{{1}{6}{Multiterminal Source Coding}{thm.1}{}}
+\newlabel{eq:ceo_bound}{{7}{6}{Multiterminal Source Coding}{equation.3.7}{}}
+\newlabel{sec:sequential}{{IV}{6}{Adaptive Estimation}{section.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Adaptive Estimation }{6}{section.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Limited efficiency in the adaptive setting}{6}{subsection.4.1}}
+\newlabel{thm:adpative_lower_bound}{{2}{6}{maximal relative effeciency}{thm.2}{}}
+\citation{efroimovich1980information}
+\citation{DBLP:journals/corr/abs-1902-08582}
+\citation{van2000asymptotic}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Asymptotically optimal estimator}{7}{subsection.4.2}}
+\newlabel{eq:sgd_alg}{{8}{7}{Asymptotically optimal estimator}{equation.4.8}{}}
+\newlabel{eq:sgd_est}{{10}{7}{Asymptotically optimal estimator}{equation.4.10}{}}
+\newlabel{thm:sgd}{{3}{7}{Asymptotically optimal estimator}{thm.3}{}}
+\newlabel{eq:conditions1}{{11}{7}{Asymptotically optimal estimator}{Item.10}{}}
+\newlabel{eq:attaining_LAM}{{12}{7}{Asymptotically optimal estimator}{Item.11}{}}
+\newlabel{eq:conditions2}{{13}{7}{Asymptotically optimal estimator}{Item.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner.  }}{8}{figure.3}}
+\newlabel{fig:one_round}{{3}{8}{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Maximal Efficiency using One Round of Threshold Adaptation}{8}{subsection.4.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta $ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \delimiter "4262304 \sqrt  {n} \delimiter "5263305 $ samples for its first stage.  }}{9}{figure.4}}
+\newlabel{fig:adaptive_error}{{4}{9}{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta $ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt {n} \rfloor $ samples for its first stage}{figure.4}{}}
+\newlabel{sec:distributed}{{V}{9}{Distributed Estimation}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Distributed Estimation }{9}{section.5}}
+\citation{van2000asymptotic}
+\newlabel{thm:LAN1}{{5}{10}{Distributed Estimation}{thm.5}{}}
+\newlabel{eq:precision_general}{{14}{10}{Distributed Estimation}{equation.5.14}{}}
+\newlabel{eq:LAN_lim}{{15}{10}{Distributed Estimation}{equation.5.15}{}}
+\newlabel{cor:LA_minimax}{{6}{10}{Distributed Estimation}{thm.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}Non-existence of a Uniformly Optimal Strategy}{10}{subsection.5.1}}
+\newlabel{thm:non_existence}{{7}{10}{Non-existence of a Uniformly Optimal Strategy}{thm.7}{}}
+\newlabel{subsec:threshold}{{\unhbox \voidb@x \hbox {V-B}}{11}{Threshold Detection}{subsection.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Threshold Detection }{11}{subsection.5.2}}
+\newlabel{eq:threshold_message}{{16}{11}{Threshold Detection}{equation.5.16}{}}
+\newlabel{eq:Ln_threshold}{{17}{11}{Threshold Detection}{equation.5.17}{}}
+\newlabel{cor:LAN_thresh}{{8}{11}{Threshold Detection}{thm.8}{}}
+\newlabel{eq:ML}{{18}{11}{Threshold Detection}{equation.5.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  Optimal threshold density $\lambda ^\star (dt)$ (blue) that maximizes the ARE for $f(x) = \mathcal  {N}(\theta ,\sigma ^2)$ and $\theta \in [-T,T]$. The continuous curve (red) represents the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ under the optimal density, i.e., the minimax risk is the inverse of the minimal value of this curve. The dashed curve (green) is the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ when the threshold values are uniformly distributed over $[-T,T]$, hence its minimal value is the inverse of \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:uniform_risk}\unskip \@@italiccorr )}}. }}{12}{figure.5}}
+\newlabel{fig:minimax_support}{{5}{12}{Optimal threshold density $\lambda ^\star (dt)$ (blue) that maximizes the ARE for $f(x) = \Ncal (\theta ,\sigma ^2)$ and $\theta \in [-T,T]$. The continuous curve (red) represents the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ under the optimal density, i.e., the minimax risk is the inverse of the minimal value of this curve. The dashed curve (green) is the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ when the threshold values are uniformly distributed over $[-T,T]$, hence its minimal value is the inverse of \eqref {eq:uniform_risk}}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}Minimax Threshold Density}{12}{subsection.5.3}}
+\newlabel{eq:var_cvx_minimax}{{19}{12}{Minimax Threshold Density}{equation.5.19}{}}
+\newlabel{eq:uniform_risk}{{20}{12}{Minimax Threshold Density}{equation.5.20}{}}
+\newlabel{eq:cvx_average}{{21}{12}{Minimax Threshold Density}{equation.5.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Minimax ARE versus $\sigma /T$ for $f(x) = \mathcal  {N}(\theta ,\sigma ^2)$ and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta $ given by $K_{\mathsf  {unif}}\sigma ^2$, where $\kappa _{\mathsf  {unif}}$ is given by \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:uniform_risk}\unskip \@@italiccorr )}}. }}{13}{figure.6}}
+\newlabel{fig:minimax_ARE}{{6}{13}{Minimax ARE versus $\sigma /T$ for $f(x) = \Ncal (\theta ,\sigma ^2)$ and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta $ given by $K_{\unif }\sigma ^2$, where $\kappa _{\unif }$ is given by \eqref {eq:uniform_risk}}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Optimal threshold density $\lambda ^\star (dt)$ that minimizes the asymptotic Bayes risk \textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:cvx_average}\unskip \@@italiccorr )}} for a uniform prior with $\sigma /\sigma _\theta =1,2,3,4$, where $\sigma _\theta ^2=T^2/3$ is the variance of the prior. }}{13}{figure.7}}
+\newlabel{fig:opt_density}{{7}{13}{Optimal threshold density $\lambda ^\star (dt)$ that minimizes the asymptotic Bayes risk \eqref {eq:cvx_average} for a uniform prior with $\sigma /\sigma _\theta =1,2,3,4$, where $\sigma _\theta ^2=T^2/3$ is the variance of the prior}{figure.7}{}}
+\newlabel{sec:conclusions}{{VI}{13}{Conclusions}{section.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusions }{13}{section.6}}
+\citation{chen2004upper}
+\@writefile{toc}{\contentsline {section}{Appendix}{14}{section*.8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A}Fast convergence of uniform estimators under bit constraints}{14}{subsection.Appendix.A.1}}
+\newlabel{sec:uniform-weirdos}{{A}{14}{Fast convergence of uniform estimators under bit constraints}{subsection.Appendix.A.1}{}}
+\newlabel{eqn:uniforms-are-easy}{{22}{14}{Fast convergence of uniform estimators under bit constraints}{equation.Appendix.A.22}{}}
+\newlabel{eqn:quality-of-initial-estimate}{{23}{14}{Fast convergence of uniform estimators under bit constraints}{equation.Appendix.A.23}{}}
+\citation{viswanathan1997quadratic}
+\citation{Barnes2018}
+\citation{Barnes2018}
+\newlabel{app:proof:CEO}{{B}{15}{Proof of Proposition~\ref {prop:CEO}}{subsection.Appendix.A.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B}Proof of Proposition\nobreakspace  {}\ref  {prop:CEO} }{15}{subsection.Appendix.A.2}}
+\newlabel{eq:ceo_optimal_sumrate}{{24}{15}{Proof of Proposition~\ref {prop:CEO}}{equation.Appendix.A.24}{}}
+\newlabel{eq:ceo_optimal_sumrate2}{{25}{15}{Proof of Proposition~\ref {prop:CEO}}{equation.Appendix.A.25}{}}
+\newlabel{proof:thm:adpative_lower_bound}{{C}{15}{Proof of Theorem~\ref {thm:adpative_lower_bound}}{subsection.Appendix.A.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C}Proof of Theorem\nobreakspace  {}\ref  {thm:adpative_lower_bound}  }{15}{subsection.Appendix.A.3}}
+\newlabel{lem:bound_intervals}{{9}{15}{Proof of Theorem~\ref {thm:adpative_lower_bound}}{thm.9}{}}
+\newlabel{eq:lem_bound_intervals}{{26}{15}{Proof of Theorem~\ref {thm:adpative_lower_bound}}{equation.Appendix.A.26}{}}
+\newlabel{lem:fisher_bound}{{10}{15}{Proof of Theorem~\ref {thm:adpative_lower_bound}}{thm.10}{}}
+\newlabel{eq:lem_fisher_bound_proof1}{{27}{16}{Proof of Lemma~\ref {lem:fisher_bound}}{equation.Appendix.A.27}{}}
+\newlabel{eq:lemma_J}{{28}{16}{Proof of Lemma~\ref {lem:fisher_bound}}{equation.Appendix.A.28}{}}
+\newlabel{eq:general_messages}{{29}{16}{Proof of Lemma~\ref {lem:fisher_bound}}{equation.Appendix.A.29}{}}
+\citation{van2004detection}
+\citation{gill1995applications}
+\newlabel{eq:adpt_lower_bound_proof:1}{{30}{17}{Proof of Lemma~\ref {lem:fisher_bound}}{equation.Appendix.A.30}{}}
+\newlabel{eq:fisher_information}{{31}{17}{Proof of Lemma~\ref {lem:fisher_bound}}{equation.Appendix.A.31}{}}
+\newlabel{sec:bound_intervals_delta}{{D}{17}{Isoperimetric Lemma}{subsection.Appendix.A.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D}Isoperimetric Lemma  }{17}{subsection.Appendix.A.4}}
+\newlabel{lem:bound_intervals_delta}{{11}{17}{Isoperimetric Lemma}{thm.11}{}}
+\newlabel{eq:lem_bound_intervals_delta}{{32}{17}{Isoperimetric Lemma}{equation.Appendix.A.32}{}}
+\newlabel{eq:lemm:interval_bounds:to_show}{{33}{17}{Proof of Lemma~\ref {lem:bound_intervals_delta}}{equation.Appendix.A.33}{}}
+\newlabel{eq:g_def}{{35}{18}{Proof of Lemma~\ref {lem:bound_intervals_delta}}{equation.Appendix.A.35}{}}
+\newlabel{eq:gradient_zero}{{36}{18}{Proof of Lemma~\ref {lem:bound_intervals_delta}}{equation.Appendix.A.36}{}}
+\citation{polyak1992acceleration}
+\citation{polyak1990new}
+\citation{polyak1992acceleration}
+\citation{polyak1992acceleration}
+\newlabel{eq:proof:lem:bound_intervals}{{37}{20}{Proof of Lemma~\ref {lem:bound_intervals_delta}}{equation.Appendix.A.37}{}}
+\newlabel{proof:thm:sgd}{{E}{20}{Proof of Theorem~\ref {thm:sgd}}{subsection.Appendix.A.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E}Proof of Theorem\nobreakspace  {}\ref  {thm:sgd}  }{20}{subsection.Appendix.A.5}}
+\newlabel{thm:polyak_juditsky}{{12}{21}{Proof of (i)}{thm.12}{}}
+\newlabel{eq:Polyak_Juditsky_alg}{{38}{21}{Proof of (i)}{equation.Appendix.A.38}{}}
+\newlabel{eq:Polyak_Juditsky_cond3}{{39}{21}{Proof of (i)}{Item.13}{}}
+\newlabel{eq:sgd_part2}{{40}{21}{Proof of (ii)}{equation.Appendix.A.40}{}}
+\newlabel{thm:normal_expansion}{{13}{21}{Proof of (ii)}{thm.13}{}}
+\newlabel{eq:PJ_additional_cond}{{41}{21}{Proof of (ii)}{equation.Appendix.A.41}{}}
+\newlabel{eq:normal_expansion_lem}{{42}{21}{Proof of (ii)}{equation.Appendix.A.42}{}}
+\citation{van2000asymptotic}
+\citation{beran1995role}
+\citation{polyak1990new}
+\citation{polyak1990new}
+\newlabel{thm:polyak_new}{{14}{22}{Proof of (iii)}{thm.14}{}}
+\newlabel{eq:polyak_new_measurements}{{43}{22}{Proof of (iii)}{equation.Appendix.A.43}{}}
+\citation{polyak1992acceleration}
+\citation{polyak1992acceleration}
+\citation{polyak1992acceleration}
+\newlabel{proof:thm:normal_expansion}{{F}{23}{Proof of Theorem~\ref {thm:normal_expansion}}{subsection.Appendix.A.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {F}Proof of Theorem\nobreakspace  {}\ref  {thm:normal_expansion}  }{23}{subsection.Appendix.A.6}}
+\newlabel{lem:Polyak_expansion}{{15}{23}{Proof of (i)}{thm.15}{}}
+\newlabel{eq:Polyak_expansion}{{44}{23}{Proof of (i)}{equation.Appendix.A.44}{}}
+\newlabel{lem:PJ_converging_sum}{{16}{23}{Proof of (i)}{thm.16}{}}
+\newlabel{eq:Polyak_expansion_lem1_alg}{{45}{23}{Step I}{equation.Appendix.A.45}{}}
+\newlabel{eq:Polyak_expansion_aux_process}{{47}{23}{Step I}{equation.Appendix.A.47}{}}
+\newlabel{eq:PJ_proof1}{{49}{24}{Step II}{equation.Appendix.A.49}{}}
+\newlabel{eq:PJ_proof2}{{50}{24}{Step II}{equation.Appendix.A.50}{}}
+\newlabel{eq:PJ_converging_sum}{{51}{24}{Step II}{equation.Appendix.A.51}{}}
+\newlabel{eq:PJ_proof_3}{{52}{24}{Step II}{equation.Appendix.A.52}{}}
+\citation{van2000asymptotic}
+\citation{van2000asymptotic}
+\citation{van2000asymptotic}
+\newlabel{eq:PJ_LAN}{{53}{25}{Part (ii)}{equation.Appendix.A.53}{}}
+\newlabel{proof:thm:LAN1}{{G}{26}{Proof of Theorem~\ref {thm:LAN1}}{subsection.Appendix.A.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G}Proof of Theorem\nobreakspace  {}\ref  {thm:LAN1}  }{26}{subsection.Appendix.A.7}}
+\newlabel{eq:LAN_proof1}{{54}{26}{Proof of Theorem~\ref {thm:LAN1}}{equation.Appendix.A.54}{}}
+\newlabel{eq:Lyaponov}{{55}{27}{Proof of Claim I}{equation.Appendix.A.55}{}}
+\newlabel{eq:Lyaponov_num}{{56}{27}{Proof of Claim I}{equation.Appendix.A.56}{}}
+\newlabel{eq:LAN_limit_cond}{{57}{28}{Proof of Claim II}{equation.Appendix.A.57}{}}
+\newlabel{proof:thm:non_existence}{{H}{28}{Proof of Theorem~\ref {thm:non_existence}}{subsection.Appendix.A.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H}Proof of Theorem\nobreakspace  {}\ref  {thm:non_existence}  }{28}{subsection.Appendix.A.8}}
+\newlabel{eq:non_existence_proof}{{58}{28}{Proof of Theorem~\ref {thm:non_existence}}{equation.Appendix.A.58}{}}
+\bibstyle{IEEEtran}
+\bibdata{IEEEfull,onebit,bib}
+\bibcite{LesserOrTa03}{1}
+\bibcite{LiWoHuSa02}{2}
+\bibcite{FullerMi11}{3}
+\bibcite{1092194}{4}
+\bibcite{53738}{5}
+\bibcite{DuchiJoWa18}{6}
+\bibcite{baraniuk2017exponential}{7}
+\bibcite{jacques2013robust}{8}
+\bibcite{plan2013one}{9}
+\bibcite{li2017channel}{10}
+\bibcite{choi2016near}{11}
+\bibcite{720540}{12}
+\bibcite{gray1998quantization}{13}
+\bibcite{Tsybakov09}{14}
+\bibcite{LeCam86}{15}
+\bibcite{LeCamYa00}{16}
+\bibcite{VanDerVaart98}{17}
+\newlabel{eq:non_existence_proof1}{{59}{29}{Proof of Theorem~\ref {thm:non_existence}}{equation.Appendix.A.59}{}}
+\newlabel{eq:few_optimality_points_proof}{{60}{29}{Proof of Theorem~\ref {thm:non_existence}}{equation.Appendix.A.60}{}}
+\@writefile{toc}{\contentsline {section}{References}{29}{section*.20}}
+\bibcite{DavenportPlVaWo15}{18}
+\bibcite{PlanVe13}{19}
+\bibcite{904560}{20}
+\bibcite{4244748}{21}
+\bibcite{6882252}{22}
+\bibcite{chen2010performance}{23}
+\bibcite{5184907}{24}
+\bibcite{berger1996ceo}{25}
+\bibcite{viswanathan1997quadratic}{26}
+\bibcite{oohama1998rate}{27}
+\bibcite{prabhakaran2004rate}{28}
+\bibcite{zhang2013information}{29}
+\bibcite{duchi2014optimality}{30}
+\bibcite{GargMaNg14}{31}
+\bibcite{BravermanGaMaNgWo16}{32}
+\bibcite{DBLP:journals/corr/abs-1802-08417}{33}
+\bibcite{zhang1988estimation}{34}
+\bibcite{han2018distributed}{35}
+\bibcite{xu2017information}{36}
+\bibcite{Barnes2018}{37}
+\bibcite{52470}{38}
+\bibcite{tsitsiklis1988decentralized}{39}
+\bibcite{5751320}{40}
+\bibcite{ibragimov1956composition}{41}
+\bibcite{LehmannCa98}{42}
+\bibcite{bagnoli2005log}{43}
+\bibcite{Samford1953}{44}
+\bibcite{hammersley1950estimating}{45}
+\bibcite{chen2004upper}{46}
+\bibcite{efroimovich1980information}{47}
+\bibcite{DBLP:journals/corr/abs-1902-08582}{48}
+\bibcite{van2000asymptotic}{49}
+\bibcite{KipnisRini2019}{50}
+\bibcite{van2004detection}{51}
+\bibcite{gill1995applications}{52}
+\bibcite{polyak1992acceleration}{53}
+\bibcite{polyak1990new}{54}
+\bibcite{beran1995role}{55}
