@@ -194,7 +194,7 @@ where $n = n_1+ n_2$ and
 \] 
 Let 
 \[
-{\theta}_{n_2}  = {\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} B_i \right)
+{\theta}_{n_2}  \triangleq {\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} B_i \right)
 \]
 and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \rightarrow 1$. Then:
 \begin{align*}
@@ -204,28 +204,24 @@ and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \ri
 %
 %
 \begin{proof}
-By the law of large numbers,
-\[
-p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
-\]
-so that ${\theta}_{n_1}$ converges almost surely to $\theta$ as $n$ goes to infinity. 
 For $t\in \mathbb R$, set
 \[
 p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}. 
 \]
-Since $n_2(n)/n \to 1$, the central limit theorem and Slutsky's theorem imply
+Since $n_2(n)/n \to 1$, if follows from the Berry Esseen theorem that there exists $C$, independent of $n$ and $t$, such that 
 \begin{align*}
-\sqrt{n} \left( p_{n_2}(t) - F( \theta - t) \right)   \overset{d}{\rightarrow} \sqrt{F(\theta - t) F \left( t - \theta\right)} Z,
+\sup_{t \in \R} \left| \sqrt{n} \frac{ p_{n_2}(t) - F( \theta - t)} {F(\theta - t) F \left( t - \theta\right) }  - \Phi(t) \right|  \leq C/\sqrt{n}. 
 \end{align*}
-where $Z \sim \Ncal(0,1)$. In addition, Slutsky's theorem imply
+where $Z \sim \Ncal(0,1)$. It follows that
+\begin{align}
+\label{eq:two_step_proof}
+ \sqrt{n} \frac{ p_{n_2}(Y_n) - F(0)} {F^2(0) }  \overset{d}{\rightarrow} \Ncal(0,1)
+\end{align}
+for any sequence of random variables $\{Y_n\}$ converging in probability to $\theta$. In particular, since
 \[
-\sqrt{F(\theta-\theta_{n_1}) F(\theta_{n_1} - \theta)} Z_1 \overset{d}{\rightarrow}  F(0) Z,  
+p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
 \]
-hence 
-\[
-\sqrt{n} \left( p_{n_2}( \theta_{n_1}) - F( \theta - \theta_{n_1}) \right)  \overset{d}{\rightarrow} F(0) Z.
-\]
-Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
+by the law of large numbers, \eqref{eq:two_step_proof} holds with $Y_n = \theta_{n_1}$. Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
 \begin{align*}
 & \sqrt{n}\left( \theta_{n_2} - \theta \right) = \sqrt{n} \left( \theta_{n_1} + F^{-1}(p_{n_2}(\theta_{n_1})) - \theta \right) \\
 &= \sqrt{n} \left( g(p_{n_2}(\theta_{n_1})) - g \left(F(\theta-\theta_{n_1}) \right)  \right) \overset{d}{\to} \Ncal\left(0, 
