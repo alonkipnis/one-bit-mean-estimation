@@ -219,9 +219,9 @@ where $Z \sim \Ncal(0,1)$. It follows that
 \end{align}
 for any sequence of random variables $\{Y_n\}$ converging in probability to $\theta$. In particular, since
 \[
-p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),
+p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0)
 \]
-by the law of large numbers, \eqref{eq:two_step_proof} holds with $Y_n = \theta_{n_1}$. Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
+by the law of large numbers, \eqref{eq:two_step_proof} holds for $Y_n = \theta_{n_1}$. Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
 \begin{align*}
 & \sqrt{n}\left( \theta_{n_2} - \theta \right) = \sqrt{n} \left( \theta_{n_1} + F^{-1}(p_{n_2}(\theta_{n_1})) - \theta \right) \\
 &= \sqrt{n} \left( g(p_{n_2}(\theta_{n_1})) - g \left(F(\theta-\theta_{n_1}) \right)  \right) \overset{d}{\to} \Ncal\left(0, 
