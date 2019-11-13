@@ -19,29 +19,29 @@ following facts:
 The simplest estimator is simply to invert a quantile. Indeed,
 fix $\theta_0 \in \mathbb R$ and define the $i$th message by 
 \[
-B_i = \mathbf 1_{X_i>\theta_0}, 
+B_i = \mathbf 1_{X_i<\theta_0}, 
 \]
 where $\mathbf 1_A$ is the indicator of the event $A$. We have
 \[
-P_n \triangleq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0),  
+P_n \triangleq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta_0 - \theta),  
 \]
 so that 
 \begin{equation}
 \label{eq:estimator_naive}
-{\theta}_n = \theta_0 + F^{-1}\left( P_n \right)
+{\theta}_n = \theta_0 - F^{-1}\left( P_n \right)
 \end{equation}
 is a consistent estimator for $\theta$ in the distributed setting of
 Figure~\ref{fig:setup}-(iii), where we note that $F$ is invertible over the
 support of $f$. As the variance of $P_n$ is
-$F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)$, a delta method
+$F(\theta_0-\theta)\left(1-F(\theta_0-\theta)\right)$, a delta method
 calculation~\cite[Ch.~23]{VanDerVaart98} implies that ${\theta}_n$ is
 asymptotically normal with variance
 \begin{equation*}
-  \frac{F(\theta-\theta_0)\left(1-F(\theta-\theta_0)\right)}{f^2(\theta-\theta_0)} = \frac{1}{
-\eta(\theta-\theta_0)}.
+  \frac{F(\theta_0-\theta)\left(1-F(\theta_0-\theta)\right)}{f^2(\theta_0-\theta)} = \frac{1}{
+\eta(\theta_0-\theta)}.
 \end{equation*}
 In the Gaussian case where the $X_i \simiid \normal(\theta, \sigma^2)$, the
-ARE of ${\theta}_n$ is $\eta(\theta - \theta_0)\sigma^2$.
+ARE of ${\theta}_n$ is $\eta(\theta_0 - \theta)\sigma^2$.
 
 Assumption~\ref{assump:failure_rate} implies that the optimal asymptotic
 variance for an estimator of the form~\eqref{eq:estimator_naive} is $1 /
