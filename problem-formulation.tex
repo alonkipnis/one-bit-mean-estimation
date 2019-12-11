@@ -117,9 +117,11 @@ decreasing function of $|x|$, as we illustrate in Fig.~\ref{fig:eta}.
 %
 We consider log-concave symmetric distributions sharing this
 property.  Specifically, we require the following.
-\begin{assumption} \label{assump:failure_rate}
-  The origin $x = 0$ uniquely maximizes $\eta(x)$, and $\eta(x)$ is
-  non-increasing in $|x|$.
+\begin{assumption}
+  \label{assump:failure_rate}
+  The density $f$ is log-concave and symmetric.  Additionally, the origin $x
+  = 0$ uniquely maximizes $\eta(x)$, and $\eta(x)$ is non-increasing in
+  $|x|$.
 \end{assumption}
 Under this assumption,
 \begin{equation*}
@@ -133,14 +135,14 @@ $\eta(x)$ vanishes as $|x|\rightarrow \infty$.  Several distributions
 satisfy Assumption~\ref{assump:failure_rate}, including the generalized
 normal distributions with a shape parameter between $1$ and $2$ (including
 the normal and Laplace distributions). Symmetric log-concave distributions
-that failing Assumption~\ref{assump:failure_rate} include the uniform
+failing Assumption~\ref{assump:failure_rate} include the uniform
 distribution and the generalized normal distribution with shape parameter
-greater than $2$. (See Appendix~\ref{sec:uniform-weirdos} for
-a brief discussion on the uniform distribution, which illustrates
-why some restriction of the class of distributions is necessary to
-develop our results; in brief, even one-step adaptive estimators
-with a single bit can achieve rates faster than the paramateric
-$\sqrt{n}$ convergence for location estimation in the uniform distribution.)
+greater than $2$. Some restriction on the class of distributions is
+necessary to develop our results; indeed, in
+Appendix~\ref{sec:uniform-weirdos} we provide a brief discussion on the
+uniform distribution, where a one-step adaptive estimator with single bit
+observations can achieve convergence rates faster than the familiar
+$\sqrt{n}$ paramateric rate.
 
 \begin{figure}
 \begin{center}

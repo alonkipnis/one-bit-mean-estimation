@@ -1,100 +1,152 @@
 \section{Adaptive Estimation \label{sec:sequential}}
-The first main results of this paper, as described in Theorem~\ref{thm:adpative_lower_bound} below, states that the ARE of any adaptive estimator cannot be larger than $\eta(0)\sigma^2$, which is the ARE of the median of the sample $X_1,\ldots,X_n$. We also provide a particular adaptive estimation scheme that attains this maximal efficiency. %Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the chosen message $B_i$  minimizes the MSE given $X_i$ and the previous $i-1$ messages. %Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $\eta(0)\sigma^2$. 
 
-\subsection{Limited efficiency in the adaptive setting}
-Our first result asserts that the ARE of any adaptive encoding and estimation scheme is bounded from above by $\eta(0)\sigma^2$. %This result follows from the following theorem:
-\begin{thm}[maximal relative effeciency] \label{thm:adpative_lower_bound}
-Let ${\theta}_n$ be any estimator of $\theta$ in the adaptive setting of Figure~\ref{fig:setup}-(ii). Assumes that $\pi(\theta)$ converges to zero at the endpoints of the interval $\Theta$. Then
-\[
-n\mathbb E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0},
-\]
-where 
-\[
-I_0 = \mathbb E \left( \frac{d}{d\theta} \log \pi (\theta) \right)^2
-\]
-is the Fisher information with respect to a location model in $\theta$. 
+The first main result of this paper (Theorem~\ref{thm:adpative_lower_bound})
+gives that the asymptotic variance of any adaptive estimator must be at
+least $\eta(0)\sigma^2$, which is precisely the efficiency of the median of
+the sample $X_1,\ldots,X_n$. Conveniently, the stochastic (sub)gradient
+estimator for the median---which minimizes $\E[|X - \theta|]$---is a
+sequence of signs (single bits), so that we can exhibit an asymptotically
+optimal adaptive estimation scheme.
+
+%Finally, in Theorem~\ref{thm:opt_one_step}, we provide an adaptive estimation scheme that is one-step optimal in the sense that at each step $i$, the chosen message $B_i$  minimizes the MSE given $X_i$ and the previous $i-1$ messages. %Numerical simulations for the case of $f(x)$ the normal density function shows that the ARE of the estimator described by this scheme is $\eta(0)\sigma^2$. 
+
+We begin with our first theorem, whose proof we provide in
+Appendix~\ref{proof:thm:adpative_lower_bound}.
+\begin{thm}[Fundamental limits]\label{thm:adpative_lower_bound}
+  Let Assumption~\ref{assump:failure_rate} hold.
+  Let ${\theta}_n$ be any estimator of $\theta$ in the adaptive setting of
+  Figure~\ref{fig:setup}(ii). Assume that the prior
+  density $\pi(\cdot)$ on $\theta$ converges to zero
+  at the endpoints of the interval $\Theta$ and
+  define the prior Fisher information
+  $I_0 \defeq \E_\pi[(\pi'(\theta) / \pi(\theta))^2]$.
+  Then
+  \begin{equation*}
+    n \E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0}.
+  \end{equation*}
 \end{thm}
 
-\subsubsection*{Proof}
 %We first bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. The result then follows using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in
-See Appendix~\ref{proof:thm:adpative_lower_bound}.\par
 
-Theorem~\ref{thm:adpative_lower_bound} implies that any estimator ${\theta}_n$ from any adaptive encoding scheme satisfies
-\[
-n\mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{1}{4f^2(0)}+O(n^{-1}),
-\]
-and 
-\[
-\ARE({\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
-\]
-It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to any other loss functions using a more subtle version of the Van Tress inequality provided in \cite{efroimovich1980information}. See also \cite{DBLP:journals/corr/abs-1902-08582}. \par
-%
-Next, we provide an adaptive encoding and estimation scheme that attains the maximal ARE of $\eta(0)\sigma^2$. 
+%% Theorem~\ref{thm:adpative_lower_bound} implies that any estimator ${\theta}_n$ from any adaptive encoding scheme satisfies
+%% \begin{equation*}
+%% n\mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{1}{4f^2(0)}+O(n^{-1}),
+%% \end{equation*}
+%% and 
+%% \begin{equation*}
+%% \ARE({\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
+%% \end{equation*}
+It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to any other
+loss functions using a more subtle version of the Van Trees
+inequality~\cite{efroimovich1980information}; see also
+\cite{DBLP:journals/corr/abs-1902-08582}.
+
+We now turn to asymptotically optimal estimators, first
+showing how a simple stochastic gradient scheme is asymptotically
+optimal (in the fully adaptive setting), after which we show that
+a one-round adaptive scheme can also achieve this optimal efficiency.
 
 \subsection{Asymptotically optimal estimator}
-Let $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ be a strictly positive sequence. Consider the following estimator ${\theta}_n$ for $\theta$:  
+
+The starting point for our first estimator is to note that the median of a
+distribution minimizes $\E[|X - \theta|]$ over $\theta \in \R$, and
+moreover, we have the familiar result (cf.~\cite{VanDerVaart98}, Ch.~21)
+that given a sample $X_1^n \simiid P$, if $\theta = \mbox{med}(P)$ and
+$P$ has density $f$ near $\theta$, then
+\begin{equation*}
+  \sqrt{n}(\mbox{med}(X_1^n) - \theta)
+  \cd \normal\left(0, \frac{1}{4 f(\theta)^2}\right),
+\end{equation*}
+which is precisely the variance lower bound in
+Theorem~\ref{thm:adpative_lower_bound}.  Thus, it it is natural consider a
+stochastic gradient procedure for minimizing $\E[|X - \theta|]$. To that end,
+let $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ be a strictly positive
+sequence of stepsizes,
+and define the sequence
 \begin{equation}
-\label{eq:sgd_alg}
-\theta_n = \theta_{n-1} +  \gamma_n B_n, \quad n = 1,2,\ldots,
+  \label{eq:sgd_alg}
+  \theta_n = \theta_{n-1} + \gamma_n B_n, \quad n = 1,2,\ldots,
 \end{equation}
 where 
-\begin{equation}
-B_n = B_n (X_n,\theta_{n-1}) =\sgn (X_n - \theta_{n-1}).
-\end{equation}
-Define the $n$th step estimation as
-\begin{equation} \label{eq:sgd_est}
-\bar{\theta}_n =  \frac{1}{n} \sum_{i=1}^n  \theta_i. 
-\end{equation}
+\begin{equation*}
+  B_n = \sgn (X_n - \theta_{n-1}).
+\end{equation*}
+We make one of two assumptions on the stepsizes $\gamma_n$, which
+are relatively standard: we always have $\gamma_n$ non-increasing, and
+\begin{subequations}
+  For some $0 < \lambda \le 1$,
+  \begin{align}
+    \label{eqn:lazy-gamma}
+    \frac{\gamma_n - \gamma_{n+1}}{\gamma_n^2}
+    \to 0, & ~~~
+    \sum_n \frac{\gamma_n^\frac{1 + \lambda}{2}}{\sqrt{n}} < \infty
+    ~~ \mbox{or} \\
+    \gamma_n = o(n^{-2/3}),
+    & ~~~
+    \sum_n \gamma_n = \infty.
+    \label{eqn:stringent-gamma}
+  \end{align}
+\end{subequations}
 
-We have the following results:
-\begin{thm} \label{thm:sgd}
-Consider the sequence $\left\{\bar{\theta}_n \right\}_{n\in \mathbb N}$ defined by \eqref{eq:sgd_est}. 
-\begin{enumerate}
-\item[(i)] Assume that $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ satisfies
-\begin{equation} \label{eq:conditions1}
-\begin{cases}
-\frac{\gamma_n - \gamma_{n+1}}{\gamma_n} = o(\gamma_n), &  \\
-\sum_{n=1}^\infty \frac{\gamma_n^{(1+\lambda)/2}} {\sqrt{n}} < \infty, & 
-\mathrm{for~some~}0< \lambda \leq 1
-\end{cases}
-\end{equation}
-(e.g., $\gamma_n = n^{-\beta}$ for $\beta \in (0,1)$). Then
-\[
-\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left(0,\frac{1}{\eta(0)}\right).
-\]
-%
-%
-\item [(ii)] Assume in addition that $f(x)$ is continuously differentiable with a finite Fisher information 
-\[
-\sigma_f^2 \triangleq \ex{\frac{f'(X)}{f(X)} } 
-\]
-for the location in the family $\{P_\theta\}$.
-%(or that $f(x-\theta)$ is differentiable in quadratic mean).  
-Then for any bounded, symmetric, and quasi-convex function $L$, 
-\begin{align} 
-& \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right] \nonumber 
-\\
-& \qquad \qquad \qquad \qquad = \mathbb E \left[ L (Z/\sqrt{\eta(0)}) \right], \label{eq:attaining_LAM}
-\end{align}
-where $Z \sim \Ncal(0,1)$. 
-%
-%
-\item[(iii)] Assume that, in addition to \eqref{eq:conditions1}, $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ satisfies
-\begin{equation} \label{eq:conditions2}
-\begin{cases}
-\gamma_n = o(n^{-2/3}), &  \\
-\sum_{n=1}^\infty \gamma_n = \infty.  & \\
-\end{cases}
-\end{equation}
-(e.g., $\gamma_n = n^{-\beta}$ with $\beta \in (2/3,1)$). Then
-\[
- \ex{\left( \bar{\theta}_n - \theta \right)^2} = \frac{1}{n\eta(0)} + o(n^{-1}). 
-\]
-\end{enumerate}
+Then we can adapt the results of Polyak and Juditsky~\cite{PolyakJu92}
+on the asymptotic normality of averaged stochastic gradient estimators
+to establish the following theorem.
+\begin{thm}
+  \label{thm:sgd}
+  Define the average $\bar{\theta}_n \defeq \frac{1}{n}
+  \sum_{i = 1}^n \theta_i$. Assume
+  that in a neighborhood
+  of $\theta = \mbox{med}(P)$,
+  the distribution $P$ has a Lipschitz continuous density $f$.
+  Then
+  \begin{enumerate}[(i)]
+  \item \label{item:normal-sgd}
+    Assume that $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ satisfies
+    condition~\eqref{eqn:lazy-gamma}.
+    Then
+    \begin{equation*}
+      \sqrt{n}\left( \bar{\theta}_n - \theta\right)
+      \cd \normal\left(0,\frac{1}{4 f(\theta)^2}\right).
+    \end{equation*}
+    %
+    %
+  \item
+    Assume in addition that $f(x)$ is continuously differentiable with a
+    finite Fisher information
+    \begin{equation*}
+      \sigma_f^2 \triangleq \ex{\frac{f'(X)}{f(X)} } 
+    \end{equation*}
+    for the location in the family $\{P_\theta\}$.
+    %(or that $f(x-\theta)$ is differentiable in quadratic mean).  
+    Then for any bounded, symmetric, and quasi-convex function $L$, 
+    \begin{align} 
+      & \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right] \nonumber 
+      \\
+      & \qquad \qquad \qquad \qquad = \mathbb E \left[ L (Z/\sqrt{\eta(0)}) \right], \label{eq:attaining_LAM}
+    \end{align}
+    where $Z \sim \Ncal(0,1)$. 
+    %
+    %
+  \item Assume the stepsizes $\gamma_n$ satisfy both
+    conditions~\eqref{eqn:lazy-gamma} and~\eqref{eqn:stringent-gamma}.
+    Then
+    \begin{equation*}
+      \ex{\left( \bar{\theta}_n - \theta \right)^2} = \frac{1}{4 n f(\theta)^2} + o(n^{-1}). 
+    \end{equation*}
+  \end{enumerate}
 \end{thm}
 
-\subsubsection*{Proof}
-See Appendix~\ref{proof:thm:sgd}. \par
+\noindent
+We provide the proof in Appendix~\ref{proof:sgd}.
+
+As an immediate corollary to Theorem~\ref{thm:sgd}, we obtain the following
+asymptotic optimality results of the averaged stochastic gradient
+sequence.
+%% \begin{corollary}
+
+\textbf{FILL THIS IN}
+
+%% \end{corollary}
 
 Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$ defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} attains the maximal ARE, as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
 %
@@ -167,9 +219,9 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 
 \subsection{Maximal Efficiency using One Round of Threshold Adaptation}
 In Section~\ref{sec:preliminary} we considered an estimator that is based on binary messages of the form 
-\[
+\begin{equation*}
 B_i = \mathbf 1_{X_i > \theta_0},\qquad i=1,\ldots,n,
-\]
+\end{equation*}
 and deduced that it is asymptotically normal with variance $1/\eta(\theta-\theta_0)$.
 %
 We now show that a similar encoding leads to an asymptotically normal estimator attaining the lower variance bound $1/\eta(0)$, provided we allow to  update the threshold value $\theta_0$ based on previously observed bits at least once. 
@@ -180,22 +232,22 @@ We first use the estimator \eqref{eq:estimator_naive} to obtain an estimate ${\t
 The specific encoding and estimation scheme, as well as its asymptotic performance, are given by the following theorem:
 \begin{thm}
 For $i=1,\ldots,n$ set
-\[
+\begin{equation*}
 B_i = \begin{cases}
  \mathbf 1_{X_i \geq \theta_0} & i = 1,\ldots,n_1, \\
  \mathbf 1_{X_i \geq {\theta}_{n_1} }& i={n_1+1,\ldots,n},
 \end{cases}
-\]
+\end{equation*}
 where $n = n_1+ n_2$ and 
-\[
+\begin{equation*}
 {\theta}_{n_1} \triangleq \theta_0 + F^{-1}\left(
 \frac{1}{n_1} \sum_{i=1}^{n_1} B_i 
  \right).
-\] 
+\end{equation*} 
 Let 
-\[
+\begin{equation*}
 {\theta}_{n_2}  \triangleq {\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} B_i \right)
-\]
+\end{equation*}
 and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \rightarrow 1$. Then:
 \begin{align*}
  \sqrt{n} \left( {\theta}_{n_2} - \theta  \right) \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
@@ -205,9 +257,9 @@ and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \ri
 %
 \begin{proof}
 For $t\in \mathbb R$, set
-\[
+\begin{equation*}
 p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}. 
-\]
+\end{equation*}
 Since $n_2(n)/n \to 1$, if follows from the Berry Esseen theorem that there exists $C$, independent of $n$ and $t$, such that 
 \begin{align*}
 \sup_{t \in \R} \left| \sqrt{n} \frac{ p_{n_2}(t) - F( \theta - t)} {F(\theta - t) F \left( t - \theta\right) }  - \Phi(t) \right|  \leq C/\sqrt{n}. 
@@ -218,9 +270,9 @@ where $Z \sim \Ncal(0,1)$. It follows that
  \sqrt{n} \frac{ p_{n_2}(Y_n) - F(0)} {F^2(0) }  \overset{d}{\rightarrow} \Ncal(0,1)
 \end{align}
 for any sequence of random variables $\{Y_n\}$ converging in probability to $\theta$. In particular, since
-\[
+\begin{equation*}
 p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0)
-\]
+\end{equation*}
 by the law of large numbers, \eqref{eq:two_step_proof} holds for $Y_n = \theta_{n_1}$. Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
 \begin{align*}
 & \sqrt{n}\left( \theta_{n_2} - \theta \right) = \sqrt{n} \left( \theta_{n_1} + F^{-1}(p_{n_2}(\theta_{n_1})) - \theta \right) \\
