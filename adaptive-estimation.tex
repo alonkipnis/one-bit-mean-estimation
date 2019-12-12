@@ -110,7 +110,7 @@ to establish the following theorem.
     \end{equation*}
     %
     %
-  \item
+  \item \label{item:sgd-regular}
     Assume in addition that $f(x)$ is continuously differentiable with a
     finite Fisher information
     \begin{equation*}
@@ -159,63 +159,63 @@ As we explain next,
 it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only one round of interactions among the encoders. 
 
 
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[node distance=2cm,auto]
-  \node at (0,0) (source) {$X_1$} ;
-  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
-\draw[->,line width = 2pt] (source) -- (enc1); 
+%% \begin{figure}
+%% \begin{center}
+%% \begin{tikzpicture}[node distance=2cm,auto]
+%%   \node at (0,0) (source) {$X_1$} ;
+%%   \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
+%% \draw[->,line width = 2pt] (source) -- (enc1); 
 
-% \node[below of = source, node distance = 1cm] (source2) {$X_2$};
-%\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc};  
-%\draw[->,line width = 2pt] (source2) -- (enc2); 
+%% % \node[below of = source, node distance = 1cm] (source2) {$X_2$};
+%% %\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc};  
+%% %\draw[->,line width = 2pt] (source2) -- (enc2); 
 
-\node[below of = source, node distance = 1.7cm] (source3) {$X_{n_1}$};
-\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
+%% \node[below of = source, node distance = 1.7cm] (source3) {$X_{n_1}$};
+%% \node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
 
-\draw[->,line width = 2pt] (source3) -- (enc3); 
+%% \draw[->,line width = 2pt] (source3) -- (enc3); 
 
-\node[below of = source, node distance = 0.5cm] {$\vdots$};
+%% \node[below of = source, node distance = 0.5cm] {$\vdots$};
 
-\node[int1, right of = enc3, node distance = 2.1cm ] (est) {$\est_1$};
+%% \node[int1, right of = enc3, node distance = 2.1cm ] (est) {$\est_1$};
 
-\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
+%% \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
 
-%\draw[->,line width = 2pt] (enc2) -| node[above, xshift = -1cm] (mes2) {$B_2$} (est);   
+%% %\draw[->,line width = 2pt] (enc2) -| node[above, xshift = -1cm] (mes2) {$B_2$} (est);   
 
-\draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
+%% \draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
 
-\node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
-\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {$\enc$};  
-\draw[->,line width = 2pt] (sourceB) -- (enc1B); 
+%% \node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
+%% \node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {$\enc$};  
+%% \draw[->,line width = 2pt] (sourceB) -- (enc1B); 
 
-\node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
-\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {$\enc$};  
-\draw[->,line width = 2pt] (source3B) -- (enc3B); 
-\node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
+%% \node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
+%% \node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {$\enc$};  
+%% \draw[->,line width = 2pt] (source3B) -- (enc3B); 
+%% \node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
 
-\node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {$\est_2$};
+%% \node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {$\est_2$};
 
-\draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.5cm] {$B_{n_1+1}$} (estB);
-\draw[->,line width = 2pt] (enc3B) -- node[above] {$B_n$} (estB);
+%% \draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.5cm] {$B_{n_1+1}$} (estB);
+%% \draw[->,line width = 2pt] (enc3B) -- node[above] {$B_n$} (estB);
 
-\draw[->,line width = 1pt] (est.east) node[above, xshift  =0.5cm] {${\theta}_{n_1}$} -| (enc1B.north);
+%% \draw[->,line width = 1pt] (est.east) node[above, xshift  =0.5cm] {${\theta}_{n_1}$} -| (enc1B.north);
 
-%\draw[->,line width = 1pt] (enc1B) -- (enc3B);
+%% %\draw[->,line width = 1pt] (enc1B) -- (enc3B);
 
-\draw[->,line width = 0.5pt] (est.east) -| +(1.3,-0.5) -- +(1.3,-2.5) -| (enc3B.north);
+%% \draw[->,line width = 0.5pt] (est.east) -| +(1.3,-0.5) -- +(1.3,-2.5) -| (enc3B.north);
 
-%\draw[->,line width = 1pt] (enc1B)  -- node[right] {${\theta}_{n_1}$} (enc3B);
+%% %\draw[->,line width = 1pt] (enc1B)  -- node[right] {${\theta}_{n_1}$} (enc3B);
 
-\draw[->,line width = 0.5pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
-\node[below of = enc1B, node distance = 0.5cm] {$\vdots$};
+%% \draw[->,line width = 0.5pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
+%% \node[below of = enc1B, node distance = 0.5cm] {$\vdots$};
 
-\end{tikzpicture}
-\end{center}
-\caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
-\label{fig:one_round}
-}
-\end{figure}
+%% \end{tikzpicture}
+%% \end{center}
+%% \caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
+%% \label{fig:one_round}
+%% }
+%% \end{figure}
 
 \subsection{Maximal Efficiency using One Round of Threshold Adaptation}
 In Section~\ref{sec:preliminary} we considered an estimator that is based on binary messages of the form 
@@ -282,45 +282,45 @@ F^2(0)/ f^2(0) \right).
 \end{proof}
 %
 
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}[scale = 0.6]
-\begin{axis}[
-width=10cm, height=6cm,
-xmin = 0, xmax=800, 
-restrict y to domain = 0:3,
-ymin = 0,
-ymax = 3.4,
-samples=10, 
-xlabel= $n$,
-ylabel = {$n\mathbb E \left[\left(\theta - {\theta}_n \right)^2 \right]$},
-%xtick={-3,-2,-1,0,1,2,3},
-%xticklabels={-3,-2,-1,0,1,2,3},
-ytick={0,1,1.57},
-yticklabels={0,1,$\pi/2$},
-line width=1.0pt,
-mark size=1.5pt,
-ymajorgrids,
-xmajorgrids,
-legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-]
+%% \begin{figure}
+%% \begin{center}
+%% \begin{tikzpicture}[scale = 0.6]
+%% \begin{axis}[
+%% width=10cm, height=6cm,
+%% xmin = 0, xmax=800, 
+%% restrict y to domain = 0:3,
+%% ymin = 0,
+%% ymax = 3.4,
+%% samples=10, 
+%% xlabel= $n$,
+%% ylabel = {$n\mathbb E \left[\left(\theta - {\theta}_n \right)^2 \right]$},
+%% %xtick={-3,-2,-1,0,1,2,3},
+%% %xticklabels={-3,-2,-1,0,1,2,3},
+%% ytick={0,1,1.57},
+%% yticklabels={0,1,$\pi/2$},
+%% line width=1.0pt,
+%% mark size=1.5pt,
+%% ymajorgrids,
+%% xmajorgrids,
+%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+%% ]
 
-\addplot[color = blue, solid, smooth] plot table [x = itr, y = SGD, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
-\addlegendentry{asymptotically optimal};
+%% \addplot[color = blue, solid, smooth] plot table [x = itr, y = SGD, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
+%% \addlegendentry{asymptotically optimal};
 
-%\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};\addlegendentry{one step optimal};
+%% %\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};\addlegendentry{one step optimal};
 
-\addplot[color = red, solid, smooth] plot table [x = itr, y = split, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
-\addlegendentry{single interaction};
+%% \addplot[color = red, solid, smooth] plot table [x = itr, y = split, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
+%% \addlegendentry{single interaction};
 
-\end{axis}
-\end{tikzpicture}
-%\begin{tikzpicture}
-%\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
-%\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left({\theta}_n - \theta \right)^2$};
-%\node[scale = 0.7] at (0,-2.4) {$n$};
-%\end{tikzpicture}
-\caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
-\label{fig:adaptive_error}  }
-\end{center}
-\end{figure}
+%% \end{axis}
+%% \end{tikzpicture}
+%% %\begin{tikzpicture}
+%% %\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
+%% %\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left({\theta}_n - \theta \right)^2$};
+%% %\node[scale = 0.7] at (0,-2.4) {$n$};
+%% %\end{tikzpicture}
+%% \caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
+%% \label{fig:adaptive_error}  }
+%% \end{center}
+%% \end{figure}

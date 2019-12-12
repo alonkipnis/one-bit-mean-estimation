@@ -1,5 +1,7 @@
-\subsection{Proof of Theorem~\ref{thm:sgd}}
+\section{Proof of Theorem~\ref{thm:sgd}}
 \label{proof:sgd}
+
+\providecommand{\score}{\dot{\ell}}
 
 The estimation algorithm~\eqref{eq:sgd_alg} is a special
 case of the stochastic gradient procedures in the papers
@@ -8,7 +10,7 @@ We rely on several of their results. Throughout this proof,
 we assume without loss of generality that the median
 $\theta = \mbox{med}(P) = 0$.
 
-\subsubsection*{Proof of (i)}
+\subsection{Proof of Theorem~\ref{thm:sgd}\eqref{item:normal-sgd}}
 
 Consider the following simplified version of
 \cite[Thm. 4]{polyak1992acceleration}:
@@ -16,9 +18,9 @@ Consider the following simplified version of
   \label{corollary:polyak-juditsky}
   Let $\varphi : \R \to \R$ and $Z_i$ be i.i.d.\ random
   variables, and
-  \[
+  \begin{equation*}
   X_i = \theta + Z_i.
-  \]
+  \end{equation*}
   Define
   \begin{align}
     \begin{split}
@@ -33,14 +35,15 @@ Consider the following simplified version of
     K_1(1+|x|)$ for all $x\in \R$.
   \item The sequence $\left\{ \gamma_i \right\}_{i=1}^\infty$ satisfies
     condition~\eqref{eqn:lazy-gamma}.
-  \item The function $\psi(x) \triangleq \ex{ \varphi(x+Z_1)}$
+  \item \label{item:zero-gradient}
+    The function $\psi(x) \triangleq \ex{ \varphi(x+Z_1)}$
     satisfies $\psi(0) = 0$ and
     $x\psi(x) > 0$ for $x\neq 0$.  Moreover, $\psi$ is differentiable
     at 0 with $\psi'(0) > 0$ and there exists
     $K_2$ and $0 < \lambda \leq 1$ such that
     \begin{equation}
-      \label{eq:Polyak_Juditsky_cond3}
-      \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}.
+      \label{eqn:local-hessian-psi}
+        \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}.
     \end{equation}
   \item The function 
     $\chi(x) \triangleq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
@@ -67,7 +70,7 @@ Using that $P$ has a density $f$ near its median, it follows that $\psi'(x)
 = 2f(-x)$ and thus $\psi'(0) = 2f(0) > 0$.  We may now verify that the
 conditions in Corollary~\ref{corollary:polyak-juditsky} hold for $\lambda =
 1$. Condition~(i) is obvious, and the convexity of $|\cdot|$ gives most of
-condition~(iii) excepting inequality~\eqref{eq:Polyak_Juditsky_cond3}. For
+condition~(iii) excepting inequality~\eqref{eqn:local-hessian-psi}. For
 that, note that as $f$ is Lipschitz near 0 with constant $\lip_0(f)$, we
 have for small $x$ that
 \begin{equation*}
@@ -81,58 +84,165 @@ As evidently $\chi(0) / \psi'(0)^2 = \frac{1}{4 f(0)^2}$,
 Corollary~\ref{corollary:polyak-juditsky} gives
 Theorem~\ref{thm:sgd}\eqref{item:normal-sgd}.
 
-\subsubsection*{Proof of (ii)}
-We first show that the estimator $\bar{\theta}_n$ is regular in the following sense: For $\theta \in \Theta$, $h\in \R$ and $n$ large enough such that $\theta+h/\sqrt{n} \in \Theta$, let $\Prob_{\theta,n}$ be a product probability measure on $\R^n$ with density $f(x-\theta - h/\sqrt{n})$ in each of its $n$ coordinates. Then 
+\subsection{Proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-regular}}
+
+This proof requires somewhat more techinicality than the first part of the
+theorem, including a brief detour into local asymptotic normality theory,
+regular estimators, and quadratic-mean
+differentiability~\cite[cf.]{VanDerVaart98}.
+We begin by recalling some of these concepts.
+\begin{definition}
+  A sequence of estimators $T_n$ for a parameter $\theta$ in the parametric
+  family $\{P_\theta\}_{\theta \in \Theta}$ is \emph{regular at $\theta$} if
+  there exists a distribution $Q$ such that for all bounded sequence
+  $h_n$,
+  \begin{equation*}
+    \sqrt{n}(T_n - (\theta + h_n / \sqrt{n}))
+    \mathop{\cd}_{P_{\theta + h_n/\sqrt{n}}}
+    Q.
+  \end{equation*}
+\end{definition}
+\begin{definition}
+  Let $\{P_\theta\}_{\theta \in \Theta}$ have densities $p_\theta$
+  with respect to a base measure $\mu$. The family
+  is \emph{quadratic mean differentiable} (QMD) at
+  $\theta$ with score $\score_\theta$ if
+  \begin{equation}
+    \label{eqn:qmd}
+    \int \left(\sqrt{p_{\theta + h}} - \sqrt{p_\theta}
+    - \half h^\top \score_\theta\sqrt{p_\theta} \right)^2 d\mu
+    = o(\norm{h}^2)
+  \end{equation}
+  as $h \to 0$.
+\end{definition}
+\begin{definition}
+  A family of distributions $\{P_\theta\}_{\theta \in \Theta}$ is
+  \emph{locally asymptotically normal with information matrix $I_\theta$} at
+  $\theta$ if there exists a sequence of random vectors $Z_n$ such that for
+  all $h_n \to h$,
+  \begin{equation*}
+    \sum_{i = 1}^n \log \frac{dP_{\theta + h_n/\sqrt{n}}}{dP_\theta}
+    (X_1, \ldots, X_n)
+    = h^\top Z_n - \half h^\top I_\theta h + o_P(1)
+  \end{equation*}
+  where $Z_n \cd \normal(0, I_\theta)$ under $P_\theta$, where
+  $X_i \simiid P_\theta$.
+\end{definition}
+
+These three definitions are linked in our case by a few important results.
+First~\cite[Theorem 7.2]{VanDerVaart98},
+if $P_\theta$ is QMD at $\theta$, then
+it is locally asymptotically normal with
+$Z_n = \frac{1}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(X_i)$ and information
+matrix $I_\theta = \E_\theta[\score_\theta \score_\theta^\top]$. Moreover,
+in any locally asymptotically normal family at $\theta$,
+if $T_n$ is a regular estimator at $\theta$ with limiting distribution $Q$,
+then for any bounded, symmetric, quasi-convex loss $L$ and $c < \infty$,
+\begin{equation*}
+  \limsup_n \sup_{\norm{h} \le c}
+  \E_{P_{\theta + h/\sqrt{n}}}
+  \left[L(\sqrt{n}(T_n - \theta - h / \sqrt{n}))\right]
+  = \E[L(W)] ~~ \mbox{for~}W \sim Q
+\end{equation*}
+(see Beran~\cite{beran1995role}, Eq.~(4.2)).
+
+Thus, we show three results: first, that $\bar{\theta}_n$ is regular,
+second, that the family $P_\theta$ is QMD, and finally, combining the two
+results.
+
+We first show that the estimator $\bar{\theta}_n$ is regular in the
+following sense: For $\theta \in \Theta$, a sequence $h_n \to h \in \R$ and
+$n$ large enough that $\theta + h_n /\sqrt{n} \in \Theta$, let
+$P_{\theta,n}$ be a product probability measure on $\R^n$ distributed
+i.i.d.\ with density
+$f(x - \theta - h_n/\sqrt{n})$. Then
 \begin{align}
-\label{eq:sgd_part2}
-\sqrt{n}\left( \bar{\theta}_n - \theta\right) \overset{d}{\to} \Ncal\left( h,\frac{1}{\eta(0)}\right),
+  \label{eqn:sgd-median-regular}
+  \sqrt{n}\left( \bar{\theta}_n - \theta\right)
+  \mathop{\cd}_{\Prob_{\theta,n}}
+  \normal\left( h,\frac{1}{4 f(\theta)^2}\right),
 \end{align}
-under $\Prob_{\theta,n}$. In order to show \eqref{eq:sgd_part2} we use the following refinement of Theorem~\ref{corollary:polyak-juditsky}, proof of which is given in Subsection~\ref{proof:thm:normal_expansion} below.
+under $\Prob_{\theta,n}$. To show the convergence~\eqref{eqn:sgd-median-regular} we
+use the following refinement of Corollary~\ref{corollary:polyak-juditsky},
+whose proof we defer to Section~\ref{proof:normal-expansion}.
 %
-\begin{thm} \label{thm:normal_expansion}
-Set $\Delta_i = \theta_i - \theta$ and
-$\bar{\Delta_i} = \frac{1}{n} \sum_{i=1}^n \Delta_i$. Assume that, in addition to Assumptions (i)-(iv) of Theorem~\ref{corollary:polyak-juditsky}, there exists $K_1$ and $\lambda>0$ such that
-\begin{equation}
-\ex{\left| \varphi(Z_1) - \varphi(x+Z_1)  \right|} \leq K_1 |x|^{1+\lambda}
-\label{eq:PJ_additional_cond}. 
-\end{equation}
-Then:
-\begin{itemize}
-\item[(i)] \begin{equation}
-\sqrt{n} \bar{\Delta}_n = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{p.n}(1). \label{eq:normal_expansion_lem}
-\end{equation}
-where $o_{p,n}(1)$ converges in probability to $0$ as $n\to \infty$.
-\item[(ii)] If $Z_1$ has continuously differentiable density $f(x)$ with finite Fisher information for location $\sigma_f^2$, then for any converging sequence $h_n \to h$,
-\[
-\sqrt{n} \left( \bar{\Delta}_n \right) \overset{d}{\to} \Ncal\left( \frac{-h}{\psi'(0)} \int_{\R} \varphi(x) f'(x) dx  , \frac{\chi(0)}{\psi'^2(0)} \right)
-\]
-under the local alternative $Z_1,\ldots,Z_n \sim \Prob^n_{h_n/\sqrt{n}}$ with density $\prod_{i=1}^n f(x_i-h_n/\sqrt{n})$.
-\end{itemize}
-\end{thm}
-In our setting, we have
+\begin{corollary}
+  \label{corollary:normal-expansion}
+  Set $\Delta_i = \theta_i - \theta$ and $\bar{\Delta}_i = \frac{1}{n}
+  \sum_{i=1}^n \Delta_i$. Let the conditions of
+  Corollary~\ref{corollary:polyak-juditsky} hold, and additionally
+  assume the local smoothness condition that there exist
+  $0 < \lambda \le 1$ and $K < \infty$ such that
+  \begin{equation}
+    \label{eqn:additional-local-smooth}
+    \E[|\varphi(x + Z) - \varphi(Z)|^2]
+    \le K (|x|^\lambda + x^2).
+  \end{equation}
+  Then
+  \begin{enumerate}[(i)]
+  \item \label{item:regularity}
+    The sequence $\Delta_i$ is regular, that is,
+    \begin{equation}
+      \sqrt{n} \bar{\Delta}_n
+      = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)
+      + o_{P,n}(1).
+      \label{eq:normal_expansion_lem}
+    \end{equation}
+  \item \label{item:apply-le-cam} Let $Z_i$ as in
+    Corollary~\ref{corollary:polyak-juditsky} have absolutely continuous
+    density $p$ with median $0$, define $\score_h(z) = \frac{p'(z - h)}{p(z
+      - h)}$, and assume that $I_h \defeq \E_\theta[\score_h(Z)^2]$ is
+    continuous in $h$ near 0.  Then for any converging sequence $h_n \to h$,
+    \begin{equation*}
+      \sqrt{n} \bar{\Delta}_n
+      \mathop{\cd}_{P_{\theta + h_n/\sqrt{n}}^n}
+      \normal\left( \frac{-h}{\psi'(0)} \E_p[\varphi(Z) \score_0(Z)]
+      , \frac{\chi(0)}{\psi'^2(0)} \right).
+    \end{equation*}
+  \end{enumerate}
+\end{corollary}
+
+We now verify that the setting of Theorem~\ref{thm:sgd} satisfies the
+conditions of Corollary~\ref{corollary:polyak-juditsky}. First,
+we have the obvious fact that
+\begin{equation*}
+  |\sgn(z) - \sgn(x + z)|
+  \le 2 \cdot \indic{|x| \ge |z|}.
+\end{equation*}
+Recalling our w.l.o.g.\ assumption that $\theta = \mbox{med}(X) = 0$,
+for $\varphi(z) = \sgn(z)$, and $Z = X - \theta = X$ we have
 \begin{align*}
-& %\varphi(Z_1) - \varphi(x+Z_1) = 
-\sgn(Z_1) - \sgn(x + Z_1) \\
-& = \begin{cases}
-2 & Z_1 > 0,\, x+Z_1<0, \\
--2 & Z_1 <0, \, x+Z_1>0, \\
-0 & \text{otherwise}.
-\end{cases}
+  \ex{ \left| \varphi(Z) - \varphi(x + Z) \right| }
+  \leq 2 \Prob\left( |Z_1| \le |x|  \right)
+  \le 2 f(0) |x| + \lip(f) x^2
 \end{align*}
-It follows that
-\begin{align*}
-\ex{ \left| \varphi(Z_1) - \varphi(x+Z_1) \right| }  \leq \Prob\left( |Z_1| < x  \right) \leq f(0) |x|, 
-\end{align*}
-and hence condition \eqref{eq:PJ_additional_cond} is fulfilled. In addition, by anti symmetry of $f'(x)$ around $x=0$, 
-\[
-\int_{\R} \varphi(x) f'(x) dx = \int_{\R} \sgn(x) f'(x) dx = 2\int_0^\infty f'(x) dx = -2f(0) = -\psi'(0). 
-\]
-Theorem~\ref{thm:normal_expansion}, applied to the setting of Theorem~\ref{thm:sgd}, implies \eqref{eq:sgd_part2}. \par
+for $x$ near 0, where $\lip(f)$ is the Lipschitz constant of $f$ near
+its median. For large $x$ we always have
+$\E[|\varphi(Z) - \varphi(x + Z)|] \le 2$, so that
+condition~\eqref{eqn:additional-local-smooth} holds.
+In addition, we have
+\begin{equation*}
+  \int_{\R} \varphi(x) f'(x ) dx
+  = \int_{\R} \sgn(x) f'(x ) dx =
+  \int_0^\infty f'(x ) dx
+  - \int_{-\infty}^0 f'(x )
+  = -2 f(0) = -\psi'(0).
+\end{equation*}
+Corollary~\ref{corollary:normal-expansion}
+now implies the convergence \eqref{eqn:sgd-median-regular}.
+
+With the convergence~\eqref{eqn:sgd-median-regular},
+the limiting efficiency estimate~\eqref{eq:attaining_LAM} is straightforward.
+Indeed, the limiting distribution~\eqref{eqn:sgd-median-regular}
+guarantees that $\bar{\theta}_n$ is a regular estimator,
+
+
+
 
 Under the assumption that $f(x)$ is continuously differentiable with a finite Fisher information for location, the model $\{Z_n+ \theta\}_{n \in \N}$ is differentiable in quadratic mean \cite[Exm. 7.8]{van2000asymptotic} and hence local asymptotically normal (LAN) in the sense that
-\[
+\begin{equation*}
 \log \left(\frac{\Prob_{\theta,n}(X^n)}{\Prob_{\theta} (X^n) }\right) = h \eta^{-1/2}(0) Z - \frac{1}{2} h^2 \eta^{-1}(0)  + o_{p,n}(1),
-\]
+\end{equation*}
 where $Z\sim \Ncal(0,1)$ and $o_{p,n}(1) \to 0$ as $n\to \infty$ under $\Prob_{\theta}$. The proof is concluded since any regular estimator in LAN model satisfies \eqref{eq:attaining_LAM} \cite{beran1995role}. 
 
 \subsubsection*{Proof of (iii)}
@@ -146,15 +256,23 @@ U_n = U_{n-1} - \gamma_n \varphi(Y_n), & Y_n = g'(U_{n-1})+Z_n \\
 \bar{U}_n= \frac{1}{n} \sum_{i=1}^n U_n, & n=1,2,\ldots.
 \end{cases}
 \end{align}
-Assume that the function $g(x)$ is twice differentiable with a strictly positive and uniformly bounded second derivative. In particular, $g(x)$ is convex with a unique minimizer $x^\star \in \R$. Moreover, assume that the noises $Z_n$ are uncorrelated and identically distributed with a distribution with a density for which the Fisher information exits. Let $\psi(x)$ and $\chi(x)$ be defined as in Theorem~\ref{corollary:polyak-juditsky}-(iii) and satisfy the conditions there. Assume in addition that $\chi(0)>0$, condition \eqref{eq:Polyak_Juditsky_cond3} with $\lambda = 1$, 
-and there exits $K_3$ such that 
-\[
+Assume that the function $g(x)$ is twice differentiable with a strictly
+positive and uniformly bounded second derivative. In particular, $g(x)$ is
+convex with a unique minimizer $x^\star \in \R$. Moreover, assume that the
+noises $Z_n$ are uncorrelated and identically distributed with a
+distribution with a density for which the Fisher information exits. Let
+$\psi(x)$ and $\chi(x)$ be defined as in
+Theorem~\ref{corollary:polyak-juditsky}-(iii) and satisfy the conditions
+there. Assume in addition that $\chi(0)>0$, condition
+\eqref{eqn:local-hessian-psi} with $\lambda = 1$, and there exits $K_3$ such
+that
+\begin{equation*}
 \ex{  | \varphi(x+Z_1) |^4 } \leq K_3(1+|x|^4). 
-\]
+\end{equation*}
 Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions \eqref{eq:conditions1} and \eqref{eq:conditions2}. Then
-\[
+\begin{equation*}
 V_n \triangleq \ex{ \left(\bar{U}_n-x^\star \right)^2 } = n^{-1}\frac{\chi(0)} { (\psi'(0))^2 (g''(x^\star))^2 } + o(n^{-1}).
-\]
+\end{equation*}
 \end{thm}
 
 We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$. From \eqref{eq:polyak_new_measurements} we have
@@ -163,11 +281,329 @@ U_n & = U_{n-1} + \gamma_n \sgn(\theta-U_{n-1} - Z_n )  \\
 & = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
 \end{align*}
 so the estimator $\bar{U}_n$ equals to the one defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}. Note that
-\[
+\begin{equation*}
 \ex{ | \varphi(x+Z_1) |^4 } = 1 \leq K_3(1+|x|^4)
-\]
+\end{equation*}
 for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
 the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies that for any $\theta \in \R$, 
-\[
+\begin{equation*}
 V_n = \ex{ \left({\theta}_n-\theta \right)^2 } = \frac{1}{4n f^2(0)} + o(n^{-1}).
-\]
+\end{equation*}
+
+\subsection{Proof of Corollary~\ref{corollary:normal-expansion}}
+\label{proof:normal-expansion}
+
+\subsubsection*{Proof of
+  Corollary~\ref{corollary:normal-expansion}\eqref{item:regularity}}
+
+The proof of part~\eqref{item:regularity} requires two additional lemmas of
+Polyak and Juditsky~\cite{PolyakJu92}.
+\begin{lem}[\cite{PolyakJu92}, Lemma 2]
+  \label{lemma:polyak-expansion}
+  Define the process $\Delta_i^1 = \Delta_{i-1}^i
+  - \gamma_i (A \Delta_{i-1} + \xi_i)$ for $i = 1, 2, \ldots$.
+  Assume that $A>0$ and the stepsizes $\gamma_i$ satisfy
+  condition~\eqref{eqn:lazy-gamma}. Then
+  for $\bar{\Delta}_n^1 = \frac{1}{n} \sum_{i = 1}^n \Delta_i^1$, we have
+  \begin{equation}
+    \label{eqn:polyak-expansion}
+    \sqrt{n} \bar{\Delta}_n^1
+    % = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1} \Delta_i^1
+    = \frac{\alpha_n \Delta_0^1}{\sqrt{n} \gamma_0}
+    + \frac{1}{\sqrt{n} A} \sum_{i=1}^{n-1} \xi_i
+    + \frac{1}{\sqrt{n}}\sum_{i=1}^{n-1} w_i^n \xi_i,
+  \end{equation}
+  where $\alpha_n$ and $w_i^n$ are real numbers such that $|\alpha_n| \leq
+  K$ and $|w_i^n|\leq K$ for some $K< \infty$, and $\lim_{n\to \infty}
+  \frac{1}{n} \sum_{i=1}^{n-1} |w_i^n| = 0$.
+\end{lem} 
+
+\begin{lem}[\cite{PolyakJu92}]
+  \label{lemma:converging-power-sum}
+  Under the conditions of Corollary~\ref{corollary:normal-expansion},
+  with probability 1,
+  \begin{equation*}
+  \sum_{i=1}^\infty \frac{|\Delta_{i}|^{1+\lambda}}{\sqrt{i}} < \infty.
+  \end{equation*}
+\end{lem}
+\noindent
+Lemma~\ref{lemma:converging-power-sum} follows from the proof of Theorem 2
+in \cite[page 851]{polyak1992acceleration}.
+
+We separate the proof of part~\eqref{item:regularity} into two lemmas, which
+mirror the proofs of Polyak and Juditsky~\cite{PolyakJu92}; together they
+immediately give the result.
+
+\begin{lemma}
+  The expansion~\eqref{eq:normal_expansion_lem} holds for the process
+  $\bar{\Delta}^1_n$ defined by the iteration
+  \begin{align}
+    \label{eqn:polyak-expansion_lem1_alg}
+    & \Delta_i^1  = \Delta_{i-1}^1 - \gamma_i \psi'(0) \Delta_{i-1}^1 - \gamma_i \varphi(Z_i), \qquad
+    \Delta_0^1 = \Delta_0\\
+    & \bar{\Delta}^1_n = \frac{1}{n}\sum_{i=0}^{n-1} \Delta^1_i.
+    \nonumber
+  \end{align}
+\end{lemma}
+\begin{proof}
+  To prove this claim, use Lemma~\ref{lemma:polyak-expansion} with $A =
+  \psi'(0)$ and $\xi_i = -\varphi(Z_i)$, which by
+  condition~\eqref{item:zero-gradient} in
+  Corollary~\ref{corollary:polyak-juditsky} gives that
+  $\E[\xi_i] = 0$ and that the $\xi_i$ are independent.
+  The first term $\alpha_n \Delta_0^1 / \gamma_0 \sqrt{n} \to 0$
+  in Eq.~\eqref{eqn:polyak-expansion}. In addition,
+  by independence and that the $\xi_i$ are mean-zero, we have
+  \begin{align*}
+    \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 }
+    & = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
+    & = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0
+  \end{align*}
+  by Lemma~\ref{lemma:polyak-expansion}.
+  Thus, the expansion~\eqref{eqn:polyak-expansion} in
+  Lemma~\ref{lemma:polyak-expansion} gives
+  \begin{equation*}
+    \sqrt{n} \bar{\Delta}^1_n
+    = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)}
+    \sum_{i=1}^{n-1} \varphi(Z_i)+ o_{P,n}(1)
+  \end{equation*}
+  as desired.
+\end{proof}
+
+We then have the following asymptotic equivalence.
+\begin{lemma}
+  The sequences $\bar{\Delta}_n$ and $\bar{\Delta}^1_n$ are asymptotically
+  equivalent, meaning that
+  $\sqrt{n} (\bar{\Delta}_n - \bar{\Delta}_n^1) \cp 0$.
+\end{lemma}
+\begin{proof}
+  From the recursions~\eqref{eq:Polyak_Juditsky_alg} and
+  \eqref{eqn:polyak-expansion_lem1_alg}, the difference $\delta_i = \Delta_i
+  - \Delta_i^1$ satisfies
+  \begin{equation*}
+  \delta_i = \delta_{i-1} - \gamma_i \psi'(0) \delta_{i-1} + \gamma_i \left( \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i) \right),
+  \end{equation*}
+  where $\delta_0 = 0$. Applying Lemma~\ref{lemma:polyak-expansion} with the
+  choices $\xi_i = \psi'(0) \Delta_{i-1} + \varphi(Z_i) -
+  \varphi(\Delta_{i-1} + Z_i)$ yields
+  \begin{align}
+    \sqrt{n}\bar{\delta}_n
+    & = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
+    \left( \frac{1}{\psi'(0)} + w_i^n \right)  \xi_i  \nonumber \\
+    & = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
+    \left( \frac{1}{\psi'(0)} + w_i^n \right)
+    \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right)
+    \label{eq:PJ_proof1} \\
+    & \qquad ~ + 
+    \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}
+    + w_i^n \right)
+    \left( \psi(\Delta_{i-1})  + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i)
+    \right) \label{eq:PJ_proof2}
+  \end{align}
+  For the term \eqref{eq:PJ_proof1},
+  the assumption~\eqref{eqn:local-hessian-psi} that
+  $|\psi(x) - \psi'(0) x| = O(x^{1 + \lambda})$
+  and that $\sup_{i,n} |w_i^n| < \infty$ by Lemma~\ref{lemma:polyak-expansion}
+  give that there exists $K < \infty$ such that
+  $|\psi'(0)^{-1} + w_i^n| |\psi'(0) \Delta_{i-1} - \psi(\Delta_{i-1})|
+  \le K |\Delta_i|^{1 + \lambda}$.
+  Lemma~\ref{lemma:converging-power-sum} gives that
+  $\sum_{i = 1}^n
+  \frac{1}{\sqrt{i}} |\Delta_i|^{1 + \lambda} < \infty$,
+  and so the Kronecker lemma gives that
+  \begin{equation*}
+    \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}  + w_i^n \right)  \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right) \cas 0.
+  \end{equation*}
+
+  The term \eqref{eq:PJ_proof2} is somewhat more challenging to control.
+  We define
+  \begin{equation*}
+    \epsilon_i \triangleq \psi(\Delta_{i-1}) + \varphi(Z_i)
+    - \varphi(\Delta_{i-1}+Z_i),
+  \end{equation*}
+  and let
+  $\mc{F}_i = \sigma(Z_1, \ldots, Z_i)$ be the $\sigma$-field of the randomness
+  through time $i$. We use a square integrable martingale convergence
+  theorem~\cite[Exercise~5.3.35]{Dembo16}. Noting that
+  $\Delta_i \in \mc{F}_i$, we have
+  \begin{align}
+    \E[\epsilon_i^2 \mid \mc{F}_{i-1}]
+    & = \E[(\psi(\Delta_{i-1}) + \varphi(Z_i)
+      - \varphi(\Delta_{i-1} + Z_i))^2 \mid \mc{F}_{i-1}]
+    \nonumber \\
+    & \le 2 \psi(\Delta_{i-1})^2
+    + 2 \E[(\varphi(\Delta_{i-1} + Z_i) - \varphi(Z_i))^2 \mid \mc{F}_{i-1}]
+    \nonumber \\
+    & \le
+    K \left[|\Delta_{i-1}|^{1 + \lambda}
+      + |\Delta_{i-1}|^\lambda
+      + \Delta_{i-1}^2 \right],
+    \label{eqn:bound-psi-error-expectations}
+  \end{align}
+  where inequality~\eqref{eqn:bound-psi-error-expectations} follows by the
+  conditions~\eqref{eqn:local-hessian-psi}
+  and~\eqref{eqn:additional-local-smooth}, and $\E[\varepsilon_i \mid
+    \mc{F}_{i-1}] = 0$ for all $i$ by definition of $\psi(x) = \E[\varphi(x
+    + Z)]$ and that $\psi(0) = 0$.  We now control the expectations of these
+  quantities. For $R < \infty$, define the stopping time $\tau_R \defeq \inf
+  \{i : |\Delta_i| > R\}$, which satisfies $\{\tau_R \le i\} \in \mc{F}_i$
+  for each $i$.  Then using~\cite[Eq.~(A14)]{PolyakJu92}, we have
+  \begin{equation*}
+    \E[\Delta_i^2 \indic{\tau_R > i}] \le K \gamma_i,
+  \end{equation*}
+  and so inequality~\eqref{eqn:bound-psi-error-expectations} gives that
+  \begin{equation*}
+    \E\bigg[\sum_{i = 1}^\infty \frac{1}{i}
+      |\varepsilon_i|^2 \indic{\tau_R > i} \bigg]
+    \le K \sum_{i = 1}^\infty \frac{\gamma_i^\lambda}{i}
+    < \infty
+    ~~ \mbox{so} ~~
+    \sum_{i = 1}^\infty \frac{1}{i}
+    \varepsilon_i^2 \indic{\tau_R > i} < \infty
+    ~ \mbox{a.s.}
+  \end{equation*}
+  by Condition~\eqref{eqn:lazy-gamma}.
+  As with probability 1 there exists some (random) $R < \infty$ such that
+  $\tau_R = \infty$, we obtain that 
+  \begin{equation*}
+    \sum_{i = 1}^\infty \frac{1}{i}
+    \varepsilon_i^2  < \infty
+    ~ \mbox{a.s.}
+  \end{equation*}
+  Applying the square integrable martingale convergence
+  theorem of \cite[Ex.~5.3.35]{Dembo16}, we have
+  \begin{equation*}
+    \frac{1}{\sqrt{n}} \sum_{i = 1}^n
+    \left(\frac{1}{\psi'(0)} + w_i^n\right) \epsilon_i \cas 0,
+  \end{equation*}
+  so that both equations~\eqref{eq:PJ_proof1} and~\eqref{eq:PJ_proof2}
+  converge almost surely to 0.
+\end{proof}
+
+\subsubsection*{Proof of
+  Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam}}
+
+This is essentially an immediate consequence of Le Cam's third
+lemma~\cite[Example 6.7]{VanDerVaart98}.
+We recall~\cite[Thm.~7.2]{VanDerVaart98} that if
+a family $\{P_\theta\}_{\theta \in \Theta}$ is quadratic mean differentiable
+at $\theta$ with score $\score_\theta$, then for any sequence
+$h_n \to h$, if $Z_i \simiid P_\theta$ then
+\begin{equation}
+  \label{eqn:lan-from-qmd}
+  \log \frac{dP_{\theta + h/\sqrt{n}}^n}{dP_\theta} (Z_1, \ldots, Z_n)
+  = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(Z_i)
+  - \half h^2 I_\theta
+  + o_{P_\theta,n}(1)
+\end{equation}
+where $I_\theta = \E_{P_\theta}[\score_\theta^2]$ is the Fisher information,
+which necessarily exists.
+
+We thus show that under the conditions we have assumed,
+we have quadratic mean differentiability.
+\begin{lemma}[Extension of \cite{VanDerVaart98}, Lemma 7.6]
+  \label{lemma:qmd}
+  Let $p_\theta$ be a density with respect to $\mu$,
+  and assume that $\theta \mapsto s_\theta(x) \defeq \sqrt{p_\theta(x)}$
+  is absolutely continuous for all $x$. Let
+  $\dot{p}_\theta(x) = \nabla_\theta p_\theta(x)$ (when it exists),
+  and assume that
+  \begin{equation*}
+    \mu(\{x : \dot{p}_\theta(x) ~ \mbox{fails~to~exist}\}) = 0.
+  \end{equation*}
+  Assume that $I_\theta \defeq \E_{P_\theta}[\dot{p}_\theta
+    \dot{p}_\theta^\top / p_\theta^2]$ is continuous at $\theta_0$. Then
+  $P_\theta$ is QMD~\eqref{eqn:qmd} at $\theta = \theta_0$ with
+  $\score_\theta = \dot{p}_\theta / p_\theta$.
+\end{lemma}
+
+Deferring the proof of Lemma~\ref{lemma:qmd} temporarily,
+we note that the regularity result~\eqref{eq:normal_expansion_lem}
+gives
+\begin{equation*}
+  \sqrt{n} \bar{\Delta}_n = -\frac{1}{\sqrt{n}}
+  \sum_{i = 1}^n  \frac{\varphi(Z_i)}{\psi'(0)} + o_{P,n}(1).
+\end{equation*}
+The conditions in
+Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam} imply
+that the Fisher information $I_h =
+\E_h[\score_h(Z)^2]$ exists and is continuous for
+$\score_h(z) = \frac{p'(z - h)}{f(z - h)}$,
+and the asymptotic expansion~\eqref{eqn:lan-from-qmd}
+with the preceding display give the joint convergence
+\begin{equation*}
+  \left(\sqrt{n} \bar{\Delta}_n, \log \frac{P^n_{h_n/\sqrt{n}}}{P^n_0}(Z_1^n)
+  \right)
+  \cd \normal \left( \left(0,-\frac{h^2}{2} I_0 \right),
+  \begin{pmatrix}
+    \frac{\chi(0)}{\psi'(0)^2} & \frac{-h}{ \psi'(0)}
+    \E_p[\varphi(Z) \score_0(Z)] \\
+    \frac{-h}{ \psi'(0)} \E_p[\varphi(Z) \score_0(Z)]
+    & h^2 I_0
+  \end{pmatrix}  \right).
+\end{equation*}
+Le Cam's third lemma \cite[Exm. 6.7]{VanDerVaart98} then implies the
+convergence
+\begin{equation*}
+  \sqrt{n}\bar{\Delta}_n
+  \mathop{\cd}_{P_{h_n/\sqrt{n}}^n}
+  \Ncal\left(\frac{-h}{ \psi'(0)} \E_f[\varphi(Z) \score(Z)],
+  \frac{\chi(0)}{\psi'(0)^2} \right)
+\end{equation*}
+under the alternatives $P_{h_n/\sqrt{n}}$, which gives
+Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam}.
+
+All that remains is to return to our proof of Lemma~\ref{lemma:qmd}:
+
+\subsubsection*{Proof of Lemma~\ref{lemma:qmd}}
+
+The proof is essentially completely parallel to that of \cite[Lemma
+  7.6]{VanDerVaart98}. Define $\dot{s}_\theta = \half
+\frac{\dot{p}_\theta}{p_\theta} \sqrt{p_\theta}$, which exists $\mu$-almost
+surely, so that $\int \dot{s}_\theta \dot{s}_\theta^\top d\mu$ is
+well-defined (though it may be infinite). By Lebesgue's integration theorem,
+we have
+\begin{equation*}
+  s_{\theta + h}(x) - s_\theta(x) = \int_0^1 h^\top \dot{s}_{\theta + t h}(x) dt,
+\end{equation*}
+and so Jensen's inequality (or Cauchy-Schwarz) we have
+\begin{equation*}
+  (s_{\theta + h}(x) - s_\theta(x))^2
+  \le \int_0^1 h^\top \dot{s}_{\theta + t h}(x)
+  \dot{s}_{\theta + t h}(x) ^\top h dt.
+\end{equation*}
+Thus for any $h_t$ we have
+\begin{align*}
+  \int \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}\right)^2
+  d\mu(x)
+  & \le \int \int_0^1 (h_t^\top \dot{s}_{\theta + u t h_t})^2 du
+  d\mu \\
+  & = \int_0^1 h_t^\top \int
+  \dot{s}_{\theta + u t h_t}\dot{s}_{\theta + u t h_t}^\top
+  d\mu(x) h_t  du
+  = \frac{1}{4} h_t^\top \left(\int_0^1 I_{\theta + u t h_t} du\right) h_t.
+\end{align*}
+By continuity, as $h_t \to h$ and $t \to 0$ the assumed continuity
+of $\theta \mapsto I_\theta$ gives that the final display converges
+to $h^\top I_\theta h$.
+
+Now, we note that
+\begin{equation*}
+  \lim_{t \downarrow 0}
+  \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}
+  - h^\top \dot{s}_\theta(x)\right)^2 = 0
+\end{equation*}
+for all $x$ excepting a $\mu$-null set, and the
+variant dominated convergence theorem in
+\cite[Prop.~2.29]{VanDerVaart98} implies that
+\begin{equation*}
+  \lim_{t \to 0}
+  \frac{1}{t^2}
+  \int \left(s_{\theta + t h_t}(x) - s_\theta(x)
+  - t h^\top \dot{s}_\theta(x)\right)^2 d\mu(x)
+  = \lim_{t \to 0}
+  \int \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}
+  - h^\top \dot{s}_\theta(x)\right)^2 d\mu(x)
+  = 0,
+\end{equation*}
+completing the proof.
