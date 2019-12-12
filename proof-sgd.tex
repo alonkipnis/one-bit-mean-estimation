@@ -92,6 +92,7 @@ regular estimators, and quadratic-mean
 differentiability~\cite[cf.]{VanDerVaart98}.
 We begin by recalling some of these concepts.
 \begin{definition}
+  \label{definition:regular-estimator}
   A sequence of estimators $T_n$ for a parameter $\theta$ in the parametric
   family $\{P_\theta\}_{\theta \in \Theta}$ is \emph{regular at $\theta$} if
   there exists a distribution $Q$ such that for all bounded sequence
@@ -103,6 +104,7 @@ We begin by recalling some of these concepts.
   \end{equation*}
 \end{definition}
 \begin{definition}
+  \label{definition:qmd}
   Let $\{P_\theta\}_{\theta \in \Theta}$ have densities $p_\theta$
   with respect to a base measure $\mu$. The family
   is \emph{quadratic mean differentiable} (QMD) at
@@ -116,8 +118,10 @@ We begin by recalling some of these concepts.
   as $h \to 0$.
 \end{definition}
 \begin{definition}
+  \label{definition:lan}
   A family of distributions $\{P_\theta\}_{\theta \in \Theta}$ is
-  \emph{locally asymptotically normal with information matrix $I_\theta$} at
+  \emph{locally asymptotically normal with information matrix $I_\theta$} (LAN)
+  at
   $\theta$ if there exists a sequence of random vectors $Z_n$ such that for
   all $h_n \to h$,
   \begin{equation*}
@@ -130,14 +134,15 @@ We begin by recalling some of these concepts.
 \end{definition}
 
 These three definitions are linked in our case by a few important results.
-First~\cite[Theorem 7.2]{VanDerVaart98},
-if $P_\theta$ is QMD at $\theta$, then
-it is locally asymptotically normal with
-$Z_n = \frac{1}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(X_i)$ and information
-matrix $I_\theta = \E_\theta[\score_\theta \score_\theta^\top]$. Moreover,
-in any locally asymptotically normal family at $\theta$,
-if $T_n$ is a regular estimator at $\theta$ with limiting distribution $Q$,
-then for any bounded, symmetric, quasi-convex loss $L$ and $c < \infty$,
+First~\cite[Theorem 7.2]{VanDerVaart98}, if $\{P_\theta\}$ is QMD
+(Def.~\ref{definition:qmd}) at the point $\theta$, then it is locally
+asymptotically normal with $Z_n = \frac{1}{\sqrt{n}} \sum_{i = 1}^n
+\score_\theta(X_i)$ and information matrix $I_\theta =
+\E_\theta[\score_\theta \score_\theta^\top]$. Moreover, in any family
+$\{P_\theta\}$ that is LAN (Def.~\ref{definition:lan}) at $\theta$, if $T_n$
+is a regular estimator (Def.~\ref{definition:regular-estimator}) at $\theta$
+with limiting distribution $Q$, then for any bounded, symmetric,
+quasi-convex loss $L$ and $c < \infty$,
 \begin{equation*}
   \limsup_n \sup_{\norm{h} \le c}
   \E_{P_{\theta + h/\sqrt{n}}}
@@ -145,10 +150,32 @@ then for any bounded, symmetric, quasi-convex loss $L$ and $c < \infty$,
   = \E[L(W)] ~~ \mbox{for~}W \sim Q
 \end{equation*}
 (see Beran~\cite{beran1995role}, Eq.~(4.2)).
+%
+Thus, we show two results: first, that
+that the family $\{P_\theta\}$ of distributions
+defined by the shifted densities $\{f(\cdot - \theta)\}_{\theta \in \R}$
+is quadratic-mean-differentiable at any $\theta$,
+and second, that $\bar{\theta}_n$ is regular and
+asymptotically normal.
+The combination evidently gives the theorem.
 
-Thus, we show three results: first, that $\bar{\theta}_n$ is regular,
-second, that the family $P_\theta$ is QMD, and finally, combining the two
-results.
+First, we have the following lemma, somewhat more general than we need, but
+whose proof we provide in Sec.~\ref{sec:proof-qmd}.
+\begin{lemma}[Extension of \cite{VanDerVaart98}, Lemma 7.6]
+  \label{lemma:qmd}
+  Let $p_\theta$ be a density with respect to $\mu$,
+  and assume that $\theta \mapsto s_\theta(x) \defeq \sqrt{p_\theta(x)}$
+  is absolutely continuous for all $x$. Let
+  $\dot{p}_\theta(x) = \nabla_\theta p_\theta(x)$ (when it exists),
+  and assume that
+  \begin{equation*}
+    \mu(\{x : \dot{p}_\theta(x) ~ \mbox{fails~to~exist}\}) = 0.
+  \end{equation*}
+  Assume that $I_\theta \defeq \E_{P_\theta}[\dot{p}_\theta
+    \dot{p}_\theta^\top / p_\theta^2]$ is continuous at $\theta_0$. Then
+  $P_\theta$ is QMD (Definition~\ref{definition:qmd}) at $\theta = \theta_0$
+  with $\score_\theta = \dot{p}_\theta / p_\theta$.
+\end{lemma}
 
 We first show that the estimator $\bar{\theta}_n$ is regular in the
 following sense: For $\theta \in \Theta$, a sequence $h_n \to h \in \R$ and
@@ -485,41 +512,30 @@ We then have the following asymptotic equivalence.
 
 This is essentially an immediate consequence of Le Cam's third
 lemma~\cite[Example 6.7]{VanDerVaart98}.
-We recall~\cite[Thm.~7.2]{VanDerVaart98} that if
+Recall~\cite[Thm.~7.2]{VanDerVaart98} that if
 a family $\{P_\theta\}_{\theta \in \Theta}$ is quadratic mean differentiable
-at $\theta$ with score $\score_\theta$, then for any sequence
-$h_n \to h$, if $Z_i \simiid P_\theta$ then
-\begin{equation}
-  \label{eqn:lan-from-qmd}
-  \log \frac{dP_{\theta + h/\sqrt{n}}^n}{dP_\theta} (Z_1, \ldots, Z_n)
-  = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(Z_i)
-  - \half h^2 I_\theta
-  + o_{P_\theta,n}(1)
-\end{equation}
-where $I_\theta = \E_{P_\theta}[\score_\theta^2]$ is the Fisher information,
-which necessarily exists.
+at $\theta$ with score $\score_\theta$, then
+it is LAN at $\theta$ (Definition~\ref{definition:lan})
+with information matrix $I_\theta = \E[\score_\theta \score_\theta^\top]$.
 
-We thus show that under the conditions we have assumed,
-we have quadratic mean differentiability.
-\begin{lemma}[Extension of \cite{VanDerVaart98}, Lemma 7.6]
-  \label{lemma:qmd}
-  Let $p_\theta$ be a density with respect to $\mu$,
-  and assume that $\theta \mapsto s_\theta(x) \defeq \sqrt{p_\theta(x)}$
-  is absolutely continuous for all $x$. Let
-  $\dot{p}_\theta(x) = \nabla_\theta p_\theta(x)$ (when it exists),
-  and assume that
-  \begin{equation*}
-    \mu(\{x : \dot{p}_\theta(x) ~ \mbox{fails~to~exist}\}) = 0.
-  \end{equation*}
-  Assume that $I_\theta \defeq \E_{P_\theta}[\dot{p}_\theta
-    \dot{p}_\theta^\top / p_\theta^2]$ is continuous at $\theta_0$. Then
-  $P_\theta$ is QMD~\eqref{eqn:qmd} at $\theta = \theta_0$ with
-  $\score_\theta = \dot{p}_\theta / p_\theta$.
-\end{lemma}
+%% then for any sequence
+%% $h_n \to h$, if $Z_i \simiid P_\theta$ then
+%% \begin{equation}
+%%   \label{eqn:lan-from-qmd}
+%%   \log \frac{dP_{\theta + h/\sqrt{n}}^n}{dP_\theta} (Z_1, \ldots, Z_n)
+%%   = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(Z_i)
+%%   - \half h^2 I_\theta
+%%   + o_{P_\theta,n}(1)
+%% \end{equation}
+%% where $I_\theta = \E_{P_\theta}[\score_\theta^2]$ is the Fisher information,
+%% which necessarily exists.
 
-Deferring the proof of Lemma~\ref{lemma:qmd} temporarily,
-we note that the regularity result~\eqref{eq:normal_expansion_lem}
-gives
+%% We thus show that under the conditions we have assumed,
+%% we have quadratic mean differentiability.
+
+%% Deferring the proof of Lemma~\ref{lemma:qmd} temporarily,
+
+The regularity result~\eqref{eq:normal_expansion_lem} gives
 \begin{equation*}
   \sqrt{n} \bar{\Delta}_n = -\frac{1}{\sqrt{n}}
   \sum_{i = 1}^n  \frac{\varphi(Z_i)}{\psi'(0)} + o_{P,n}(1).
@@ -555,7 +571,8 @@ Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam}.
 
 All that remains is to return to our proof of Lemma~\ref{lemma:qmd}:
 
-\subsubsection*{Proof of Lemma~\ref{lemma:qmd}}
+\subsection{Proof of Lemma~\ref{lemma:qmd}}
+\label{sec:proof-qmd}
 
 The proof is essentially completely parallel to that of \cite[Lemma
   7.6]{VanDerVaart98}. Define $\dot{s}_\theta = \half
