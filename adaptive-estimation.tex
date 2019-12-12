@@ -52,10 +52,10 @@ The starting point for our first estimator is to note that the median of a
 distribution minimizes $\E[|X - \theta|]$ over $\theta \in \R$, and
 moreover, we have the familiar result (cf.~\cite{VanDerVaart98}, Ch.~21)
 that given a sample $X_1^n \simiid P$, if $\theta = \mbox{med}(P)$ and
-$P$ has density $f$ near $\theta$, then
+$P$ has continuous density $f(\cdot - \theta)$ near $\theta$, then
 \begin{equation*}
   \sqrt{n}(\mbox{med}(X_1^n) - \theta)
-  \cd \normal\left(0, \frac{1}{4 f(\theta)^2}\right),
+  \cd \normal\left(0, \frac{1}{4 f(0)^2}\right),
 \end{equation*}
 which is precisely the variance lower bound in
 Theorem~\ref{thm:adpative_lower_bound}.  Thus, it it is natural consider a
@@ -111,23 +111,21 @@ to establish the following theorem.
     %
     %
   \item \label{item:sgd-regular}
-    Assume in addition that $f(x)$ is continuously differentiable with a
-    finite Fisher information
-    \begin{equation*}
-      \sigma_f^2 \triangleq \ex{\frac{f'(X)}{f(X)} } 
-    \end{equation*}
-    for the location in the family $\{P_\theta\}$.
     %(or that $f(x-\theta)$ is differentiable in quadratic mean).  
-    Then for any bounded, symmetric, and quasi-convex function $L$, 
+    For any bounded, symmetric, and quasi-convex function $L$, 
     \begin{align} 
-      & \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right] \nonumber 
+      & \sup_{c < \infty} \limsup_{n \to \infty}
+      \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}
+      \E_\tau \left[ L\left( \sqrt{n}(\bar{\theta}_{n} - \tau) \right) \right] \nonumber 
       \\
-      & \qquad \qquad \qquad \qquad = \mathbb E \left[ L (Z/\sqrt{\eta(0)}) \right], \label{eq:attaining_LAM}
+      & \qquad \qquad \qquad \qquad = \mathbb E \left[L(W/ 2 f(0)) \right],
+        \label{eq:attaining_LAM}
     \end{align}
-    where $Z \sim \Ncal(0,1)$. 
+    where $W \sim \normal(0,1)$. 
     %
     %
-  \item Assume the stepsizes $\gamma_n$ satisfy both
+  \item \label{item:sgd-ms-convergence}
+    Assume the stepsizes $\gamma_n$ satisfy both
     conditions~\eqref{eqn:lazy-gamma} and~\eqref{eqn:stringent-gamma}.
     Then
     \begin{equation*}
