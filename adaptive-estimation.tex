@@ -265,62 +265,78 @@ set the individual bits
 \begin{equation*}
   B_i =
   \begin{cases}
-    \indic{X_i \geq \theta_0} & i = 1,\ldots,n_1, \\
-    \indic{X_i \geq T_n}& i={n_1+1,\ldots,n},
+    \indic{X_i \le \theta_0} & i = 1,\ldots,n_1, \\
+    \indic{X_i \le T_n}& i={n_1+1,\ldots,n},
   \end{cases}
 \end{equation*}
 where
 \begin{equation*}
-  T_n \defeq \theta_0 + F^{-1}\left(
+  T_n \defeq \theta_0 - F^{-1}\left(
   \frac{1}{n_1} \sum_{i=1}^{n_1} B_i 
   \right)
   ~~ \mbox{and} ~~
   \theta_n \defeq
-  \theta_{n_1} + F^{-1} \left(\frac{1}{n - n_1}
+  T_n - F^{-1} \left(\frac{1}{n - n_1}
   \sum_{i = n_1}^n B_i \right).
 \end{equation*} 
-Then
+The intuition here is that the estimator $\theta_n$ is a one-step
+correction (cf.~\cite[Thm.~6.4.3]{LehmannCa98}) of the initial estimator
+$T_n$, which approximately estimates
+$\theta_0 - F^{-1}(\theta_0 - \theta) = \theta$. We then have the
+following convergence result.
 \begin{thm}
-  Assume that as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_1 / n \to
+  Assume that $X_i = Z_i + \theta$, where $Z_i$ are i.i.d.\
+  with density $f$ and CDF $F$ and $\mbox{med}(Z_i) = 0$. Assume that
+  $f$ is continuous at 0, and that as $n \to \infty$,
+  $n_1(n) \rightarrow \infty$ and $n_1 / n \to
   0$. Then
   \begin{align*}
     \sqrt{n} \left( {\theta}_n - \theta  \right)
-    \cd  \normal\left( 0, 1/\eta(0) \right).
+    \cd  \normal\left( 0, \frac{1}{4 f(0)^2}\right).
   \end{align*}
 \end{thm}
-%
+\noindent
+That is, under Assumption~\ref{assump:failure_rate}, the method is
+asymptotically optimal.
 %
 \begin{proof}
   We abuse notation and instead of assuming we receive $n$ observations, assume
   we receive the $n + n_1$ observations $X_{-n_1}, \ldots, X_{-1}$ and
-  $X_1, \ldots, X_n$, defining $T_n = \theta_0 + F^{-1}(\frac{1}{n_1}
+  $X_1, \ldots, X_n$, defining $T_n = \theta_0 - F^{-1}(\frac{1}{n_1}
   \sum_{i = -n_1}^{-1} B_i)$ and
-  $B_i = \indic{X_i \ge T_n}$ for $i \ge 1$.
-  By continuity, we have $T_n \cas \theta$ as $n_1 \to \infty$.
-  Let
-  $E_n = \E[B_i \mid T_n] = P(X_i \ge T_n)$,
-  so that $V_n \defeq \var(B_i \mid T_n) = E_n(1 - E_n)$. Define also the random
+  $B_i = \indic{X_i \le T_n}$ for $i \ge 1$.
+  Letting $X_i = Z_i + \theta$ for $Z_i$ i.i.d.\ with fixed density
+  $f = F'$, we have
+  $B_i \cas F(\theta_0 - \theta)$, so that
+  $\frac{1}{n_1} \sum_{i = -n_1}^{-1} B_i \cas F(\theta - \theta_0)$ and
+  by the continuous
+  mapping theorem we have $T_n \cas \theta$ as $n_1 \to \infty$.
+
+  Now let
+  $E_n = \E[B_i \mid T_n] = P(X_i \le T_n)$,
+  so that $\var(B_i \mid T_n) = E_n(1 - E_n)$. Define also the random
   variable
   \begin{equation*}
-    Y_n \defeq \frac{1}{\sqrt{n}} \sum_{i = 1}^n \frac{B_i - E_i}{
-      \sqrt{E_n (1 - E_n)}},
+    Y_n \defeq \sqrt{n}
+    \frac{1}{\sqrt{E_n (1 - E_n)}}
+    \bigg[\frac{1}{n}\sum_{i = 1}^n B_i - E_n\bigg],
   \end{equation*}
   and let $F_n(\cdot \mid T_n)$ be its cumulative distribution function.
   Then because
   \begin{equation*}
-    \E\left[|B_i - E_n|^3 \mid T_n\right] \le V_n = E_n(1 - E_n)
+    \E\left[|B_i - E_n|^3 \mid T_n\right] \le E_n(1 - E_n)
     ~~ \mbox{we have} ~~
     \E\left[\frac{|B_i - E_n|^3}{(E_n(1 - E_n))^{3/2}} \mid T_n\right]
-    \le \frac{1}{\sqrt{V_n}}.
+    \le \frac{1}{\sqrt{E_n(1 - E_n)}},
   \end{equation*}
-  Then the Berry-Esseen theorem implies that there exists a constant
+  the Berry-Esseen theorem implies that there exists a constant
   $C \le 1$ such that
   \begin{equation*}
     \sup_t \left|F_n(t \mid T_n) - \Phi(t) \right|
-    \le \frac{C}{\sqrt{V_n} \sqrt{n}} \wedge 2,
+    \le \frac{C}{\sqrt{E_n (1 - E_n)} \sqrt{n}} \wedge 2,
   \end{equation*}
   where $\Phi$ is the standard Gaussian CDF.
-  As $V_n \cas \frac{1}{4}$ by definition of the median,
+  As $E_n (1 - E_n) \cas \frac{1}{4}$ by definition of the median,
   we have
   that (with probability 1)
   \begin{equation*}
@@ -329,12 +345,41 @@ Then
   \end{equation*}
   By dominated convergence and Jensen's inequality we thus obtain
   \begin{equation*}
-    \sup_t \left|\mathbb{P}(Y_n - \theta \le t) - \Phi(t)\right|
+    \sup_t \left|\mathbb{P}(Y_n \le t) - \Phi(t)\right|
     \le \E\left[
       \sup_t \left|F_n(t \mid T_n) - \Phi(t)\right| \right]
     \to 0,
   \end{equation*}
-  which gives the result when combined with Slutsky's lemmas.
+  which gives that $Y_n \cd \normal(0, 1)$.
+
+  Now,
+  Slutsky's lemmas imply
+  \begin{equation}
+    \sqrt{n}
+    \cdot \frac{2}{n} \sum_{i = 1}^n (B_i - E_n)
+    =
+    (1 + o_P(1)) \frac{1}{\sqrt{n E_n(1 - E_n)}}
+    \sum_{i = 1}^n \left(B_i - E_n\right)
+    \cd \normal(0, 1).
+    \label{eqn:apply-slutsky}
+  \end{equation}
+  For shorthand we write $P_n B = \frac{1}{n} \sum_{i = 1}^n B_i$,
+  and using that $E_n = \E[B_i \mid T_n] = F(T_n - \theta)$, we may thus
+  use the delta method to write
+  \begin{align*}
+    \sqrt{n}(\theta_n - \theta)
+    & = \sqrt{n}\left(T_n - F^{-1}\left(P_n B\right)
+    - \theta \right) \\
+    & = \sqrt{n} \left(T_n - F^{-1}\left(F(T_n - \theta)
+    + P_n B - F(T_n - \theta)\right) - \theta \right) \\
+    & = \sqrt{n} \left(T_n - (T_n - \theta )
+    + (F^{-1})'(T_n - \theta + o_P(1))\cdot \left(
+    P_n B - E_n\right) \right) \\
+    & = \sqrt{n} (F^{-1})'(0) (P_n B - E_n)
+    + o_P(1)
+    \cd \normal\left(0, \frac{1}{4 f(0)^2}\right),
+  \end{align*}
+  where we have used the limiting distribution~\eqref{eqn:apply-slutsky}.
 \end{proof}
 %
 
