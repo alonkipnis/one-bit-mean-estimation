@@ -151,7 +151,11 @@ respectively.
 
 As an immediate corollary to Theorem~\ref{thm:sgd}, we obtain the following
 asymptotic optimality results of the averaged stochastic gradient
-sequence.
+sequence. Specifically, the average of the stochastic gradient
+iterates~\eqref{eq:sgd_alg}
+is locally asymptotically minimax, and they achieve the lower
+bound of Theorem~\ref{thm:adpative_lower_bound}.
+
 \begin{corollary}
   Let the conditions of Theorem~\ref{thm:adpative_lower_bound} hold
   and $\theta_n$ be defined by the iteration~\eqref{eq:sgd_alg}.
@@ -165,26 +169,16 @@ sequence.
       \mathop{\cd}_{P_n} \normal\left(0, \frac{1}{\eta(0)}\right).
     \end{equation*}
   \item If in addition the stepsizes satisfy
-    condition~\eqref{eqn:stringent-gamma}, then for any
-    prior $\pi$ on $\R$, we have
-    \begin{equation*}
-      \int \E\left[(\bar{\theta}_n - \theta)^2\right] d\pi(\theta)
-      = \frac{1}{4 n f(0)^2} + o(n^{-1}).
-    \end{equation*}
+    condition~\eqref{eqn:stringent-gamma}, then they
+    achieve the lower bound of Theorem~\ref{thm:adpative_lower_bound} for any
+    prior $\pi$ on $\R$.
   \end{enumerate}
 \end{corollary}
-\noindent
 
   
-Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$ defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} attains the maximal ARE, as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
-%
-The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. In particular, parts (i) and (ii) of Theorem~\ref{thm:sgd} provides conditions under which $\bar{\theta}$ is asymptotically normal and local asymptotically minimax, in the sense that it attains the local asymptotic minimax bound \cite{van2000asymptotic}. Part (iii) provides an additional condition under which $\bar{\theta}$ also converges in its second moment. 
- \par
-%Note that $\theta_0$ is not explicitly defined in equation \eqref{eq:sgd_est}. A reasonable initialization for $\theta_0$ is $\theta_0 = \mathbb E [\theta]$, although Theorem~\ref{thm:sgd} implies that the asymptotic behavior of the estimator is indifferent to this initialization. Thus, the optimal efficiency is attained regardless of the prior distribution on $\theta$ or the radius of the parameter space $\Theta$.  \\
-In the encoding and estimating procedure \eqref{eq:sgd_alg} and \eqref{eq:sgd_est}, each one-bit message $B_n$ depends on its private sample as well as the current gradient descent estimate $\theta_{n-1}$. In this sense, each encoder in this algorithm interacts with previous one by using the current estimate.
-%
-As we explain next, 
-it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only one round of interactions among the encoders. 
+%% Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$ defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} attains the maximal ARE, as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
+%% %
+%% The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. In particular, parts (i) and (ii) of Theorem~\ref{thm:sgd} provides conditions under which $\bar{\theta}$ is asymptotically normal and local asymptotically minimax, in the sense that it attains the local asymptotic minimax bound \cite{van2000asymptotic}. Part (iii) provides an additional condition under which $\bar{\theta}$ also converges in its second moment. 
 
 
 \begin{figure}
@@ -246,67 +240,101 @@ it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only o
 \end{figure}
 
 \subsection{Maximal Efficiency using One Round of Threshold Adaptation}
-In Section~\ref{sec:preliminary} we considered an estimator that is based on binary messages of the form 
+
+
+In the encoding and estimating procedure \eqref{eq:sgd_alg}, each one-bit
+message $B_n$ depends on its private sample as well as the current gradient
+descent estimate $\theta_{n-1}$. In this sense, each encoder in this
+algorithm interacts with previous one by using the current estimate.  This
+amount of adaptivity is unnecessary: as we now consider, a similar encoding
+yields an asymptotically normal estimator attaining the lower variance bound
+$1/\eta(0)$, provided we allow \emph{one} adaptive update to the threshold
+value $\theta_0$ based on previously observed bits.
+%
+In this procedure we separate the sample into the disjoint sets
+$X_1,\ldots,X_{n_1}$ and $X_{n_1+1},\ldots,X_n$ for some $n_1 < n$.  We
+first use the estimator \eqref{eq:estimator_naive} to obtain an estimate
+${\theta}_{n_1}$ based on $B_1,\ldots,B_{n_1}$, and then use
+${\theta}_{n_1}$ as the new threshold value to obtain messages $B_{n_1+1},
+\ldots, B_n$. Figure~\ref{fig:one_round} illustrates a diagram of this
+procedure.
+
+More formally, we consider the following estimation scheme. Given
+$n_1 \in \{1, \ldots, n\}$,
+set the individual bits
 \begin{equation*}
-B_i = \mathbf 1_{X_i > \theta_0},\qquad i=1,\ldots,n,
+  B_i =
+  \begin{cases}
+    \indic{X_i \geq \theta_0} & i = 1,\ldots,n_1, \\
+    \indic{X_i \geq T_n}& i={n_1+1,\ldots,n},
+  \end{cases}
 \end{equation*}
-and deduced that it is asymptotically normal with variance $1/\eta(\theta-\theta_0)$.
-%
-We now show that a similar encoding leads to an asymptotically normal estimator attaining the lower variance bound $1/\eta(0)$, provided we allow to  update the threshold value $\theta_0$ based on previously observed bits at least once. 
-%
-In this procedure we separate the sample into two disjoint sets: $X_1,\ldots,X_{n_1}$ and $X_{n_1+1},\ldots,X_n$ for some $n_1 < n$.
-We first use the estimator \eqref{eq:estimator_naive} to obtain an estimate ${\theta}_{n_1}$ based on $B_1,\ldots,B_{n_1}$, and then use ${\theta}_{n_1}$ as the new threshold value to obtain messages $B_{n_1+1}, \ldots, B_n$. Figure~\ref{fig:one_round} illustrates a diagram of this procedure. 
-%
-The specific encoding and estimation scheme, as well as its asymptotic performance, are given by the following theorem:
-\begin{thm}
-For $i=1,\ldots,n$ set
+where
 \begin{equation*}
-B_i = \begin{cases}
- \mathbf 1_{X_i \geq \theta_0} & i = 1,\ldots,n_1, \\
- \mathbf 1_{X_i \geq {\theta}_{n_1} }& i={n_1+1,\ldots,n},
-\end{cases}
-\end{equation*}
-where $n = n_1+ n_2$ and 
-\begin{equation*}
-{\theta}_{n_1} \triangleq \theta_0 + F^{-1}\left(
-\frac{1}{n_1} \sum_{i=1}^{n_1} B_i 
- \right).
+  T_n \defeq \theta_0 + F^{-1}\left(
+  \frac{1}{n_1} \sum_{i=1}^{n_1} B_i 
+  \right)
+  ~~ \mbox{and} ~~
+  \theta_n \defeq
+  \theta_{n_1} + F^{-1} \left(\frac{1}{n - n_1}
+  \sum_{i = n_1}^n B_i \right).
 \end{equation*} 
-Let 
-\begin{equation*}
-{\theta}_{n_2}  \triangleq {\theta}_{n_1} +  F^{-1} \left( \frac{1}{n_2} \sum_{i=n_1+1}^{n_2} B_i \right)
-\end{equation*}
-and assume that, as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_2(n)/n \rightarrow 1$. Then:
-\begin{align*}
- \sqrt{n} \left( {\theta}_{n_2} - \theta  \right) \overset{d}{\longrightarrow}  \Ncal\left( 0, 1/\eta(0) \right).
-\end{align*}
+Then
+\begin{thm}
+  Assume that as $n\to \infty$, $n_1(n) \rightarrow \infty$ and $n_1 / n \to
+  0$. Then
+  \begin{align*}
+    \sqrt{n} \left( {\theta}_n - \theta  \right)
+    \cd  \normal\left( 0, 1/\eta(0) \right).
+  \end{align*}
 \end{thm}
 %
 %
 \begin{proof}
-For $t\in \mathbb R$, set
-\begin{equation*}
-p_{n_2}(t) \triangleq \frac{1}{n_2} \sum_{i=n_1+1}^{n} \mathbf 1_{X_i \geq t}. 
-\end{equation*}
-Since $n_2(n)/n \to 1$, if follows from the Berry Esseen theorem that there exists $C$, independent of $n$ and $t$, such that 
-\begin{align*}
-\sup_{t \in \R} \left| \sqrt{n} \frac{ p_{n_2}(t) - F( \theta - t)} {F(\theta - t) F \left( t - \theta\right) }  - \Phi(t) \right|  \leq C/\sqrt{n}. 
-\end{align*}
-where $Z \sim \Ncal(0,1)$. It follows that
-\begin{align}
-\label{eq:two_step_proof}
- \sqrt{n} \frac{ p_{n_2}(Y_n) - F(0)} {F^2(0) }  \overset{d}{\rightarrow} \Ncal(0,1)
-\end{align}
-for any sequence of random variables $\{Y_n\}$ converging in probability to $\theta$. In particular, since
-\begin{equation*}
-p_{n_1} \triangleq \frac{1}{n_1} \sum_{i=1}^{n_1} B_i \overset{a.s.}{\rightarrow} F(\theta - \theta_0)
-\end{equation*}
-by the law of large numbers, \eqref{eq:two_step_proof} holds for $Y_n = \theta_{n_1}$. Finally, we use the delta method with $g(x) = F^{-1}(x)$ to conclude
-\begin{align*}
-& \sqrt{n}\left( \theta_{n_2} - \theta \right) = \sqrt{n} \left( \theta_{n_1} + F^{-1}(p_{n_2}(\theta_{n_1})) - \theta \right) \\
-&= \sqrt{n} \left( g(p_{n_2}(\theta_{n_1})) - g \left(F(\theta-\theta_{n_1}) \right)  \right) \overset{d}{\to} \Ncal\left(0, 
-F^2(0)/ f^2(0) \right).
-\end{align*}
+  We abuse notation and instead of assuming we receive $n$ observations, assume
+  we receive the $n + n_1$ observations $X_{-n_1}, \ldots, X_{-1}$ and
+  $X_1, \ldots, X_n$, defining $T_n = \theta_0 + F^{-1}(\frac{1}{n_1}
+  \sum_{i = -n_1}^{-1} B_i)$ and
+  $B_i = \indic{X_i \ge T_n}$ for $i \ge 1$.
+  By continuity, we have $T_n \cas \theta$ as $n_1 \to \infty$.
+  Let
+  $E_n = \E[B_i \mid T_n] = P(X_i \ge T_n)$,
+  so that $V_n \defeq \var(B_i \mid T_n) = E_n(1 - E_n)$. Define also the random
+  variable
+  \begin{equation*}
+    Y_n \defeq \frac{1}{\sqrt{n}} \sum_{i = 1}^n \frac{B_i - E_i}{
+      \sqrt{E_n (1 - E_n)}},
+  \end{equation*}
+  and let $F_n(\cdot \mid T_n)$ be its cumulative distribution function.
+  Then because
+  \begin{equation*}
+    \E\left[|B_i - E_n|^3 \mid T_n\right] \le V_n = E_n(1 - E_n)
+    ~~ \mbox{we have} ~~
+    \E\left[\frac{|B_i - E_n|^3}{(E_n(1 - E_n))^{3/2}} \mid T_n\right]
+    \le \frac{1}{\sqrt{V_n}}.
+  \end{equation*}
+  Then the Berry-Esseen theorem implies that there exists a constant
+  $C \le 1$ such that
+  \begin{equation*}
+    \sup_t \left|F_n(t \mid T_n) - \Phi(t) \right|
+    \le \frac{C}{\sqrt{V_n} \sqrt{n}} \wedge 2,
+  \end{equation*}
+  where $\Phi$ is the standard Gaussian CDF.
+  As $V_n \cas \frac{1}{4}$ by definition of the median,
+  we have
+  that (with probability 1)
+  \begin{equation*}
+    \sup_t \left|F_n(t \mid T_n) - \Phi(t)\right| \le \frac{C}{\sqrt{n}}
+    ~~ \mbox{eventually}.
+  \end{equation*}
+  By dominated convergence and Jensen's inequality we thus obtain
+  \begin{equation*}
+    \sup_t \left|\mathbb{P}(Y_n - \theta \le t) - \Phi(t)\right|
+    \le \E\left[
+      \sup_t \left|F_n(t \mid T_n) - \Phi(t)\right| \right]
+    \to 0,
+  \end{equation*}
+  which gives the result when combined with Slutsky's lemmas.
 \end{proof}
 %
 
