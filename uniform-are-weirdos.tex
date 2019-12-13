@@ -1,0 +1,133 @@
+% -*- Mode: latex -*- %
+
+\section{Fast convergence of uniform estimators under bit constraints}
+\label{sec:uniform-weirdos}
+
+Here we consider the uniform distribution as our location family,
+demonstrating that in the adaptive setting~\eqref{item:adaptive} or even the
+one-step adaptive setting~(\ref{item:one-step-adaptive}'), constrained
+estimators can attain rates faster than the $1 / \sqrt{n}$ rates regular
+estimands allow. Indeed, define $c(x) = -\log 2$ for $x \in [-1, 1]$ and
+$c(x) = -\infty$ for $x \not \in [-1, 1]$. Then $f(x) = e^{-c(x)}$ is
+log-concave and symmetric, and we may consider the location family with
+densities $f(x - \theta)$. For notational simplicity, we assume we have
+a sample of size $2n$. We provide a proof sketch that
+there is a one-step adaptive estimator $\theta_n$ such that
+\begin{equation}
+  \label{eqn:uniforms-are-easy}
+  \sup_{|\theta| \le \log n}
+  P_\theta\left(|\theta_n - \theta| \ge \frac{8 \log n}{n^{3/4}}\right)
+  \le \frac{2}{n^2}.
+\end{equation}
+for all large $n$,
+and so (by the Borel-Cantelli lemmas), for any $\theta \in \R$ we have
+$P_\theta(|\theta_n - \theta| \le \sqrt{2 \log n} / n^{3/4} ~
+\mbox{eventually}) = 1$. This is of course faster than the $1/\sqrt{n}$
+rates we prove throughout.
+
+To prove inequality~\eqref{eqn:uniforms-are-easy}, we proceed in two steps,
+both quite similar.
+First, we define an initial estimator $\theta\init_n$.
+Let $\epsilon > 0$, which we will determine presently, though we will
+take $n \epsilon \to \infty$ as $n \to \infty$, so that we may assume
+w.l.o.g.\ that $\theta \in [-n\epsilon/2, n \epsilon/2]$. Take the interval
+$[-n\epsilon, n\epsilon]$, and construct
+$m$ thresholds at intervals of size $2 n \epsilon / m$; let
+the $j$th such threshold be
+\begin{equation*}
+  t_j \defeq -n \epsilon + \frac{2 n (j-1) \epsilon}{m}
+\end{equation*}
+Then we ``assign'' observations to each pair of thresholds, so that
+threshold $j$ corresponds to observations $I_j \defeq \{\frac{n (j - 1)}{m}
++ 1, \ldots, \frac{n j}{m}\}$, of which there are $n/m$.  For each index $i
+\in I_j$, we set
+\begin{equation*}
+  B_i = \begin{cases}
+    1 & \mbox{if~} X_i \ge t_j \\
+    0 & \mbox{otherwise}.
+  \end{cases}
+\end{equation*}
+Then we simply set $\theta_n\init$ to be the maximal threshold for which
+$B_i = 0$ for all observations $X_i$ corresponding to that threshold.
+
+Let us now consider the probability that $\theta_n\init$ is substantially
+wrong. For notational simplicity, let $U_i = (1 + X_i - \theta) / 2$, so that
+the $U_i$ are uniform on $[0, 1]$.
+First, note that we always have $\theta_n\init \ge \theta
+- \frac{2 n \epsilon}{m}$, because no observations will be below
+the appropriate threshold. Let $j\opt$ be the smallest index $j$
+for which $\theta \le t_{j\opt}$, and consider
+the index sets $I_{j\opt}$, $I_{j\opt + 1}$, and so on.
+The event $\theta\init_n \ge t_{j\opt} + \frac{2 n \epsilon}{m}$ may
+occur only if for each of the $n/m$ observations in the set
+$I_{j\opt + 1}$, we have $U_i \ge \frac{n \epsilon}{m}$. Thus,
+\begin{equation*}
+  P_\theta\left(\theta_n\init \ge t_{j\opt} + \frac{2 n \epsilon}{m}
+  \right)
+  \le \left(1 - \frac{n \epsilon}{m}\right)^\frac{n}{m}
+  \le \exp\left(-\frac{n^2\epsilon}{m^2}\right).
+\end{equation*}
+Setting the number of bins $m = \sqrt{n}$,
+the resolution $\epsilon = 2 \log n / n$, we obtain
+$P_\theta(\theta_n\init \ge t_{j\opt} + 4 \log n / \sqrt{n})
+\le n^{-2}$. Thus we have
+\begin{equation}
+  \label{eqn:quality-of-initial-estimate}
+  \sup_{|\theta| \le \log n} P_\theta\left(|\theta_n\init - \theta| \ge
+  \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^2}.
+\end{equation}
+
+The second stage estimator follows roughly the same strategy, except that
+the resolution of the bins is tighter. In particular, let us assume that
+$|\theta_n\init - \theta| \le \frac{8 \log n}{\sqrt{n}}$, which happens
+eventually by inequality~\eqref{eqn:quality-of-initial-estimate}.  (We will
+assume this tacitly for the remainder of the argument.)  Consider the
+interval $\Theta_n \defeq \theta_n\init + [-\frac{16 \log n}{\sqrt{n}},
+  \frac{16 \log n}{\sqrt{n}}]$ centered at $\theta_n\init$; we know that the
+interval includes $[\theta - \frac{8 \log n}{\sqrt{n}}, \theta + \frac{8
+    \log n}{\sqrt{n}}]$. Without loss of generality we assume $\theta_n\init
+= 0$.  Following precisely the same discretization strategy as that for
+$\theta_n\init$, we divide $\Theta_n$ into $m$ equal intervals, with
+thresholds $t_j = -\frac{16 \log n}{\sqrt{n}} + \frac{32 (j - 1) \log n}{m
+  \sqrt{n}}$; let $\epsilon_n = \frac{32 \log n}{m \sqrt{n}}$ be the width of
+these intervals.  Then following exactly the same reasoning as above, we
+assign indices $I_j = \{\frac{n(j - 1)}{m} + 1, \ldots, \frac{n j}{m}\}$ and
+for $i \in I_j$, set $B_i = 1$ if $X_i \ge t_j$. We define $\theta_n$ to be
+the maximal threshold $t_j$ for which $B_i = 0$ for all observations $X_i
+\in I_j$. Then following precisely the reasoning above, we have (on the
+event that $|\theta_n\init - \theta| \le \frac{8 \log n}{\sqrt{n}}$)
+\begin{equation*}
+  P_\theta(|\theta_n - \theta|
+  \ge 2 \epsilon_n)
+  \le (1 - \epsilon_n)^\frac{n}{m}
+  \le \exp\left(-\frac{n \epsilon_n}{m}\right)
+  = \exp\left(-\frac{32 \sqrt{n} \log n}{m^2}\right).
+\end{equation*}
+Set $m = 4 n^{1/4}$ to obtain the claimed
+result~\eqref{eqn:uniforms-are-easy}.
+
+
+
+\subsection{Proof of Proposition~\ref{prop:CEO}
+\label{app:proof:CEO}}
+
+%
+Denote by $D^\star$ the optimal MSE in the Gaussian CEO with $L$ observers and under a total sum-rate $r = r_1 + \ldots +r_L$. An expression for $D^\star$ as a function of $r$ is give as \cite[Eq. 10]{chen2004upper}:
+\begin{equation} \label{eq:ceo_optimal_sumrate}
+r = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
+\end{equation}
+For the special case where $r = n$ and $L=n$, we have
+\begin{equation} \label{eq:ceo_optimal_sumrate2}
+n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
+\end{equation}
+Consider the distributed encoding setting (iii) in the case where $f(x) = \Ncal(0,\sigma^2)$ and the prior on $\Theta$ is $\pi = \Ncal(0,\sigma_\theta^2)$. The Gaussian CEO problem of \cite{viswanathan1997quadratic} with a unit bitrate $r_1=\ldots = r_n =1$ at each terminal and blocklength $k=1$ reduces to our distributed setting (iii). Since $D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describes the MSE in the CEO setting under an optimal allocation of the sum-rate $r = n$ among $n$ encoders, it provides a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering the limit $n\rightarrow \infty$ in \eqref{eq:ceo_optimal_sumrate2}, we see that 
+\[
+D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
+\]
+This implies Proposition~\ref{prop:CEO}. 
+%We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the MSE in the CEO setting while enforcing the condition $r_1=\ldots = r_n = 1$. Indeed, an upper bound for the CEO MSE under the condition $r_1=\ldots = r_n = 1$ follows from \cite{KipnisRini2019}, and leads to
+%\[
+%D^\star \leq  \left( \frac{1}{\sigma_\theta^2} +  \frac{3n}{4\sigma^2 + \sigma_\theta^2} \right)^{-1}   =
+%\frac{4 \sigma^2}{3n} +  \frac{\sigma_\theta^2}{3n} + O(n^{-2}),
+%\]
+%which is equivalent to \eqref{eq:ceo_bound} when $\sigma_\theta$ is small. 

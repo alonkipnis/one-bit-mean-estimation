@@ -22,7 +22,7 @@ Appendix~\ref{proof:thm:adpative_lower_bound}.
   $I_0 \defeq \E_\pi[(\pi'(\theta) / \pi(\theta))^2]$.
   Then
   \begin{equation*}
-    n \E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0}.
+    \E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0}.
   \end{equation*}
 \end{thm}
 
@@ -106,13 +106,22 @@ to establish the following theorem.
     Then
     \begin{equation*}
       \sqrt{n}\left( \bar{\theta}_n - \theta\right)
-      \cd \normal\left(0,\frac{1}{4 f(\theta)^2}\right).
+      \cd \normal\left(0,\frac{1}{4 f(0)^2}\right).
     \end{equation*}
     %
     %
   \item \label{item:sgd-regular}
     %(or that $f(x-\theta)$ is differentiable in quadratic mean).  
-    For any bounded, symmetric, and quasi-convex function $L$, 
+    Let $\{P_\theta\}_{\theta \in \R}$ be the family of distributions
+    with density $f(\cdot - \theta)$, where $f$ has median 0.
+    Let $h_n \to h \in \R$, and define the distributions
+    $P_n = P_{\theta + h_n/\sqrt{n}}^n$. Then
+    \begin{equation*}
+      \sqrt{n}\left(\bar{\theta}_n - \theta - h_n / \sqrt{n}\right)
+      \mathop{\cd}_{P_n}
+      \normal\left(0, \frac{1}{4 f(0)^2}\right),
+    \end{equation*}
+    and for any bounded, symmetric, and quasi-convex function $L$,
     \begin{align} 
       & \sup_{c < \infty} \limsup_{n \to \infty}
       \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}
@@ -124,28 +133,49 @@ to establish the following theorem.
     where $W \sim \normal(0,1)$. 
     %
     %
-  \item \label{item:sgd-ms-convergence}
-    Assume the stepsizes $\gamma_n$ satisfy both
-    conditions~\eqref{eqn:lazy-gamma} and~\eqref{eqn:stringent-gamma}.
-    Then
+  \item \label{item:sgd-ms-convergence} Assume the stepsizes $\gamma_n$
+    satisfy both conditions~\eqref{eqn:lazy-gamma}
+    and~\eqref{eqn:stringent-gamma}. Let
+    $\pi$ be a distribution on $\R$.
     \begin{equation*}
-      \ex{\left( \bar{\theta}_n - \theta \right)^2} = \frac{1}{4 n f(\theta)^2} + o(n^{-1}). 
+      \int \E\Big[( \bar{\theta}_n - \theta )^2\Big] d\pi(\theta)
+      = \frac{1}{4 n f(0)^2} + o(n^{-1}). 
     \end{equation*}
   \end{enumerate}
 \end{thm}
 
 \noindent
-We provide the proof in Appendix~\ref{proof:sgd}.
+We provide the proofs of the items in Appendices~\ref{sec:proof-normal-sgd},
+\ref{sec:proof-sgd-regular}, \ref{sec:proof-sgd-ms-convergence},
+respectively.
 
 As an immediate corollary to Theorem~\ref{thm:sgd}, we obtain the following
 asymptotic optimality results of the averaged stochastic gradient
 sequence.
-%% \begin{corollary}
+\begin{corollary}
+  Let the conditions of Theorem~\ref{thm:adpative_lower_bound} hold
+  and $\theta_n$ be defined by the iteration~\eqref{eq:sgd_alg}.
+  Let $\{P_\theta\}_{\theta \in \R}$ be the family of distributions
+  with densities $f(\cdot - \theta)$.
+  \begin{enumerate}[(i)]
+  \item Define the shorthand $P_n = P_{\theta + h_n/\sqrt{n}}^n$.
+    If the stepsizes satisfy condition~\eqref{eqn:lazy-gamma}, then
+    \begin{equation*}
+      \sqrt{n}(\bar{\theta}_n - \theta - h_n / \sqrt{n})
+      \mathop{\cd}_{P_n} \normal\left(0, \frac{1}{\eta(0)}\right).
+    \end{equation*}
+  \item If in addition the stepsizes satisfy
+    condition~\eqref{eqn:stringent-gamma}, then for any
+    prior $\pi$ on $\R$, we have
+    \begin{equation*}
+      \int \E\left[(\bar{\theta}_n - \theta)^2\right] d\pi(\theta)
+      = \frac{1}{4 n f(0)^2} + o(n^{-1}).
+    \end{equation*}
+  \end{enumerate}
+\end{corollary}
+\noindent
 
-\textbf{FILL THIS IN}
-
-%% \end{corollary}
-
+  
 Theorem~\ref{thm:sgd} implies that the estimator ${\theta}_n$ defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg} attains the maximal ARE, as established by Theorem~\ref{thm:adpative_lower_bound}. %Furthermore, it is locally minimax in the sense that it attains the minimal MSE for all local alternatives of $\theta$. 
 %
 The update step \eqref{eq:sgd_alg} can be seen as a gradient descent step for the function $x\to |x|$ at the point $x=X_n - \theta_{n-1}$. Consequently, the procedure above is known as averaged stochastic gradient descent for minimizing $x \to |x|$ given the data $X_1,\ldots,X_n$. The minimal value of this optimization is the sample median, and Theorem~\ref{thm:sgd} provides conditions for the sequence of gradient steps so that the algorithm converges to this minimum. In particular, parts (i) and (ii) of Theorem~\ref{thm:sgd} provides conditions under which $\bar{\theta}$ is asymptotically normal and local asymptotically minimax, in the sense that it attains the local asymptotic minimax bound \cite{van2000asymptotic}. Part (iii) provides an additional condition under which $\bar{\theta}$ also converges in its second moment. 
@@ -157,63 +187,63 @@ As we explain next,
 it is possible to obtain the optimal efficiency of $\eta(0)\sigma^2$ with only one round of interactions among the encoders. 
 
 
-%% \begin{figure}
-%% \begin{center}
-%% \begin{tikzpicture}[node distance=2cm,auto]
-%%   \node at (0,0) (source) {$X_1$} ;
-%%   \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
-%% \draw[->,line width = 2pt] (source) -- (enc1); 
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm,auto]
+  \node at (0,0) (source) {$X_1$} ;
+  \node[int1, right of = source, node distance = 1.2cm] (enc1) {$\enc$};  
+\draw[->,line width = 2pt] (source) -- (enc1); 
 
-%% % \node[below of = source, node distance = 1cm] (source2) {$X_2$};
-%% %\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc};  
-%% %\draw[->,line width = 2pt] (source2) -- (enc2); 
+% \node[below of = source, node distance = 1cm] (source2) {$X_2$};
+%\node[int1, right of = source2, node distance = 1.2cm] (enc2) {Enc};  
+%\draw[->,line width = 2pt] (source2) -- (enc2); 
 
-%% \node[below of = source, node distance = 1.7cm] (source3) {$X_{n_1}$};
-%% \node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
+\node[below of = source, node distance = 1.7cm] (source3) {$X_{n_1}$};
+\node[int1, right of = source3, node distance = 1.2cm] (enc3) {$\enc$};  
 
-%% \draw[->,line width = 2pt] (source3) -- (enc3); 
+\draw[->,line width = 2pt] (source3) -- (enc3); 
 
-%% \node[below of = source, node distance = 0.5cm] {$\vdots$};
+\node[below of = source, node distance = 0.5cm] {$\vdots$};
 
-%% \node[int1, right of = enc3, node distance = 2.1cm ] (est) {$\est_1$};
+\node[int1, right of = enc3, node distance = 2.1cm ] (est) {$\est_1$};
 
-%% \draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
+\draw[->,line width = 2pt] (enc1) -| node[above, xshift = -1cm] (mes1) {$B_1$} (est);   
 
-%% %\draw[->,line width = 2pt] (enc2) -| node[above, xshift = -1cm] (mes2) {$B_2$} (est);   
+%\draw[->,line width = 2pt] (enc2) -| node[above, xshift = -1cm] (mes2) {$B_2$} (est);   
 
-%% \draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
+\draw[->,line width = 2pt] (enc3) -- node[above, xshift = 0cm]  {$B_{n_1}$} (est);   
 
-%% \node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
-%% \node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {$\enc$};  
-%% \draw[->,line width = 2pt] (sourceB) -- (enc1B); 
+\node[below right = 0.75 and 1.5 of source3] (sourceB) {$X_{n_1 +1}$} ;
+\node[int1, right of = sourceB, node distance = 1.7cm] (enc1B) {$\enc$};  
+\draw[->,line width = 2pt] (sourceB) -- (enc1B); 
 
-%% \node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
-%% \node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {$\enc$};  
-%% \draw[->,line width = 2pt] (source3B) -- (enc3B); 
-%% \node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
+\node[below of = sourceB, node distance = 1.7cm] (source3B) {$X_n$};
+\node[int1, right of = source3B, node distance = 1.7cm] (enc3B) {$\enc$};  
+\draw[->,line width = 2pt] (source3B) -- (enc3B); 
+\node[below of = sourceB, node distance = 0.4cm] {$\vdots$};
 
-%% \node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {$\est_2$};
+\node[int1, right of = enc3B, node distance = 2.1cm ] (estB) {$\est_2$};
 
-%% \draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.5cm] {$B_{n_1+1}$} (estB);
-%% \draw[->,line width = 2pt] (enc3B) -- node[above] {$B_n$} (estB);
+\draw[->,line width = 2pt] (enc1B) -| node[above, xshift = -0.5cm] {$B_{n_1+1}$} (estB);
+\draw[->,line width = 2pt] (enc3B) -- node[above] {$B_n$} (estB);
 
-%% \draw[->,line width = 1pt] (est.east) node[above, xshift  =0.5cm] {${\theta}_{n_1}$} -| (enc1B.north);
+\draw[->,line width = 1pt] (est.east) node[above, xshift  =0.5cm] {${\theta}_{n_1}$} -| (enc1B.north);
 
-%% %\draw[->,line width = 1pt] (enc1B) -- (enc3B);
+%\draw[->,line width = 1pt] (enc1B) -- (enc3B);
 
-%% \draw[->,line width = 0.5pt] (est.east) -| +(1.3,-0.5) -- +(1.3,-2.5) -| (enc3B.north);
+\draw[->,line width = 0.5pt] (est.east) -| +(1.3,-0.5) -- +(1.3,-2.5) -| (enc3B.north);
 
-%% %\draw[->,line width = 1pt] (enc1B)  -- node[right] {${\theta}_{n_1}$} (enc3B);
+%\draw[->,line width = 1pt] (enc1B)  -- node[right] {${\theta}_{n_1}$} (enc3B);
 
-%% \draw[->,line width = 0.5pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
-%% \node[below of = enc1B, node distance = 0.5cm] {$\vdots$};
+\draw[->,line width = 0.5pt] (estB) -- +(0.8,0) node[right] {${\theta}_n$};
+\node[below of = enc1B, node distance = 0.5cm] {$\vdots$};
 
-%% \end{tikzpicture}
-%% \end{center}
-%% \caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
-%% \label{fig:one_round}
-%% }
-%% \end{figure}
+\end{tikzpicture}
+\end{center}
+\caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
+\label{fig:one_round}
+}
+\end{figure}
 
 \subsection{Maximal Efficiency using One Round of Threshold Adaptation}
 In Section~\ref{sec:preliminary} we considered an estimator that is based on binary messages of the form 
@@ -280,8 +310,9 @@ F^2(0)/ f^2(0) \right).
 \end{proof}
 %
 
-%% \begin{figure}
-%% \begin{center}
+\begin{figure}
+  %%%%% COMMENTED TIKZ PICTURE %%%%%
+\begin{center}
 %% \begin{tikzpicture}[scale = 0.6]
 %% \begin{axis}[
 %% width=10cm, height=6cm,
@@ -313,12 +344,7 @@ F^2(0)/ f^2(0) \right).
 
 %% \end{axis}
 %% \end{tikzpicture}
-%% %\begin{tikzpicture}
-%% %\node at (0,0) {\includegraphics[scale=0.4]{one_bit_adpative}};
-%% %\node[rotate = 90, scale = 0.7] at (-3.8,0) {$n \mathbb E \left({\theta}_n - \theta \right)^2$};
-%% %\node[scale = 0.7] at (0,-2.4) {$n$};
-%% %\end{tikzpicture}
-%% \caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
-%% \label{fig:adaptive_error}  }
-%% \end{center}
-%% \end{figure}
+\caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
+\label{fig:adaptive_error}  }
+\end{center}
+\end{figure}

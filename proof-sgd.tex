@@ -11,6 +11,7 @@ we assume without loss of generality that the median
 $\theta = \mbox{med}(P) = 0$.
 
 \subsection{Proof of Theorem~\ref{thm:sgd}\eqref{item:normal-sgd}}
+\label{sec:proof-normal-sgd}
 
 Consider the following simplified version of
 \cite[Thm. 4]{polyak1992acceleration}:
@@ -85,8 +86,9 @@ Corollary~\ref{corollary:polyak-juditsky} gives
 Theorem~\ref{thm:sgd}\eqref{item:normal-sgd}.
 
 \subsection{Proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-regular}}
+\label{sec:proof-sgd-regular}
 
-This proof requires somewhat more techinicality than the first part of the
+This proof requires somewhat more technicality than the first part of the
 theorem, including a brief detour into local asymptotic normality theory,
 regular estimators, and quadratic-mean
 differentiability~\cite[cf.]{VanDerVaart98}.
@@ -193,7 +195,7 @@ It remains to show that the average $\bar{\theta}_n$ is regular:
   Then $\bar{\theta}_n$ is regular with
   \begin{align}
     \label{eqn:sgd-median-regular}
-    \sqrt{n}\left( \bar{\theta}_n - \theta\right)
+    \sqrt{n}\left( \bar{\theta}_n - \theta - h_n / \sqrt{n}\right)
     \mathop{\cd}_{P_n}
     \normal\left( h,\frac{1}{4 f(0)^2}\right).
   \end{align}
@@ -282,51 +284,67 @@ Combining Lemmas~\ref{lemma:qmd} and~\ref{lemma:sgd-median-regular}
 with the limit~\eqref{eqn:limit-law-regular} gives
 Theorem~\ref{thm:sgd}\eqref{item:sgd-regular}.
 
-\subsubsection*{Proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}}
+\subsection{Proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}}
+\label{sec:proof-sgd-ms-convergence}
 
 We begin with the following result from \cite{polyak1990new}:
 \begin{corollary}[\cite{polyak1990new}, Theorem 2]
   \label{corollary:polyak-mse}
-  Let
+  Define the iteration
   \begin{align} \label{eq:polyak_new_measurements}
     \begin{cases}
       U_n = U_{n-1} - \gamma_n \varphi(Y_n), & Y_n = g'(U_{n-1})+Z_n \\
       \bar{U}_n= \frac{1}{n} \sum_{i=1}^n U_n, & n=1,2,\ldots.
     \end{cases}
   \end{align}
-  Assume that the function $g(x)$ is twice differentiable with a strictly
-  positive and uniformly bounded second derivative. In particular, $g(x)$ is
-  convex with a unique minimizer $x^\star \in \R$. Moreover, assume that the
-  noises $Z_n$ are uncorrelated and identically distributed with a
-  distribution with a density for which the Fisher information exits. Let
-  $\psi(x)$ and $\chi(x)$ be defined as in
-  Theorem~\ref{corollary:polyak-juditsky}-(iii) and satisfy the conditions
-  there. Assume in addition that $\chi(0)>0$, condition
-  \eqref{eqn:local-hessian-psi} with $\lambda = 1$, and there exits $K_3$ such
-  that
+  Assume that the function $g$ is $\mc{C}^2$, strictly convex, has Lipschitz
+  derivative, and is minimized by $x^\star$. Moreover, assume that the
+  noises $Z_n$ are i.i.d.\ with density $p$ and
+  that the Fisher information $\E[(p'(Z))^2 / p(Z)^2]$ exists and is finite.
+  Let $\psi(x)$ and $\chi(x)$ be defined as in
+  Corollary~\ref{corollary:polyak-juditsky} and satisfy the conditions in
+  the corollary. Assume in addition that $\chi(0)>0$, condition
+  \eqref{eqn:local-hessian-psi} with $\lambda = 1$, and there exits $K_3$
+  such that
   \begin{equation*}
     \ex{  | \varphi(x+Z_1) |^4 } \leq K_3(1+|x|^4). 
   \end{equation*}
-  Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions \eqref{eq:conditions1} and \eqref{eq:conditions2}. Then
+  Finally, assume that the sequence $\{\gamma_n \}$ satisfies conditions
+  \eqref{eqn:lazy-gamma} and \eqref{eqn:stringent-gamma}. Then
   \begin{equation*}
-    V_n \triangleq \ex{ \left(\bar{U}_n-x^\star \right)^2 } = n^{-1}\frac{\chi(0)} { (\psi'(0))^2 (g''(x^\star))^2 } + o(n^{-1}).
+    V_n \defeq
+    \E\Big[(\bar{U}_n-x^\star )^2\Big] = n^{-1}\frac{\chi(0)} {
+      (\psi'(0))^2 (g''(x^\star))^2 } + o(n^{-1}).
   \end{equation*}
 \end{corollary}
 
-We now use Theorem~\ref{thm:polyak_new} with $g(x) = 0.5(x-\theta)^2$, $\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$. From \eqref{eq:polyak_new_measurements} we have
+We apply Corollary~\ref{corollary:polyak-mse} with $g(x) = 0.5(x-\theta)^2$,
+$\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$.
+The update~\eqref{eq:polyak_new_measurements} gives
 \begin{align*} 
-U_n & = U_{n-1} + \gamma_n \sgn(\theta-U_{n-1} - Z_n )  \\
-& = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
+  U_n %% & = U_{n-1} + \gamma_n \sgn(\theta-U_{n-1} - Z_n )  \\
+  & = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
 \end{align*}
-so the estimator $\bar{U}_n$ equals to the one defined by \eqref{eq:sgd_est} and \eqref{eq:sgd_alg}. Note that
-\begin{equation*}
-\ex{ | \varphi(x+Z_1) |^4 } = 1 \leq K_3(1+|x|^4)
-\end{equation*}
-for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
-the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies that for any $\theta \in \R$, 
-\begin{equation*}
-V_n = \ex{ \left({\theta}_n-\theta \right)^2 } = \frac{1}{4n f^2(0)} + o(n^{-1}).
-\end{equation*}
+so the estimator $\bar{U}_n$ is identical to the stochastic gradient
+estimator~\eqref{eq:sgd_est}. We have $\E[\varphi(x + Z)^4] = 1$ and by
+assumption the Fisher information $\E[(f'(Z))^2 / f(Z)^2]$ exists, and the
+functions $\psi$ and $\chi$ have the desired conditions of
+Corollary~\ref{corollary:polyak-juditsky} (as we verify in
+Section~\ref{sec:proof-normal-sgd}). Finally, the function $\theta \mapsto
+\E_{P_\theta}[(\bar{\theta}_n - \theta)^2]$ is continuous in $\theta$, so
+that for $x^\star = \theta$ and $g'' \equiv 1$, we may apply
+Corollary~\ref{corollary:polyak-mse} and a finite approximation to the prior
+measure $\pi$ to obtain
+Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}.
+
+%% \begin{equation*}
+%% \ex{ | \varphi(x+Z_1) |^4 } = 1 \leq K_3(1+|x|^4)
+%% \end{equation*}
+%% for any $K_3\geq 1$, the Fisher information of $Z_1$ is $\sigma^2$, $\chi(x) = 1 > 0$, and that 
+%% the conditions in Theorem~\ref{thm:polyak_new} on $\psi(x)$ and $\chi(x)$ were verified to hold in the first part of the proof. In particular, $\psi'(0) = (2f(0))^{-2}$. Since $f(x)$ satisfies the conditions above with $x^\star = \theta$ and $g''(x) = 1$. Theorem~\ref{thm:polyak_new} implies that for any $\theta \in \R$, 
+%% \begin{equation*}
+%% V_n = \ex{ \left({\theta}_n-\theta \right)^2 } = \frac{1}{4n f^2(0)} + o(n^{-1}).
+%% \end{equation*}
 
 \subsection{Proof of Corollary~\ref{corollary:normal-expansion}}
 \label{proof:normal-expansion}

@@ -171,128 +171,129 @@ Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(
 Corollary~\ref{cor:LAN_thresh} implies that the ARE under threshold values uniformly distributed is $\kappa_\unif \sigma^2$. \par
 
 \begin{figure}
-\begin{center}
-\begin{tikzpicture}[scale = 0.55]
-\begin{axis}[
-width=8cm, height=6cm,
-xmin = -0.5, xmax=0.5, 
-restrict y to domain = 0:100,
-ymin = 0,
-ymax = 1,
-samples=10, 
-xlabel= {$dt$},
-xtick={-0.5,0,0.5},
-xticklabels={-$T$, 0, $T$},
-title = {$\sigma/T = 1/2$},
-ytick={0,0.1,1},
-%ylabel = {$\lambda(dt)$},
-yticklabels={0,0.1,1},
-line width=1.0pt,
-mark size=1.5pt,
-ymajorgrids,
-xmajorgrids,
-legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.5.csv};
+  %%%%% COMMENTED TIKZ PICTURE %%%%%
+  \begin{center}
+%% \begin{tikzpicture}[scale = 0.55]
+%% \begin{axis}[
+%% width=8cm, height=6cm,
+%% xmin = -0.5, xmax=0.5, 
+%% restrict y to domain = 0:100,
+%% ymin = 0,
+%% ymax = 1,
+%% samples=10, 
+%% xlabel= {$dt$},
+%% xtick={-0.5,0,0.5},
+%% xticklabels={-$T$, 0, $T$},
+%% title = {$\sigma/T = 1/2$},
+%% ytick={0,0.1,1},
+%% %ylabel = {$\lambda(dt)$},
+%% yticklabels={0,0.1,1},
+%% line width=1.0pt,
+%% mark size=1.5pt,
+%% ymajorgrids,
+%% xmajorgrids,
+%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+%% ]
+%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.5.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
+%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
+%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
-\end{axis}
-\end{tikzpicture}
-%
-\begin{tikzpicture}[scale = 0.55]
-\begin{axis}[
-width=8cm, height=6cm,
-xmin = -0.5, xmax=0.5, 
-restrict y to domain = 0:100,
-ymin = 0,
-ymax = 0.6,
-samples=10, 
-xlabel= {$dt$},
-title = {$\sigma/T = 1/5$},
-xtick={-0.5,0,0.5},
-xticklabels={-$T$, 0, $T$},
-ytick={0,0.5},
-ylabel = {$\lambda(dt)$},
-yticklabels={0,0.5},
-line width=1.0pt,
-mark size=1.5pt,
-ymajorgrids,
-xmajorgrids,
-legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.2.csv};
+%% \end{axis}
+%% \end{tikzpicture}
+%% %
+%% \begin{tikzpicture}[scale = 0.55]
+%% \begin{axis}[
+%% width=8cm, height=6cm,
+%% xmin = -0.5, xmax=0.5, 
+%% restrict y to domain = 0:100,
+%% ymin = 0,
+%% ymax = 0.6,
+%% samples=10, 
+%% xlabel= {$dt$},
+%% title = {$\sigma/T = 1/5$},
+%% xtick={-0.5,0,0.5},
+%% xticklabels={-$T$, 0, $T$},
+%% ytick={0,0.5},
+%% ylabel = {$\lambda(dt)$},
+%% yticklabels={0,0.5},
+%% line width=1.0pt,
+%% mark size=1.5pt,
+%% ymajorgrids,
+%% xmajorgrids,
+%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+%% ]
+%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.2.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
+%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
+%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
-\end{axis}
-\end{tikzpicture}
-%
-\begin{tikzpicture}[scale = 0.55]
-\begin{axis}[
-width=8cm, height=6cm,
-xmin = -0.5, xmax=0.5, 
-restrict y to domain = 0:100,
-ymin = 0,
-ymax = 0.3,
-samples=10, 
-xlabel= {$dt$},
-xtick={-0.5,0,0.5},
-title = {$\sigma / T = 1/10$},
-xticklabels={-$T$, 0, $T$},
-ytick={0,0.2},
-%ylabel = {$\lambda(dt)$},
-yticklabels={0,0.2},
-line width=1.0pt,
-mark size=1.5pt,
-ymajorgrids,
-xmajorgrids,
-legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-]
-\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.1.csv};
+%% \end{axis}
+%% \end{tikzpicture}
+%% %
+%% \begin{tikzpicture}[scale = 0.55]
+%% \begin{axis}[
+%% width=8cm, height=6cm,
+%% xmin = -0.5, xmax=0.5, 
+%% restrict y to domain = 0:100,
+%% ymin = 0,
+%% ymax = 0.3,
+%% samples=10, 
+%% xlabel= {$dt$},
+%% xtick={-0.5,0,0.5},
+%% title = {$\sigma / T = 1/10$},
+%% xticklabels={-$T$, 0, $T$},
+%% ytick={0,0.2},
+%% %ylabel = {$\lambda(dt)$},
+%% yticklabels={0,0.2},
+%% line width=1.0pt,
+%% mark size=1.5pt,
+%% ymajorgrids,
+%% xmajorgrids,
+%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+%% ]
+%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.1.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
+%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
+%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
-\end{axis}
-\end{tikzpicture}
-%
-\begin{tikzpicture}[scale = 0.55]
-\begin{axis}[
-width=8cm, height=6cm,
-xmin = -0.5, xmax=0.5, 
-restrict y to domain = 0:100,
-ymin = 0,
-ymax = 0.15,
-samples=10, 
-xlabel= {$dt$},
-title = {$\sigma / T = 1/20$},
-xtick={-0.5,0,0.5},
-xticklabels={-$T$, 0, $T$},
-ytick={0,0.1},
-ylabel = {$\lambda(dt)$},
-yticklabels={0,0.1},
-line width=1.0pt,
-mark size=1.5pt,
-ymajorgrids,
-xmajorgrids,
-legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-]
-\addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.05.csv};
+%% \end{axis}
+%% \end{tikzpicture}
+%% %
+%% \begin{tikzpicture}[scale = 0.55]
+%% \begin{axis}[
+%% width=8cm, height=6cm,
+%% xmin = -0.5, xmax=0.5, 
+%% restrict y to domain = 0:100,
+%% ymin = 0,
+%% ymax = 0.15,
+%% samples=10, 
+%% xlabel= {$dt$},
+%% title = {$\sigma / T = 1/20$},
+%% xtick={-0.5,0,0.5},
+%% xticklabels={-$T$, 0, $T$},
+%% ytick={0,0.1},
+%% ylabel = {$\lambda(dt)$},
+%% yticklabels={0,0.1},
+%% line width=1.0pt,
+%% mark size=1.5pt,
+%% ymajorgrids,
+%% xmajorgrids,
+%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+%% ]
+%% \addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.05.csv};
 
-\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
+%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
-\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
+%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
 
-%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-\end{axis}
-\end{tikzpicture}
+%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+%% \end{axis}
+%% \end{tikzpicture}
 
 \caption{\label{fig:minimax_support}
 Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \Ncal(\theta,\sigma^2)$ and $\theta \in [-T,T]$.
@@ -303,7 +304,8 @@ The continuous curve (red) represents the reciprocal of the asymptotic risk at a
 
 
 \begin{figure}
-\begin{center}
+  %%%%% COMMENTED TIKZ PICTURE %%%%%
+  \begin{center}
 \begin{tikzpicture}[scale = 1]
 \begin{axis}[
 width=8cm, height=6cm,
