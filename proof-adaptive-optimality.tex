@@ -1,321 +1,389 @@
-\section{Proof of Theorem~\ref{thm:adpative_lower_bound}
+\section{Proof of Theorem~\ref{thm:adpative_lower_bound}}
 \label{proof:thm:adpative_lower_bound}
-}
-Consider the following two Lemmas:
+
+We begin with two technical lemmas.
 \begin{lem} \label{lem:bound_intervals}
-Let $f(x)$ be log-concave, symmetric, and differentiable density function such that Assumption~1 holds. For any $x_1 \geq \ldots \geq x_n \in \R$,
-\begin{equation}
-\frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^2 }
-{\left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
-\leq  4f^2(0). 
-\label{eq:lem_bound_intervals}
-\end{equation}
+  Let $f$ be a log-concave and symmetric density function
+  for which Assumption~\ref{assump:failure_rate} holds. For any $x_1 \geq
+  \ldots \geq x_n \in \R$,
+  \begin{equation}
+    \frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^2 }{
+      \left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
+    \leq  4f(0)^2.
+    \label{eq:lem_bound_intervals}
+  \end{equation}
 \end{lem}
 \begin{lem} \label{lem:fisher_bound}
-Let $X$ be a random variable with a symmetric, log-concave, and continuously differentiable density function $f(x)$ such that Assumption~1 holds. For a Borel measurable $A$ set, 
-\[
-B(X) = \begin{cases} 1,& X \in A, \\
--1, & X \notin A.
-\end{cases}
-\]
-Then the Fisher information of $B$ with respect to $\theta$ is bounded from above by $\eta(0)$.
+  Let $X$ be a random variable with a symmetric, log-concave, and
+  continuously differentiable density function $f(x)$ such that Assumption~1
+  holds. For a Borel measurable set $A$, define
+  \begin{equation*}
+    B(x) \defeq \begin{cases} 1
+      & \mbox{if} ~x \in A, \\
+      -1 & \mbox{if}~ x \notin A.
+    \end{cases}
+  \end{equation*}
+  Then the Fisher information of $B$ with respect to $\theta$ is bounded
+  from above by $\eta(0)$.
 \end{lem}
 
-Lemma~\ref{lem:bound_intervals} is obtained as the special case $\delta = 0$ of lemma \ref{lem:bound_intervals_delta}. 
-We now prove Lemma~\ref{lem:fisher_bound}.
-\subsubsection*{Proof of Lemma~\ref{lem:fisher_bound}}
-When $f(x)$ is the normal density function, this lemma follows from \cite[Thm. 3]{Barnes2018}. The proof below is based on a different techique than in \cite{Barnes2018}, and is valid for any log-concave symmetric density satisfying Assumption~\ref{assump:failure_rate}. \\
+Lemma~\ref{lem:bound_intervals} is the special case $\delta = 0$ of
+Lemma~\ref{lem:bound_intervals_delta} to come in
+Section~\ref{sec:bound_intervals_delta}.  We now prove
+Lemma~\ref{lem:fisher_bound}.
 
-The Fisher information of $B$ with respect to $\theta$ is given by
-\begin{align}
-I_\theta & =  \ex{ \left( \frac{d}{d\theta} \log P\left( B | \theta \right) \right)^2 |\theta } \nonumber \\
-& = \frac{ \left(\frac{d}{d\theta} P(B=1|\theta) \right)^2}{P(B=1| \theta)} + \frac{ \left(\frac{d}{d\theta} P(B=-1|\theta) \right)^2} {P(B=-1| \theta)} \nonumber \\
-& =  \frac{ \left( \frac{d}{d\theta} \int_A f \left( x-\theta\right)dx \right)^2} { P(B=1| \theta) } + \frac{ \left( \frac{d}{d\theta}\int_A f \left( x-\theta \right)dx \right)^2} { P(B=-1| \theta) } \nonumber \\ 
-& \overset{(a)}{=} \frac{ \left( - \int_A f' \left( x-\theta \right)dx \right)^2} { P(B=1| \theta) } + \frac{ \left(- \int_A f' \left( x-\theta \right)dx \right)^2} { P(B=-1| \theta) } \nonumber \\ 
-& = \frac{\left( \int_A f'\left( x-\theta \right) dx \right)^2 }{  P(B=1 | \theta) \left(1-P(B=1|\theta) \right)  }, \nonumber \\
-& = \frac{\left( \int_A f'\left( x-\theta \right) dx \right) \left( \int_A f'\left( x-\theta \right) dx \right)}{ \left( \int_A f \left( x-\theta \right) dx \right)  \left(1- \int_A f \left( x-\theta \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
-\end{align}
-where differentiation under the integral sign in $(a)$ is possible since $f(x)$ is differentiable with continuous derivative $f'(x)$. Regularity of the Lebesgue measure implies that for any $\epsilon>0$, there exists a finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that 
-\[
-\int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon,
-\]
-which implies that for any $\epsilon' > 0$, the set $A$ in \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of disjoint intervals without increasing $I_\theta$ by more than $\epsilon'$. It is therefore enough to proceed in the proof assuming that $A$ is of the form
-\[
-A = \cup_{j=1}^k (a_j,b_j),
-\]
-with $\infty \leq a_1 \leq \ldots a_k$, $b_1 \leq b_k \leq \infty$ and $a_j \leq b_j$ for $j=1,\ldots,k$. Under this assumption we have
+\begin{proof-of-lemma}[\ref{lem:fisher_bound}]  
+  When $f$ is the normal density function, this lemma follows from
+  \cite[Thm.~3]{Barnes2018}. The proof below is based on a different techique
+  than in \cite{Barnes2018}, and is valid for any log-concave symmetric
+  density satisfying Assumption~\ref{assump:failure_rate}. \\
+
+  The Fisher information of $B$ with respect to $\theta$ is given by
+  \begin{align}
+    I_\theta & =  \ex{ \left( \frac{d}{d\theta} \log P\left( B | \theta \right) \right)^2 |\theta } \nonumber \\
+    & = \frac{ \left(\frac{d}{d\theta} P(B=1|\theta) \right)^2}{P(B=1| \theta)} + \frac{ \left(\frac{d}{d\theta} P(B=-1|\theta) \right)^2} {P(B=-1| \theta)} \nonumber \\
+    & =  \frac{ \left( \frac{d}{d\theta} \int_A f \left( x-\theta\right)dx \right)^2} { P(B=1| \theta) } + \frac{ \left( \frac{d}{d\theta}\int_A f \left( x-\theta \right)dx \right)^2} { P(B=-1| \theta) } \nonumber \\ 
+    & \overset{(a)}{=} \frac{ \left( - \int_A f' \left( x-\theta \right)dx \right)^2} { P(B=1| \theta) } + \frac{ \left(- \int_A f' \left( x-\theta \right)dx \right)^2} { P(B=-1| \theta) } \nonumber \\ 
+    & = \frac{\left( \int_A f'\left( x-\theta \right) dx \right)^2 }{  P(B=1 | \theta) \left(1-P(B=1|\theta) \right)  }, \nonumber \\
+    & = \frac{\left( \int_A f'\left( x-\theta \right) dx \right) \left( \int_A f'\left( x-\theta \right) dx \right)}{ \left( \int_A f \left( x-\theta \right) dx \right)  \left(1- \int_A f \left( x-\theta \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
+  \end{align}
+  where differentiation under the integral sign in $(a)$ is possible since
+  $f$ is log-concave and so a.e.\ differentiable
+  (cf.~\cite{Bertsekas73}),
+  with a.e.\ derivative $f'(x)$. Regularity of
+  the Lebesgue measure implies that for any $\epsilon>0$, there exists a
+  finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that
+  \begin{equation*}
+    \int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon,
+  \end{equation*}
+  which implies that for any $\epsilon' > 0$, the set $A$ in
+  \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of
+  disjoint intervals without increasing $I_\theta$ by more than
+  $\epsilon'$. It is therefore enough to proceed in the proof assuming that
+  $A$ is of the form
+  \begin{equation*}
+    A = \cup_{j=1}^k (a_j,b_j),
+  \end{equation*}
+  with $\infty \leq a_1 \leq \ldots a_k$, $b_1 \leq b_k \leq \infty$ and $a_j \leq b_j$ for $j=1,\ldots,k$. Under this assumption we have
+  \begin{align*}
+    \mathbb P(B_n=1| \theta) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
+    & = \sum_{j=1}^k \left( F \left(b_j-\theta\right) -  F \left(a_j-\theta\right)  \right),
+  \end{align*}
+  so we may rewrite Eq.~\eqref{eq:lem_fisher_bound_proof1} as
+  \begin{align*}
+    I_\theta & =   \frac { \left( \sum_{j=1}^{k} f \left(a_j-\theta \right) - f \left( b_j-\theta \right)  \right)^2 } 
+    { \left( \sum_{j=1}^k F \left( b_j-\theta \right) - F \left( a_j-\theta \right)  \right) }  \nonumber \\
+    & \times \frac {1} 
+    {1- \left( \sum_{j=1}^k F \left(  b_j-\theta \right) - F \left( a_j-\theta \right)  \right) } 
+  \end{align*}
+  It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in
+  \R$ and any choice of the intervals' endpoints,
+  \begin{equation*}
+    I_\theta \le
+    \max_{t \in \{a_j,b_j, j=1,\ldots,k\} } 4f(t)^2 \leq 4 f(0)^2, 
+  \end{equation*}
+  where the last transition is by Assumption~\ref{assump:failure_rate}. 
+\end{proof-of-lemma}
+
+
+We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}.
+To bound the Fisher information of any set of $n$ one-bit
+messages with respect to $\theta$,
+%% we first note that without loss of
+%% each message $B_i$ can is of the form
+%% \begin{equation}
+%% B_i = \begin{cases}
+%% X_i \in A_i & 1, \\
+%% X_i \notin A_i & -1,
+%% \end{cases} 
+%% \end{equation}
+%% where $A_i \subset \R$ is a Borel measurable set. 
+%% %Indeed, any measurable function $(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = B^{-1}(1)$.
+we consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of
+$(B_1,\ldots,B_n)$ given $\theta$. We have
 \begin{align*}
-\mathbb P(B_n=1| \theta) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
-& = \sum_{j=1}^k \left( F \left(b_j-\theta\right) -  F \left(a_j-\theta\right)  \right),
+  P\left( B_1,\ldots,B_n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B_1,\ldots,B_{i-1} \right),
+  %% \label{eq:adpt_lower_bound_proof:1}
 \end{align*}
-so \eqref{eq:lem_fisher_bound_proof1} can be rewritten as
-\begin{align}
-& =   \frac { \left( \sum_{j=1}^{k} f \left(a_j-\theta \right) - f \left( b_j-\theta \right)  \right)^2 } 
-{ \left( \sum_{j=1}^k F \left( b_j-\theta \right) - F \left( a_j-\theta \right)  \right) }  \nonumber \\
-& \times \frac {1} 
-{1- \left( \sum_{j=1}^k F \left(  b_j-\theta \right) - F \left( a_j-\theta \right)  \right) } 
-\label{eq:lemma_J}
-\end{align}
-It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in \R$ and any choice of the intervals endpoints, \eqref{eq:lemma_J} is smaller than 
-\[
-\max_{t \in \{a_j,b_j, j=1,\ldots,k\} } 4f^2(t) \leq 4 f^2(0), 
-\]
-where the last transition is due to Assumption~1. 
-\QEDA \\
-
-
-We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}. In order to bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$, we first note that without loss of generality, each message $B_i$ can is of the form
-\begin{equation}
-\label{eq:general_messages}
-B_i = \begin{cases}
-X_i \in A_i & 1, \\
-X_i \notin A_i & -1,
-\end{cases} 
-\end{equation}
-where $A_i \subset \R$ is a Borel measurable set. 
-%Indeed, any measurable function $(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = B^{-1}(1)$.
-Consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of $(B_1,\ldots,B_n)$ given $\theta$. We have 
-\begin{align}
-P\left( B_1,\ldots,B_n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B_1,\ldots,B_{i-1} \right), \label{eq:adpt_lower_bound_proof:1}
-\end{align}
-where $P\left(B_i =1 | \theta, B_1,\ldots,B_{i-1}  \right) = \mathbb P\left( X_i \in A_i\right)$, so that the Fisher information of $B_1,\ldots,B_n$ with respect to $\theta$ is given by 
+where $P\left(B_i =1 | \theta, B_1,\ldots,B_{i-1} \right) = \mathbb P\left(
+X_i \in A_i\right)$, when $B_i = \indic{X_i \in A_i}$ by independence,
+so that the Fisher information of $B_1,\ldots,B_n$ with
+respect to $\theta$ is
 \begin{align}
 I_\theta(B_1,\ldots,B_N) = \sum_{i=1}^n I_\theta (B_i|B_1,\ldots,B_{i-1}),
 \label{eq:fisher_information}
 \end{align}
-where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the distribution of $B_i$ given $B_1,\ldots,B_{i-1}$. From Lemma~\ref{lem:fisher_bound} it follows that $I_\theta (B_i|B_{i-1},\ldots,B_1) \leq 4f^2(0)$. The Van Trees inequality \cite{van2004detection, gill1995applications} now implies 
+where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the
+distribution of $B_i$ given $B_1,\ldots,B_{i-1}$.
+Lemma~\ref{lem:fisher_bound} implies that $I_\theta
+(B_i|B_{i-1},\ldots,B_1) \leq 4f(0)^2$. The Van Trees inequality
+\cite{van2004detection, gill1995applications} now implies
 \begin{align*}
 \ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B_1,\ldots,B_n)} + I_0} \\
 & = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B^{i-1} ) + I_0} \\
-& \geq \frac{1}{ 4f^2(0) n + I_0}.
+& \geq \frac{1}{ 4f^2(0) n + I_0}
 \end{align*}
-\QEDA
+as desired.
 
+\subsection{An Isoperimetric Lemma}
+\label{sec:bound_intervals_delta}
 
-\subsection{Isoperimetric Lemma
-\label{sec:bound_intervals_delta} }
-The following lemma is used in the proof Theorems~\ref{thm:adpative_lower_bound}, \ref{thm:LAN1}, and \ref{thm:non_existence}. 
+The following lemma is essential to the the proofs
+of Theorems~\ref{thm:adpative_lower_bound}, \ref{thm:LAN1}, and
+\ref{thm:non_existence}.
 
-\begin{lem} \label{lem:bound_intervals_delta}
-Let $f(x)$ be log-concave, symmetric, and differentiable density function. Let $\delta\geq 0$. Assume that the function
-\[
-\eta_\delta(x) \triangleq  \eta^{1+\delta}(x)/f^\delta(x) = \frac{  \left( f(x) \right)^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}}
-\]
-is non-increasing in $|x|$. For any $x_1 \ge \ldots \ge x_n \in \R^n$,
-\begin{equation}
-\frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} }
-{\left| \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{k=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} } 
-\leq  \max_{i} \eta_\delta(x_i).
-\label{eq:lem_bound_intervals_delta}
-\end{equation}
+\begin{lem}
+  \label{lem:bound_intervals_delta}
+  Let $f$ be a log-concave and symmetric density
+  function. Let $\delta\geq 0$. Assume that the function
+  \begin{equation*}
+    \eta_\delta(x) \triangleq  \eta^{1+\delta}(x)/f^\delta(x)
+    = \frac{  \left( f(x) \right)^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}}
+  \end{equation*}
+  is non-increasing in $|x|$. Then for any $x_1 \ge \ldots \ge x_n \in \R^n$,
+  \begin{equation}
+    \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} } {\left|
+      \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{k=1}^n
+      (-1)^{i+1} F(x_i) \right|^{1+\delta} } \leq \max_{i} \eta_\delta(x_i).
+    \label{eq:lem_bound_intervals_delta}
+  \end{equation}
 \end{lem}
 In particular, 
-\[
+\begin{equation*}
 \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} }
 {\left| \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} } 
 \leq \eta_\delta(0) = 4^{1+\delta} f^{2+\delta}(0).
-\]
+\end{equation*}
 
-\subsubsection*{
-Proof of Lemma~\ref{lem:bound_intervals_delta}}
-Denote 
-\[
-\delta_n(x_1,\ldots,x_n) \triangleq \sum_{i=1}^{n} s_i f(x_i),
-\]
-\[
- \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{i=1}^n s_i F(x_i), 
-\]
-where $s_i \triangleq (-1)^{i+1}$. We use induction on $n \in \N$ to show that 
-\begin{align}
-\label{eq:lemm:interval_bounds:to_show}
-\frac{ \left| \delta_n(x_1,\ldots,x_n) \right|^{2+\delta}} 
-{\left|\Delta_n(x_1,\ldots,x_n)\left(1- \Delta_n(x_1,\ldots,x_n) \right) \right|^{1+\delta} } \leq \max_{i}\eta_{\delta}(x_i).
-\end{align}
- Since 
-\[
-\eta_\delta(x) =  \frac{  \left|\delta_1(x) \right|^{2+\delta}}{\left|\Delta_1(x)
-(1-\Delta_1(x)) \right|^{1+\delta}}, 
-\]
-The case $n=1$ is trivial.  
-%follows from the assumption that $\eta_\delta(x)$ is non-increasing in $|x|$. 
-Assume that \eqref{eq:lemm:interval_bounds:to_show} holds for all integers up to $n = N$ and for any $x_1 \ge \ldots \ge x_N$. Consider the case $n = N+1$. Let $i^*$ be the index such that $x_{i^*}$ has minimal absolute value among $x_1,\ldots,x_N$. The assumption on $\eta_\delta(x)$ implies that
-\[
-\eta_\delta(x_{i^*}) = \max_i \eta_\delta(x_i).
-\]
-Since the LHS of \eqref{eq:lem_bound_intervals_delta} is invariant to a sign flip of all $x_1,\ldots,x_{N+1}$, we may assume that $x_{i^*}$ is positive without loss of generality. 
-%For simplicity, we also assume that $s_{i^*} = 1$ and note that the case $s_{i^*} = -1$ is obtained using identical arguments. 
-Set $x^* = x_{i^*}$ and let $k=i^*-1$. In what follows, variables with subscript of non-positive index are ignored in summations and in lists of arguments to functions. Consider the function
-\begin{align}
-& g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \\
-&  \triangleq  \frac{\left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) )\right|^{2+\delta}}{
-\left|\Delta_{N+1}(y_1,\ldots,y_k,x_{i^*},y_{k+1}\ldots,y_N)  (1 -\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  \right|^{1+\delta}
-} \label{eq:g_def}.
-\end{align}
-The LHS of \eqref{eq:lemm:interval_bounds:to_show} is obtained by taking $y_i=x_{k_i}$ where $k_i$ is the $i$th element in $\{1,\ldots,N+1\}\setminus \{i^*\}$. It is therefore enough to prove that 
-\[
-\max_{(y_1,\ldots,y_N) \in A_N} g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*),
-\]
-where 
-\[
-A_N(x^*,k) \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, : \, y_1 \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
-\right\}.
-\]
-%
-Since $f(x)$ is log-concave, symmetric, and differentiable, we may write $f(x) = e^{c(x)}$ where $c(x)$ is concave, symmetric, and differentiable with derivative 
-\[
-c'(x) \triangleq \frac{f'(x)}{f(x)} 
-\]
-that is non-increasing. We first prove the lemma under the assumption that $c'(x)$ is an injection, or, equivalently, that $c(x)$ is strictly decreasing for all $x\in \R$. \par
-%
-The maximal value of $g(y_1,\ldots,y_N)$ is attained for the same $(y_1,\ldots,y_N) \in A_N(x^*,k)$ that maximizes
-\begin{align*}
- \log(g)(y_1,\ldots, y_N) =  (2+\delta) \log \left( \delta_N  \right)  - (1+\delta) \log \left( \Delta_N  \right) - (1+\delta) \log \left(1 - \Delta_N \right),
-\end{align*}
-where in the last display and henceforth we suppress the arguments $y_1,\ldots,y_k,x^*,y_{k+1},\ldots, y_N$ of the functions $\delta_N$ and $\Delta_N$.
-%
-Within the interior of $A_N(x^*,k)$, all three expressions in \eqref{eq:g_def} within an absolute value are positive. It follows that partial derivative of $\log(g)(y_1,\ldots,y_N)$ with respect to $y_i$ within the interior of $A_N(x^*,k)$ is given by
-\[
-\frac{\partial \log(g)}{\partial y_i} = \frac{(2+\delta) s_i f'(x_i)}{\delta_N } -\frac{(1+\delta) s_i f(x_i)}{\Delta_N  } + \frac{(1+\delta)s_i f(y_i)}{1-\Delta_N }.
-\]
-We conclude that the gradient of $\log(g)$ vanishes if and only if
-\begin{equation}
-\label{eq:gradient_zero}
-c'(y_i) = \frac{f'(y_i)}{f(y_i)} = \frac{1+\delta}{2+\delta} \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N } \right),\quad i=1,\ldots,N.
-\end{equation}
-%
-Since we assumed that $c'(x)$ is an injection, \eqref{eq:gradient_zero} is satisfied if and only if $y_1 = \ldots = y_N$. In this case, 
-$g(y_1,\ldots,y_N) = \eta_\delta(x_{i^*})$  
-if $N$ is even. If $N$ is odd and $y_1 = \ldots = y_N > x^*$, then 
-\begin{align*}
-& g(y_1,\ldots,y_N) = \frac{\left| f(y_1)-f(x_{i^*})  \right|^{2+\delta}} { 
-\left|  F(y_1) - F(x_{i^*}) \right|^{1+ \delta} 
-\left| 1 - (F(y_1) -F(x_{i^*})) \right|^{1+ \delta} } 
-\end{align*} 
-which is bounded from from above by $\eta_\delta(x_{i^*})$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
-%
-We now consider the possibility that the maximum of $g(y_1,\ldots,y_N)$ is attained at the boundaries of $A_N(x^*,k)$. At boundary points for which $y_i = y_{i+1}$ for some $i$, the contribution of $y_i$ and $y_{i+1}$ to $g(y_1,\ldots,y_N)$ is zero and the induction assumption for $n=N-1$ implies that 
-\[
-g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*)
-\]
-The remaining boundary points of $A_N(x^*,k)$ are covered by the following cases:
-\begin{itemize}
-\item[(1)]  $y_N \to -\infty$. 
-\item[(2)] $y_1 \to \infty$.
-\item[(3)] $y_k = x_{i^*}$.
-\item[(4)] $y_{k+1} = -x_{i^*}$. 
-\end{itemize}
-For case (1), 
-\begin{align*}
-g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
-{\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
-\end{align*}
-which is smaller than $\eta_\delta(x_{i^*})$ by the induction hypothesis. Similarly, under case (2),
-\begin{align*}
-& g(y_1,\ldots,y_N) \to 
-\frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-{\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
- \\
-& = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x_{i^*}) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-{ \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
-\left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
-\end{align*}
-which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (3), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $n=N-1$ variables hence this case is handled by the induction hypothesis. 
-%
-Finally, under case (4), set 
-\[
-d \triangleq s_k F(-x^*) + s_{i^*} F(x^*) = s_{i^*}\left(1-2F(-x^*) \right), 
-\]
-\[
-\sigma \triangleq \sum_{i=1}^{k-1} s_i f(y_i) - \sum_{i=k+1}^{N} s_i f(y_i). 
-\]
-and 
-\[
-\Sigma \triangleq \sum_{i=1}^{k-1} s_i F(y_i) - \sum_{i=k+1}^{N} s_i F(y_i). 
-\]
-We have
-\begin{align*}
-& g(y_1,\ldots,y_N) =\nonumber  \\ 
-& =
-\frac{ \left| \sum_{i=1}^{k-1} s_i f(y_i) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-{\left| \sum_{i=1}^{k-1} s_i F(y_i) + d(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} \left|1- \sum_{i=1}^{k-1} s_i F(y_i) - d(x^*) + \sum_{i=k+1}^{N} s_i F(y_i)   \right|^{1+\delta} }, \\
-& = \frac{ \left| \sigma \right|^{2+\delta}} 
-{\left| \Sigma+d \right|^{1+\delta} \left|1- \Sigma - d \right|^{1+\delta} }  =  
-\frac{ \left| \sigma \right|^{2+\delta}} 
-{\left| \Sigma \right|^{1+\delta} \left|1- \Sigma \right|^{1+\delta} }  \left| \frac{\Sigma(1-\Sigma) } { \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} \right|^{1+\delta}. 
-\end{align*}
-By the induction hypothesis,
-\[
-\frac{ \left| \sigma \right|^{2+\delta}} 
-{\left| \Sigma \right|^{1+\delta} \left|1- \Sigma \right|^{1+\delta} } \leq \eta_\delta(x^*), 
-\]
-hence it is left to show that 
-\[
- \frac{\Sigma(1-\Sigma) } { \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} \leq 1.
-\]
-Whenever $d>0$, 
-\begin{align*}
-& \frac{ \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} {\Sigma(1-\Sigma)} \geq 1 \Leftrightarrow  1-2\Sigma \geq d, 
-\end{align*}
-while for $d<0$,
-\begin{align*}
-& \frac{ \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} {\Sigma(1-\Sigma)} \geq 1 \Leftrightarrow  1-2\Sigma \leq d. 
-\end{align*}
-Therefore, it is enough to show that $\Sigma \leq F(-x^*)$ if $s_{i^*}=1$ and 
-$\Sigma \geq F(-x^*)$ if $s_{i^*}=-1$. 
-%
-Indeed, if $s_{i^*}=1$, then $s_{k+1}=-1$ and monotonicity of $F(x)$ implies that 
-\[
-\Sigma + d \leq F(y_1) - F(y_k) + F(x^*) - F(-x^*) + F(y_{k+2}) - F(y_N), 
-\]
-and hence
-\[
-\Sigma \leq 1-F(x^*) = F(-x^*). 
-\]
-Similarly, if $s_{i^*}=-1$ then 
-\[
-1 - \Sigma \leq 1 -  F(-x^*).
-\]
-This conclude the proof in the case where $c'(x)$ is an injection. 
-\par  
-In the case where $c'(x)$ is not necessarily strictly decreasing, we approximate $c(x)$ using another concave symmetric function whose derivative is always negative except, perhaps, at the origin. For $\alpha>0$ consider the function  $f_\alpha(x) = \kappa(\alpha) e^{\sgn(c(x))|c(x)|^{1+\alpha}}$, where $\kappa(\alpha)$ is chosen such that $f_\alpha(x)$ is a probability density function. Then $c_\alpha(x)$ is concave, symmetric, and differentiable with
-\[
-c_\alpha'(x) \triangleq \frac{f'_\alpha(x)}{f_\alpha(x)} = (1+\alpha)|c(x)|^{\alpha} c'(x). 
-\]
-Now $c_\alpha'(x)$ is non-increasing since it is the derivative of a concave function. Furthermore, since $c(x)$ is non-constant on any interval and $c'(x)$ is non-increasing, $c_\alpha'(x)$ is non-constant on any interval hence an injection. It follows from the first part of the proof that, for any $\alpha>0$,
-\begin{align}
-\label{eq:proof:lem:bound_intervals}
-\frac{(\delta_{n,\alpha})^2}{\Delta_{n,\alpha}(1-\Delta_{n,\alpha})} \leq \max_i \eta_{\alpha}(x_i),
-\end{align}
-where 
-\[
-\delta_{n,\alpha} \triangleq  \sum_{k=1}^{n} (-1)^{k+1} f_{\alpha}(x_k),
-\]
-\[
-\Delta_{n,\alpha} \triangleq \sum_{k=1}^n (-1)^{k+1} F_{\alpha}(x_k), 
-\]
-and 
-\[
-\eta_{\delta,\alpha}(x) \triangleq \frac{(f_\alpha(x))^{2+\delta}}{\left(F_{\alpha}(x)(1-F(x)) \right)^{1+\delta}}. 
-\]
-The proof is completed by noting that 
-\begin{align*}
-\lim_{\alpha \to 0} \frac{(\delta_{n,\alpha})^{2+\delta} }{ \left(\Delta_{n,\alpha}(1-\Delta_{n,\alpha})\right)^{1+\delta}}  = \frac{(\delta_{n})^{2+\delta }}{\left(\Delta_{n}(1-\Delta_{n}) \right)^{1+\delta}},  
-\end{align*}
-and, since the maximum is over a finite set,
-\begin{align*}
-\lim_{\alpha \to 0}  \max_i \eta_{\delta,\alpha}(x_i)  = \max_i\eta_\delta(x_i).
-\end{align*}
+\begin{proof-of-lemma}[\ref{lem:bound_intervals_delta}]
+  Denote 
+  \begin{equation*}
+    \delta_n(x_1,\ldots,x_n) \triangleq \sum_{i=1}^{n} s_i f(x_i),
+  \end{equation*}
+  \begin{equation*}
+    \Delta_n(x_1,\ldots,x_n) \triangleq  \sum_{i=1}^n s_i F(x_i), 
+  \end{equation*}
+  where $s_i \triangleq (-1)^{i+1}$. We use induction on $n \in \N$ to show that 
+  \begin{align}
+    \label{eq:lemm:interval_bounds:to_show}
+    \frac{ \left| \delta_n(x_1,\ldots,x_n) \right|^{2+\delta}} 
+         {\left|\Delta_n(x_1,\ldots,x_n)\left(1- \Delta_n(x_1,\ldots,x_n) \right) \right|^{1+\delta} } \leq \max_{i}\eta_{\delta}(x_i).
+  \end{align}
+  Since 
+  \begin{equation*}
+    \eta_\delta(x) =  \frac{  \left|\delta_1(x) \right|^{2+\delta}}{\left|\Delta_1(x)
+      (1-\Delta_1(x)) \right|^{1+\delta}}, 
+  \end{equation*}
+  The case $n=1$ is trivial.  
+  %follows from the assumption that $\eta_\delta(x)$ is non-increasing in $|x|$. 
+  Assume that \eqref{eq:lemm:interval_bounds:to_show} holds for all integers up to $n = N$ and for any $x_1 \ge \ldots \ge x_N$. Consider the case $n = N+1$. Let $i^*$ be the index such that $x_{i^*}$ has minimal absolute value among $x_1,\ldots,x_N$. The assumption on $\eta_\delta(x)$ implies that
+  \begin{equation*}
+    \eta_\delta(x_{i^*}) = \max_i \eta_\delta(x_i).
+  \end{equation*}
+  Since the LHS of \eqref{eq:lem_bound_intervals_delta} is invariant to a sign flip of all $x_1,\ldots,x_{N+1}$, we may assume that $x_{i^*}$ is positive without loss of generality. 
+  %For simplicity, we also assume that $s_{i^*} = 1$ and note that the case $s_{i^*} = -1$ is obtained using identical arguments. 
+  Set $x^* = x_{i^*}$ and let $k=i^*-1$. In what follows, variables with subscript of non-positive index are ignored in summations and in lists of arguments to functions. Consider the function
+  \begin{align}
+    & g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \\
+    &  \triangleq  \frac{\left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) )\right|^{2+\delta}}{
+      \left|\Delta_{N+1}(y_1,\ldots,y_k,x_{i^*},y_{k+1}\ldots,y_N)  (1 -\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  \right|^{1+\delta}
+    } \label{eq:g_def}.
+  \end{align}
+  The LHS of \eqref{eq:lemm:interval_bounds:to_show} is obtained by taking $y_i=x_{k_i}$ where $k_i$ is the $i$th element in $\{1,\ldots,N+1\}\setminus \{i^*\}$. It is therefore enough to prove that 
+  \begin{equation*}
+    \max_{(y_1,\ldots,y_N) \in A_N} g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*),
+  \end{equation*}
+  where 
+  \begin{equation*}
+    A_N(x^*,k) \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, : \, y_1 \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
+    \right\}.
+  \end{equation*}
+  %
+  Since $f(x)$ is log-concave and symmetric, we may write $f(x) = e^{c(x)}$
+  where $c(x)$ is concave, symmetric, and superdifferentiable on the interior
+  of its domain with
+  supergradient set $\partial c(x) = \{v \in \R \mid c(y) \le c(x) + v (y - x) ~
+  \mbox{for~all}~ y\}$; $c$ is also
+  differentiable a.e.\ with derivative
+  \begin{equation*}
+    c'(x) \triangleq \frac{f'(x)}{f(x)}
+  \end{equation*}
+  (when it exists), and we otherwise simply treat $f'(x) / f(x) = c'(x) \in
+  \partial c(x)$ as an arbitrary element of the superdifferential.  The
+  supergradient sets $\partial c(x)$ are increasing, in that $v_0 \in
+  \partial c(x_0)$ and $v_1 \in \partial c(x_1)$ implies that $(v_1 - v_0)
+  (x_1 - x_0) \le 0$.  We first prove the lemma under the assumption that
+  $c$ is strictly concave, or, equivalently, that $v_i \in \partial c(x_i)$
+  implies that $(v_1 - v_0)(x_1 - x_0) < 0$ whenever $x_1 \neq x_0$; that
+  is, $c'$ is strictly decreasing.
 
-%Our goal is to construct an approximation to $f(x)$ using a log-concave, symmetric, and differentiable function $\hat{f}(x)$ such that $\hat{f}'(x)/\hat{f}(x)$ is strictly decreasing. We achieve such an approximation by modifying $f(x)$ over intervals over which $c'(x)$ is a constant. Assume first $c'(x)$ is only a constant over an interval $(a_1,b_1)\subset \R$ containing $x_1>0$ and on the mirror image of this interval around $x=0$. Over this interval, $f(x)$ is necessarily of the form $f(x) = e^{-c_1|x| + d_1}$ for some $c_1\geq 0$ and $d_1$. % and For $\alpha>0$, consider
-%\[
-%F_1(x,\alpha) \triangleq  F(a_1) + \frac{1}{c_1} e^{-c_1 (|x|^{1+\alpha} +d_1}, \quad x \in (a_1,b_1),
-%\]
-%and 
-%\[
-%f_1(x,\alpha) \triangleq  F_1'(x,\alpha) =  -\sgn(x)(1+\alpha)|x|^\alpha e^{-c_1 |x|^{1+\alpha} + d_1}, \quad x \in (a_1,b_1).
-%\]
+  The maximal value of $g(y_1,\ldots,y_N)$ is attained for the same
+  $(y_1,\ldots,y_N) \in A_N(x^*,k)$ that maximizes
+  \begin{align*}
+    \log(g)(y_1,\ldots, y_N) =  (2+\delta) \log \left( \delta_N  \right)  - (1+\delta) \log \left( \Delta_N  \right) - (1+\delta) \log \left(1 - \Delta_N \right),
+  \end{align*}
+  where in the last display and henceforth we suppress the arguments
+  $y_1,\ldots,y_k,x^*,y_{k+1},\ldots, y_N$ of the functions $\delta_N$ and
+  $\Delta_N$. (We may take the compactification of $\R$ as $[-\infty, \infty]$.)
+  %
+  Within the interior of $A_N(x^*,k)$, all three expressions in
+  \eqref{eq:g_def} within an absolute value are positive. It follows that
+  partial derivative of $\log(g)(y_1,\ldots,y_N)$ with respect to $y_i$ within
+  the interior of $A_N(x^*,k)$ is
+  \begin{equation*}
+    \frac{\partial \log(g)}{\partial y_i} = \frac{(2+\delta) s_i
+      f'(x_i)}{\delta_N } -\frac{(1+\delta) s_i f(x_i)}{\Delta_N } +
+    \frac{(1+\delta)s_i f(y_i)}{1-\Delta_N }.
+  \end{equation*}
+  We conclude that the gradient of $\log(g)$ vanishes if and only if
+  \begin{equation}
+    \label{eq:gradient_zero}
+    c'(y_i) = \frac{f'(y_i)}{f(y_i)} = \frac{1+\delta}{2+\delta} \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N } \right),\quad i=1,\ldots,N.
+  \end{equation}
+  %
+  Since we assumed that $\partial c(x)$ is injective,
+  equality~\eqref{eq:gradient_zero} holds if and only if $y_1 = \ldots
+  = y_N$. In this case, $g(y_1,\ldots,y_N) = \eta_\delta(x_{i^*})$ if $N$ is
+  even. If $N$ is odd and $y_1 = \ldots = y_N > x^*$, then
+  \begin{align*}
+    & g(y_1,\ldots,y_N) = \frac{\left| f(y_1)-f(x_{i^*})  \right|^{2+\delta}} { 
+      \left|  F(y_1) - F(x_{i^*}) \right|^{1+ \delta} 
+      \left| 1 - (F(y_1) -F(x_{i^*})) \right|^{1+ \delta} } 
+  \end{align*} 
+  which is bounded from from above by $\eta_\delta(x_{i^*})$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
+  %
+  We now consider the possibility that the maximum of $g(y_1,\ldots,y_N)$ is attained at the boundaries of $A_N(x^*,k)$. At boundary points for which $y_i = y_{i+1}$ for some $i$, the contribution of $y_i$ and $y_{i+1}$ to $g(y_1,\ldots,y_N)$ is zero and the induction assumption for $n=N-1$ implies that 
+  \begin{equation*}
+    g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*)
+  \end{equation*}
+  The remaining boundary points of $A_N(x^*,k)$ are covered by the following cases:
+  \begin{itemize}
+  \item[(1)]  $y_N \to -\infty$. 
+  \item[(2)] $y_1 \to \infty$.
+  \item[(3)] $y_k = x_{i^*}$.
+  \item[(4)] $y_{k+1} = -x_{i^*}$. 
+  \end{itemize}
+  For case (1), 
+  \begin{align*}
+    g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
+    {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
+  \end{align*}
+  which is smaller than $\eta_\delta(x_{i^*})$ by the induction hypothesis. Similarly, under case (2),
+  \begin{align*}
+    & g(y_1,\ldots,y_N) \to 
+    \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+         {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
+         \\
+         & = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x_{i^*}) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+           { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
+             \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
+  \end{align*}
+  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (3), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $n=N-1$ variables hence this case is handled by the induction hypothesis. 
+  %
+  Finally, under case (4), set 
+  \begin{equation*}
+    d \triangleq s_k F(-x^*) + s_{i^*} F(x^*) = s_{i^*}\left(1-2F(-x^*) \right), 
+  \end{equation*}
+  \begin{equation*}
+    \sigma \triangleq \sum_{i=1}^{k-1} s_i f(y_i) - \sum_{i=k+1}^{N} s_i f(y_i). 
+  \end{equation*}
+  and 
+  \begin{equation*}
+    \Sigma \triangleq \sum_{i=1}^{k-1} s_i F(y_i) - \sum_{i=k+1}^{N} s_i F(y_i). 
+  \end{equation*}
+  We have
+  \begin{align*}
+    & g(y_1,\ldots,y_N) =\nonumber  \\ 
+    & =
+    \frac{ \left| \sum_{i=1}^{k-1} s_i f(y_i) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+         {\left| \sum_{i=1}^{k-1} s_i F(y_i) + d(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} \left|1- \sum_{i=1}^{k-1} s_i F(y_i) - d(x^*) + \sum_{i=k+1}^{N} s_i F(y_i)   \right|^{1+\delta} }, \\
+         & = \frac{ \left| \sigma \right|^{2+\delta}} 
+         {\left| \Sigma+d \right|^{1+\delta} \left|1- \Sigma - d \right|^{1+\delta} }  =  
+         \frac{ \left| \sigma \right|^{2+\delta}} 
+              {\left| \Sigma \right|^{1+\delta} \left|1- \Sigma \right|^{1+\delta} }  \left| \frac{\Sigma(1-\Sigma) } { \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} \right|^{1+\delta}. 
+  \end{align*}
+  By the induction hypothesis,
+  \begin{equation*}
+    \frac{ \left| \sigma \right|^{2+\delta}} 
+         {\left| \Sigma \right|^{1+\delta} \left|1- \Sigma \right|^{1+\delta} } \leq \eta_\delta(x^*), 
+  \end{equation*}
+  hence it is left to show that 
+  \begin{equation*}
+    \frac{\Sigma(1-\Sigma) } { \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} \leq 1.
+  \end{equation*}
+  Whenever $d>0$, 
+  \begin{align*}
+    & \frac{ \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} {\Sigma(1-\Sigma)} \geq 1 \Leftrightarrow  1-2\Sigma \geq d, 
+  \end{align*}
+  while for $d<0$,
+  \begin{align*}
+    & \frac{ \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} {\Sigma(1-\Sigma)} \geq 1 \Leftrightarrow  1-2\Sigma \leq d. 
+  \end{align*}
+  Therefore, it is enough to show that $\Sigma \leq F(-x^*)$ if $s_{i^*}=1$ and 
+  $\Sigma \geq F(-x^*)$ if $s_{i^*}=-1$. 
+  %
+  Indeed, if $s_{i^*}=1$, then $s_{k+1}=-1$ and monotonicity of $F(x)$ implies that 
+  \begin{equation*}
+    \Sigma + d \leq F(y_1) - F(y_k) + F(x^*) - F(-x^*) + F(y_{k+2}) - F(y_N), 
+  \end{equation*}
+  and hence
+  \begin{equation*}
+    \Sigma \leq 1-F(x^*) = F(-x^*). 
+  \end{equation*}
+  Similarly, if $s_{i^*}=-1$ then 
+  \begin{equation*}
+    1 - \Sigma \leq 1 -  F(-x^*).
+  \end{equation*}
+  This conclude the proof in the case where $c'(x)$ is an injection. 
+
+  In the case where $c(x)$ is not strictly concave, so that $c'$ does not
+  strictly decrease, we approximate $c$ using another concave symmetric
+  function with decreasing derivative. We assume w.l.o.g.\ that $c(0) = 0$
+  maximizes $c$.  For $\alpha>0$ consider the function $f_\alpha(x) =
+  \kappa(\alpha) e^{-|c(x)|^{1+\alpha}}$, where $\kappa(\alpha)$ normalizes
+  $f_\alpha$.  Then $c_\alpha(x)$ is concave, symmetric, and
+  a.e.\ differentiable with
+  \begin{equation*}
+    c_\alpha'(x) \triangleq \frac{f'_\alpha(x)}{f_\alpha(x)} = (1+\alpha)|c(x)|^{\alpha} c'(x). 
+  \end{equation*}
+  Now $c_\alpha'(x)$ is non-increasing since it is the derivative of a concave
+  function. Furthermore, since $c(x)$ is non-constant on any interval and
+  $c'(x)$ is non-increasing, $c_\alpha'(x)$ is non-constant on any interval
+  hence an injection. It follows from the first part of the proof that, for
+  any $\alpha>0$,
+  \begin{align}
+    \label{eq:proof:lem:bound_intervals}
+    \frac{(\delta_{n,\alpha})^2}{\Delta_{n,\alpha}(1-\Delta_{n,\alpha})} \leq \max_i \eta_{\alpha}(x_i),
+  \end{align}
+  where 
+  \begin{equation*}
+    \delta_{n,\alpha} \triangleq  \sum_{k=1}^{n} (-1)^{k+1} f_{\alpha}(x_k),
+  \end{equation*}
+  \begin{equation*}
+    \Delta_{n,\alpha} \triangleq \sum_{k=1}^n (-1)^{k+1} F_{\alpha}(x_k), 
+  \end{equation*}
+  and 
+  \begin{equation*}
+    \eta_{\delta,\alpha}(x) \triangleq \frac{(f_\alpha(x))^{2+\delta}}{\left(F_{\alpha}(x)(1-F(x)) \right)^{1+\delta}}. 
+  \end{equation*}
+  The proof is completed by noting that 
+  \begin{align*}
+    \lim_{\alpha \to 0} \frac{(\delta_{n,\alpha})^{2+\delta} }{ \left(\Delta_{n,\alpha}(1-\Delta_{n,\alpha})\right)^{1+\delta}}  = \frac{(\delta_{n})^{2+\delta }}{\left(\Delta_{n}(1-\Delta_{n}) \right)^{1+\delta}},  
+  \end{align*}
+  and, since the maximum is over a finite set,
+  \begin{align*}
+    \lim_{\alpha \to 0}  \max_i \eta_{\delta,\alpha}(x_i)  = \max_i\eta_\delta(x_i).
+  \end{align*}
+
+  %Our goal is to construct an approximation to $f(x)$ using a log-concave, symmetric, and differentiable function $\hat{f}(x)$ such that $\hat{f}'(x)/\hat{f}(x)$ is strictly decreasing. We achieve such an approximation by modifying $f(x)$ over intervals over which $c'(x)$ is a constant. Assume first $c'(x)$ is only a constant over an interval $(a_1,b_1)\subset \R$ containing $x_1>0$ and on the mirror image of this interval around $x=0$. Over this interval, $f(x)$ is necessarily of the form $f(x) = e^{-c_1|x| + d_1}$ for some $c_1\geq 0$ and $d_1$. % and For $\alpha>0$, consider
+  %\begin{equation*}
+  %F_1(x,\alpha) \triangleq  F(a_1) + \frac{1}{c_1} e^{-c_1 (|x|^{1+\alpha} +d_1}, \quad x \in (a_1,b_1),
+  %\end{equation*}
+  %and 
+  %\begin{equation*}
+  %f_1(x,\alpha) \triangleq  F_1'(x,\alpha) =  -\sgn(x)(1+\alpha)|x|^\alpha e^{-c_1 |x|^{1+\alpha} + d_1}, \quad x \in (a_1,b_1).
+  %\end{equation*}
 
 
-
-\QEDA 
+\end{proof-of-lemma}
 

@@ -1,0 +1,293 @@
+% -*- Mode: latex -*- %
+
+\section{Proof of Theorem~\ref{theorem:non-adaptive-minimax}}
+
+We follow a similar outline to the optimality results we establish
+in the proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-regular} in
+Sec.~\ref{sec:proof-sgd-regular}.
+Roughly, we establish that the family $P_\theta$ of distributions
+on the bits $B_i$ is locally asymptotically normal
+(Definition~\ref{definition:lan}) via a quadratic
+mean differentiability argument. After this, the result
+follows by standard local asymptotic minimax theory.
+
+\begin{lemma}
+  \label{lemma:lan-bits}
+  Let Assumption~\ref{assumption:detection-regions}\eqref{item:density-nice}
+  and~\eqref{item:finite-intervals} hold, and let
+  $B_i = \indic{X_i \in A_i}$.
+  Let $h_n \to h \in \R$. Then for any $\theta \in \mbox{int}\Theta$,
+  \begin{equation*}
+    \sum_{i = 1}^n \log \frac{P_{\theta + h_n/\sqrt{n}}(B_i)}{
+      P_\theta(B_i)}
+    = \frac{h}{\sqrt{n}}
+    \sum_{i = 1}^n \score_\theta(B_i)
+    - \frac{h}{4n} \sum_{i = 1}^n \var(\score_\theta(B_i))
+    - \frac{h}{4n} \sum_{i = 1}^n \score_\theta(B_i)^2
+    + o_P(1).
+  \end{equation*}
+  If additionally
+  Assumption~\ref{assumption:detection-regions}\eqref{item:limit-variance}
+  holds, then
+  \begin{equation*}
+    \sum_{i = 1}^n \log \frac{P_{\theta + h_n/\sqrt{n}}(B_i)}{
+      P_\theta(B_i)}
+    = \frac{h}{\sqrt{n}}
+    \sum_{i = 1}^n \score_\theta(B_i)
+    - \frac{h^2}{2} \kappa(\theta) + o_P(1).
+  \end{equation*}
+\end{lemma}
+\noindent
+The proof of Lemma~\ref{lemma:lan-bits} is quite technical,
+so we defer it to Section~\ref{sec:proof-lan-bits}.
+
+With this lemma, it is not too challenging to demonstrate the local
+asymptotic normality (Definition~\ref{definition:lan}) of the family
+$\{P_\theta\}$. Indeed, the assumption that $f$ is Lipschitz guarantees that
+$f(z) \le \sqrt{\lip(f)}$ for all $z$, and thus we obtain that
+$|\dPtheta(A_n)| \le K \sqrt{\lip(f)}$ for all $n$, whence $\sup_n
+\max\{|\score_\theta(A_n)|, |\score_\theta(A_n^c)|\} \le C < \infty$ for
+some $C$. Thus, the strong law of large numbers
+gives that
+$\frac{1}{n} \sum_{i = 1}^n \score_\theta(B_i)
+\cas 0$ as $\E_\theta[\score_\theta(B_i)] = 0$, and Lyapunov's central
+limit theorem applies to give
+\begin{equation*}
+  \frac{1}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  \cd \normal\left(0, \kappa(\theta)\right)
+\end{equation*}
+under
+Assumption~\ref{assumption:detection-regions}\eqref{item:limit-variance},
+so that the family $\{P_\theta\}$ is locally asymptotically normal
+(Def.~\ref{definition:lan}).
+
+We now recall the familiar H\'{a}jek-Le-Cam local asymptotic minimax
+result~\cite[Thm.~8.11]{VanDerVaart98}: if the family
+$\{P_\theta\}$ is LAN with precision $\kappa(\theta)$, then
+\begin{equation*}
+  \liminf_{c \to \infty} \liminf_n \sup_{\norm{\tau - \theta} \le
+    c / \sqrt{n}} \E_\tau\left[L(\sqrt{n}(\theta_n - \tau))\right]
+  \ge \E[L(Z / \sqrt{\kappa(\theta)})]
+\end{equation*}
+for any symmetric quasi-convex loss $L$, where $Z \sim normal(0, 1)$.
+This immediately gives Theorem~\ref{theorem:non-adaptive-minimax}.
+
+\subsection{Proof of Lemma~\ref{lemma:lan-bits}}
+\label{sec:proof-lan-bits}
+
+Our proof follows that of \cite[Thm.~7.2]{VanDerVaart98} closely.
+The first step is to note that
+if $\lip(f)$ denotes the Lipschitz constant of $f$, then for any
+$h \in \R$ and $A = \cup_{i = 1}^K \{[t_i^-, t_i^+]\}$, we have
+\begin{equation}
+  \label{eqn:expansion-dPtheta}
+  P_{\theta + h}(A) = P_\theta(A) + \dPtheta(A)
+  \pm \frac{K \cdot \lip(f)}{2}  h^2.
+\end{equation}
+Indeed, for any interval $[t_0, t_1]$ we immediately have
+\begin{align*}
+  P_{\theta + h}([t_0, t_1])
+  & = \int_{t_0}^{t_1} f(z - \theta - h) dz
+  = \int_{t_0}^{t_1} \left(f(z - \theta)
+  + \int_0^h f'(z - \theta - v) dv\right) dz \\
+  & = P_\theta([t_0, t_1])
+  + \int_0^h \int_{t_0}^{t_1} f'(z - \theta - v) dz dv \\
+  & = P_\theta([t_0, t_1])
+  + \int_0^h \left[f(t_1 - \theta - v) - f(t_0 - \theta - v)\right] dv \\
+  & = P_\theta([t_0, t_1])
+  + \left(f(t_1 - \theta) - f(t_0 - \theta)\right) h
+  \pm \int_0^h \lip(f) |v| dv \\
+  & = P_\theta([t_0, t_1]) + \dPtheta([t_0, t_1])
+  \pm \frac{\lip(f)}{2} h^2,
+\end{align*}
+giving the result~\eqref{eqn:expansion-dPtheta}.
+
+Now we demonstrate a type of uniform quadratic mean differentiability
+(Definition~\ref{definition:qmd}) for such sets
+$A$. First, note that by a Taylor approximation and concavity
+of $\sqrt{\cdot}$, we have
+\begin{equation*}
+  \sqrt{a} + \frac{b}{2 \sqrt{a}} -
+  \frac{b^2}{4\sqrt{a}}
+  \le \sqrt{a + b} \le \sqrt{a}
+  + \frac{b}{2 \sqrt{a}}
+\end{equation*}
+for any $a > 0$ and $|b| \le 3a/4$. Consequently,
+recalling that $\score_\theta(A) = \dPtheta(A) / P_\theta(A)$,
+for any $h \in \R$ the expansion~\eqref{eqn:expansion-dPtheta} yields
+\begin{equation*}
+  \left(\sqrt{P_{\theta + h}(A)} -
+  \sqrt{P_\theta(A)} - \half h \score_\theta(A) \sqrt{P_\theta(A)}
+  \right)^2
+  \le
+  \left(
+  \frac{K \lip(f)}{2 \sqrt{P_\theta(A)}} h^2
+  + \frac{(|\dPtheta(A) h| + h^2 \lip(f))^2}{P_\theta(A)^{3/2}}
+  \right)^2.
+\end{equation*}
+Now, note that for any Lipschitz-continuous $f$, that
+$1 = \int f(z) dz$ and $f \ge 0$ yield that
+$f(z) \le \sqrt{\lip(f)}$ for all $z \in \R$. Thus, under
+Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals},
+there exists a finite constant $C < \infty$ such that
+\begin{subequations}
+  \label{eqn:h-fourth}
+  \begin{align}
+    \nonumber \left(\sqrt{P_{\theta + h}(A)} -
+    \sqrt{P_\theta(A)} - \half
+    h \score_\theta(A) \sqrt{P_\theta(A)}\right)^2
+    & \le
+    \left(\frac{h^2 k \cdot \lip(f)}{2 \sqrt{P_\theta(A)}}
+    + \frac{(|\dPtheta(A) h| + k h^2 \lip(f))^2}{
+      P_\theta(A)^{3/2}}\right)^2 \\
+    & \le \frac{C}{P_\theta(A)} \left[k^2 \lip^2(f)
+      + \score_\theta(A)^2
+      + \frac{k^4 h^4 \lip^4(f)}{P_\theta(A)^2}
+      \right] \cdot h^4
+  \end{align}
+  where $C < \infty$ is a numerical constant, valid whenever $|\dPtheta(A) h|
+  \le P_\theta(A) / 4$ and $k h^2 \lip^4(f) \le P_\theta(A) / 4$,
+  and similarly, we have
+  \begin{equation}
+    \left(\sqrt{P_{\theta + h}(A^c)} -
+    \sqrt{P_\theta(A^c)} - \half
+    h \score_\theta(A^c) \sqrt{P_\theta(A^c)}\right)^2
+    \le \frac{C}{P_\theta(A^c)}
+    \left[k^2 \lip^2(f)
+      + \score_\theta(A^c)^2
+      + \frac{k^4 h^4 \lip^4(f)}{P_\theta(A^c)^2}
+      \right] \cdot h^4.
+  \end{equation}
+\end{subequations}
+That is, the family $\{P_\theta\}$ with bit observations $B_n$ satisfies a
+uniform type of quadratic-mean differentiability
+(Def.~\ref{definition:qmd}).
+
+Now, for shorthand, define $P_n = P_{\theta + h_n / \sqrt{n}}$ and $P =
+P_\theta$, and let $p_n, p$ be shorthand for the p.m.f.s of the two
+distributions.  For the sets $A_i$ we recall that $B_i = \indic{X_i \in
+  A_i}$.  The random variables
+\begin{equation*}
+  W_{n,i} \defeq 2 \left(\sqrt{\frac{p_n}{p}}(B_i) - 1\right)
+\end{equation*}
+are with $P$-probability 1 well-defined, and by the
+inequalities~\eqref{eqn:h-fourth}, we have
+that
+\begin{align*}
+  \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+  & \le 
+  C \frac{k^2 \lip^2(f) + \score_\theta(A_i)^2
+  + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
+  \cdot \frac{h_n^4}{n^2}
+  + C \frac{k^4 \lip^4(f)}{
+    P_\theta(A_i)^3 P_\theta(A_i^c)^3}
+  \frac{h_n^8}{n^4} \\
+  & \le 
+  C \frac{k^2 \lip^2(f) + \score_\theta(A_i)^2
+  + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
+  \cdot \frac{h^4}{n^2}
+  + C \frac{k^4 \lip^4(f)}{
+    P_\theta(A_i)^3 P_\theta(A_i^c)^3}
+  \frac{h^8}{n^4}
+\end{align*}
+whenever
+\begin{equation*}
+  \frac{h}{\sqrt{n}} \max\{\score_\theta(A_i),
+  \score_\theta(A_i^c)\}
+  \le \frac{1}{4}
+  ~~ \mbox{and} ~~
+  \frac{h^2}{n} \lip^2(f)
+  \le \frac{\min\{P_\theta(A_i), P_\theta(A_i^c)\}}{4}
+\end{equation*}
+In particular, using the uniform boundedness of $0 < P_\theta(A_i) < 1$,
+we see that unifomly in $i, n$ we have
+\begin{equation*}
+  \var\left(W_{n,i} - \frac{h}{\sqrt{n}} \score_\theta(B_i)\right)
+  = O\left(\frac{h^4}{n^2}\right)
+  + O(1) \E[\score_\theta(B_i)^2]
+  \frac{(h_n - h)^2}{n},
+\end{equation*}
+while $\E[\score_\theta(B_i)] = 0$. Additionally, defining $\mu_i$ to be the
+induced counting measure on $B_i = \indic{X_i \in A_i}$,
+\begin{align*}
+  \sum_{i = 1}^n \E[W_{n,i}]
+  & = 2\sum_{i = 1}^n
+  \left(\int \sqrt{p_n(b)} \sqrt{p(b)} d\mu_i(b) - 1 \right)
+  = -\sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}\right)^2
+  d\mu_i(b) \\
+  & = -\frac{h_n^2}{4 n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
+  - \sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}
+  - \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}\right)^2 d\mu_i(b) \\
+  & \qquad \qquad ~
+  - \sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}
+  - \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}\right)
+  \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}d\mu_i(b) \\
+  & = -\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
+  - O(h^4 / n) - O(h^2 / n^{1/2})
+\end{align*}
+uniformly in $h$.
+Therefore, we obtain
+\begin{equation*}
+  \sum_{i = 1}^n W_{n,i}
+  = \sum_{i = 1}^n \left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+  + \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  = -\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
+  + \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  + o_P(1),
+\end{equation*}
+where we have used that $h_n \to h$.
+
+Now, we write the log-likelihood ratio. We have
+\begin{align*}
+  \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
+  & = 2 \sum_{i = 1}^n \log\left(1 + \half W_{n,i}\right) \\
+  & = \sum_{i = 1}^n W_{n,i}
+  - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2
+  + \half \sum_{i = 1}^n W_{n,i}^2 R(W_{n,i})
+\end{align*}
+where the remainder $|R(W_{n,i})| \le |W_{n,i}|$ for $|W_{n,i}| \le 1$.
+In particular, using the Taylor approximation to $\sqrt{\cdot}$ and
+that $\inf_i P_\theta(A_i) > 0$, we have
+$\max_i W_{n,i} \cas 0$, so that
+\begin{equation}
+  \label{eqn:almost-at-the-end}
+  \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
+  = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
+\end{equation}
+
+It remains to compute $\E[W_{n,i}^2]$. Using the
+expansions~\eqref{eqn:h-fourth}, we have for any $B = \indic{X \in A}$,
+%% \begin{align*}
+%%   \E\left[
+%%     \left(\sqrt{\frac{P_{\theta + h}(B)}{P_\theta(B)}}
+%%     - 1\right)^2
+%%     \right]
+%%   & = (\sqrt{P_{\theta + h}(A)} - \sqrt{P_\theta(A)})^2
+%%   + (\sqrt{P_{\theta + h}(A^c)} - \sqrt{P_\theta(A^c)})^2 \\
+%%   & = (h \dPtheta(A) / \sqrt{P_\theta(A)}
+%%   + O(h^2)) + (h \dPtheta(A^c) / \sqrt{P_\theta(A^c)} + O(h^2))^2 \\
+%%   & = h^2 P_\theta(A) \score_\theta(A)^2
+%%   + h^2 P_\theta(A^c) \score_\theta(A^c)^2
+%%   + O(h^3)
+%%   = h^2 \var(\score_\theta(B))
+%%   + O(h^3)
+%% \end{align*}
+%% uniformly in $h$,
+%% and
+\begin{align*}
+  \left(\sqrt{\frac{P_{\theta + h}(B)}{P_\theta(B)}}
+  - 1\right)^2
+  & = \left(\sqrt{1 + h \score_\theta(B) + O(h^2)} - 1\right)^2
+  % = \left(h \score_\theta(B) / 2 + O(h^2)\right)^2
+  = h^2 \score_\theta(B)^2 / 4 + O(h^3)
+\end{align*}
+uniformly in $h$ near 0, as the probabilities $P_\theta(A)$ are bounded from
+0 and 1. Thus
+\begin{equation*}
+  \sum_{i = 1}^n W_{n,i}^2
+  = \frac{h_n^2}{n} \sum_{i = 1}^n \score_\theta(B_i)^2
+  + O(h_n^2 / \sqrt{n}),
+\end{equation*}
+giving Lemma~\ref{lemma:lan-bits}.
+

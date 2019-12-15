@@ -26,6 +26,7 @@
 \usepackage{epstopdf}
 
 \newtheorem{thm}{\bf{Theorem}}
+\newtheorem{theorem}[thm]{\bf{Theorem}}
 \newtheorem{cor}[thm]{\bf {Corollary}}
 \newtheorem{corollary}[thm]{\bf {Corollary}}
 \newtheorem{lem}[thm]{\bf {Lemma}}
@@ -47,6 +48,12 @@
 \newcommand{\supp}{\mathrm{supp} }
 \renewcommand\vec[1]{\ensuremath\boldsymbol{#1}}
 \newenvironment{proof}{\paragraph*{Proof}}{\hfill$\square$ \newline}
+\newenvironment{proof-of-lemma}[1][{}]{%
+  \noindent
+  \paragraph*{Proof of Lemma~{#1}}
+}{%
+  \hfill$\square$\newline
+}
 \newcommand{\sgn}{\mathrm{sgn} }
 \newcommand{\Prob}{\mathbb{P} }
 \newcommand{\argmax}{\mathrm{argmax}}
@@ -85,3 +92,7 @@
 \newcommand{\indic}[1]{1\!\left\{#1\right\}}
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\norm}[1]{\left\|{#1}\right\|}
+
+\newcommand{\score}{\dot{\ell}}
+\newcommand{\dPtheta}{\dot{P}_\theta}
+% \newcommand{\score}{\dot{\ell}}

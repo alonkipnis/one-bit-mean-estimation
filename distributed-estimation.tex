@@ -1,68 +1,94 @@
 \section{Distributed Estimation \label{sec:distributed}}
-In this section, we now consider the distributed encoding setting in Figure~\ref{fig:setup}-(iii) where  each one-bit message $B_i$ is only a function of its private sample $X_i$. In this case, the $i$th encoder is fully characterized its \emph{detection region}, defined as 
-\[
-A_i = \left\{ x \in \mathbb R \,:\, B_i(x) = 1 \right\}.
-\]
-Consequently, $B_i$ is of the form
-\[
-B_i = \begin{cases} 1 & X_i \in A_i, \\
--1 & X_i \notin A_i,
-\end{cases} \quad i\in \mathbb N,
-\]
-where the detection region $A_i$ is a Borel set that is independent of $X_1,\ldots,X_n$.\par
 
-As a first step, the following theorem provides conditions under which the messages $B_1,B_2,\ldots$ define a local asymptotic normal family. The proof of this theorem is in Appendix~\ref{proof:thm:LAN1}. 
+We now consider the distributed encoding setting in
+Figure~\ref{fig:setup}-(iii) where each one-bit message $B_i$ is a
+function only of its private sample $X_i$. In this case, the $i$th encoder is
+of the form $B_i = \indic{X_i \in A_i}$, where the detection region
+$A_i$ is a Borel set independent of $X_1, X_2, \ldots$.
 
-\begin{thm} \label{thm:LAN1}
-For $n \in \mathbb N$ and $A_n \subset \mathbb R$,  define
+We begin by making a few restrictions on the collections of the sets $A_i$,
+which we believe not unreasonable, but which allow us to develop fundamental
+limits for estimation.  We require a bit of notation to define the
+assumptions. As we work with a location family based on a density $f$
+with associated probability distribution $P$ on variables $Z$,
+we define
+\begin{equation*}
+  P_\theta(A) \defeq P(Z - \theta \in A)
+\end{equation*}
+for $Z$ with density $f$. Whenever $A$ is a collection
+of disjoint intervals $A = \cup_i \{[t_i^-, t_i^+]\}$, we may define
+\begin{equation*}
+  \dPtheta(A) \defeq \frac{\partial}{\partial \theta} P_\theta(A)
+  = \sum_i \left(f(t_i^- - \theta) - f(t_i^+ - \theta)\right),
+\end{equation*}
+and similarly we define the score
+function $\score_\theta(A) \defeq \dPtheta(A) / P_\theta(A)$.
+For $B = \indic{X \in A}$, we abuse notation and also write
+$\score_\theta(B) = \score_\theta(A)$ and similarly for $\dPtheta$.
+With this, we may define the variance of the
+scores $\score_\theta(B_i)$ under $P_\theta$ via
 \begin{equation}
-\label{eq:precision_general}
-L_n(A_1,\ldots,A_n;\theta) \triangleq \frac{1}{n} \sum_{i=1}^n \frac{ \left(\frac{d}{d \theta} \Prob(X_i \in A_i) \right)^2 }{ \Prob(X_i \in A_i)\left(1- \Prob(X_i \in A_i) \right) }. 
+  \label{eq:precision_general}
+  L_n(A_1,\ldots,A_n;\theta) \defeq
+  \frac{1}{n} \sum_{i=1}^n \frac{ \dPtheta(A_i)^2}{
+    P_\theta(A_i) (1 - P_\theta(A_i))}.
 \end{equation}
-Consider the following conditions:
-\begin{itemize}
-\item [(i)\,\,] The probability density function $f(x)$ of $X_n-\theta$ is log-concave, differentiable, and symmetric. Furthermore, there exists $\delta>0$ such that the function $\eta^{1+\delta}(x)/f^\delta(x)$ is non-increasing in $|x|$. 
-\item[(ii)\,] $A_n$ is a finite union of disjoint intervals.
-\item[(iii)] The limit 
-\begin{equation}
-\label{eq:LAN_lim}
-\kappa(\theta) \triangleq \lim_{n\to \infty} L_n(A_1,\ldots,A_n; \theta)
-\end{equation}
-exists. 
-\end{itemize}
-For $i=1,\ldots,n$ set
-\[
-B_n = \begin{cases} 1 & X_n \in A_n, \\
--1 & X_n \notin A_n. 
-\end{cases} 
-\]
-For any $\theta$, $f(x)$ and a sequence of sets $A_1,A_2,\ldots$ such that (i)-(iii) hold, and any $h\in \mathbb R$, we have
-\begin{align*}
-& \log  \frac{ \mathbb P_{\theta+h/\sqrt{n}} (B_1,\ldots,B_n) }{
-\mathbb P_{\theta} (B_1,\ldots,B_n)} \\
-& \overset{d}{\longrightarrow} \Ncal\left(-\frac{1}{2} h^2 \kappa(\theta), h^2 \kappa(\theta) \right).
-\end{align*} 
-\end{thm}
-Theorem~\ref{thm:LAN1} provides conditions under which $B_1,\ldots,B_n$ defines a LAN family with a precision parameter given by the limit in \eqref{eq:LAN_lim}. Condition (i) is satisfied, for example, by the normal distribution with $\delta\leq 2$. Condition (iii) is arguably the strongest and hardest to verify. As we show in Section~\ref{subsec:threshold} below, this condition is satisfied, for example, when $A_1, \ldots,A_n$ are half lines whose starting points are drawn independently from some probability measure on $\mathbb R$. Similar ideas imply that condition (iii) holds whenever we choose the intervals consisting each $A_i$ according to some pre-specified distribution. \par
-%
-An important conclusion of Theorem~\ref{thm:LAN1} follows from the local asymptotic minimax property of estimators in LAN models \cite{van2000asymptotic}):
-\begin{cor} \label{cor:LA_minimax}
-Let ${\theta}_n$ be an estimator of $\theta \in \Theta$ from $B_1,\ldots,B_n$ with detection regions $A_1,\ldots,A_n$ such that conditions (i)-(iii) of Theorem~\ref{thm:LAN1} hold. Then for any symmetric and quasi-convex function $L$, 
-\begin{align*}
-& \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}({\theta}_{n} - \tau) \right) \right]
-\\
-& \qquad \qquad \qquad \qquad \geq \mathbb E \left[ L (Z/\sqrt{\kappa(\theta)}) \right],
+We then make the following assumption.
+\begin{assumption}
+  \label{assumption:detection-regions}
+  The density and detection regions satisfy
+  \begin{enumerate}[(i)]
+  \item \label{item:density-nice}
+    The density function $f$ of $X_n - \theta$ is Lipschitz continuous.
+  \item \label{item:finite-intervals}
+    Each set $A_n$ is a finite union of at most $K < \infty$ intervals
+    (which may include $\pm \infty$), and
+    $0 < \inf_n P_\theta(A_n) \le \sup_n P_\theta(A_n) < 1$.
+  \item \label{item:limit-variance}
+    The limit
+    \begin{equation}
+      \label{eqn:LAN-limit}
+      \kappa(\theta) \defeq \lim_{n\to \infty} L_n(A_1,\ldots,A_n; \theta)
+    \end{equation}
+    exists and is finite.
+  \end{enumerate}
+\end{assumption}
+
+Under this assumption, we have the following theorem, which provides
+a local asymptotic minimax lower bound on the efficiency of
+\emph{any} non-adaptive estimator.
+\begin{theorem}
+  \label{theorem:non-adaptive-minimax}
+  Let Assumption~\ref{assumption:detection-regions} hold, and
+  let ${\theta}_n$ be an estimator of $\theta \in \Theta$ from
+  observations $B_i = \indic{X_i \in A_i}$.
+  Then for any
+  symmetric and quasi-convex function $L$,
+  \begin{align*}
+    & \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}({\theta}_{n} - \tau) \right) \right]
+    \\
+    & \qquad \qquad \qquad \qquad \geq \mathbb E \left[ L (Z/\sqrt{\kappa(\theta)}) \right],
 \end{align*}
-where $Z \sim \Ncal(0,1)$. In particular, for $L(x) = x^2$,
-\begin{align*}
-\liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  n \mathbb E  \left( {\theta}_{n} - \tau \right)^2 \geq 1/\kappa(\theta).
-\end{align*}
-\end{cor}
-%
-Corollary~\ref{cor:LA_minimax} says that when the sequence of one-bit messages defines a LAN model with respect to $\theta$, no estimator can attain MSE smaller than $1/\kappa(\theta)n + O(1/n)$ where $\kappa(\theta)$ is the precision parameter of the model. Consequently, the ARE  in such case is at most $\kappa(\theta)\sigma^2$. Furthermore, as we show next, no estimator in this setting can attain the optimal ARE of $\eta(0)\sigma^2$ uniformly over $ \Theta$.
+  where $Z \sim \normal(0,1)$.
+\end{theorem}
+
+Theorem~\ref{theorem:non-adaptive-minimax} shows that the limiting variance
+term $\kappa(\theta)$ provides strong lower bounds on the efficiency of any
+non-adaptive estimator, and moreover, that these bounds necessarily depend
+on $\theta$. This suggests that attaining any type of good (uniform)
+efficiency with non-adaptive estimators will be challenging.  As a
+particular consequence, for the squared error $L(x) = x^2$, for any $\delta
+> 0$ and $\theta$, there exists a $c < \infty$ such that $\sup_{|\tau -
+  \theta| \le c / \sqrt{n}} \E_\tau[(\theta_n - \tau)^2] \ge \frac{(1 -
+  \delta)}{n \kappa(\theta)} + o(1/n)$.
+We next turn to the uniformity limitations of non-adaptive strategies.
 
 \subsection{Non-existence of a Uniformly Optimal Strategy}
-We now show that under LAN models, the optimal minimal risk $1/\eta(0)$ can only be attained at a finite number of points within $\Theta$. This fact implies in particular that, unlike in the adaptive setting, no distributed estimation scheme has ARE of $\eta(0)\sigma^2$ for all $\theta \in \Theta$. 
+
+We now show that under LAN models, the optimal minimal risk $1/\eta(0)$ can
+only be attained at a finite number of points within $\Theta$. This fact
+implies in particular that, unlike in the adaptive setting, no distributed
+estimation scheme has ARE of $\eta(0)\sigma^2$ for all $\theta \in \Theta$.
 
 \begin{thm} \label{thm:non_existence}
 Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is the union of at most $K$ intervals. The number of points $\theta \in \Theta$ satisfying $\kappa(\theta) = \eta(0)$ is at most $2K$. 
