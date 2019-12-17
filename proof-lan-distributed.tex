@@ -1,6 +1,7 @@
 % -*- Mode: latex -*- %
 
 \section{Proof of Theorem~\ref{theorem:non-adaptive-minimax}}
+\label{sec:proof-non-adaptive-minimax}
 
 We follow a similar outline to the optimality results we establish
 in the proof of Theorem~\ref{thm:sgd}\eqref{item:sgd-regular} in
@@ -102,6 +103,99 @@ $\{P_\theta\}$ is LAN with precision $\kappa(\theta)$, then
 \end{equation*}
 for any symmetric quasi-convex loss $L$, where $Z \sim \normal(0, 1)$.
 This immediately gives Theorem~\ref{theorem:non-adaptive-minimax}.
+
+%% Returning to the expansion~\eqref{eqn:almost-at-the-end}, we thus obtain
+%% %% \begin{equation*}
+%% %%   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
+%% %%   = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+%% %%   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
+
+
+%% %% \begin{equation*}
+%% %%   W_{n,i}
+%% %%   = \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+%% %%   \pm \frac{h_n^2 k \lip(f)}{n p(B_i)}
+%% %%   \pm \frac{1}{2}
+%% %% \end{equation*}
+
+%% \begin{equation*}
+%%   g(b) = h \score_\theta(b),
+%% \end{equation*}
+
+%% Under the assumption that $0 < \inf_i P_{\theta}(A_i) \le \sup_i P_{\theta}(A_i)
+%% < 1$, the random 
+
+\subsection{Proof of Lemma~\ref{lemma:derivative-bounds}}
+\label{sec:proof-derivative-bounds}
+
+To see the first claim of the lemma, we consider the simpler special case
+that $A = [a, b]$. Then as $f$ is Lipschitz (and hence absolutely
+continuous and a.e.\ differentiable with $\linf{f'} \le \lip(f)$),
+we have
+\begin{align*}
+  P_{\theta + h}(A)
+  - P_\theta(A)
+  & = \int_a^b (f(z - \theta - h) - f(z - \theta)) dz \\
+  & = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
+  & = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
+  & = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
+  & = \int_0^h (f(a - \theta) - f(b - \theta)) du
+  \pm 2 \int_0^h \lip(f) u du \\
+  & = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
+\end{align*}
+This gives the first two claims of the lemma.
+
+For the second, we require a bit more work.
+Let $L = \lip(f)$ for shorthand. Let $a < b$.
+Then we always have
+\begin{equation}
+  \label{eqn:interval-length-thing}
+  P([a, b])
+  \ge \int_a^b f(z) dz
+  \ge \int_a^b \max\{f(b) - L (b - z), f(a) - L(z - a), 0\} dz.
+\end{equation}
+If $f(a) + f(b) \ge L (b - a)$, then the point $\hat{z} =
+\frac{a + b}{2} - \frac{f(b) - f(a)}{2L}$ satisfies both $f(b) - L(b -
+\hat{z}) \ge 0$ and $f(a) - L(\hat{z} - a) \ge 0$. The
+integral~\eqref{eqn:interval-length-thing} then becomes
+\begin{align*}
+  \lefteqn{\int_a^{\hat{z}}
+    (f(a) - L (z - a) dz)
+    + \int_{\hat{z}}^b
+    (f(b) - L (b - z)) dz} \\
+  & = \frac{f(a) + f(b)}{2}
+  \left(\frac{b - a}{2}\right)
+  - L \left(\frac{b - a}{2} \right)^2
+  + \frac{(f(b) - f(a))^2}{4L},
+\end{align*}
+and using the assumption that $\frac{f(a) + f(b)}{2} \ge L(b - a)$,
+we obtain
+\begin{align*}
+  \frac{(f(b) - f(a))^2}{4L}
+  & \le \frac{f(b) + f(b)}{2} \frac{b - a}{2}
+  - L \left(\frac{b - a}{2}\right)^2
+  + \frac{(f(b) - f(a))^2}{4L}
+  \le P([a, b]).
+\end{align*}
+That is, $|f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}$.
+In the converse case that $f(a) + f(b) \le L(b - a)$, then
+the integral~\eqref{eqn:interval-length-thing} becomes
+\begin{align*}
+  P([a, b])
+  & \ge \int_a^{a + \frac{f(a)}{L}}
+  (f(a) - L (z - a)) dz
+  + \int_{b - \frac{f(b)}{L}}^b (f(b) - L (b - z)) dz \\
+  & = \frac{f(a)^2}{L}
+  - \frac{f(a)^2}{2L}
+  + \frac{f(b)^2}{L}
+  - \frac{f(b)^2}{2L},
+\end{align*}
+so that $\sqrt{f(a)^2 + f(b)^2} \le \sqrt{2 \lip(f) P([a, b])}$.  In sum,
+we have demonstrated that always the first
+bound~\eqref{eqn:bound-density-diffs} holds.
+To show the second inequality in expression~\eqref{eqn:bound-density-diffs},
+note that
+$\sum_i P([a_i, b_i]) \le 1$, and apply Cauchy-Schwarz.
 
 \subsection{Proof of Lemma~\ref{lemma:lan-bits}}
 \label{sec:proof-lan-bits}
@@ -337,98 +431,5 @@ Thus
   = \frac{h_n^2}{n} \sum_{i = 1}^n \score_\theta(B_i)^2
   + o(1),
 \end{equation*}
-giving the theorem.
-
-%% Returning to the expansion~\eqref{eqn:almost-at-the-end}, we thus obtain
-%% %% \begin{equation*}
-%% %%   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
-%% %%   = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
-%% %%   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
-
-
-%% %% \begin{equation*}
-%% %%   W_{n,i}
-%% %%   = \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
-%% %%   \pm \frac{h_n^2 k \lip(f)}{n p(B_i)}
-%% %%   \pm \frac{1}{2}
-%% %% \end{equation*}
-
-%% \begin{equation*}
-%%   g(b) = h \score_\theta(b),
-%% \end{equation*}
-
-%% Under the assumption that $0 < \inf_i P_{\theta}(A_i) \le \sup_i P_{\theta}(A_i)
-%% < 1$, the random 
-
-\subsection{Proof of Lemma~\ref{lemma:derivative-bounds}}
-\label{sec:proof-derivative-bounds}
-
-To see the first claim of the lemma, we consider the simpler special case
-that $A = [a, b]$. Then as $f$ is Lipschitz (and hence absolutely
-continuous and a.e.\ differentiable with $\linf{f'} \le \lip(f)$),
-we have
-\begin{align*}
-  P_{\theta + h}(A)
-  - P_\theta(A)
-  & = \int_a^b (f(z - \theta - h) - f(z - \theta)) dz \\
-  & = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
-  & = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
-  & = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
-  & = \int_0^h (f(a - \theta) - f(b - \theta)) du
-  \pm 2 \int_0^h \lip(f) u du \\
-  & = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
-\end{align*}
-This gives the first two claims of the lemma.
-
-For the second, we require a bit more work.
-Let $L = \lip(f)$ for shorthand. Let $a < b$.
-Then we always have
-\begin{equation}
-  \label{eqn:interval-length-thing}
-  P([a, b])
-  \ge \int_a^b f(z) dz
-  \ge \int_a^b \max\{f(b) - L (b - z), f(a) - L(z - a), 0\} dz.
-\end{equation}
-If $f(a) + f(b) \ge L (b - a)$, then the point $\hat{z} =
-\frac{a + b}{2} - \frac{f(b) - f(a)}{2L}$ satisfies both $f(b) - L(b -
-\hat{z}) \ge 0$ and $f(a) - L(\hat{z} - a) \ge 0$. The
-integral~\eqref{eqn:interval-length-thing} then becomes
-\begin{align*}
-  \lefteqn{\int_a^{\hat{z}}
-    (f(a) - L (z - a) dz)
-    + \int_{\hat{z}}^b
-    (f(b) - L (b - z)) dz} \\
-  & = \frac{f(a) + f(b)}{2}
-  \left(\frac{b - a}{2}\right)
-  - L \left(\frac{b - a}{2} \right)^2
-  + \frac{(f(b) - f(a))^2}{4L},
-\end{align*}
-and using the assumption that $\frac{f(a) + f(b)}{2} \ge L(b - a)$,
-we obtain
-\begin{align*}
-  \frac{(f(b) - f(a))^2}{4L}
-  & \le \frac{f(b) + f(b)}{2} \frac{b - a}{2}
-  - L \left(\frac{b - a}{2}\right)^2
-  + \frac{(f(b) - f(a))^2}{4L}
-  \le P([a, b]).
-\end{align*}
-That is, $|f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}$.
-In the converse case that $f(a) + f(b) \le L(b - a)$, then
-the integral~\eqref{eqn:interval-length-thing} becomes
-\begin{align*}
-  P([a, b])
-  & \ge \int_a^{a + \frac{f(a)}{L}}
-  (f(a) - L (z - a)) dz
-  + \int_{b - \frac{f(b)}{L}}^b (f(b) - L (b - z)) dz \\
-  & = \frac{f(a)^2}{L}
-  - \frac{f(a)^2}{2L}
-  + \frac{f(b)^2}{L}
-  - \frac{f(b)^2}{2L},
-\end{align*}
-so that $\sqrt{f(a)^2 + f(b)^2} \le \sqrt{2 \lip(f) P([a, b])}$.  In sum,
-we have demonstrated that always the first
-bound~\eqref{eqn:bound-density-diffs} holds.
-To show the second inequality in expression~\eqref{eqn:bound-density-diffs},
-note that
-$\sum_i P([a_i, b_i]) \le 1$, and apply Cauchy-Schwarz.
+giving Lemma~\ref{lemma:lan-bits}.
 

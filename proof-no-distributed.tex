@@ -3,26 +3,27 @@
 \section{Proof of Theorem~\ref{thm:non_existence}}
 \label{proof:thm:non_existence}
 
-Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta) = \eta(0)$. 
+Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta)
+= \eta(0)$.
 %
-Since $B_1,B_2,\ldots$ satisfy the conditions in Theorem~\ref{thm:LAN1}, $\theta$ is in $\Xi$ if and only if
-\begin{equation}
-\label{eq:non_existence_proof}
-\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0). 
-\end{equation}
-By assumption, we have $B_i^{-1} = A_i$ where $A_i$ can be expressed as
-\[
-A_i = \cup_{i=1}^K (a_{i,k},b_{i,k}), 
-\]
-where $a_{i,1} \leq b_{i,1} \leq \ldots \leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values $-\infty$ and $\infty$, respectively. Denote
-\[
-C_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\}.
-\]
-For any $\theta$ and $\epsilon>0$, denote 
-\[
-S_n(\theta, \epsilon) \triangleq \left\{ i\leq n \,:\, (\theta-\epsilon,\theta+\epsilon) \cap C_i \neq \emptyset \right\}
-\]
-In words, $S_n$ contains all integers smaller than $n$ in which an $\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals consisting $A_i$. 
+Since $B_1,B_2,\ldots$ satisfy the conditions in
+Theorem~\ref{theorem:non-adaptive-minimax}, $\theta$ is in $\Xi$ if and only
+if $\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0)$.  By
+assumption, we have $B_i = \indic{X_i \in A_i}$ where each $A_i =
+\cup_{i=1}^K \{[a_{i,k},b_{i,k}]\}$, where $a_{i,1} \leq b_{i,1} \leq \ldots
+\leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values
+$-\infty$ and $\infty$, respectively. Denote the endpoints
+\begin{equation*}
+  E_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\},
+\end{equation*}
+and for $\theta$ and $\epsilon>0$, define
+\begin{equation*}
+  S_n(\theta, \epsilon) \triangleq \left\{ i\leq n ~ \mbox{s.t.}~
+  (\theta-\epsilon,\theta+\epsilon) \cap E_i \neq \emptyset \right\}
+\end{equation*}
+In words, $S_n$ contains all integers smaller than $n$ in which an
+$\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals
+defining $A_i$.
 %
 We now claim that 
 if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for such $\theta$ we have
@@ -37,23 +38,29 @@ if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for suc
  \label{eq:non_existence_proof1}
 \end{align}
 where $(a)$ follows from Lemma~\ref{lem:bound_intervals_delta} with $\delta =0$, and the fact that for $i \in S_n(\theta, \epsilon)$, 
-\[
+\begin{equation*}
 \max\left\{ \max_k \eta(b_{i,k}-\theta) , \max_k \eta(a_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
-\]
-Unless  $\card \left(S_n(\theta, \epsilon) \right)/n \to 1$, we get that \eqref{eq:non_existence_proof1}, hence $L_n(A_1,\ldots,A_n ; \theta)$, are bounded from above by a constant that is smaller then $\eta(0)$ in contradiction to the fact that $\theta \in \Xi$. \par
-For $k\in \N$, assume by contradiction that there exists $N \geq 2K + 1$ distinct elements
-$\theta_1,\ldots,\theta_N \in \Xi$. Since each $A_i$ consists of at most $K$ intervals, we have that 
+\end{equation*}
+Unless  $\card \left(S_n(\theta, \epsilon) \right)/n \to 1$, we get that \eqref{eq:non_existence_proof1}, hence $L_n(A_1,\ldots,A_n ; \theta)$, are bounded from above by a constant that is smaller then $\eta(0)$ in contradiction to the fact that $\theta \in \Xi$.
+
+Assume for the sake of contradiction that there exists $N \geq 2K + 1$
+distinct elements $\theta_1,\ldots,\theta_N \in \Xi$. Since each $A_i$
+consists of at most $K$ intervals, we have that
 \begin{equation}
-\label{eq:few_optimality_points_proof}
-\card (\cup_{i=1}^n \mathcal B_i) \leq 2 n K. 
+  \label{eq:few_optimality_points_proof}
+  \card (\cup_{i=1}^n \mathcal B_i) \leq 2 n K. 
 \end{equation}
 Fix $\epsilon>0$ such that 
-\[
-\epsilon < \frac{1}{2}\min_{i\neq j} |\theta_i - \theta_j|. 
-\]
+\begin{equation*}
+  \epsilon < \frac{1}{2}\min_{i\neq j} |\theta_i - \theta_j|. 
+\end{equation*}
 Since for each $\theta \in \Theta$ we have $S_n(\theta, \epsilon) \to 1$, there exists $n$ large enough such that 
-\[
-\card \left(S_n(\theta_i, \epsilon) \right) \geq n \left(1-\frac{1}{2N} \right)
-\]
-for all $i=1,\ldots,N$. However, $S_n(\theta_1,\epsilon), \ldots S_n(\theta_N,\epsilon)$ are disjoint, so the cardinallity of their union is at least $n\left(1-\frac{1}{2N} \right)N$ which is grater than $2nK + n/2$ in contradiction to \eqref{eq:few_optimality_points_proof}. 
+\begin{equation*}
+  \card \left(S_n(\theta_i, \epsilon) \right)
+  \geq n \left(1-\frac{1}{2N} \right)
+\end{equation*}
+for all $i=1,\ldots,N$. However, $S_n(\theta_1,\epsilon), \ldots
+S_n(\theta_N,\epsilon)$ are disjoint, so the cardinality of their union is
+at least $n\left(1-\frac{1}{2N} \right)N > 2nK + n/2$, a contradiction to
+inequality~\eqref{eq:few_optimality_points_proof}.
 

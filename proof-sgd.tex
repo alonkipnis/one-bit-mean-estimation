@@ -324,9 +324,10 @@ The update~\eqref{eq:polyak_new_measurements} gives
   & = U_{n-1} + \gamma_n \sgn(X_n-U_{n-1} ),
 \end{align*}
 so the estimator $\bar{U}_n$ is identical to the stochastic gradient
-estimator~\eqref{eq:sgd_est}. We have $\E[\varphi(x + Z)^4] = 1$ and by
-assumption the Fisher information $\E[(f'(Z))^2 / f(Z)^2]$ exists, and the
-functions $\psi$ and $\chi$ have the desired conditions of
+estimator~\eqref{eq:sgd_alg} with $\bar{\theta}_n = \frac{1}{n} \sum_{i =
+  1}^n \theta_i$. We have $\E[\varphi(x + Z)^4] = 1$ and by assumption the
+Fisher information $\E[(f'(Z))^2 / f(Z)^2]$ exists, and the functions $\psi$
+and $\chi$ have the desired conditions of
 Corollary~\ref{corollary:polyak-juditsky} (as we verify in
 Section~\ref{sec:proof-normal-sgd}). Finally, the function $\theta \mapsto
 \E_{P_\theta}[(\bar{\theta}_n - \theta)^2]$ is continuous in $\theta$, so
@@ -572,8 +573,9 @@ Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam} imply
 that the Fisher information $I_h =
 \E_h[\score_h(Z)^2]$ exists and is continuous for
 $\score_h(z) = \frac{p'(z - h)}{p(z - h)}$,
-and the asymptotic expansion~\eqref{eqn:lan-from-qmd}
-with the preceding display give the joint convergence
+and the asymptotic expansion Definitions~\ref{definition:qmd}
+and~\ref{definition:lan} allow combines
+with the preceding display to give the joint convergence
 \begin{equation*}
   \left(\sqrt{n} \bar{\Delta}_n, \log \frac{P^n_{h_n/\sqrt{n}}}{P^n_0}(Z_1^n)
   \right)

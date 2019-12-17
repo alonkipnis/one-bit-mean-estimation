@@ -78,6 +78,8 @@ a local asymptotic minimax lower bound on the efficiency of
     \E\left[ L (Z/\sqrt{\kappa(\theta)}) \right].
   \end{align*}
 \end{theorem}
+\noindent
+See Appendix~\ref{sec:proof-non-adaptive-minimax} for a proof.
 
 Theorem~\ref{theorem:non-adaptive-minimax} shows that the limiting variance
 term $\kappa(\theta)$ provides strong lower bounds on the efficiency of any
@@ -88,94 +90,171 @@ particular consequence, for the squared error $L(x) = x^2$, for any $\delta
 > 0$ and $\theta$, there exists a $c < \infty$ such that $\sup_{|\tau -
   \theta| \le c / \sqrt{n}} \E_\tau[(\theta_n - \tau)^2] \ge \frac{(1 -
   \delta)}{n \kappa(\theta)} + o(1/n)$.
-We next turn to the uniformity limitations of non-adaptive strategies.
 
-\subsection{Non-existence of a Uniformly Optimal Strategy}
-
-We now show that under LAN models, the optimal minimal risk $1/\eta(0)$ can
-only be attained at a finite number of points within $\Theta$. This fact
-implies in particular that, unlike in the adaptive setting, no distributed
-estimation scheme has ARE of $\eta(0)\sigma^2$ for all $\theta \in \Theta$.
+Yet Theorem~\ref{theorem:non-adaptive-minimax}
+limits non-adaptive strategies in stronger ways.
+%%
+%% \subsection{Non-existence of a Uniformly Optimal Strategy}
+%%
+Under the density models we have considered, with the additional
+Assumption~\ref{assump:failure_rate}, we can show stronger
+optimality results that adaptivity is essential for achieving
+optimal convergence guarantees.
+Recall the transformation~\eqref{eq:eta_def} of the
+hazard rate function, $\eta(x) = \frac{f^2(x)}{F(x)(1 - F(x))}$, which
+has unique maximum at $x = 0$ under Assumption~\ref{assump:failure_rate}.
+When each detection region $A_n$ consists of a bounded number
+of intervals, the next theorem
+shows that
+the optimal minimal risk $1/\eta(0)$ can
+only be attained at finitely many points within $\Theta$.
+In particular, distinct from the adaptive setting, no distributed
+estimation scheme can achieve asymptotic variance $\eta(0)$
+uniformly in $\theta \in \Theta$.
 
 \begin{thm} \label{thm:non_existence}
-Under conditions (i)-(iii) in Theorem~\ref{thm:LAN1}, assume that each $A_i$ is the union of at most $K$ intervals. The number of points $\theta \in \Theta$ satisfying $\kappa(\theta) = \eta(0)$ is at most $2K$. 
+  Let Assumptions~\ref{assump:failure_rate}
+  and~\ref{assumption:detection-regions} hold.
+  Additionally, assume that $A_i$ is the union of at most $K$
+  intervals. The number of points $\theta \in \Theta$ satisfying
+  $\kappa(\theta) = \eta(0)$ is at most $2K$.
 \end{thm}
+\noindent
+See Appendix~\ref{proof:thm:non_existence} for a proof.
 
-\begin{proof}
-See Appendix~\ref{proof:thm:non_existence}.
-\end{proof}
-
-
-We next consider the case where each detection region is a half-open interval, i.e., the $i$th message is obtained by comparing $X_i$ against a single threshold. As we explain next, the existence of a density for the sequence of thresholds is enough to establish local asymptotic normality and leads to a closed form expression for the precision parameter and the ARE.  
 
 %In the adaptive setting, it follows from Theorem~\ref{thm:sgd} that messages of this kind with appropriately chosen thresholds lead to an estimator with the optimal ARE of $\eta(0)sigma^2$. However, Theorem~\ref{thm:non_existence} implies that such ARE can only be attained for a negligible subset of the parameter space. As we shall see next, messages obtained via a comparison against a sequence of thresholds cannot attain the optimal efficiency one more than a single point of $\Theta$. 
 
-\subsection{Threshold Detection \label{subsec:threshold}}
+\subsection{Threshold Detection}
+\label{subsec:threshold}
+
+We now consider consider a restricted case where each detection region is a
+half-open interval, i.e., the $i$th message is obtained by comparing $X_i$
+against a single threshold. Under adaptive signal acquisition,
+this is sufficient for asymptotic optimality;
+in non-adaptive settings, it is not sufficient, though we may characterize
+a few additional optimality results.
+%% As we explain next, the existence of a density
+%% for the sequence of thresholds is enough to establish local asymptotic
+%% normality and leads to a closed form expression for the precision parameter
+%% and the ARE.
 Assume now that each $B_i$ is of the form
 \begin{equation}
-\label{eq:threshold_message}
-B_i = \sgn(t_i - X_i) = \begin{cases} 1 & X_i< t_i, \\
--1 & X_i > t_i,
-\end{cases}  
+  \label{eq:threshold_message}
+  B_i = \sgn(t_i - X_i) = \begin{cases} 1 & X_i< t_i, \\
+    -1 & X_i > t_i,
+  \end{cases}  
 \end{equation}
-where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th encoder. In other words, the detection region of $B_i$ is $A_i = (t_i,\infty)$ and $\mathbb P(X_i \in A_i) = F \left( B_i(t_i-\theta) \right)$. It follows that
+where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th encoder. In
+other words, the detection region of $B_i$ is $A_i = (t_i,\infty)$ and
+$\mathbb P(X_i \in A_i) = F \left( B_i(t_i-\theta) \right)$. It follows that
 \begin{equation}
-L_n(A_1,\ldots,A_n;\theta) = \frac{1}{n} \sum_{i=1}^n \frac{ \left(f(t_i-\theta) \right)^2 }{F\left(t_i-\theta \right) F\left(\theta - t_i \right) }  = \frac{1}{n} \sum_{i=1}^n \eta(t_i - \theta).
-\label{eq:Ln_threshold}
+  L_n(A_1,\ldots,A_n;\theta)
+  = \frac{1}{n} \sum_{i=1}^n \frac{ \left(f(t_i-\theta) \right)^2 }{F\left(t_i-\theta \right) F\left(\theta - t_i \right) }  = \frac{1}{n} \sum_{i=1}^n \eta(t_i - \theta).
+  \label{eq:Ln_threshold}
 \end{equation}
-A natural condition for the existence of the limit \eqref{eq:Ln_threshold} as $n\to \infty$ is that the empirical distribution of the threshold values converges to a probability measure. Specifically, for an interval $I \subset \mathbb R$ define
-\[
-\lambda_n(I) = \frac{ \card \left( I \cap \{t_1,t_2,\ldots \} \right)}{n}. 
-\]
-Theorem~\ref{thm:LAN1} implies:
+A natural condition for the existence of the limit \eqref{eq:Ln_threshold}
+as $n\to \infty$ is that the empirical distribution of the threshold values
+converges to a probability measure. Specifically, for an interval $I \subset
+\mathbb R$ define
+\begin{equation*}
+  \lambda_n(I) = \frac{ \card \left( I \cap \{t_1,t_2,\ldots \} \right)}{n}. 
+\end{equation*}
+Then an investigation of the proof of
+Theorem~\ref{theorem:non-adaptive-minimax} in
+Section~\ref{sec:proof-non-adaptive-minimax}, specifically
+Sec.~\ref{sec:proof-lan-bits} and the bounds~\eqref{eqn:h-fourth}, show that
+as $\eta(t) \le \eta(0)$ for all $t \in \R$ under
+Assumption~\ref{assump:failure_rate}, the following corollary follows. (The
+corollary relies on local asymptotic normality~\cite[Ch.~7]{VanDerVaart98};
+see Appendix~\ref{sec:proof-sgd-regular} for some brief discussion of such
+conditions.)
 \begin{cor} \label{cor:LAN_thresh}
-Let $\{t_n\}_{n=1}^\infty$ be a sequence of threshold values such that $\lambda_n$ converges (weakly) to a probability measure $\lambda(dt)$ on $\mathbb R$. Then $\left\{ B_i = \sgn(X_i - t_i) \right\}_{i=1}^n$ is a LAN family with precision parameter
-\[
-\kappa(\theta) = \int_{\mathbb R} \eta(t-\theta) \lambda(dt). 
-\]
+  Let $\{t_n\}_{n=1}^\infty$ be a sequence of threshold values such that
+  $\lambda_n$ converges (weakly) to a probability measure $\lambda(dt)$ on
+  $\mathbb R$. Then the conclusions of
+  Theorem~\ref{theorem:non-adaptive-minimax} apply with
+  %% $\left\{ B_i = \sgn(X_i - t_i) \right\}_{i=1}^n$ is a
+  %% LAN family with precision parameter
+  \begin{equation*}
+    \kappa(\theta) = \int_{\mathbb R} \eta(t-\theta) \lambda(dt). 
+  \end{equation*}
+  Moreover, the family of laws of $\{B_i = \sgn(X_i - t_i)\}_{i = 1}^n$
+  under $\{P_\theta\}_{\theta \in \Theta}$ is locally asymptotically normal
+  with information $\kappa(\theta)$.
 \end{cor}
-The condition that $\lambda_n$ converges to a probability measure is satisfied, for example, whenever the $t_1,\ldots,t_n$s are drawn independently from a probability distribution $\lambda(dt)$ on $\mathbb R$. \par
-Due to local asymptotic normality of $\{B_n\}_{n=1}^\infty$, the maximum likelihood estimator (ML) of $\theta$ from $B_1,\ldots,B_n$, denoted here by 
-${\theta}^{ML}_n$, is local asymptotic minimax in the sense that 
-\[
-\sqrt{n} \left( {\theta}^{ML}_n - \theta \right) \overset{d}{\longrightarrow} \mathcal{N} \left(0, 1/\kappa(\theta) \right). 
-\]
-It follows that when the density of the threshold values converges to a probability measure, the ARE of the ML estimator is $\kappa(\theta)\sigma^2$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. We note that ${\theta}^{ML}_n$ is given by the root of 
+
+The condition that $\lambda_n$ converges to a probability measure is
+satisfied, for example, whenever the $t_1,\ldots,t_n$s are drawn
+independently from a probability distribution $\lambda(dt)$ on $\mathbb
+R$.
+
+The local asymptotic normality of $\{B_n\}_{n=1}^\infty$, the maximum
+likelihood estimator (ML) of $\theta$ from $B_1,\ldots,B_n$, denoted here by
+${\theta}^{ML}_n$, is local asymptotic minimax in the sense that
+\begin{equation*}
+  \sqrt{n} \left( {\theta}^{ML}_n - \theta \right)
+  \cd \normal\left(0, 1/\kappa(\theta) \right). 
+\end{equation*}
+It follows that when the density of the threshold values converges to a
+probability measure, the ML estimator has asymptotic variance $1 /
+\kappa(\theta)$, and this is minimal. We note that ${\theta}^{ML}_n$
+solves
 \begin{equation}
-\label{eq:ML}
-\sum_{i=1}^n B_i \frac{f \left( t_i-\theta\right) }{F \left(B_i  (t_i-\theta)\right) },  
+  \label{eq:ML}
+  0 = \sum_{i=1}^n B_i \frac{f \left( t_i-\theta\right) }{F \left(B_i  (t_i-\theta)\right) }.
 \end{equation}
-This root is unique since the log-likelihood function is concave. Furthermore, for any $n \in \mathbb R$, we have that ${\theta}^{ML}_n  \in [t_{(1)}, t_{(n)}]$ where $t_{(i)}$ denotes the $i$th element of $\{t_1,t_2\ldots\}$. Therefore, if $\{t_1,t_2\ldots\}$ is bounded (for example $\{t_1,t_2\ldots\} \subset \Theta$), then 
-\[
+If the collection $\{t_1,t_2\ldots\}$ is bounded
+(for example $\{t_1,t_2\ldots\} \subset \Theta$), then
+\begin{equation*}
 \lim_{n\to \infty} n \ex{\left({\theta}^{ML}_n - \theta \right)^2}  = 1/\kappa(\theta), 
-\] 
-so that the ML estimator attains the local asymptotic MSE of Corollary~\ref{cor:LA_minimax}. \par
-%
-Since $\eta(x)$ attains its maximum at the origin, we conclude that
-\[
-\kappa(\theta) \leq \sup_{t\in \mathbb R} \eta \left( t-\theta\right) = \eta(0).
-\]
-This upper bound on $\kappa(\theta)$ implies that the ARE of any distributed estimator based on a sequence of threshold detectors does not exceed $\eta(0)\sigma^2$, a fact that agrees with the lower bound under adaptive estimation derived in Theorem~\ref{thm:adpative_lower_bound}. 
-%
-This upper bound on $\kappa(\theta)$ is attained only when $\lambda$ is the mass distribution at $\theta$. Since $\theta$ is apriori unknown, we conclude that estimation in the distributed setting using threshold detection is strictly sub-optimal compared to the adaptive setting. In other words, the ability to choose the threshold values in an adaptive manner based on previous messages necessarily improves relative efficiency compared to a non-adaptive threshold selection.  \par
+\end{equation*} 
+so that the ML estimator attains the local asymptotic MSE of
+Theorem~\ref{thm:adpative_lower_bound}.
+
+By Assumption~\ref{assump:failure_rate},
+$\eta(x)$ attains its maximum at the origin, so we conclude that
+\begin{equation*}
+  \kappa(\theta) \leq \sup_{t\in \mathbb R} \eta \left( t-\theta\right) = \eta(0).
+\end{equation*}
+Moreover, this upper bound on $\kappa(\theta)$ is attained only when
+$\lambda$ is the point mass at $\theta$. Since $\theta$ is \emph{a priori}
+unknown, we conclude that estimation in the distributed setting using
+threshold detection is strictly suboptimal compared to the adaptive
+setting; the ability to choose the thresholds $t_i$
+adaptively conditional on previous messages is necessary for optimal
+efficiency.
 
 %We conclude that when the density of the threshold values converges to a probability measure, the ARE of the ML is $\kappa(\theta)$, and this ARE is maximal with respect to all local alternative estimators for $\theta$. 
 
-%
-We conclude this section by considering the density of the threshold values that maximizes the ARE $\kappa(\theta)$ under the worst choice of $\theta \in \Theta$.
 
 \subsection{Minimax Threshold Density}
-The distribution $\lambda(dt)$ that maximizes $\kappa(\theta)$, and thus minimizes $1/\kappa(\theta)$, over the worst choice of $\theta$ in $\Theta$ is given as the solution to the following optimization problem:
+
+We conclude this section by considering the density of the threshold values
+that maximizes the worst-case information $\inf_\theta \kappa(\theta)
+= \kappa_\lambda(\theta)$ where $\kappa_\lambda(\theta)
+= \int \eta(t - \theta) d\lambda(t)$.
+This distribution $\lambda$ solves the
+optimization problem
 \begin{align}
-\label{eq:var_cvx_minimax}
-\begin{split}
-\mathrm{maximize} \quad &  \inf_{\theta \in \Theta} \int \eta(t-\theta) \lambda(dt)
-\\ 
-\mathrm{subject~to} 
-\quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
-\end{split}
+  \label{eq:var_cvx_minimax}
+  \begin{split}
+    \mathrm{maximize} \quad &  \inf_{\theta \in \Theta} \int \eta(t-\theta) \lambda(dt)
+    \\ 
+    \mathrm{subject~to} 
+    \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
+  \end{split}
 \end{align}
-The objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda(dt)$ and hence this problem can be solved using a convex program. We denote by $\kappa^\star$ the maximal value of \eqref{eq:var_cvx_minimax} and by $\lambda^\star(dt)$ the density that achieves this maximum. Theorem~\ref{thm:LAN1} and Corollary~\ref{cor:LAN_thresh} imply that for any $\theta \in \Theta$, the ARE of any local asymptotic minimax estimator (such as the ML estimator) from $\{B_i,\,i\in N\}$ of the form \eqref{eq:threshold_message} with $t_i \sim \lambda^\star$ i.i.d. is at least $\kappa^\star$.
+The objective function~\eqref{eq:var_cvx_minimax} is concave in
+$\lambda(dt)$ and continuous in the weak topology over measures on $\Theta$,
+so that by discretizing, we can approximately solve this problem using
+convex optimization. We let $\kappa^\star$ denote the maximal value of
+problem~\eqref{eq:var_cvx_minimax} and $\lambda^\star(dt)$ be the density
+achieving the maximum. By drawing thresholds
+$t_i \simiid \lambda^\star$,
+Corollary~\ref{cor:LAN_thresh} guarantees that for any $\theta \in \Theta$, the
+maximum likelihood estimator
+using $\{B_i = \sgn(X_i - t_i)\}_{i \in \N}$ is at least $\kappa^\star$.
 %
 %By discretizing the interval $[-b,b]$ using $N_\theta$ values $\theta_1,\ldots,\theta_{N_\theta}$ and the real line using $N_\lambda$ values $\lambda_1,\ldots,\lambda_{N_\lambda}$, the discrete version of \eqref{eq:var_cvx_minimax} is the following linear program (LP) in the variables $K \in \mathbb R$ and $\lambda \in \mathbb R^{N_\lambda}$:
 %\begin{align}
@@ -192,8 +271,16 @@ The objective function in \eqref{eq:var_cvx_minimax} is concave in $\lambda(dt)$
 %The number of variables in \eqref{eq:cvx_minimax} is $N_\lambda+1$ and number of constraints is $1 + N_\lambda + N_\theta$. Since an LP has an optimal solution at which the number of constraints for which equality holds is no smaller than the number of variables \cite{papadimitriou1998combinatorial}, there exists an optimal $\lambda$ with support over no more than $N_{\theta}$ points. Therefore, in approximating the solution of \eqref{eq:var_cvx_minimax} using 
 %\eqref{eq:cvx_minimax}, it is enough to take $N_\lambda = N_\theta$.
 %\end{rem} 
-\par
-Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(dt)$ obtained by solving a discretized version of \eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density with variance $\sigma^2$ and $\Theta = [-T,T]$. The minimax asymptotic precision parameter $\kappa^\star$ obtained this way is illustrated in Fig.~\ref{fig:minimax_ARE} as a function of half the support size $T$. Also illustrated in these figures is $\kappa_{\unif}$ which is the precision parameter corresponding to threshold values uniformly distribution over $\Theta = [-T,T]$, namely
+
+Figure~\ref{fig:minimax_support} illustrates an approximation to
+$\lambda^\star(dt)$ obtained by solving a discretized version of
+\eqref{eq:var_cvx_minimax} for the case when $f(x)$ is the normal density
+with variance $\sigma^2$ and $\Theta = [-T,T]$. The minimax asymptotic
+precision parameter $\kappa^\star$ obtained this way is illustrated in
+Fig.~\ref{fig:minimax_ARE} as a function of half the support size $T$. Also
+illustrated in these figures is $\kappa_{\unif}$, the precision
+parameter corresponding to threshold values uniformly distribution over
+$\Theta = [-T,T]$,
 \begin{align}
 & \kappa_{\unif} \triangleq \min_{\theta \in [-T,T]} \frac{1}{2T}\int_{-T}^T \eta\left(t-\theta\right) dt \nonumber
  \\
@@ -201,132 +288,131 @@ Figure~\ref{fig:minimax_support} illustrates an approximating to $\lambda^\star(
 \frac{1}{2T}\int_{-T}^{T} \eta\left(t\pm T\right) dt
 = \frac{1}{2T}\int_{0}^{2T} \eta(t) dt  \label{eq:uniform_risk}. 
 \end{align}
-Corollary~\ref{cor:LAN_thresh} implies that the ARE under threshold values uniformly distributed is $\kappa_\unif \sigma^2$. \par
 
 \begin{figure}
   %%%%% COMMENTED TIKZ PICTURE %%%%%
   \begin{center}
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% title = {$\sigma/T = 1/2$},
-%% ytick={0,0.1,1},
-%% %ylabel = {$\lambda(dt)$},
-%% yticklabels={0,0.1,1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.5.csv};
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=10, 
+xlabel= {$dt$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+title = {$\sigma/T = 1/2$},
+ytick={0,0.1,1},
+%ylabel = {$\lambda(dt)$},
+yticklabels={0,0.1,1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.5.csv};
 
-%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
-%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.5.csv};
 
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 0.6,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% title = {$\sigma/T = 1/5$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,0.5},
-%% ylabel = {$\lambda(dt)$},
-%% yticklabels={0,0.5},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.2.csv};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 0.6,
+samples=10, 
+xlabel= {$dt$},
+title = {$\sigma/T = 1/5$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+ytick={0,0.5},
+ylabel = {$\lambda(dt)$},
+yticklabels={0,0.5},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.2.csv};
 
-%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
-%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.2.csv};
 
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 0.3,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% xtick={-0.5,0,0.5},
-%% title = {$\sigma / T = 1/10$},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,0.2},
-%% %ylabel = {$\lambda(dt)$},
-%% yticklabels={0,0.2},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.1.csv};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 0.3,
+samples=10, 
+xlabel= {$dt$},
+xtick={-0.5,0,0.5},
+title = {$\sigma / T = 1/10$},
+xticklabels={-$T$, 0, $T$},
+ytick={0,0.2},
+%ylabel = {$\lambda(dt)$},
+yticklabels={0,0.2},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.1.csv};
 
-%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
-%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.1.csv};
 
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 0.15,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% title = {$\sigma / T = 1/20$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,0.1},
-%% ylabel = {$\lambda(dt)$},
-%% yticklabels={0,0.1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.05.csv};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 0.15,
+samples=10, 
+xlabel= {$dt$},
+title = {$\sigma / T = 1/20$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+ytick={0,0.1},
+ylabel = {$\lambda(dt)$},
+yticklabels={0,0.1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [x = x, y  = y,col sep=comma] {./Figs/minmax_lmd_b0.5_sig0.05.csv};
 
-%% \addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
+\addplot[color = black!30!green, smooth, dashed] plot table [x = x, y  = z,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
-%% \addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
+\addplot[color = red, smooth] plot table [x = x, y  = y,col sep=comma] {./Figs/minimax_th_b0.5_sig0.05.csv};
 
 
-%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-%% \end{axis}
-%% \end{tikzpicture}
+%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+\end{axis}
+\end{tikzpicture}
 
 \caption{\label{fig:minimax_support}
 Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \Ncal(\theta,\sigma^2)$ and $\theta \in [-T,T]$.
@@ -339,147 +425,147 @@ The continuous curve (red) represents the reciprocal of the asymptotic risk at a
 \begin{figure}
   %%%%% COMMENTED TIKZ PICTURE %%%%%
   \begin{center}
-%% \begin{tikzpicture}[scale = 1]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmax=2.5, 
-%% xmode = log,
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=1, 
-%% xlabel= {$\sigma/T$},
-%% %xtick={-0.5,0,0.5},
-%% %xticklabels={-$$, 0, $b$},
-%% ytick={0,0.637,1},
-%% yticklabels={0,$2/\pi$,1},
-%% ylabel = {$\ARE$},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
-%% \addlegendentry{optimal threshold density};
+\begin{tikzpicture}[scale = 1]
+\begin{axis}[
+width=8cm, height=6cm,
+xmax=2.5, 
+xmode = log,
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=1, 
+xlabel= {$\sigma/T$},
+%xtick={-0.5,0,0.5},
+%xticklabels={-$$, 0, $b$},
+ytick={0,0.637,1},
+yticklabels={0,$2/\pi$,1},
+ylabel = {$\ARE$},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{optimal threshold density};
 
-%% \addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
-%% \addlegendentry{uniform threshold desnity};
-%% \end{axis}
-%% \end{tikzpicture}
-%% \caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x) = \Ncal(\theta,\sigma^2)$  and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
-%% \end{center}
-%% \end{figure}
+\addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{uniform threshold desnity};
+\end{axis}
+\end{tikzpicture}
+\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma/T$ for $f(x) = \Ncal(\theta,\sigma^2)$  and $\theta \in \Theta = [-T,T]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$, where $\kappa_{\unif}$ is given by \eqref{eq:uniform_risk}. }.
+\end{center}
+\end{figure}
 
 
-%% %We have seen that using threshold detection, an ARE $\eta(0)\sigma^2$ can only be attained at a single point in $\Theta$. Next, we prove that with any set of messages obtained via a distributed strategy, there exists at least one $\theta \in \Theta$ such that the estimator of $\theta$ has ARE strictly smaller than $\eta(0)\sigma^2$. 
+%We have seen that using threshold detection, an ARE $\eta(0)\sigma^2$ can only be attained at a single point in $\Theta$. Next, we prove that with any set of messages obtained via a distributed strategy, there exists at least one $\theta \in \Theta$ such that the estimator of $\theta$ has ARE strictly smaller than $\eta(0)\sigma^2$. 
 
-%% \begin{figure}
-%% \begin{center}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% title = {$\sigma/\sigma_{\theta} = 4$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,1},
-%% ylabel = {$\lambda(dt)$},
-%% yticklabels={0,1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig4.csv};
-%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% xtick={-0.5,0,0.5},
-%% title = {$\sigma/\sigma_{\theta} = 3$},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,1},
-%% %ylabel = {$\lambda(dt)$},
-%% yticklabels={0,1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig3.csv};
-%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% title = {$\sigma/\sigma_{\theta} = 2$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% ytick={0,1},
-%% ylabel = {$\lambda(dt)$},
-%% yticklabels={0,1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig2.csv};
-%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-%% \end{axis}
-%% \end{tikzpicture}
-%% %
-%% \begin{tikzpicture}[scale = 0.55]
-%% \begin{axis}[
-%% width=8cm, height=6cm,
-%% xmin = -0.5, xmax=0.5, 
-%% restrict y to domain = 0:100,
-%% ymin = 0,
-%% ymax = 1,
-%% samples=10, 
-%% xlabel= {$dt$},
-%% xtick={-0.5,0,0.5},
-%% xticklabels={-$T$, 0, $T$},
-%% title = {$\sigma/\sigma_{\theta} = 1$},
-%% ytick={0,1},
-%% %ylabel = {$\lambda(dt)$},
-%% yticklabels={0,1},
-%% line width=1.0pt,
-%% mark size=1.5pt,
-%% ymajorgrids,
-%% xmajorgrids,
-%% legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
-%% ]
-%% \addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig1.csv};
-%% %\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
-%% \end{axis}
-%% \end{tikzpicture}
+\begin{figure}
+\begin{center}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=10, 
+xlabel= {$dt$},
+title = {$\sigma/\sigma_{\theta} = 4$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+ytick={0,1},
+ylabel = {$\lambda(dt)$},
+yticklabels={0,1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig4.csv};
+%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=10, 
+xlabel= {$dt$},
+xtick={-0.5,0,0.5},
+title = {$\sigma/\sigma_{\theta} = 3$},
+xticklabels={-$T$, 0, $T$},
+ytick={0,1},
+%ylabel = {$\lambda(dt)$},
+yticklabels={0,1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig3.csv};
+%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=10, 
+xlabel= {$dt$},
+title = {$\sigma/\sigma_{\theta} = 2$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+ytick={0,1},
+ylabel = {$\lambda(dt)$},
+yticklabels={0,1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig2.csv};
+%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+\end{axis}
+\end{tikzpicture}
+%
+\begin{tikzpicture}[scale = 0.55]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin = -0.5, xmax=0.5, 
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=10, 
+xlabel= {$dt$},
+xtick={-0.5,0,0.5},
+xticklabels={-$T$, 0, $T$},
+title = {$\sigma/\sigma_{\theta} = 1$},
+ytick={0,1},
+%ylabel = {$\lambda(dt)$},
+yticklabels={0,1},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = blue, smooth, mark = o ] plot table [col sep=comma] {./Figs/unif_Bayes_lmd_b0.5_sig1.csv};
+%\addlegendentry{$\frac{\sigma^2}{\sigma_\theta^2} = 1$};
+\end{axis}
+\end{tikzpicture}
 \caption{\label{fig:opt_density}
 Optimal threshold density $\lambda^\star(dt)$ that minimizes the asymptotic Bayes risk \eqref{eq:cvx_average} for a uniform prior with $\sigma/\sigma_\theta=1,2,3,4$, where $\sigma_\theta^2=T^2/3$ is the variance of the prior. 
 }
