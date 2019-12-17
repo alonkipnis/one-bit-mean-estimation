@@ -11,19 +11,49 @@ on the bits $B_i$ is locally asymptotically normal
 mean differentiability argument. After this, the result
 follows by standard local asymptotic minimax theory.
 
+We begin with an argument on the smoothness properties of the densities,
+which is important for our Taylor expansions to come.
+\begin{lemma}
+  \label{lemma:derivative-bounds}
+  Let
+  Assumption~\ref{assumption:detection-regions}\eqref{item:lipschitz-density}
+  and \eqref{item:finite-intervals} hold. Then for any $A = \cup_{i = 1}^k
+  \{[a_i, b_i]\}$ and $h \in \R$,
+  \begin{equation*}
+    P_{\theta + h}(A) = P_\theta(A) + \dPtheta(A) h \pm
+    k \cdot \lip(f) h^2,
+  \end{equation*}
+  where
+  \begin{equation}
+    \dPtheta(A) = \sum_{i = 1}^k f(a_i - \theta) - f(b_i - \theta).
+    \label{eqn:expansion-dPtheta}
+  \end{equation}
+  Additionally, we have the bounds
+  \begin{equation}
+    \label{eqn:bound-density-diffs}
+    |f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}
+    ~~ \mbox{and} ~~
+    |\dPtheta(A)| \le 2 \sqrt{k \lip(f)}.
+  \end{equation}
+\end{lemma}
+\noindent
+See Section~\ref{sec:proof-derivative-bounds} for a proof.
+
+The second lemma provides the local asymptotic normality we require.
 \begin{lemma}
   \label{lemma:lan-bits}
-  Let Assumption~\ref{assumption:detection-regions}\eqref{item:density-nice}
-  and~\eqref{item:finite-intervals} hold, and let
-  $B_i = \indic{X_i \in A_i}$.
-  Let $h_n \to h \in \R$. Then for any $\theta \in \mbox{int}\Theta$,
+  Let
+  Assumption~\ref{assumption:detection-regions}\eqref{item:lipschitz-density}
+  and~\eqref{item:finite-intervals} hold, and let $B_i = \indic{X_i \in
+    A_i}$.  Let $h_n \to h \in \R$. Then for any $\theta \in
+  \mbox{int}\Theta$,
   \begin{equation*}
     \sum_{i = 1}^n \log \frac{P_{\theta + h_n/\sqrt{n}}(B_i)}{
       P_\theta(B_i)}
     = \frac{h}{\sqrt{n}}
     \sum_{i = 1}^n \score_\theta(B_i)
-    - \frac{h}{4n} \sum_{i = 1}^n \var(\score_\theta(B_i))
-    - \frac{h}{4n} \sum_{i = 1}^n \score_\theta(B_i)^2
+    - \frac{h^2}{4n} \sum_{i = 1}^n \var(\score_\theta(B_i))
+    - \frac{h^2}{4n} \sum_{i = 1}^n \score_\theta(B_i)^2
     + o_P(1).
   \end{equation*}
   If additionally
@@ -43,15 +73,16 @@ so we defer it to Section~\ref{sec:proof-lan-bits}.
 
 With this lemma, it is not too challenging to demonstrate the local
 asymptotic normality (Definition~\ref{definition:lan}) of the family
-$\{P_\theta\}$. Indeed, the assumption that $f$ is Lipschitz guarantees that
-$f(z) \le \sqrt{\lip(f)}$ for all $z$, and thus we obtain that
-$|\dPtheta(A_n)| \le K \sqrt{\lip(f)}$ for all $n$, whence $\sup_n
-\max\{|\score_\theta(A_n)|, |\score_\theta(A_n^c)|\} \le C < \infty$ for
-some $C$. Thus, the strong law of large numbers
-gives that
-$\frac{1}{n} \sum_{i = 1}^n \score_\theta(B_i)
-\cas 0$ as $\E_\theta[\score_\theta(B_i)] = 0$, and Lyapunov's central
-limit theorem applies to give
+$\{P_\theta\}$. Indeed, Lemma~\ref{lemma:derivative-bounds} guarantees that
+$|\dPtheta(A_n)| \le 2\sqrt{k_n \lip(f)}$ for all $n$, so that
+$\E_\theta[|\score_\theta(B_i)|^3] \le C \frac{k_i^{3/2}
+  \lip(f)^{3/2}}{P_\theta(A_i)^2 (1 - P_\theta(A_i))^2}$, while
+Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals}
+guarantees that
+$\frac{1}{n^3} \sum_{i = 1}^n \E_\theta[|\score_\theta(B_i)|^3]
+\to 0$. Because $\E[\score_\theta(B_i)] = 0$,
+the Lyapunov central limit theorem
+applies to give
 \begin{equation*}
   \frac{1}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
   \cd \normal\left(0, \kappa(\theta)\right)
@@ -69,43 +100,17 @@ $\{P_\theta\}$ is LAN with precision $\kappa(\theta)$, then
     c / \sqrt{n}} \E_\tau\left[L(\sqrt{n}(\theta_n - \tau))\right]
   \ge \E[L(Z / \sqrt{\kappa(\theta)})]
 \end{equation*}
-for any symmetric quasi-convex loss $L$, where $Z \sim normal(0, 1)$.
+for any symmetric quasi-convex loss $L$, where $Z \sim \normal(0, 1)$.
 This immediately gives Theorem~\ref{theorem:non-adaptive-minimax}.
 
 \subsection{Proof of Lemma~\ref{lemma:lan-bits}}
 \label{sec:proof-lan-bits}
 
-Our proof follows that of \cite[Thm.~7.2]{VanDerVaart98} closely.
-The first step is to note that
-if $\lip(f)$ denotes the Lipschitz constant of $f$, then for any
-$h \in \R$ and $A = \cup_{i = 1}^K \{[t_i^-, t_i^+]\}$, we have
-\begin{equation}
-  \label{eqn:expansion-dPtheta}
-  P_{\theta + h}(A) = P_\theta(A) + \dPtheta(A)
-  \pm \frac{K \cdot \lip(f)}{2}  h^2.
-\end{equation}
-Indeed, for any interval $[t_0, t_1]$ we immediately have
-\begin{align*}
-  P_{\theta + h}([t_0, t_1])
-  & = \int_{t_0}^{t_1} f(z - \theta - h) dz
-  = \int_{t_0}^{t_1} \left(f(z - \theta)
-  + \int_0^h f'(z - \theta - v) dv\right) dz \\
-  & = P_\theta([t_0, t_1])
-  + \int_0^h \int_{t_0}^{t_1} f'(z - \theta - v) dz dv \\
-  & = P_\theta([t_0, t_1])
-  + \int_0^h \left[f(t_1 - \theta - v) - f(t_0 - \theta - v)\right] dv \\
-  & = P_\theta([t_0, t_1])
-  + \left(f(t_1 - \theta) - f(t_0 - \theta)\right) h
-  \pm \int_0^h \lip(f) |v| dv \\
-  & = P_\theta([t_0, t_1]) + \dPtheta([t_0, t_1])
-  \pm \frac{\lip(f)}{2} h^2,
-\end{align*}
-giving the result~\eqref{eqn:expansion-dPtheta}.
-
-Now we demonstrate a type of uniform quadratic mean differentiability
-(Definition~\ref{definition:qmd}) for such sets
-$A$. First, note that by a Taylor approximation and concavity
-of $\sqrt{\cdot}$, we have
+Our proof follows that of \cite[Thm.~7.2]{VanDerVaart98} closely.  We first
+demonstrate a type of uniform quadratic mean differentiability
+(Definition~\ref{definition:qmd}) for sets $A$ that are finite unions of
+intervals. By a Taylor approximation and concavity of
+$\sqrt{\cdot}$, we have
 \begin{equation*}
   \sqrt{a} + \frac{b}{2 \sqrt{a}} -
   \frac{b^2}{4\sqrt{a}}
@@ -114,22 +119,24 @@ of $\sqrt{\cdot}$, we have
 \end{equation*}
 for any $a > 0$ and $|b| \le 3a/4$. Consequently,
 recalling that $\score_\theta(A) = \dPtheta(A) / P_\theta(A)$,
-for any $h \in \R$ the expansion~\eqref{eqn:expansion-dPtheta} yields
+for any $h \in \R$ and $A = \cup_{i = 1}^k \{[t_i^-, t_i^+]\}$ the
+union of $k$ intervals, the expansion~\eqref{eqn:expansion-dPtheta} yields
 \begin{equation*}
   \left(\sqrt{P_{\theta + h}(A)} -
   \sqrt{P_\theta(A)} - \half h \score_\theta(A) \sqrt{P_\theta(A)}
   \right)^2
   \le
   \left(
-  \frac{K \lip(f)}{2 \sqrt{P_\theta(A)}} h^2
+  \frac{k \lip(f)}{2 \sqrt{P_\theta(A)}} h^2
   + \frac{(|\dPtheta(A) h| + h^2 \lip(f))^2}{P_\theta(A)^{3/2}}
-  \right)^2.
+  \right)^2,
 \end{equation*}
-Now, note that for any Lipschitz-continuous $f$, that
-$1 = \int f(z) dz$ and $f \ge 0$ yield that
-$f(z) \le \sqrt{\lip(f)}$ for all $z \in \R$. Thus, under
+valid for $h$ such that
+$|\dPtheta(A) h| \le P_\theta(A) / 4$ and
+$k h^2 \lip^2(f) \le P_\theta(A) / 4$.
+Thus, under
 Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals},
-there exists a finite constant $C < \infty$ such that
+there exists a numerical constant $C < \infty$ such that
 \begin{subequations}
   \label{eqn:h-fourth}
   \begin{align}
@@ -143,10 +150,10 @@ there exists a finite constant $C < \infty$ such that
     & \le \frac{C}{P_\theta(A)} \left[k^2 \lip^2(f)
       + \score_\theta(A)^2
       + \frac{k^4 h^4 \lip^4(f)}{P_\theta(A)^2}
-      \right] \cdot h^4
+      \right] \cdot h^4,
   \end{align}
-  where $C < \infty$ is a numerical constant, valid whenever $|\dPtheta(A) h|
-  \le P_\theta(A) / 4$ and $k h^2 \lip^4(f) \le P_\theta(A) / 4$,
+  valid whenever $|\dPtheta(A) h|
+  \le P_\theta(A) / 4$ and $k h^2 \lip^2(f) \le P_\theta(A) / 4$,
   and similarly, we have
   \begin{equation}
     \left(\sqrt{P_{\theta + h}(A^c)} -
@@ -163,7 +170,7 @@ That is, the family $\{P_\theta\}$ with bit observations $B_n$ satisfies a
 uniform type of quadratic-mean differentiability
 (Def.~\ref{definition:qmd}).
 
-Now, for shorthand, define $P_n = P_{\theta + h_n / \sqrt{n}}$ and $P =
+For shorthand, define $P_n = P_{\theta + h_n / \sqrt{n}}$ and $P =
 P_\theta$, and let $p_n, p$ be shorthand for the p.m.f.s of the two
 distributions.  For the sets $A_i$ we recall that $B_i = \indic{X_i \in
   A_i}$.  The random variables
@@ -173,41 +180,66 @@ distributions.  For the sets $A_i$ we recall that $B_i = \indic{X_i \in
 are with $P$-probability 1 well-defined, and by the
 inequalities~\eqref{eqn:h-fourth}, we have
 that
-\begin{align*}
-  \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
-  & \le 
-  C \frac{k^2 \lip^2(f) + \score_\theta(A_i)^2
-  + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
-  \cdot \frac{h_n^4}{n^2}
-  + C \frac{k^4 \lip^4(f)}{
-    P_\theta(A_i)^3 P_\theta(A_i^c)^3}
-  \frac{h_n^8}{n^4} \\
-  & \le 
-  C \frac{k^2 \lip^2(f) + \score_\theta(A_i)^2
+\begin{align}
+  \lefteqn{\var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+    \le 
+    C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
+      + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
+    \cdot \frac{h_n^4}{n^2}
+    + C \frac{k^4 \lip^4(f)}{
+      P_\theta(A_i)^3 P_\theta(A_i^c)^3}
+    \frac{h_n^8}{n^4}} \nonumber \\
+  & \qquad\qquad\qquad\qquad\qquad \le 
+  C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
   + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
   \cdot \frac{h^4}{n^2}
   + C \frac{k^4 \lip^4(f)}{
     P_\theta(A_i)^3 P_\theta(A_i^c)^3}
   \frac{h^8}{n^4}
-\end{align*}
+  \label{eqn:var-wni-expansion}
+\end{align}
 whenever
 \begin{equation*}
   \frac{h}{\sqrt{n}} \max\{\score_\theta(A_i),
   \score_\theta(A_i^c)\}
   \le \frac{1}{4}
   ~~ \mbox{and} ~~
-  \frac{h^2}{n} \lip^2(f)
+  \frac{k_i h^2}{n} \lip^2(f)
   \le \frac{\min\{P_\theta(A_i), P_\theta(A_i^c)\}}{4}
 \end{equation*}
-In particular, using the uniform boundedness of $0 < P_\theta(A_i) < 1$,
-we see that unifomly in $i, n$ we have
+Now, we use
+Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals},
+coupled with Lemma~\ref{lemma:derivative-bounds} to show that the summed
+variances converge to zero.  Indeed, Lemma~\ref{lemma:derivative-bounds} and
+inequality~\eqref{eqn:var-wni-expansion} give that
 \begin{equation*}
-  \var\left(W_{n,i} - \frac{h}{\sqrt{n}} \score_\theta(B_i)\right)
-  = O\left(\frac{h^4}{n^2}\right)
-  + O(1) \E[\score_\theta(B_i)^2]
-  \frac{(h_n - h)^2}{n},
+  \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+  \le C \cdot
+  \left[\frac{k_i^2}{P_\theta(A_i) P_\theta(A_i^c)}
+    \frac{1}{n}
+    + \frac{k_i}{P_\theta(A_i) P_\theta(A_i^c)}
+    \frac{1}{n}
+    + \frac{k_i^4}{P_\theta(A_i)^3 P_\theta(A_i^c)^3}
+    \frac{1}{n^3}\right] \frac{1}{n},
 \end{equation*}
-while $\E[\score_\theta(B_i)] = 0$. Additionally, defining $\mu_i$ to be the
+where $C < \infty$ depends only on $\lip(f)$ and $h$ (both of which are
+uniformly bounded) whenever
+\begin{equation*}
+  \frac{k_i}{P_\theta(A_i) P_\theta(A_i^c)} \frac{1}{n} \le
+  \frac{1}{C}.
+\end{equation*}
+Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals}
+thus implies that $\E[\score_\theta(B_i)] = 0$ and
+\begin{equation}
+  \label{eqn:summed-variances-to-zero}
+  \var\left(\sum_{i = 1}^n W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+  \right)
+  = \sum_{i = 1}^n \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+  \right)
+  \to 0.
+\end{equation}
+
+We now control the expectation of the $W_{n,i}$. Defining $\mu_i$ to be the
 induced counting measure on $B_i = \indic{X_i \in A_i}$,
 \begin{align*}
   \sum_{i = 1}^n \E[W_{n,i}]
@@ -222,10 +254,10 @@ induced counting measure on $B_i = \indic{X_i \in A_i}$,
   - \sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}
   - \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}\right)
   \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}d\mu_i(b) \\
-  & = -\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
-  - O(h^4 / n) - O(h^2 / n^{1/2})
+  & = -\bigg(\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]\bigg)
+  - o(1)
 \end{align*}
-uniformly in $h$.
+uniformly in $h$, with a derivation completely paralleling that above.
 Therefore, we obtain
 \begin{equation*}
   \sum_{i = 1}^n W_{n,i}
@@ -246,48 +278,157 @@ Now, we write the log-likelihood ratio. We have
   + \half \sum_{i = 1}^n W_{n,i}^2 R(W_{n,i})
 \end{align*}
 where the remainder $|R(W_{n,i})| \le |W_{n,i}|$ for $|W_{n,i}| \le 1$.
-In particular, using the Taylor approximation to $\sqrt{\cdot}$ and
-that $\inf_i P_\theta(A_i) > 0$, we have
-$\max_i W_{n,i} \cas 0$, so that
+Using the Taylor expansions of $\sqrt{\cdot}$ and
+Lemma~\ref{lemma:derivative-bounds}, we have
+\begin{align}
+  \nonumber
+  \half W_{n,i}
+  & = \half \score_\theta(B_i)
+  \frac{h_n}{\sqrt{n}}
+  \pm \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
+  + \frac{h_n^2}{n} \score_\theta(B_i)^2
+  + \frac{ h_n^4}{n^2} \frac{k_i^2 \lip(f)^2}{p(B_i)^2}\right| \\
+  & \in \pm
+  C \left|\frac{\sqrt{k_i}}{\sqrt{n} p(B_i)}
+  + \frac{k_i}{n p(B_i)}
+  + \frac{\sqrt{k_i}}{p(B_i)^2 n}
+  + \frac{k_i^2}{p(B_i)^2 n^2}
+  \right| \to 0,
+  \label{eqn:max-wni-zero}
+\end{align}
+where $C < \infty$ depends only on $\lip(f)$ and $h_n$ and so is
+uniformly bounded;
+the limit follows from
+and Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals}.
+Consequently $\max_i W_{n,i} \to 0$, so that
 \begin{equation}
   \label{eqn:almost-at-the-end}
   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
   = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  - \frac{1}{4} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
 \end{equation}
 
-It remains to compute $\E[W_{n,i}^2]$. Using the
-expansions~\eqref{eqn:h-fourth}, we have for any $B = \indic{X \in A}$,
-%% \begin{align*}
-%%   \E\left[
-%%     \left(\sqrt{\frac{P_{\theta + h}(B)}{P_\theta(B)}}
-%%     - 1\right)^2
-%%     \right]
-%%   & = (\sqrt{P_{\theta + h}(A)} - \sqrt{P_\theta(A)})^2
-%%   + (\sqrt{P_{\theta + h}(A^c)} - \sqrt{P_\theta(A^c)})^2 \\
-%%   & = (h \dPtheta(A) / \sqrt{P_\theta(A)}
-%%   + O(h^2)) + (h \dPtheta(A^c) / \sqrt{P_\theta(A^c)} + O(h^2))^2 \\
-%%   & = h^2 P_\theta(A) \score_\theta(A)^2
-%%   + h^2 P_\theta(A^c) \score_\theta(A^c)^2
-%%   + O(h^3)
-%%   = h^2 \var(\score_\theta(B))
-%%   + O(h^3)
-%% \end{align*}
-%% uniformly in $h$,
-%% and
+It remains to compute $\E[W_{n,i}^2]$. Using the bounds
+that $|\score_\theta(B_i)| \le C \sqrt{k_i} / p(B_i)$ from
+Lemma~\ref{lemma:derivative-bounds},
+the
+expansion~\eqref{eqn:max-wni-zero}
+yields
 \begin{align*}
-  \left(\sqrt{\frac{P_{\theta + h}(B)}{P_\theta(B)}}
-  - 1\right)^2
-  & = \left(\sqrt{1 + h \score_\theta(B) + O(h^2)} - 1\right)^2
-  % = \left(h \score_\theta(B) / 2 + O(h^2)\right)^2
-  = h^2 \score_\theta(B)^2 / 4 + O(h^3)
+  \lefteqn{\left|\E\left[W_{n,i}^2 - \frac{h_n^2}{2n} \score_\theta(B_i)^2\right]
+    \right|} \\
+  &
+  \le \frac{C}{n} \left[
+    \frac{k_i^{3/2}}{p(A_i)(1 - p(A_i)) \sqrt{n}}
+    + \frac{k_i^{3/2}}{p(A_i)^2 (1 - p(A_i))^2 \sqrt{n}}
+    + \frac{k_i^2}{p(A_i)(1 - p(A_i))} \frac{1}{n^{3/2}}
+    \right] \\
+  & \qquad ~ +
+  \frac{C}{n}
+  \left[\frac{k_i^2}{p(A_i)(1 - p(A_i))} \frac{1}{n}
+    + \frac{k_i}{p(A_i)^3(1 - p(A_i))^3} \frac{1}{n}
+    + \frac{k_i^4}{p(A_i)^3 (1 - p(A_i))^3} \frac{1}{n^3} \right],
 \end{align*}
-uniformly in $h$ near 0, as the probabilities $P_\theta(A)$ are bounded from
-0 and 1. Thus
+where $C$ depends only on $h$ and $\lip(f)$.
+Thus
 \begin{equation*}
   \sum_{i = 1}^n W_{n,i}^2
   = \frac{h_n^2}{n} \sum_{i = 1}^n \score_\theta(B_i)^2
-  + O(h_n^2 / \sqrt{n}),
+  + o(1),
 \end{equation*}
-giving Lemma~\ref{lemma:lan-bits}.
+giving the theorem.
+
+%% Returning to the expansion~\eqref{eqn:almost-at-the-end}, we thus obtain
+%% %% \begin{equation*}
+%% %%   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
+%% %%   = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+%% %%   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
+
+
+%% %% \begin{equation*}
+%% %%   W_{n,i}
+%% %%   = \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+%% %%   \pm \frac{h_n^2 k \lip(f)}{n p(B_i)}
+%% %%   \pm \frac{1}{2}
+%% %% \end{equation*}
+
+%% \begin{equation*}
+%%   g(b) = h \score_\theta(b),
+%% \end{equation*}
+
+%% Under the assumption that $0 < \inf_i P_{\theta}(A_i) \le \sup_i P_{\theta}(A_i)
+%% < 1$, the random 
+
+\subsection{Proof of Lemma~\ref{lemma:derivative-bounds}}
+\label{sec:proof-derivative-bounds}
+
+To see the first claim of the lemma, we consider the simpler special case
+that $A = [a, b]$. Then as $f$ is Lipschitz (and hence absolutely
+continuous and a.e.\ differentiable with $\linf{f'} \le \lip(f)$),
+we have
+\begin{align*}
+  P_{\theta + h}(A)
+  - P_\theta(A)
+  & = \int_a^b (f(z - \theta - h) - f(z - \theta)) dz \\
+  & = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
+  & = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
+  & = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
+  & = \int_0^h (f(a - \theta) - f(b - \theta)) du
+  \pm 2 \int_0^h \lip(f) u du \\
+  & = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
+\end{align*}
+This gives the first two claims of the lemma.
+
+For the second, we require a bit more work.
+Let $L = \lip(f)$ for shorthand. Let $a < b$.
+Then we always have
+\begin{equation}
+  \label{eqn:interval-length-thing}
+  P([a, b])
+  \ge \int_a^b f(z) dz
+  \ge \int_a^b \max\{f(b) - L (b - z), f(a) - L(z - a), 0\} dz.
+\end{equation}
+If $f(a) + f(b) \ge L (b - a)$, then the point $\hat{z} =
+\frac{a + b}{2} - \frac{f(b) - f(a)}{2L}$ satisfies both $f(b) - L(b -
+\hat{z}) \ge 0$ and $f(a) - L(\hat{z} - a) \ge 0$. The
+integral~\eqref{eqn:interval-length-thing} then becomes
+\begin{align*}
+  \lefteqn{\int_a^{\hat{z}}
+    (f(a) - L (z - a) dz)
+    + \int_{\hat{z}}^b
+    (f(b) - L (b - z)) dz} \\
+  & = \frac{f(a) + f(b)}{2}
+  \left(\frac{b - a}{2}\right)
+  - L \left(\frac{b - a}{2} \right)^2
+  + \frac{(f(b) - f(a))^2}{4L},
+\end{align*}
+and using the assumption that $\frac{f(a) + f(b)}{2} \ge L(b - a)$,
+we obtain
+\begin{align*}
+  \frac{(f(b) - f(a))^2}{4L}
+  & \le \frac{f(b) + f(b)}{2} \frac{b - a}{2}
+  - L \left(\frac{b - a}{2}\right)^2
+  + \frac{(f(b) - f(a))^2}{4L}
+  \le P([a, b]).
+\end{align*}
+That is, $|f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}$.
+In the converse case that $f(a) + f(b) \le L(b - a)$, then
+the integral~\eqref{eqn:interval-length-thing} becomes
+\begin{align*}
+  P([a, b])
+  & \ge \int_a^{a + \frac{f(a)}{L}}
+  (f(a) - L (z - a)) dz
+  + \int_{b - \frac{f(b)}{L}}^b (f(b) - L (b - z)) dz \\
+  & = \frac{f(a)^2}{L}
+  - \frac{f(a)^2}{2L}
+  + \frac{f(b)^2}{L}
+  - \frac{f(b)^2}{2L},
+\end{align*}
+so that $\sqrt{f(a)^2 + f(b)^2} \le \sqrt{2 \lip(f) P([a, b])}$.  In sum,
+we have demonstrated that always the first
+bound~\eqref{eqn:bound-density-diffs} holds.
+To show the second inequality in expression~\eqref{eqn:bound-density-diffs},
+note that
+$\sum_i P([a_i, b_i]) \le 1$, and apply Cauchy-Schwarz.
 

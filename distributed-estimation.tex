@@ -38,12 +38,18 @@ We then make the following assumption.
   \label{assumption:detection-regions}
   The density and detection regions satisfy
   \begin{enumerate}[(i)]
-  \item \label{item:density-nice}
+  \item \label{item:lipschitz-density}
     The density function $f$ of $X_n - \theta$ is Lipschitz continuous.
   \item \label{item:finite-intervals}
-    Each set $A_n$ is a finite union of at most $K < \infty$ intervals
-    (which may include $\pm \infty$), and
-    $0 < \inf_n P_\theta(A_n) \le \sup_n P_\theta(A_n) < 1$.
+    Each set $A_n$ is the finite union of $k_n$ disjoint intervals
+    (which may include $\pm \infty$), where
+    \begin{equation*}
+      \frac{1}{n} \cdot \max_{i \le n} \frac{k_i^3}{P_\theta(A_i)^4
+        (1 - P_\theta(A_i))^4} \to 0.
+    \end{equation*}
+    %% Each set $A_n$ is a finite union of at most $K < \infty$ intervals
+    %% (which may include $\pm \infty$), and
+    %% $0 < \inf_n P_\theta(A_n) \le \sup_n P_\theta(A_n) < 1$.
   \item \label{item:limit-variance}
     The limit
     \begin{equation}
@@ -62,14 +68,15 @@ a local asymptotic minimax lower bound on the efficiency of
   Let Assumption~\ref{assumption:detection-regions} hold, and
   let ${\theta}_n$ be an estimator of $\theta \in \Theta$ from
   observations $B_i = \indic{X_i \in A_i}$.
-  Then for any
+  Then for $Z \sim \normal(0, 1)$ and any
   symmetric and quasi-convex function $L$,
   \begin{align*}
-    & \liminf_{c \to \infty} \liminf_{n \to \infty} \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}  \mathbb E \left[ L\left( \sqrt{n}({\theta}_{n} - \tau) \right) \right]
-    \\
-    & \qquad \qquad \qquad \qquad \geq \mathbb E \left[ L (Z/\sqrt{\kappa(\theta)}) \right],
-\end{align*}
-  where $Z \sim \normal(0,1)$.
+    & \liminf_{c \to \infty} \liminf_{n \to \infty}
+    \sup_{\tau\,:\,|\theta-\tau| \leq \frac{c}{\sqrt{n} }}
+    \E \left[ L\left( \sqrt{n}({\theta}_{n} - \tau) \right) \right] \\
+    & \qquad \qquad \qquad \qquad \geq
+    \E\left[ L (Z/\sqrt{\kappa(\theta)}) \right].
+  \end{align*}
 \end{theorem}
 
 Theorem~\ref{theorem:non-adaptive-minimax} shows that the limiting variance
