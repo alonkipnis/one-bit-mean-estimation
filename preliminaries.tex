@@ -63,17 +63,17 @@ see in Section~\ref{sec:sequential}.
 \label{sec:ceo}
 
 A related problem is the CEO problem, which considers the estimation of a
-sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_i$
+sequence $\theta_1,\theta_2\ldots$, where a noisy version of each $\theta_j$
 is available at $n$ terminals. At each terminal $i$, an encoder observes the
 $k$ noisy samples
 \[
 X_{i,j} = \theta_j + Z_{i,j},\qquad j=1,\ldots,k, \qquad i = 1,\ldots,n,
 \]
 and transmits $r_i k$ bits to a central estimator~\cite{berger1996ceo}. The
-central estimator produces an estimates ${\theta}_1,\ldots,{\theta}_k$ with
+central estimator produces estimates ${\hat{\theta}}_1,\ldots,{\hat{\theta}}_k$ with
 the goal of minimizing the quadratic risk:
 \[
-R_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - {\theta} \right)^2 \right]. 
+R_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\hat{\theta}_j - {\theta_j} \right)^2 \right]. 
 \]
 Note that any distributed encoding scheme using one-bit per sample can be replicated $k$ times and thus leads to a legitimate encoding and estimation scheme for the CEO problem with $r_1=\ldots=r_n = 1$. It follows that, assuming that $\theta$ is drawn once from the prior $\pi$, our mean estimation problem from one-bit samples under distributed encoding corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. 
 %
