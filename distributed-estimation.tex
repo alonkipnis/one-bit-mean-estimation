@@ -91,7 +91,7 @@ particular consequence, for the squared error $L(x) = x^2$, for any $\delta
   \theta| \le c / \sqrt{n}} \E_\tau[(\theta_n - \tau)^2] \ge \frac{(1 -
   \delta)}{n \kappa(\theta)} + o(1/n)$.
 
-Yet Theorem~\ref{theorem:non-adaptive-minimax}
+Yet, Theorem~\ref{theorem:non-adaptive-minimax}
 limits non-adaptive strategies in stronger ways.
 %%
 %% \subsection{Non-existence of a Uniformly Optimal Strategy}
@@ -104,9 +104,8 @@ Recall the transformation~\eqref{eq:eta_def} of the
 hazard rate function, $\eta(x) = \frac{f^2(x)}{F(x)(1 - F(x))}$, which
 has unique maximum at $x = 0$ under Assumption~\ref{assump:failure_rate}.
 When each detection region $A_n$ consists of a bounded number
-of intervals, the next theorem
-shows that
-the optimal minimal risk $1/\eta(0)$ can
+of intervals, the next theorem shows that
+the minimal risk $1/\eta(0)$ can
 only be attained at finitely many points within $\Theta$.
 In particular, distinct from the adaptive setting, no distributed
 estimation scheme can achieve asymptotic variance $\eta(0)$
@@ -156,7 +155,7 @@ $\mathbb P(X_i \in A_i) = F \left( B_i(t_i-\theta) \right)$. It follows that
 A natural condition for the existence of the limit \eqref{eq:Ln_threshold}
 as $n\to \infty$ is that the empirical distribution of the threshold values
 converges to a probability measure. Specifically, for an interval $I \subset
-\mathbb R$ define
+\mathbb R$, define
 \begin{equation*}
   \lambda_n(I) = \frac{ \card \left( I \cap \{t_1,t_2,\ldots \} \right)}{n}. 
 \end{equation*}
@@ -171,7 +170,7 @@ see Appendix~\ref{sec:proof-sgd-regular} for some brief discussion of such
 conditions.)
 \begin{cor} \label{cor:LAN_thresh}
   Let $\{t_n\}_{n=1}^\infty$ be a sequence of threshold values such that
-  $\lambda_n$ converges (weakly) to a probability measure $\lambda(dt)$ on
+  $\lambda_n$ converges (weakly) to a probability measure $\lambda$ on
   $\mathbb R$. Then the conclusions of
   Theorem~\ref{theorem:non-adaptive-minimax} apply with
   %% $\left\{ B_i = \sgn(X_i - t_i) \right\}_{i=1}^n$ is a
