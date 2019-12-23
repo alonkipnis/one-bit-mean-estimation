@@ -128,7 +128,7 @@ as desired.
 \subsection{An Isoperimetric Lemma}
 \label{sec:bound_intervals_delta}
 
-The following lemma is essential to the the proofs
+The following lemma is essential to the proofs
 of Theorems~\ref{thm:adpative_lower_bound} and
 \ref{thm:non_existence}.
 
@@ -250,7 +250,7 @@ In particular,
       \left|  F(y_1) - F(x_{i^*}) \right|^{1+ \delta} 
       \left| 1 - (F(y_1) -F(x_{i^*})) \right|^{1+ \delta} } 
   \end{align*} 
-  which is bounded from from above by $\eta_\delta(x_{i^*})$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
+  which is bounded from above by $\eta_\delta(x_{i^*})$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
   %
   We now consider the possibility that the maximum of $g(y_1,\ldots,y_N)$ is attained at the boundaries of $A_N(x^*,k)$. At boundary points for which $y_i = y_{i+1}$ for some $i$, the contribution of $y_i$ and $y_{i+1}$ to $g(y_1,\ldots,y_N)$ is zero and the induction assumption for $n=N-1$ implies that 
   \begin{equation*}
@@ -353,7 +353,7 @@ In particular,
   any $\alpha>0$,
   \begin{align}
     \label{eq:proof:lem:bound_intervals}
-    \frac{(\delta_{n,\alpha})^2}{\Delta_{n,\alpha}(1-\Delta_{n,\alpha})} \leq \max_i \eta_{\alpha}(x_i),
+    \frac{(\delta_{n,\alpha})^{2+\delta}}{\left(\Delta_{n,\alpha}(1-\Delta_{n,\alpha})\right)^{1+\delta}} \leq \max_i \eta_{\delta,\alpha}(x_i),
   \end{align}
   where 
   \begin{equation*}

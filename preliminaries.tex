@@ -73,9 +73,9 @@ and transmits $r_i k$ bits to a central estimator~\cite{berger1996ceo}. The
 central estimator produces an estimates ${\theta}_1,\ldots,{\theta}_k$ with
 the goal of minimizing the quadratic risk:
 \[
-R_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - {\theta}_j \right)^2 \right]. 
+R_{\CEO} = \frac{1}{k} \sum_{j=1}^k \mathbb E \left[\left(\theta_j - {\theta} \right)^2 \right]. 
 \]
-Note that any distributed encoding scheme using one-bit per sample can be replicated $k$ times and thus leads to a legitimate encoding and estimation scheme for the CEO problem with $r_1=\ldots=r_n = 1$. It follows that, assuming that $\theta$ is drawn once from the prior $\pi(d\theta)$, our mean estimation problem from one-bit samples under distributed encoding corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. 
+Note that any distributed encoding scheme using one-bit per sample can be replicated $k$ times and thus leads to a legitimate encoding and estimation scheme for the CEO problem with $r_1=\ldots=r_n = 1$. It follows that, assuming that $\theta$ is drawn once from the prior $\pi$, our mean estimation problem from one-bit samples under distributed encoding corresponds to the CEO setting with $k=1$ realization of $\theta$ observed under noise at $n$ different locations, and communicated at each location using an encoder sending a single bit. 
 %
 Consequently, a lower bound on the MSE in estimating $\theta$ in the
 distributed encoding setting is given by the minimal MSE in the CEO setting
@@ -98,7 +98,7 @@ expression provides the following proposition:
   \begin{equation} \label{eq:ceo_bound}
     n \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
   \end{equation}
-  where the expectation is with respect to $\theta$ and $X^n$.
+  where the expectation is with respect to $\theta$ and $X_1,\ldots,X_n$.
 \end{prop}
 \noindent
 See Appendix~\ref{app:proof:CEO} for a proof.

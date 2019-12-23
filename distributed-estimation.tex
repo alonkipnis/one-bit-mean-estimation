@@ -417,7 +417,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \caption{\label{fig:minimax_support}
 Optimal threshold density $\lambda^\star(dt)$ (blue) that maximizes the ARE for $f(x) = \Ncal(\theta,\sigma^2)$ and $\theta \in [-T,T]$.
 %
-The continuous curve (red) represents the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ under the optimal density, i.e., the minimax risk is the inverse of the minimal value of this curve. The dashed curve (green) is the reciprocal of the asymptotic risk at a fixed $\theta \in [-T,T]$ when the threshold values are uniformly distributed over $[-T,T]$, hence its minimal value is the inverse of \eqref{eq:uniform_risk}. }
+The continuous curve (red) represents the reciprocal of the asymptotic risk for each $\theta \in [-T,T]$ under the optimal density, i.e., the minimax risk is the inverse of the minimal value of this curve. The dashed curve (green) is the reciprocal of the asymptotic risk for each $\theta \in [-T,T]$ when the threshold values are uniformly distributed over $[-T,T]$, hence its minimal value is the inverse of \eqref{eq:uniform_risk}. }
 \end{center}
 \end{figure}
 
@@ -580,5 +580,5 @@ When a prior $\pi$ on $\Theta$ is provided, one may be interested in the thresho
 \mathrm{subject~to} \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) =1, 
 \end{split}
 \end{align}
-which is convex in $\lambda$ since $x \rightarrow 1/x$, $x>0$, is convex. Figure~\ref{fig:opt_density}  illustrates the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distribution and $\pi$ is the uniform over $\Theta = [-T,T]$. %Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
+which is convex in $\lambda$ since $x \rightarrow 1/x$, $x>0$, is convex. Figure~\ref{fig:opt_density}  illustrates the solution to \eqref{eq:cvx_average} for the case of where $f(x)$ is the normal distribution and $\pi$ is the uniform distribution over $\Theta = [-T,T]$. %Figure~\ref{fig:dist_bound_uniform} illustrates the corresponding Bayes risk. 
 

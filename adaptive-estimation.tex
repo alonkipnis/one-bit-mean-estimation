@@ -36,7 +36,7 @@ Appendix~\ref{proof:thm:adpative_lower_bound}.
 %% \begin{equation*}
 %% \ARE({\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
 %% \end{equation*}
-It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to any other
+It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to other
 loss functions using a more subtle version of the Van Trees
 inequality~\cite{efroimovich1980information}; see also
 \cite{DBLP:journals/corr/abs-1902-08582}.
@@ -51,14 +51,14 @@ a one-round adaptive scheme can also achieve this optimal efficiency.
 The starting point for our first estimator is to note that the median of a
 distribution minimizes $\E[|X - \theta|]$ over $\theta \in \R$, and
 moreover, we have the familiar result (cf.~\cite{VanDerVaart98}, Ch.~21)
-that given a sample $X_1^n \simiid P$, if $\theta = \mbox{med}(P)$ and
+that given a sample $X_1,\ldots,X_n \simiid P$, if $\theta = \mbox{med}(P)$ and
 $P$ has continuous density $f(\cdot - \theta)$ near $\theta$, then
 \begin{equation*}
   \sqrt{n}(\mbox{med}(X_1^n) - \theta)
   \cd \normal\left(0, \frac{1}{4 f(0)^2}\right),
 \end{equation*}
 which is precisely the variance lower bound in
-Theorem~\ref{thm:adpative_lower_bound}.  Thus, it it is natural consider a
+Theorem~\ref{thm:adpative_lower_bound}.  Thus, it is natural to consider a
 stochastic gradient procedure for minimizing $\E[|X - \theta|]$. To that end,
 let $\left\{ \gamma_n \right\}_{n\in \mathbb N}$ be a strictly positive
 sequence of stepsizes,
@@ -136,9 +136,9 @@ to establish the following theorem.
   \item \label{item:sgd-ms-convergence} Assume the stepsizes $\gamma_n$
     satisfy both conditions~\eqref{eqn:lazy-gamma}
     and~\eqref{eqn:stringent-gamma}. Let
-    $\pi$ be a distribution on $\R$.
+    $\pi$ be a distribution on $\R$. Then
     \begin{equation*}
-      \int \E\Big[( \bar{\theta}_n - \theta )^2\Big] d\pi(\theta)
+      \int \E\Big[( \bar{\theta}_n - \theta )^2\Big] \pi(d\theta)
       = \frac{1}{4 n f(0)^2} + o(n^{-1}). 
     \end{equation*}
   \end{enumerate}
@@ -322,9 +322,9 @@ asymptotically optimal.
     \E\left[|B_i - E_n|^3 \mid T_n\right] \le E_n(1 - E_n)
     ~~ \mbox{we have} ~~
     \E\left[\frac{|B_i - E_n|^3}{(E_n(1 - E_n))^{3/2}} \mid T_n\right]
-    \le \frac{1}{\sqrt{E_n(1 - E_n)}},
+    \le \frac{1}{\sqrt{E_n(1 - E_n)}}.
   \end{equation*}
-  the Berry-Esseen theorem implies that there exists a constant
+ The Berry-Esseen theorem implies that there exists a constant
   $C \le 1$ such that
   \begin{equation*}
     \sup_t \left|F_n(t \mid T_n) - \Phi(t) \right|
