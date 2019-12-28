@@ -188,17 +188,14 @@ satisfied, for example, whenever the $t_1,\ldots,t_n$s are drawn
 independently from a probability distribution $\lambda(dt)$ on $\mathbb
 R$.
 
-The local asymptotic normality of $\{B_n\}_{n=1}^\infty$, the maximum
+When the conclusions of Corollary~\ref{cor:LAN_thresh} hold, local asymptotic normality of $\{B_n\}_{n=1}^\infty$ implies that the maximum
 likelihood estimator (ML) of $\theta$ from $B_1,\ldots,B_n$, denoted here by
 ${\theta}^{ML}_n$, is local asymptotic minimax in the sense that
 \begin{equation*}
   \sqrt{n} \left( {\theta}^{ML}_n - \theta \right)
   \cd \normal\left(0, 1/\kappa(\theta) \right). 
 \end{equation*}
-It follows that when the density of the threshold values converges to a
-probability measure, the ML estimator has asymptotic variance $1 /
-\kappa(\theta)$, and this is minimal. We note that ${\theta}^{ML}_n$
-solves
+We note that ${\theta}^{ML}_n$ solves
 \begin{equation}
   \label{eq:ML}
   0 = \sum_{i=1}^n B_i \frac{f \left( t_i-\theta\right) }{F \left(B_i  (t_i-\theta)\right) }.
@@ -208,8 +205,7 @@ If the collection $\{t_1,t_2\ldots\}$ is bounded
 \begin{equation*}
 \lim_{n\to \infty} n \ex{\left({\theta}^{ML}_n - \theta \right)^2}  = 1/\kappa(\theta), 
 \end{equation*} 
-so that the ML estimator attains the local asymptotic MSE of
-Theorem~\ref{thm:adpative_lower_bound}.
+so that the ML estimator attains the local asymptotic MSE of Theorem~\ref{thm:adpative_lower_bound}.
 
 By Assumption~\ref{assump:failure_rate},
 $\eta(x)$ attains its maximum at the origin, so we conclude that
