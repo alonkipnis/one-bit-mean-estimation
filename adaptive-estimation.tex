@@ -229,7 +229,7 @@ bound of Theorem~\ref{thm:adpative_lower_bound}.
 
 \end{tikzpicture}
 \end{center}
-\caption{Distributed encoding with a single interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is to obtain another $n-n_1$ bits in a distributed manner. 
+\caption{Distributed encoding with one round of interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is utilized in obtaining another $n-n_1$ bits in a distributed manner. 
 \label{fig:one_round}
 }
 \end{figure}
@@ -384,13 +384,13 @@ asymptotically optimal.
 \begin{tikzpicture}[scale = 0.6]
 \begin{axis}[
 width=10cm, height=6cm,
-xmin = 0, xmax=800, 
+xmin = 200, xmax=800, 
 restrict y to domain = 0:3,
 ymin = 0,
 ymax = 3.4,
 samples=10, 
 xlabel= $n$,
-ylabel = {$n\mathbb E \left[\left(\theta - {\theta}_n \right)^2 \right]$},
+ylabel = {$n\cdot\mathbb E \left[\left(\theta - {\theta}_n \right)^2 \right]$},
 %xtick={-3,-2,-1,0,1,2,3},
 %xticklabels={-3,-2,-1,0,1,2,3},
 ytick={0,1,1.57},
@@ -412,7 +412,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 
 \end{axis}
 \end{tikzpicture}
-\caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The single interaction strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples for its first stage. 
+\caption{Normalized empirical risk versus number of samples $n$ for $10,000$ Monte Carlo trials with $f(x)$ the standard normal density. In each trial, $\theta$ is chosen uniformly over the interval $(-1.64,1.64)$. The one round threshold adaptation strategy uses $n_1 = \lfloor \sqrt{n} \rfloor$ samples before adapting the threshold.
 \label{fig:adaptive_error}  }
 \end{center}
 \end{figure}

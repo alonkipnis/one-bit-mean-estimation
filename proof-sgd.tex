@@ -155,7 +155,7 @@ quasi-convex loss $L$ and $c < \infty$,
 \end{equation}
 (see Beran~\cite{beran1995role}, Eq.~(4.2)).
 %
-Thus, we show two results: first, that
+Thus, we show two results: first,
 that the family $\{P_\theta\}$ of distributions
 defined by the shifted densities $\{f(\cdot - \theta)\}_{\theta \in \R}$
 is quadratic-mean-differentiable at any $\theta$,
@@ -258,7 +258,7 @@ It remains to show that the average $\bar{\theta}_n$ is regular:
     \ex{ \left| \varphi(Z) - \varphi(x + Z) \right| }
     \leq 2 \Prob\left( |Z_1| \le |x|  \right)
     = 2 \int_{-|x|}^{|x|} f(t) dt
-    = 4 f(0)|x| \pm 2 \int_{-|x|}^{|x|}
+    = 4 f(0)|x| + 2 \int_{-|x|}^{|x|}
     \lip(f) t dt
     = 4 f(0) |x| + 2 \lip(f) x^2
   \end{align*}
@@ -271,7 +271,7 @@ It remains to show that the average $\bar{\theta}_n$ is regular:
     \int_{\R} \varphi(x) f'(x ) dx
     = \int_{\R} \sgn(x) f'(x ) dx =
     \int_0^\infty f'(x ) dx
-    - \int_{-\infty}^0 f'(x )
+    - \int_{-\infty}^0 f'(x ) dx
     = -2 f(0) = -\psi'(0).
   \end{equation*}
   Corollary~\ref{corollary:normal-expansion}

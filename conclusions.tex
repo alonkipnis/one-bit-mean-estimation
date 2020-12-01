@@ -1,11 +1,9 @@
 \section{Conclusions \label{sec:conclusions}}
 We considered the risk and efficiency in estimating the mean of a symmetric and log-concave distribution from a sequence of bits, where each bit is obtained by encoding a single sample from this distribution. 
 %
-In an adaptive encoding setting, we showed that no estimator can attain asymptotic relative efficiency larger than that of the median of the samples. We also showed that this bound is tight by presenting two adaptive encoding and estimation procedures that are as efficient as the median. 
-%We also characterized the one-step optimal scheme in this adaptive setting, i.e., the scheme that minimizes the risk given any set of previously obtained bits.
-\par
-In the distributed setting we provided conditions for local asymptotic normality of the encoded samples, which implies asymptotic minimax bound on both the risk and efficiency relative to the mean. 
+In an adaptive encoding setting, we showed that, asymptotically, no estimator can be more efficient than the median of the samples. We also showed that this bound is tight by presenting two adaptive encoding and estimation procedures that are as efficient as the median. Furtheremore, we showed that only one round of adapticity is required to attain the optimal efficiecny. In the distributed setting we provided conditions for local asymptotic normality of the encoded samples, which implies asymptotic minimax bound on both the risk and efficiency relative to the mean. 
 %
-These condition implies that, in the distributed setting, the optimal estimation performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in this setting. 
+Under local asymptotic normality, the optimal estimation performance derived for the adaptive case can only be attained over a finite number of points, i.e., no scheme is uniformly optimal in this setting. 
 %
-We further considered the special case where the sequence of bits is obtained by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such bit-sequence using the density of the thresholds and considered the density that minimizes the minimax risk. 
+We further considered the special case where the sequence of bits is obtained in a distributed manner by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such bit-sequence using the density of the thresholds and considered the density that minimizes the minimax risk. \par
+Obvious extensions of our work include the derviation explicit bounds and optimal procedures when more than one-bit per sample is provided or when each sample is a vector. Another possible extension may consider estimation when single bits are sent between nodes of a directed graph.
