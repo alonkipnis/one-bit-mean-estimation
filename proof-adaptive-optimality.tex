@@ -33,12 +33,9 @@ Section~\ref{sec:bound_intervals_delta}.  We now prove
 Lemma~\ref{lem:fisher_bound}.
 
 \begin{proof-of-lemma}[\ref{lem:fisher_bound}]  
-  When $f$ is the normal density function, this lemma follows from
-  \cite[Thm.~3]{Barnes2018}. The proof below is based on a different techique
-  than in \cite{Barnes2018}, and is valid for any log-concave symmetric
-  density satisfying Assumption~\ref{assump:failure_rate}. \\
+  We first note that in the special case where $f$ is a normal density, Lemma~\ref{lem:fisher_bound} follows from \cite[Thm.~3]{Barnes2018}. The proof below, valid for any log-concave symmetric density satisfying Assumption~\ref{assump:failure_rate}, is based on a different techique than that of \cite{Barnes2018}. \\
 
-  The Fisher information of $B$ with respect to $\theta$ is given by
+  Write the Fisher information of $B$ with respect to $\theta$ as
   \begin{align}
     I_\theta & =  \ex{ \left( \frac{d}{d\theta} \log P\left( B | \theta \right) \right)^2 |\theta } \nonumber \\
     & = \frac{ \left(\frac{d}{d\theta} P(B=1|\theta) \right)^2}{P(B=1| \theta)} + \frac{ \left(\frac{d}{d\theta} P(B=-1|\theta) \right)^2} {P(B=-1| \theta)} \nonumber \\
@@ -48,18 +45,17 @@ Lemma~\ref{lem:fisher_bound}.
     & = \frac{\left( \int_A f'\left( x-\theta \right) dx \right) \left( \int_A f'\left( x-\theta \right) dx \right)}{ \left( \int_A f \left( x-\theta \right) dx \right)  \left(1- \int_A f \left( x-\theta \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
   \end{align}
   where differentiation under the integral sign in $(a)$ is possible since
-  $f$ is log-concave and so a.e.\ differentiable
-  (cf.~\cite{Bertsekas73}),
-  with a.e.\ derivative $f'(x)$. Regularity of
+  $f$ is log-concave hence a.e.\ differentiable
+  (cf.~\cite{Bertsekas73}) with a.e.\ derivative $f'(x)$. Regularity of
   the Lebesgue measure implies that for any $\epsilon>0$, there exists a
   finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that
   \begin{equation*}
-    \int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon,
+    \int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon.
   \end{equation*}
-  which implies that for any $\epsilon' > 0$, the set $A$ in
+  It follows that for any $\epsilon' > 0$, the set $A$ in
   \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of
   disjoint intervals without increasing $I_\theta$ by more than
-  $\epsilon'$. It is therefore enough to proceed in the proof assuming that
+  $\epsilon'$. Consequently, we may proceed assuming that
   $A$ is of the form
   \begin{equation*}
     A = \cup_{j=1}^k (a_j,b_j),
@@ -88,18 +84,7 @@ Lemma~\ref{lem:fisher_bound}.
 
 We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}.
 To bound the Fisher information of any set of $n$ one-bit
-messages with respect to $\theta$,
-%% we first note that without loss of
-%% each message $B_i$ can is of the form
-%% \begin{equation}
-%% B_i = \begin{cases}
-%% X_i \in A_i & 1, \\
-%% X_i \notin A_i & -1,
-%% \end{cases} 
-%% \end{equation}
-%% where $A_i \subset \R$ is a Borel measurable set. 
-%% %Indeed, any measurable function $(X_i) \in \{-1,1\}$ can be written in the form \eqref{eq:general_messages} with $A_i = B^{-1}(1)$.
-we consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of
+messages with respect to $\theta$, we consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of
 $(B_1,\ldots,B_n)$ given $\theta$. We have
 \begin{align*}
   P\left( B_1,\ldots,B_n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B_1,\ldots,B_{i-1} \right),
