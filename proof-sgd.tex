@@ -48,7 +48,7 @@ Consider the following simplified version of
     $\chi(x) \triangleq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
   \end{enumerate}
   Then $\bar{\theta}_n \cas \theta$ and $ \sqrt{n}({\theta}_n - \theta)
-  \cd \normal(0,V)$ for
+  \cd \normal(0,V)$ for  b n
   $V = \frac{ \chi(0)} {\psi'(0)^2}$.
 \end{corollary}
 
@@ -72,11 +72,18 @@ conditions in Corollary~\ref{corollary:polyak-juditsky} hold for $\lambda =
 condition~(iii) excepting inequality~\eqref{eqn:local-hessian-psi}. For
 that, note that as $f$ is Lipschitz near 0 with constant $\lip_0(f)$, we
 have for small $x$ that
+% AK: Here I changed \pm to \leq and \geq
 \begin{equation*}
   \psi(x) = 2 \int_0^x f(-t) dt
-  = 2 \int_0^x \left[f(0) \pm \lip_0(f) t \right] dt
-  = 2 f(0) x \pm \frac{\lip_0(f)}{2} x^2
-  = \psi'(0) x \pm \frac{\lip_0(f)}{2} x^2,
+  \leq 2 \int_0^x \left[f(0) + \lip_0(f) t \right] dt
+  = 2 f(0) x + \lip_0(f) x^2
+  = \psi'(0) x + \lip_0(f) x^2,
+\end{equation*}
+\begin{equation*}
+  \psi(x) = 2 \int_0^x f(-t) dt
+  \geq 2 \int_0^x \left[f(0) - \lip_0(f) t \right] dt
+  = 2 f(0) x - \lip_0(f) x^2
+  = \psi'(0) x - \lip_0(f) x^2,
 \end{equation*}
 so that condition~(iii) holds.
 As evidently $\chi(0) / \psi'(0)^2 = \frac{1}{4 f(0)^2}$,
