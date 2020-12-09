@@ -22,7 +22,7 @@ which is important for our Taylor expansions to come.
  hold. Then for any $A = \cup_{i = 1}^k
   \{[a_i, b_i]\}$ and $h \in \R$,
   \begin{equation*}
-    P_{\theta + h}(A) = P_\theta(A) + \dPtheta(A) h \pm
+    \left|P_{\theta + h}(A) - P_\theta(A) - \dPtheta(A) h \right| \leq 
     k \cdot \lip(f) h^2,
   \end{equation*}
   where
@@ -287,10 +287,10 @@ that
   & \qquad\qquad\qquad\qquad\qquad \le 
   C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
   + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
-  \cdot \frac{h^4}{n^2}
+  \cdot \frac{h_n^4}{n^2}
   + C \frac{k^4 \lip^4(f)}{
     P_\theta(A_i)^3 P_\theta(A_i^c)^3}
-  \frac{h^8}{n^4}
+  \frac{h_n^8}{n^4}
   \label{eqn:var-wni-expansion}
 \end{align}
 whenever
@@ -299,7 +299,7 @@ whenever
   \score_\theta(A_i^c)\}
   \le \frac{1}{4}
   ~~ \mbox{and} ~~
-  \frac{k_i h^2}{n} \lip^2(f)
+  \frac{k_i h_n^2}{n} \lip^2(f)
   \le \frac{\min\{P_\theta(A_i), P_\theta(A_i^c)\}}{4}
 \end{equation*}
 Now, we use
@@ -317,7 +317,7 @@ inequality~\eqref{eqn:var-wni-expansion} give that
     + \frac{k_i^4}{P_\theta(A_i)^3 P_\theta(A_i^c)^3}
     \frac{1}{n^3}\right] \frac{1}{n},
 \end{equation*}
-where $C < \infty$ depends only on $\lip(f)$ and $h$ (both of which are
+where $C < \infty$ depends only on $\lip(f)$ and $h_n$ (both of which are
 uniformly bounded) whenever
 \begin{equation*}
   \frac{k_i}{P_\theta(A_i) P_\theta(A_i^c)} \frac{1}{n} \le
@@ -383,22 +383,29 @@ Lemma~\ref{lemma:derivative-bounds}, we have
   \pm \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
   + \frac{h_n^2}{n} \score_\theta(B_i)^2
   + \frac{ h_n^4}{n^2} \frac{k_i^2 \lip(f)^2}{p(B_i)^2}\right| \\
-  & \in \pm
+  & = \half \score_\theta(B_i)
+  \frac{h_n}{\sqrt{n}} +
   C \left|\frac{\sqrt{k_i}}{\sqrt{n} p(B_i)}
   + \frac{k_i}{n p(B_i)}
   + \frac{\sqrt{k_i}}{p(B_i)^2 n}
   + \frac{k_i^2}{p(B_i)^2 n^2}
-  \right| \to 0,
+  \right|
   \label{eqn:max-wni-zero}
 \end{align}
-where $C < \infty$ depends only on $\lip(f)$ and $h_n$ and so is
-uniformly bounded;
-the limit follows from Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals}.
+where $|C| < \infty$ depends only on $\lip(f)$ and $h_n$ and so is
+uniformly bounded. From Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals} we get
+\[
+C \left|\frac{\sqrt{k_i}}{\sqrt{n} p(B_i)}
+  + \frac{k_i}{n p(B_i)}
+  + \frac{\sqrt{k_i}}{p(B_i)^2 n}
+  + \frac{k_i^2}{p(B_i)^2 n^2}
+  \right| \to 0. 
+\]
 Consequently $\max_i W_{n,i} \to 0$, so that
 \begin{equation}
   \label{eqn:almost-at-the-end}
   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
-  = \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  = \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
   - \frac{1}{4} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
 \end{equation}
