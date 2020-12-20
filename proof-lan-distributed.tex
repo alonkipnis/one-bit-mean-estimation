@@ -140,7 +140,7 @@ we have
   & = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
   & = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
   & = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
-  & = \int_0^h (f(a - \theta) - f(b - \theta)) du
+  & \lesseqgtr \int_0^h (f(a - \theta) - f(b - \theta)) du
   \pm 2 \int_0^h \lip(f) u du \\
   & = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
 \end{align*}
@@ -201,7 +201,7 @@ $\sum_i P([a_i, b_i]) \le 1$, and apply Cauchy-Schwarz.
 \subsection{Proof of Lemma~\ref{lemma:lan-bits}}
 \label{sec:proof-lan-bits}
 
-Our proof follows that of \cite[Thm.~7.2]{VanDerVaart98} closely.  We first
+Our proof follows that of \cite[Thm.~7.2]{VanDerVaart98} closely. We first
 demonstrate a type of uniform quadratic mean differentiability
 (Definition~\ref{definition:qmd}) for sets $A$ that are finite unions of
 intervals. By a Taylor approximation and concavity of
@@ -377,10 +377,10 @@ Using the Taylor expansions of $\sqrt{\cdot}$ and
 Lemma~\ref{lemma:derivative-bounds}, we have
 \begin{align}
   \nonumber
-  \half W_{n,i}
-  & = \half \score_\theta(B_i)
+  \left| \half W_{n,i} \right|
+  & \leq \half \left| \score_\theta(B_i) \right|
   \frac{h_n}{\sqrt{n}}
-  \pm \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
+  + \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
   + \frac{h_n^2}{n} \score_\theta(B_i)^2
   + \frac{ h_n^4}{n^2} \frac{k_i^2 \lip(f)^2}{p(B_i)^2}\right| \\
   & = \half \score_\theta(B_i)

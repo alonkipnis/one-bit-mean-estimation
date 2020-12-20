@@ -243,17 +243,17 @@ In particular,
   \end{equation*}
   The remaining boundary points of $A_N(x^*,k)$ are covered by the following cases:
   \begin{itemize}
-  \item[(1)]  $y_N \to -\infty$. 
-  \item[(2)] $y_1 \to \infty$.
-  \item[(3)] $y_k = x_{i^*}$.
-  \item[(4)] $y_{k+1} = -x_{i^*}$. 
+  \item[(i)]  $y_N = -\infty$. 
+  \item[(ii)] $y_1 = \infty$.
+  \item[(iii)] $y_k = x_{i^*}$.
+  \item[(iv)] $y_{k+1} = -x_{i^*}$. 
   \end{itemize}
-  For case (1), 
+  For case (i), 
   \begin{align*}
     g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
     {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
   \end{align*}
-  which is smaller than $\eta_\delta(x_{i^*})$ by the induction hypothesis. Similarly, under case (2),
+  which is smaller than $\eta_\delta(x_{i^*})$ by the induction hypothesis. Similarly, under case (ii),
   \begin{align*}
     & g(y_1,\ldots,y_N) \to 
     \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
@@ -263,9 +263,9 @@ In particular,
            { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
              \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
   \end{align*}
-  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (3), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $n=N-1$ variables hence this case is handled by the induction hypothesis. 
+  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $n=N-1$ variables hence this case is handled by the induction hypothesis. 
   %
-  Finally, under case (4), set 
+  Finally, under case (iv), set 
   \begin{equation*}
     d \triangleq s_k F(-x^*) + s_{i^*} F(x^*) = s_{i^*}\left(1-2F(-x^*) \right), 
   \end{equation*}
