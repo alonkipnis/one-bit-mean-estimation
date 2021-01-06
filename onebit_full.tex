@@ -1,5 +1,5 @@
 %% \documentclass[11pt]{article}
-\documentclass[letterpaper, 11pt]{IEEEtran}      % Use this line for a4 paper
+\documentclass[letterpaper, 11pt, draftcls]{IEEEtran}      % Use this line for a4 paper
 
 %LatexiDiff ignore tikz:
 % $: latexdiff -c "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" old.tex new.tex > diff.tex
@@ -27,7 +27,11 @@ Alon Kipnis\IEEEauthorrefmark{1} and
     John C. Duchi\IEEEauthorrefmark{1}\IEEEauthorrefmark{2}  \\}
     \IEEEauthorblockA{\IEEEauthorrefmark{1}Stanford University, Department of Statistics \\}
     \IEEEauthorblockA{\IEEEauthorrefmark{2}Stanford University, Department of Electrical Engineering. }
+
+\thanks{This paper was presented in part at the 55th Annual Allerton Conference on Communication, Control, and Computing (Allerton) \cite{KipnisAllerton2017}.
 }
+}
+
 
 %% \renewenvironment{figure}{%
 %%   \ignorespaces

@@ -8,13 +8,13 @@ Let $\Xi$ be the set of points $\theta \in \Theta$ for which $\kappa(\theta)
 %
 Since $B_1,B_2,\ldots$ satisfy the conditions in
 Theorem~\ref{theorem:non-adaptive-minimax}, $\theta$ is in $\Xi$ if and only
-if $\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0)$.  By
-assumption, we have $B_i = \indic{X_i \in A_i}$ where each $A_i =
-\cup_{i=1}^K \{[a_{i,k},b_{i,k}]\}$, where $a_{i,1} \leq b_{i,1} \leq \ldots
-\leq a_{i,K}, b_{i,K}$, and $a_{i,1}$ and $b_{i,K}$ may take the values
-$-\infty$ and $\infty$, respectively. Denote the endpoints
+if $\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0)$. By
+assumption, we have $B_i = \indic{X_i \in A_i}$, $A_i =
+\cup_{i=1}^K (t^-_{i,k},t^+_{i,k})$, where $t^-_{i,1} \leq t^+_{i,1} \leq \ldots
+\leq t^-_{i,K}, t^+_{i,K}$, and $t^-_{i,1}$ and $t^+_{i,K}$ may take the values
+$-\infty$ and $\infty$, respectively. Denote the set of endpoints
 \begin{equation*}
-  E_i = \cup_{k=1}^{K}\{a_{i,k},b_{i,k}\},
+  E_i = \bigcup_{k=1}^{K}\{t^-_{i,k},t^+_{i,k}\},
 \end{equation*}
 and for $\theta$ and $\epsilon>0$, define
 \begin{equation*}
@@ -30,16 +30,16 @@ if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for suc
 \begin{align}
 & L_n(A_1,\ldots,A_n; \theta) \nonumber \\
 & = \frac{1}{n} \sum_{i \in S_n(\epsilon,\theta)}  
-\frac{ \left(\sum_{k=1}^{K}  f(\theta - b_{i,k})- f(\theta - a_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
+\frac{ \left(\sum_{k=1}^{K}  f(\theta - t^+_{i,k})- f(\theta - t^-_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
 & 
-+ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(b_{i,k}-\theta) - f(a_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - b_{i,k})- F(\theta - a_{i,k}) \right)\right)} \nonumber \\
++ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(t^+_{i,k}-\theta) - f(t^-_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
 & \overset{(a)}{\leq}
 \frac{\card\left(S_n(\theta,\epsilon)\right)}{n} \eta(0) + \frac{n-\card\left(S_n(\theta,\epsilon) \right) }{n} \eta(\epsilon) 
  \label{eq:non_existence_proof1}
 \end{align}
 where $(a)$ follows from Lemma~\ref{lem:bound_intervals_delta} with $\delta =0$, and the fact that for $i \in S_n(\theta, \epsilon)$, 
 \begin{equation*}
-\max\left\{ \max_k \eta(b_{i,k}-\theta) , \max_k \eta(a_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
+\max\left\{ \max_k \eta(t^+_{i,k}-\theta) , \max_k \eta(t^-_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
 \end{equation*}
 Unless  $\card \left(S_n(\theta, \epsilon) \right)/n \to 1$, we get that \eqref{eq:non_existence_proof1}, hence $L_n(A_1,\ldots,A_n ; \theta)$, are bounded from above by a constant that is smaller then $\eta(0)$ in contradiction to the fact that $\theta \in \Xi$.
 
@@ -48,7 +48,7 @@ distinct elements $\theta_1,\ldots,\theta_N \in \Xi$. Since each $A_i$
 consists of at most $K$ intervals, we have that
 \begin{equation}
   \label{eq:few_optimality_points_proof}
-  \card (\cup_{i=1}^n \mathcal B_i) \leq 2 n K. 
+  \card \left(\bigcup_{i=1}^n  A_i \right) \leq 2 n K. 
 \end{equation}
 Fix $\epsilon>0$ such that 
 \begin{equation*}

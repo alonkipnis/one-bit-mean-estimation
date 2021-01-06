@@ -15,26 +15,23 @@ We begin with two technical lemmas.
 \end{lem}
 \begin{lem} \label{lem:fisher_bound}
   Let $X$ be a random variable with a symmetric, log-concave, and
-  continuously differentiable density function $f(x)$ such that Assumption~1
-  holds. For a Borel measurable set $A$, define
+  continuously differentiable density function $f(x)$ such that Assumption~1 holds. For a Borel measurable set $A$, define
   \begin{equation*}
     B(x) \defeq \begin{cases} 1
       & \mbox{if} ~x \in A, \\
       -1 & \mbox{if}~ x \notin A.
     \end{cases}
   \end{equation*}
-  Then the Fisher information of $B$ with respect to $\theta$ is bounded
-  from above by $\eta(0)$.
+  The Fisher information of $B$ with respect to $\theta$ is bounded from above by $\eta(0)$.
 \end{lem}
 
 Lemma~\ref{lem:bound_intervals} is the special case $\delta = 0$ of
 Lemma~\ref{lem:bound_intervals_delta} to come in
-Section~\ref{sec:bound_intervals_delta}.  We now prove
+Section~\ref{sec:bound_intervals_delta}. We now prove
 Lemma~\ref{lem:fisher_bound}.
 
 \begin{proof-of-lemma}[\ref{lem:fisher_bound}]  
-  We first note that in the special case where $f$ is a normal density, Lemma~\ref{lem:fisher_bound} follows from \cite[Thm.~3]{Barnes2018}. The proof below, valid for any log-concave symmetric density satisfying Assumption~\ref{assump:failure_rate}, is based on a different techique than that of \cite{Barnes2018}. \\
-
+  We first note that in the special case where $f$ is a normal density, Lemma~\ref{lem:fisher_bound} follows from \cite[Thm.~3]{Barnes2018}. The proof below, valid for any log-concave symmetric density satisfying Assumption~\ref{assump:failure_rate}, is based on a different techique than that of \cite{Barnes2018}. \par
   Write the Fisher information of $B$ with respect to $\theta$ as
   \begin{align}
     I_\theta & =  \ex{ \left( \frac{d}{d\theta} \log P\left( B | \theta \right) \right)^2 |\theta } \nonumber \\
@@ -44,71 +41,66 @@ Lemma~\ref{lem:fisher_bound}.
     & = \frac{\left( \int_A f'\left( x-\theta \right) dx \right)^2 }{  P(B=1 | \theta) \left(1-P(B=1|\theta) \right)  }, \nonumber \\
     & = \frac{\left( \int_A f'\left( x-\theta \right) dx \right) \left( \int_A f'\left( x-\theta \right) dx \right)}{ \left( \int_A f \left( x-\theta \right) dx \right)  \left(1- \int_A f \left( x-\theta \right) dx \right) }, \label{eq:lem_fisher_bound_proof1}
   \end{align}
-  where differentiation under the integral sign in $(a)$ is possible since
-  $f$ is log-concave hence a.e.\ differentiable
-  (cf.~\cite{Bertsekas73}) with a.e.\ derivative $f'(x)$. Regularity of
-  the Lebesgue measure implies that for any $\epsilon>0$, there exists a
-  finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that
+  where differentiation under the integral sign in $(a)$ is justified since $f$ is log-concave hence a.e.\ differentiable
+  (cf.~\cite{Bertsekas73}) with a.e.\ derivative $f'(x)$. By regularity of the Lebesgue, for any $\epsilon>0$ there exists a finite number $k$ of disjoint open intervals $I_1,\ldots I_k$ such that
   \begin{equation*}
     \int_{A\setminus \cup_{j=1}^k I_j }  dx < \epsilon.
   \end{equation*}
   It follows that for any $\epsilon' > 0$, the set $A$ in
-  \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of
-  disjoint intervals without increasing $I_\theta$ by more than
+  \eqref{eq:lem_fisher_bound_proof1} can be replaced by a finite union of disjoint intervals without increasing $I_\theta$ by more than
   $\epsilon'$. Consequently, we may proceed assuming that
   $A$ is of the form
   \begin{equation*}
-    A = \cup_{j=1}^k (a_j,b_j),
+    A = \cup_{j=1}^k (t^+_j,t^-_j),
   \end{equation*}
-  with $\infty \leq a_1 \leq \ldots a_k$, $b_1 \leq b_k \leq \infty$ and $a_j \leq b_j$ for $j=1,\ldots,k$. Under this assumption we have
+  with $\infty \leq t^-_1 \leq \ldots t^-_k$, $t^+_1 \leq t^+_k \leq \infty$ and $t^-_j \leq t^+_j$ for $j=1,\ldots,k$. Under this assumption, 
   \begin{align*}
-    \mathbb P(B_n=1| \theta) & = \sum_{j=1}^k \mathbb P\left(X_n \in (a_j,b_j) \right)  \\
-    & = \sum_{j=1}^k \left( F \left(b_j-\theta\right) -  F \left(a_j-\theta\right)  \right),
+    P_{\theta}(B_n=1) & = \sum_{j=1}^k \left( F \left(t^+_j-\theta\right) -  F \left(t^-_j-\theta\right)  \right),
   \end{align*}
   so we may rewrite Eq.~\eqref{eq:lem_fisher_bound_proof1} as
   \begin{align*}
-    I_\theta & =   \frac { \left( \sum_{j=1}^{k} f \left(a_j-\theta \right) - f \left( b_j-\theta \right)  \right)^2 } 
-    { \left( \sum_{j=1}^k F \left( b_j-\theta \right) - F \left( a_j-\theta \right)  \right) }  \nonumber \\
+    I_\theta & = \frac { \left( \sum_{j=1}^{k} \left[ f \left(t^+_j-\theta \right) - f \left( t^-_j-\theta \right) \right] \right)^2 } 
+    { \left( \sum_{j=1}^k \left[ F \left( t^+_j-\theta \right) - F \left( t^-_j-\theta \right) \right] \right) }  \nonumber \\
     & \times \frac {1} 
-    {1- \left( \sum_{j=1}^k F \left(  b_j-\theta \right) - F \left( a_j-\theta \right)  \right) } 
+    {1- \left( \sum_{j=1}^k \left[ F \left(  t^+_j-\theta \right) - F \left( t^-_j-\theta \right) \right] \right) } 
   \end{align*}
-  It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in
-  \R$ and any choice of the intervals' endpoints,
+  It follows from Lemma~\ref{lem:bound_intervals} that for any $\theta \in \R$ and any choice of the intervals' endpoints,
   \begin{equation*}
     I_\theta \le
-    \max_{t \in \{a_j,b_j, j=1,\ldots,k\} } 4f(t)^2 \leq 4 f(0)^2, 
+    \max_{t \in \{t^\pm_1,\ldots,t^\pm_k\} } 4f(t)^2 \leq 4 f(0)^2. 
   \end{equation*}
-  where the last transition is by Assumption~\ref{assump:failure_rate}. 
 \end{proof-of-lemma}
 
-
-We now finish the proof of Theorem~\ref{thm:adpative_lower_bound}.
-To bound the Fisher information of any set of $n$ one-bit
-messages with respect to $\theta$, we consider the conditional distribution $P({B_1,\ldots,B_n|\theta})$ of
-$(B_1,\ldots,B_n)$ given $\theta$. We have
+We now prove Theorem~\ref{thm:adpative_lower_bound}. Write the Fisher information of $B_1,\ldots,B_n$ with respect to $\theta$ as 
 \begin{align*}
-  P\left( B_1,\ldots,B_n | \theta \right) & =  \prod_{i=1}^n P\left(B_i | \theta, B_1,\ldots,B_{i-1} \right),
-  %% \label{eq:adpt_lower_bound_proof:1}
+I_\theta(B_1,\ldots,B_n) = \sum_{i=1}^n I_\theta (B_i|B_1,\ldots,B_{i-1}),
 \end{align*}
-where $P\left(B_i =1 | \theta, B_1,\ldots,B_{i-1} \right) = \mathbb P\left(
-X_i \in A_i\right)$, when $B_i = \indic{X_i \in A_i}$ by independence,
-so that the Fisher information of $B_1,\ldots,B_n$ with
-respect to $\theta$ is
+where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the distribution of $B_i$ given $B_1,\ldots,B_{i-1}$. By the definition of the adaptive setting, $P_{\theta}(B_i|B_1,\ldots,B_{i-1}) = P_{\theta}(X_i \in A_i)$ for some Borel measurable $A_i$. Consequently, Lemma~\ref{lem:fisher_bound} applies, leading to the bound
+\[
+ I_\theta (B_i|B_{i-1},\ldots,B_1) \leq 4f(0)^2,
+\]
+We conclude
 \begin{align}
-I_\theta(B_1,\ldots,B_N) = \sum_{i=1}^n I_\theta (B_i|B_1,\ldots,B_{i-1}),
-\label{eq:fisher_information}
+I_\theta(B_1,\ldots,B_n) = 4f(0)^2 n
+\label{eq:fisher_information}.
 \end{align}
-where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the
-distribution of $B_i$ given $B_1,\ldots,B_{i-1}$.
-Lemma~\ref{lem:fisher_bound} implies that $I_\theta
-(B_i|B_{i-1},\ldots,B_1) \leq 4f(0)^2$. The Van Trees inequality
-\cite{van2004detection, gill1995applications} now implies
+The Van Trees inequality in the version of 
+\cite{gill1995applications} holds under the regularity conditions on $\pi(\cdot)$, which implies
+\begin{align*}
+\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \E_{\pi} \left[ I_\theta(B_1,\ldots,B_n)\right] + I_0}.
+\end{align*}
+Combining the last display with \eqref{eq:fisher_information}, we get
+\begin{align*}
+\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ 4f(0)^2 n + I_0}.
+\end{align*}
+
+
+\cite{van2004detection} and \eqref{eq:fisher_information} imply
 \begin{align*}
 \ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B_1,\ldots,B_n)} + I_0} \\
-& = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B^{i-1} ) + I_0} \\
-& \geq \frac{1}{ 4f^2(0) n + I_0}
+& = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B_1,\ldots,B_{i-1}) + I_0} \\
+& \geq \frac{1}{ 4f^2(0) n + I_0}.
 \end{align*}
-as desired.
 
 \subsection{Isoperimetric Lemma}
 \label{sec:bound_intervals_delta}
@@ -167,7 +159,7 @@ In particular,
   \end{equation*}
   Since the LHS of \eqref{eq:lem_bound_intervals_delta} is invariant to a sign flip of all $x_1,\ldots,x_{N+1}$, we may assume that $x_{i^*}$ is positive without loss of generality. 
   %For simplicity, we also assume that $s_{i^*} = 1$ and note that the case $s_{i^*} = -1$ is obtained using identical arguments. 
-  Set $x^* = x_{i^*}$ and let $k=i^*-1$. In what follows, variables with subscript of non-positive index are ignored in summations and in lists of arguments to functions. Consider the function
+  Set $x^* = x_{i^*}$ and let $k=i^*-1$. Consider the function
   \begin{align}
     & g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \\
     &  \triangleq  \frac{\left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) )\right|^{2+\delta}}{
@@ -176,7 +168,7 @@ In particular,
   \end{align}
   The LHS of \eqref{eq:lemm:interval_bounds:to_show} is obtained by taking $y_i=x_{k_i}$ where $k_i$ is the $i$th element in $\{1,\ldots,N+1\}\setminus \{i^*\}$. It is therefore enough to prove that 
   \begin{equation*}
-    \max_{(y_1,\ldots,y_N) \in A_N} g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*),
+    \max_{(y_1,\ldots,y_N) \in A_N(x^*,k) } g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*),
   \end{equation*}
   where 
   \begin{equation*}
@@ -239,7 +231,7 @@ In particular,
   %
   We now consider the possibility that the maximum of $g(y_1,\ldots,y_N)$ is attained at the boundaries of $A_N(x^*,k)$. At boundary points for which $y_i = y_{i+1}$ for some $i$, the contribution of $y_i$ and $y_{i+1}$ to $g(y_1,\ldots,y_N)$ is zero and the induction assumption for $n=N-1$ implies that 
   \begin{equation*}
-    g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*)
+    g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*).
   \end{equation*}
   The remaining boundary points of $A_N(x^*,k)$ are covered by the following cases:
   \begin{itemize}
@@ -263,7 +255,7 @@ In particular,
            { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
              \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
   \end{align*}
-  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $n=N-1$ variables hence this case is handled by the induction hypothesis. 
+  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $N-2$ variables hence this case is handled by the induction hypothesis. 
   %
   Finally, under case (iv), set 
   \begin{equation*}

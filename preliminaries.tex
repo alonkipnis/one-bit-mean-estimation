@@ -19,9 +19,9 @@ following facts:
 The simplest estimator is simply to invert a quantile. Indeed,
 fix $\theta_0 \in \mathbb R$ and define the $i$th message by 
 \[
-B_i = \mathbf 1_{X_i<\theta_0}, 
+B_i = \indic \{X_i<\theta_0\}, 
 \]
-where $\mathbf 1_A$ is the indicator of the event $A$. We have
+where $\indic \{A\}$ is the indicator of the event $A$. We have
 \[
 P_n \triangleq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta_0 - \theta),  
 \]
@@ -96,7 +96,7 @@ expression provides the following proposition:
   arbitrary. Then any estimator ${\theta}_n$ of $\theta$ in the distributed
   setting satisfies
   \begin{equation} \label{eq:ceo_bound}
-    n \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
+    n \cdot \ex{\left( \theta - \theta_n \right)^2} \geq \frac{4}{3} \sigma^2 + O(n^{-1}),
   \end{equation}
   where the expectation is with respect to $\theta$ and $X_1,\ldots,X_n$.
 \end{prop}

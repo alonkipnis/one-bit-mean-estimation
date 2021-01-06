@@ -22,24 +22,10 @@ Appendix~\ref{proof:thm:adpative_lower_bound}.
   $I_0 \defeq \E_\pi[(\pi'(\theta) / \pi(\theta))^2]$.
   Then
   \begin{equation*}
-    \E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{n}{ 4f^2(0) n + I_0}.
+    \E\left[ (\theta-{\theta}_n)^2 \right] \geq   \frac{1}{ 4f^2(0) n + I_0}.
   \end{equation*}
 \end{thm}
-
-%We first bound from above the Fisher information of any set of $n$ one-bit messages with respect to $\theta$. The result then follows using the van-Trees inequality which bounds from below the risk of any estimator of $\theta$ by the inverse of the expected value of the aforementioned Fisher information plus $I_0$. The details are in
-
-%% Theorem~\ref{thm:adpative_lower_bound} implies that any estimator ${\theta}_n$ from any adaptive encoding scheme satisfies
-%% \begin{equation*}
-%% n\mathbb E\left[ (\theta-\theta_n)^2 \right] \geq  \frac{1}{4f^2(0)}+O(n^{-1}),
-%% \end{equation*}
-%% and 
-%% \begin{equation*}
-%% \ARE({\theta}_n) \leq 4f^2(0)\sigma^2 = \eta(0)\sigma^2.
-%% \end{equation*}
-It is possible to extend Theorem~\ref{thm:adpative_lower_bound} to other
-loss functions using a more subtle version of the Van Trees
-inequality~\cite{efroimovich1980information}; see also
-\cite{DBLP:journals/corr/abs-1902-08582}.
+%Theorem~\ref{thm:adpative_lower_bound} can be extended to other loss functions using more general versions of the Van Trees inequality~\cite{efroimovich1980information}; see also \cite{DBLP:journals/corr/abs-1902-08582}.
 
 We now turn to asymptotically optimal estimators, first
 showing how a simple stochastic gradient scheme is asymptotically
@@ -229,7 +215,7 @@ bound of Theorem~\ref{thm:adpative_lower_bound}.
 
 \end{tikzpicture}
 \end{center}
-\caption{Distributed encoding with one round of interaction: The estimation obtained from the first $n_1$ bits in a distributed manner is utilized in obtaining another $n-n_1$ bits in a distributed manner. 
+\caption{Distributed encoding with one round of threshold adaptation. The estimation obtained from the first $n_1$ bits in a distributed manner is utilized in obtaining another $n-n_1$ bits in a distributed manner. 
 \label{fig:one_round}
 }
 \end{figure}
@@ -374,9 +360,13 @@ asymptotically optimal.
     + o_P(1)
     \cd \normal\left(0, \frac{1}{4 f(0)^2}\right),
   \end{align*}
-  where we have used the limiting distribution~\eqref{eqn:apply-slutsky}.
+  where we have used the limiting distribution~\eqref{eqn:apply-slutsky}. 
 \end{proof}
 %
+
+Figure \ref{fig:adaptive_error} illustrates the empirical risks 
+of the estimator \eqref{eq:sgd_alg} and an estimator obtained using one round of threshold adaptation under a series of Monte Carlo simulations when $f(x)$ is the standard normal desnity.
+
 
 \begin{figure}
   %%%%% COMMENTED TIKZ PICTURE %%%%%
@@ -408,7 +398,7 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 %\addplot[color = red, solid, smooth] plot table [x = itr, y = Bayes, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};\addlegendentry{one step optimal};
 
 \addplot[color = red, solid, smooth] plot table [x = itr, y = split, col sep=comma] {./SimRes/sim_res_nMonte5000.csv};
-\addlegendentry{single interaction};
+\addlegendentry{one adaptation};
 
 \end{axis}
 \end{tikzpicture}
