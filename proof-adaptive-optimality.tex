@@ -15,7 +15,7 @@ We begin with two technical lemmas.
 \end{lem}
 \begin{lem} \label{lem:fisher_bound}
   Let $X$ be a random variable with a symmetric, log-concave, and
-  continuously differentiable density function $f(x)$ such that Assumption~1 holds. For a Borel measurable set $A$, define
+  continuously differentiable density function $f(x)$ such that Assumption~\ref{assump:failure_rate} holds. For a Borel measurable set $A$, define
   \begin{equation*}
     B(x) \defeq \begin{cases} 1
       & \mbox{if} ~x \in A, \\
@@ -53,7 +53,7 @@ Lemma~\ref{lem:fisher_bound}.
   \begin{equation*}
     A = \cup_{j=1}^k (t^+_j,t^-_j),
   \end{equation*}
-  with $\infty \leq t^-_1 \leq \ldots t^-_k$, $t^+_1 \leq t^+_k \leq \infty$ and $t^-_j \leq t^+_j$ for $j=1,\ldots,k$. Under this assumption, 
+  with $\infty \leq t^-_1 \leq \ldots \leq t^-_k$, $t^+_1 \leq \ldots \leq t^+_k \leq \infty$ and $t^-_j \leq t^+_j$ for $j=1,\ldots,k$. Under this assumption, 
   \begin{align*}
     P_{\theta}(B_n=1) & = \sum_{j=1}^k \left( F \left(t^+_j-\theta\right) -  F \left(t^-_j-\theta\right)  \right),
   \end{align*}
@@ -81,7 +81,7 @@ where $I_\theta (B_i|B_{i-1},\ldots,B_1)$ is the Fisher information of the distr
 \]
 We conclude
 \begin{align}
-I_\theta(B_1,\ldots,B_n) = 4f(0)^2 n
+I_\theta(B_1,\ldots,B_n) \leq 4f(0)^2 n
 \label{eq:fisher_information}.
 \end{align}
 The Van Trees inequality in the version of 
@@ -95,12 +95,12 @@ Combining the last display with \eqref{eq:fisher_information}, we get
 \end{align*}
 
 
-\cite{van2004detection} and \eqref{eq:fisher_information} imply
-\begin{align*}
-\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B_1,\ldots,B_n)} + I_0} \\
-& = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B_1,\ldots,B_{i-1}) + I_0} \\
-& \geq \frac{1}{ 4f^2(0) n + I_0}.
-\end{align*}
+%\cite{van2004detection} and \eqref{eq:fisher_information} imply
+%\begin{align*}
+%\ex{ \left( \theta_n - \theta \right)^2} &  \geq \frac{1}{ \ex{ I_\theta(B_1,\ldots,B_n)} + I_0} \\
+%& = \frac{1}{ \sum_{i=1}^n I_\theta (B_i | B_1,\ldots,B_{i-1}) + I_0} \\
+%& \geq \frac{1}{ 4f^2(0) n + I_0}.
+%\end{align*}
 
 \subsection{Isoperimetric Lemma}
 \label{sec:bound_intervals_delta}
@@ -163,7 +163,7 @@ In particular,
   \begin{align}
     & g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \\
     &  \triangleq  \frac{\left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) )\right|^{2+\delta}}{
-      \left|\Delta_{N+1}(y_1,\ldots,y_k,x_{i^*},y_{k+1}\ldots,y_N)  (1 -\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  \right|^{1+\delta}
+      \left|\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  (1 -\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  \right|^{1+\delta}
     } \label{eq:g_def}.
   \end{align}
   The LHS of \eqref{eq:lemm:interval_bounds:to_show} is obtained by taking $y_i=x_{k_i}$ where $k_i$ is the $i$th element in $\{1,\ldots,N+1\}\setminus \{i^*\}$. It is therefore enough to prove that 
@@ -172,7 +172,7 @@ In particular,
   \end{equation*}
   where 
   \begin{equation*}
-    A_N(x^*,k) \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, : \, y_1 \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
+    A_N(x^*,k) \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, : \, y_1 \ge \ldots \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
     \right\}.
   \end{equation*}
   %

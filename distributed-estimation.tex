@@ -15,8 +15,7 @@ we define
 \begin{equation*}
   P_\theta(A) \defeq P(Z - \theta \in A)
 \end{equation*}
-for $Z$ with density $f$. Whenever $A$ is a collection
-of disjoint intervals $A = \cup_i \{[t_i^-, t_i^+]\}$, we may define
+for $Z$ with density $f$. Whenever $A$ is a collection of disjoint intervals $A = \cup_i [t_i^-, t_i^+]$, we may define
 \begin{equation*}
   \dPtheta(A) \defeq \frac{\partial}{\partial \theta} P_\theta(A)
   = \sum_i \left(f(t_i^- - \theta) - f(t_i^+ - \theta)\right),
@@ -41,7 +40,7 @@ We then make the following assumption.
   \item \label{item:lipschitz-density}
     The density function $f$ of $X_n - \theta$ is Lipschitz continuous.
   \item \label{item:finite-intervals}
-    Each set $A_n$ is the finite union of $k_n$ disjoint intervals
+    Each set $A_i$ is the finite union of $k_i$ disjoint intervals
     (which may include $\pm \infty$), where
     \begin{equation*}
       \frac{1}{n} \cdot \max_{i \le n} \frac{k_i^3}{P_\theta(A_i)^4
@@ -205,7 +204,7 @@ If the collection $\{t_1,t_2\ldots\}$ is bounded
 \begin{equation*}
 \lim_{n\to \infty} n \cdot \ex{\left({\theta}^{ML}_n - \theta \right)^2}  = 1/\kappa(\theta), 
 \end{equation*} 
-so that the ML estimator attains the local asymptotic MSE of Theorem~\ref{thm:adpative_lower_bound}.
+so that the ML estimator attains the local asymptotic MSE of Theorem~\ref{theorem:non-adaptive-minimax}.
 
 By Assumption~\ref{assump:failure_rate},
 $\eta(x)$ attains its maximum at the origin, so we conclude that
@@ -225,11 +224,11 @@ efficiency.
 
 \subsection{Minimax Threshold Density}
 
-We conclude this section by considering the density of the threshold values
+We conclude this section by considering the \newtext{distribution} of the threshold values
 that maximizes the worst-case information $\inf_\theta \kappa(\theta)
 = \kappa_\lambda(\theta)$ where $\kappa_\lambda(\theta)
 = \int \eta(t - \theta) d\lambda(t)$.
-This distribution $\lambda$ solves the
+The \newtext{optimal distribution $\lambda^\star$} solves the
 optimization problem
 \begin{align}
   \label{eq:var_cvx_minimax}

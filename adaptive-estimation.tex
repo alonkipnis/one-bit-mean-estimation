@@ -122,11 +122,12 @@ to establish the following theorem.
   \item \label{item:sgd-ms-convergence} Assume the stepsizes $\gamma_n$
     satisfy both conditions~\eqref{eqn:lazy-gamma}
     and~\eqref{eqn:stringent-gamma}. Let
-    $\pi$ be a distribution on $\R$. Then
-    \begin{equation*}
+    $\pi$ be a distribution on $\R$ \newtext{with a finite second moment}. Then
+    \begin{align}
       \int \E\Big[( \bar{\theta}_n - \theta )^2\Big] \pi(d\theta)
       = \frac{1}{4 n f(0)^2} + o(n^{-1}). 
-    \end{equation*}
+      \label{eq:adaptive_3}
+    \end{align}
   \end{enumerate}
 \end{thm}
 
@@ -288,7 +289,7 @@ asymptotically optimal.
   $B_i = \indic{X_i \le T_n}$ for $i \ge 1$.
   Letting $X_i = Z_i + \theta$ for $Z_i$ i.i.d.\ with fixed density
   $f = F'$, we have
-  $B_i \cas F(\theta_0 - \theta)$, so that
+  $\ex{B_i} \cas F(\theta_0 - \theta)$, so that
   $\frac{1}{n_1} \sum_{i = -n_1}^{-1} B_i \cas F(\theta - \theta_0)$ and
   by the continuous
   mapping theorem we have $T_n \cas \theta$ as $n_1 \to \infty$.

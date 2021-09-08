@@ -10,8 +10,8 @@ Since $B_1,B_2,\ldots$ satisfy the conditions in
 Theorem~\ref{theorem:non-adaptive-minimax}, $\theta$ is in $\Xi$ if and only
 if $\lim_{n\to \infty} L_n(A_1,\ldots,A_n;\theta) = \eta(0)$. By
 assumption, we have $B_i = \indic{X_i \in A_i}$, $A_i =
-\cup_{i=1}^K (t^-_{i,k},t^+_{i,k})$, where $t^-_{i,1} \leq t^+_{i,1} \leq \ldots
-\leq t^-_{i,K}, t^+_{i,K}$, and $t^-_{i,1}$ and $t^+_{i,K}$ may take the values
+\cup_{k=1}^K (t^-_{i,k},t^+_{i,k})$, where $t^-_{i,1} \leq t^+_{i,1} \leq \ldots
+\leq t^-_{i,K} \leq t^+_{i,K}$, and $t^-_{i,1}$ and $t^+_{i,K}$ may take the values
 $-\infty$ and $\infty$, respectively. Denote the set of endpoints
 \begin{equation*}
   E_i = \bigcup_{k=1}^{K}\{t^-_{i,k},t^+_{i,k}\},
@@ -54,7 +54,7 @@ Fix $\epsilon>0$ such that
 \begin{equation*}
   \epsilon < \frac{1}{2}\min_{i\neq j} |\theta_i - \theta_j|. 
 \end{equation*}
-Since for each $\theta \in \Theta$ we have $S_n(\theta, \epsilon) \to 1$, there exists $n$ large enough such that 
+Since for each $\theta \in \Theta$ we have $\card \left(S_n(\theta, \epsilon) \right) \to 1$, there exists $n$ large enough such that 
 \begin{equation*}
   \card \left(S_n(\theta_i, \epsilon) \right)
   \geq n \left(1-\frac{1}{2N} \right)

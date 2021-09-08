@@ -15,7 +15,7 @@ Consider the following simplified version of
 \cite[Thm. 4]{polyak1992acceleration}:
 \begin{corollary}{\cite[Thms. 3 \& 4]{PolyakJu92}}
   \label{corollary:polyak-juditsky}
-  Let $\varphi : \R \to \R$ and $Z_i$ be i.i.d.\ random
+  Let $\varphi : \R \to \R$ and $\{Z_i\}$ be i.i.d.\ random
   variables, and
   \begin{equation*}
   X_i = \theta + Z_i.
@@ -35,20 +35,21 @@ Consider the following simplified version of
   \item The sequence $\left\{ \gamma_i \right\}_{i=1}^\infty$ satisfies
     condition~\eqref{eqn:lazy-gamma}.
   \item \label{item:zero-gradient}
-    The function $\psi(x) \triangleq \ex{ \varphi(x+Z_1)}$
+    The function $\psi(x) \defeq \ex{ \varphi(x+Z_1)}$
     satisfies $\psi(0) = 0$ and
     $x\psi(x) > 0$ for $x\neq 0$.  Moreover, $\psi$ is differentiable
     at 0 with $\psi'(0) > 0$ and there exists
     $K_2$ and $0 < \lambda \leq 1$ such that
     \begin{equation}
       \label{eqn:local-hessian-psi}
-        \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}.
+        \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}
     \end{equation}
+    \newtext{for all $|x|<r$ for some $r>0$ small enough. }
   \item The function 
-    $\chi(x) \triangleq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
+    $\chi(x) \defeq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
   \end{enumerate}
   Then $\bar{\theta}_n \cas \theta$ and $ \sqrt{n}({\theta}_n - \theta)
-  \cd \normal(0,V)$ for  b n
+  \cd \normal(0,V)$ for
   $V = \frac{ \chi(0)} {\psi'(0)^2}$.
 \end{corollary}
 
@@ -132,11 +133,11 @@ We begin by recalling the statistical concepts we require.
   A family of distributions $\{P_\theta\}_{\theta \in \Theta}$ is
   \emph{locally asymptotically normal with information matrix $I_\theta$} (LAN)
   at
-  $\theta$ if there exists a sequence of random vectors $Z_n$ such that for
+  $\theta$ if there exists a sequence of random vectors $\{Z_n\}$ such that for
   all $h_n \to h$,
   \begin{equation*}
     \sum_{i = 1}^n \log \frac{dP_{\theta + h_n/\sqrt{n}}}{dP_\theta}
-    (X_1, \ldots, X_n)
+    \newtext{(X_i)}
     = h^\top Z_n - \half h^\top I_\theta h + o_P(1)
   \end{equation*}
   where $Z_n \cd \normal(0, I_\theta)$ under $P_\theta$, where
@@ -189,20 +190,22 @@ more general than we need; we defer proof to Sec.~\ref{sec:proof-qmd}.
 \end{lemma}
 
 By the assumption in Theorem~\ref{thm:sgd} that the density $f$
-is Lipschitz continuous, we see that the location family
+is Lipschitz continuous, \newtext{$\sqrt{f}$ is Lipschitz continuous hence absolutely continuous}. We see that the location family
 $\{P_\theta\}_{\theta \in \R}$ defined by $dP_\theta(x) = f(x - \theta)$
 satisfies the conditions of Lemma~\ref{lemma:qmd}.
 
-It remains to show that the average $\bar{\theta}_n$ is regular:
+It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\theta$ with the limiting distribution $\Ncal(0,(4f(0)^2)^{-1})$}:
 \begin{lemma}
   \label{lemma:sgd-median-regular}
   Let $h_n \to h \in \R$, and define $P_n = P_{\theta + h_n / \sqrt{n}}^n$.
-  Then $\bar{\theta}_n$ is regular with
+  Then 
   \begin{align}
     \label{eqn:sgd-median-regular}
-    \sqrt{n}\left( \bar{\theta}_n - \theta - h_n / \sqrt{n}\right)
+    \newtext{
+    \sqrt{n}\left( \bar{\theta}_n - \theta \right)
     \mathop{\cd}_{P_n}
     \normal\left( h,\frac{1}{4 f(0)^2}\right).
+    }
   \end{align}
 \end{lemma}
 \begin{proof}
@@ -216,35 +219,35 @@ It remains to show that the average $\bar{\theta}_n$ is regular:
     \label{corollary:normal-expansion}
     Let the conditions of Corollary~\ref{corollary:polyak-juditsky} hold,
     meaning that $\theta_i = \theta_{i-1} + \gamma_i \varphi(X_i -
-    \theta_{i-1})$ for $X_i = \theta + Z_i$, where $Z_i$ are i.i.d.\ with
+    \theta_{i-1})$ for $X_i = \theta + Z_i$, where $\{Z_i\}$ are i.i.d.\ with
     $\E[\varphi(Z)] = 0$. Additionally assume the local smoothness
     condition that there exist $0 < \lambda \le 1$ and $K < \infty$ such
     that
     \begin{equation}
       \label{eqn:additional-local-smooth}
-      \E[|\varphi(x + Z) - \varphi(Z)|^2]
+      \E[|\varphi(x + Z_1) - \varphi(Z)|^2]
       \le K (|x|^\lambda + x^2).
     \end{equation}
-    Set $\Delta_i = \theta_i - \theta$ and $\bar{\Delta}_i = \frac{1}{n}
+    Set $\Delta_i \defeq \theta_i - \theta$ and $\bar{\Delta}_n \defeq \frac{1}{n}
     \sum_{i=1}^n \Delta_i$. Then
     \begin{enumerate}[(i)]
     \item \label{item:regularity}
-      The sequence $\Delta_i$ is regular, that is,
+      The sequence $\{\Delta_i\}$ is regular, that is,
       \begin{equation}
         \sqrt{n} \bar{\Delta}_n
         = -\frac{1}{\sqrt{n}} \frac{1}{\psi'(0)} \sum_{i=1}^{n-1} \varphi(Z_i)
         + o_{P,n}(1).
         \label{eq:normal_expansion_lem}
       \end{equation}
-    \item \label{item:apply-le-cam} Let $Z_i$ as in
+    \item \label{item:apply-le-cam} Let $\{Z_i\}$ as in
       Corollary~\ref{corollary:polyak-juditsky} have absolutely continuous
       density $p$ with median $0$, define $\score_h(z) = \frac{p'(z - h)}{p(z
-        - h)}$, and assume that $I_h \defeq \E_\theta[\score_h(Z)^2]$ is
+        - h)}$, and assume that $I_h \defeq \E_p[\score_h(Z_1)^2]$ is
       continuous in $h$ near 0.  Then for any converging sequence $h_n \to h$,
       \begin{equation*}
         \sqrt{n} \bar{\Delta}_n
         \mathop{\cd}_{P_{\theta + h_n/\sqrt{n}}^n}
-        \normal\left( \frac{-h}{\psi'(0)} \E_p[\varphi(Z) \score_0(Z)],
+        \normal\left( \frac{-h}{\psi'(0)} \E_p[\varphi(Z_1) \score_0(Z_1)],
         \frac{\chi(0)}{\psi'^2(0)} \right).
       \end{equation*}
     \end{enumerate}
@@ -270,17 +273,18 @@ It remains to show that the average $\bar{\theta}_n$ is regular:
     = 4 f(0) |x| + 2 \lip(f) x^2
   \end{align*}
   where $\lip(f)$ is the Lipschitz constant of $f$.
-  For large $x$ we always have
-  $\E[|\varphi(Z) - \varphi(x + Z)|] \le 2$, so that
-  condition~\eqref{eqn:additional-local-smooth} holds.
+\newtext{It follows that condition~\eqref{eqn:additional-local-smooth} holds.}  
+   %For large $x$ we always have  $\E[|\varphi(Z) - \varphi(x + Z)|] \le 2$, so that condition~\eqref{eqn:additional-local-smooth} holds.
   In addition, we have
-  \begin{equation*}
+  \begin{align*}
+\newtext{ \E_p[\varphi(Z_1) \score_0(Z_1)] } & = 
     \int_{\R} \varphi(x) f'(x ) dx
-    = \int_{\R} \sgn(x) f'(x ) dx =
+    = \int_{\R} \sgn(x) f'(x ) dx\\
+     &  =
     \int_0^\infty f'(x ) dx
     - \int_{-\infty}^0 f'(x ) dx
     = -2 f(0) = -\psi'(0).
-  \end{equation*}
+  \end{align*}
   Corollary~\ref{corollary:normal-expansion}
   now implies the convergence \eqref{eqn:sgd-median-regular}.
 \end{proof}
@@ -304,8 +308,8 @@ We begin with the following result from \cite{polyak1990new}:
   \end{align}
   Assume that the function $g$ is $\mc{C}^2$, strictly convex, has Lipschitz
   derivative, and is minimized by $x^\star$. Moreover, assume that the
-  noises $Z_n$ are i.i.d.\ with density $p$ and
-  that the Fisher information $\E[(p'(Z))^2 / p(Z)^2]$ exists and is finite.
+  noises $\{Z_n\}$ are i.i.d.\ with density $p$ and
+  that the Fisher information $\E[(p'(Z_1))^2 / p(Z_1)^2]$ exists and is finite.
   Let $\psi(x)$ and $\chi(x)$ be defined as in
   Corollary~\ref{corollary:polyak-juditsky} and satisfy the conditions in
   the corollary. Assume in addition that $\chi(0)>0$, condition
@@ -323,7 +327,7 @@ We begin with the following result from \cite{polyak1990new}:
   \end{equation*}
 \end{corollary}
 
-We apply Corollary~\ref{corollary:polyak-mse} with $g(x) = 0.5(x-\theta)^2$,
+\newtext{Fix $\theta \in \R$}. Apply Corollary~\ref{corollary:polyak-mse} with $g(x) = 0.5(x-\theta)^2$,
 $\varphi(x) = \sgn(x)$, $Z_n = \theta-X_n$.
 The update~\eqref{eq:polyak_new_measurements} gives
 \begin{align*} 
@@ -338,10 +342,16 @@ and $\chi$ have the desired conditions of
 Corollary~\ref{corollary:polyak-juditsky} (as we verify in
 Section~\ref{sec:proof-normal-sgd}). Finally, the function $\theta \mapsto
 \E_{P_\theta}[(\bar{\theta}_n - \theta)^2]$ is continuous in $\theta$, so
-that for $x^\star = \theta$ and $g'' \equiv 1$, we may apply
-Corollary~\ref{corollary:polyak-mse} and a finite approximation to the prior
-measure $\pi$ to obtain
-Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}.
+that for $x^\star = \theta$ and $g'' \defeq 1$, \newtext{we may apply
+Corollary~\ref{corollary:polyak-mse} to obtain}
+\begin{align*}
+\ex{(\bar{\theta}_n - \theta)^2} = \frac{1}{4nf(0)^2} + o(n^{-1}).
+\end{align*}
+\newtext{
+From here, existence of the second moment of $\pi$ implies \eqref{eq:thm:sgd_3}. }
+%Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}.}
+
+%and a finite approximation to the prior measure $\pi$ to obtain
 
 %% \begin{equation*}
 %% \ex{ | \varphi(x+Z_1) |^4 } = 1 \leq K_3(1+|x|^4)
@@ -362,8 +372,8 @@ The proof of part~\eqref{item:regularity} requires two additional lemmas of
 Polyak and Juditsky~\cite{PolyakJu92}.
 \begin{lem}[\cite{PolyakJu92}, Lemma 2]
   \label{lemma:polyak-expansion}
-  Define the process $\Delta_i^1 = \Delta_{i-1}^i
-  - \gamma_i (A \Delta_{i-1} + \xi_i)$ for $i = 1, 2, \ldots$.
+  Define the process $\Delta_i^1 = \Delta_{i-1}^1
+  - \gamma_i (A \Delta_{i-1}^1 + \xi_i)$ for $i = 1, 2, \ldots$.
   Assume that $A>0$ and the stepsizes $\gamma_i$ satisfy
   condition~\eqref{eqn:lazy-gamma}. Then
   for $\bar{\Delta}_n^1 = \frac{1}{n} \sum_{i = 1}^n \Delta_i^1$, we have
@@ -480,7 +490,7 @@ We then have the following asymptotic equivalence.
   The term \eqref{eq:PJ_proof2} is somewhat more challenging to control.
   We define
   \begin{equation*}
-    \epsilon_i \triangleq \psi(\Delta_{i-1}) + \varphi(Z_i)
+    \epsilon_i \defeq \psi(\Delta_{i-1}) + \varphi(Z_i)
     - \varphi(\Delta_{i-1}+Z_i),
   \end{equation*}
   and let
@@ -524,13 +534,11 @@ We then have the following asymptotic equivalence.
     \varepsilon_i^2 \indic{\tau_R > i} < \infty
     ~ \mbox{a.s.}
   \end{equation*}
-  by Condition~\eqref{eqn:lazy-gamma}.
-  As with probability 1 there exists some (random) $R < \infty$ such that
-  $\tau_R = \infty$, we obtain that 
+  by Condition~\eqref{eqn:lazy-gamma}. \newtext{As Lemma~\ref{lemma:converging-power-sum} implies in particular that $\{\Delta_i\}$ is a.s. bounded, with probability 1 there exists some (random) $R < \infty$ such that $\tau_R = \infty$.} We obtain that 
   \begin{equation*}
     \sum_{i = 1}^\infty \frac{1}{i}
     \varepsilon_i^2  < \infty
-    ~ \mbox{a.s.}
+    ~ \mbox{a.s.}.
   \end{equation*}
   Applying the square integrable martingale convergence
   theorem of \cite[Ex.~5.3.35]{Dembo16}, we have
@@ -578,19 +586,19 @@ The regularity result~\eqref{eq:normal_expansion_lem} gives
 The conditions in
 Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam} imply
 that the Fisher information $I_h =
-\E_h[\score_h(Z)^2]$ exists and is continuous for
+\E_h[\score_h(Z_1)^2]$ exists and is continuous for
 $\score_h(z) = \frac{p'(z - h)}{p(z - h)}$,
 and the asymptotic expansion Definitions~\ref{definition:qmd}
 and~\ref{definition:lan} combined
 with the preceding display, give the joint convergence
 \begin{equation*}
-  \left(\sqrt{n} \bar{\Delta}_n, \log \frac{P^n_{h_n/\sqrt{n}}}{P^n_0}(Z_1^n)
+  \left(\sqrt{n} \bar{\Delta}_n, \sum_{i=1}^n \log \frac{P_{h_n/\sqrt{n}}}{P_0}(Z_i)
   \right)
   \cd \normal \left( \left(0,-\frac{h^2}{2} I_0 \right),
   \begin{pmatrix}
     \frac{\chi(0)}{\psi'(0)^2} & \frac{-h}{ \psi'(0)}
-    \E_p[\varphi(Z) \score_0(Z)] \\
-    \frac{-h}{ \psi'(0)} \E_p[\varphi(Z) \score_0(Z)]
+    \E_p[\varphi(Z_1) \score_0(Z_1)] \\
+    \frac{-h}{ \psi'(0)} \E_p[\varphi(Z_1) \score_0(Z_1)]
     & h^2 I_0
   \end{pmatrix}  \right).
 \end{equation*}
@@ -602,7 +610,7 @@ convergence
   \Ncal\left(\frac{-h}{ \psi'(0)} \E_p[\varphi(Z) \score(Z)],
   \frac{\chi(0)}{\psi'(0)^2} \right)
 \end{equation*}
-under the alternatives $P_{h_n/\sqrt{n}}$, which gives
+under the alternatives $P^n_{h_n/\sqrt{n}}$, which gives
 Corollary~\ref{corollary:normal-expansion}\eqref{item:apply-le-cam}.
 
 \subsection{Proof of Lemma~\ref{lemma:qmd}}
@@ -617,7 +625,7 @@ we have
 \begin{equation*}
   s_{\theta + h}(x) - s_\theta(x) = \int_0^1 h^\top \dot{s}_{\theta + t h}(x) dt,
 \end{equation*}
-and so Jensen's inequality (or Cauchy-Schwarz) we have
+and so By Jensen's inequality (or Cauchy-Schwartz) we have
 \begin{equation*}
   (s_{\theta + h}(x) - s_\theta(x))^2
   \le \int_0^1 h^\top \dot{s}_{\theta + t h}(x)
@@ -645,7 +653,7 @@ Now, we note that
   - h^\top \dot{s}_\theta(x)\right)^2 = 0
 \end{equation*}
 for all $x$ excepting a $\mu$-null set, and the
-variant dominated convergence theorem in
+variant of the dominated convergence theorem in
 \cite[Prop.~2.29]{VanDerVaart98} implies that
 \begin{equation*}
   \lim_{t \to 0}
