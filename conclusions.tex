@@ -8,4 +8,6 @@ Under local asymptotic normality, the optimal estimation performance derived for
 We further considered the special case where the sequence of bits is obtained in a distributed manner by comparing against a prescribed sequence of thresholds. We characterized the performance of the optimal estimator from such bit-sequence using the density of the thresholds and considered the density that minimizes the minimax risk. 
 %
 %\par
-%Obvious extensions of our work include deriving explicit bounds and optimal procedures when more than one-bit per sample is provided or when each sample is a vector. Another possible extension may consider the efficiency of estimation when single bits are sent between nodes of a directed graph.
+
+\newtext{
+Natural extensions of the setting of this work are situations when the communication bit-budget $b$ is larger than one and when each sample is a $d$-dimensional vector. Fundamental bounds for this general case follows from several recent works (e.g. \cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}), which imply that in the adaptive and distributed cases the MSE scales in the regular parametric rate of $1/n$ when $b$ and $d$ are held fixed in the sample size $n$. Nevertheless, the coefficient of the $1/n$ term corresponding to the ARE is still unknown; deriving the ARE for general $b$ and $d$ is left as a future challenge.}

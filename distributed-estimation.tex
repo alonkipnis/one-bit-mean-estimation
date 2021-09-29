@@ -6,9 +6,10 @@ function only of its private sample $X_i$. In this case, the $i$th encoder is
 of the form $B_i = \indic{X_i \in A_i}$, where the detection region
 $A_i$ is a Borel set independent of $X_1, X_2, \ldots$.
 
+\subsection{Optimal Efficiency}
 We begin by making a few restrictions on the collections of the sets $A_i$,
 which we believe not unreasonable, but which allow us to develop fundamental
-limits for estimation.  We require a bit of notation to define the
+limits for estimation. We require a bit of notation to define the
 assumptions. As we work with a location family based on a density $f$
 with associated probability distribution $P$ on variables $Z$,
 we define
@@ -227,7 +228,7 @@ efficiency.
 We conclude this section by considering the \newtext{distribution} of the threshold values
 that maximizes the worst-case information $\inf_\theta \kappa(\theta)
 = \kappa_\lambda(\theta)$ where $\kappa_\lambda(\theta)
-= \int \eta(t - \theta) d\lambda(t)$.
+= \int \eta(t - \theta) \lambda(dt)$.
 The \newtext{optimal distribution $\lambda^\star$} solves the
 optimization problem
 \begin{align}
@@ -267,12 +268,13 @@ $\Theta$,
 = \frac{1}{2T}\int_{0}^{2T} \eta(t) dt  \label{eq:uniform_risk}. 
 \end{align}
 
+
 \begin{figure}
   %%%%% COMMENTED TIKZ PICTURE %%%%%
   \begin{center}
 \input{Figs/opt_thr_den.tex}
 \caption{\label{fig:minimax_support}
-Optimal threshold density. The threshold density $\lambda^\star(dt)$ (blue) that maximizes the asymptotic relative efficiency for $f(x)$ the normal desnity with variance $\sigma^2$ and $\Theta= [-1/2,1/2]$. 
+Optimal threshold density under distributed encoding. The threshold density $\lambda^\star(dt)$ (blue) that maximizes the asymptotic relative efficiency for $f(x)$ the normal desnity with variance $\sigma^2$ and $\Theta= [-1/2,1/2]$. 
 %
 The continuous curve (red) is the ARE for each $\theta \in [-1/2,1/2]$ under the optimal density, hence the minimax ARE is the minimal value of this curve. The dashed curve (green) is the ARE when the threshold values are uniformly distributed over $[-1/2,1/2]$; its minimal value is $\kappa_{\unif}$ \eqref{eq:uniform_risk}. }
 \end{center}
@@ -310,10 +312,11 @@ legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 \addlegendentry{uniform threshold desnity};
 \end{axis}
 \end{tikzpicture}
-\caption{\label{fig:minimax_ARE} Minimax ARE versus $\sigma$ for $f(x)$ the standard normal density with variance $\sigma^2$ and $\Theta = [-1/2,1/2]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$ of \eqref{eq:uniform_risk}.}.
+\caption{\label{fig:minimax_ARE} 
+Minimax relative efficiency under distributed encoding. ARE versus $\sigma$ for $f(x)$ the standard normal density with variance $\sigma^2$ and $\Theta = [-1/2,1/2]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$ of \eqref{eq:uniform_risk}. \newtext{
+The line $\pi/2$ is the optimal relative efficiency, attained under adaptive encoding for any $\sigma$ uniformly over the parameter space.}}
 \end{center}
 \end{figure}
-
 
 
 %%% Optimal density under a prior %%%%
@@ -429,7 +432,6 @@ Optimal threshold density $\lambda^\star(dt)$ that minimizes the asymptotic Baye
 }
 \end{center}
 \end{figure}
-
 
 When a prior $\pi$ on $\Theta$ is provided, one may be interested in the threshold density $\lambda$ minimizing the Bayes risk $R_n(\pi)$. The resulting minimization problem is 
 \begin{align}

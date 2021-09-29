@@ -16,12 +16,12 @@ there is a one-step adaptive estimator $\theta_n$ such that
 \begin{equation}
   \label{eqn:uniforms-are-easy}
   \sup_{|\theta| \le \log n}
-  P_\theta\left(|\theta_n - \theta| \ge \frac{8 \log n}{n^{3/4}}\right)
+  P_\theta\left(|\theta_n - \theta| \ge \frac{\newtext{16} \log n}{n^{3/4}}\right)
   \le \frac{2}{n^2}.
 \end{equation}
 for all large $n$,
 and so (by the Borel-Cantelli lemmas), for any $\theta \in \R$ we have
-$P_\theta(|\theta_n - \theta| \le \sqrt{\newtext{8} \log n} / n^{3/4} ~
+$P_\theta(|\theta_n - \theta| \le \newtext{16 \log n} / n^{3/4} ~
 \mbox{eventually}) = 1$. This is of course faster than the $1/\sqrt{n}$
 rates we prove throughout.
 
@@ -39,7 +39,7 @@ the $j$th such threshold be
 \end{equation*}
 Then we ``assign'' observations to each pair of thresholds, so that
 threshold $j$ corresponds to observations $I_j \defeq \{\frac{n (j - 1)}{m}
-+ 1, \ldots, \frac{n j}{m}\}$, of which there are $n/m$.  For each index $i
++ 1, \ldots, \frac{n j}{m}\}$, of which there are $n/m$. For each index $i
 \in I_j$, we set
 \begin{equation*}
   B_i = \begin{cases}
@@ -47,7 +47,7 @@ threshold $j$ corresponds to observations $I_j \defeq \{\frac{n (j - 1)}{m}
     0 & \mbox{otherwise}.
   \end{cases}
 \end{equation*}
-Then we simply set $\theta_n\init$ to be the maximal threshold for which
+Then we simply set $\theta_n\init$ to be the \newtext{minimal} threshold for which
 $B_i = 0$ for all observations $X_i$ corresponding to that threshold.
 
 Let us now consider the probability that $\theta_n\init$ is substantially
@@ -55,27 +55,29 @@ wrong. For notational simplicity, let $U_i = (1 + X_i - \theta) / 2$, so that
 the $U_i$ are uniform on $[0, 1]$.
 First, note that we always have $\theta_n\init \ge \theta
 - \frac{2 n \epsilon}{m}$, because no observations will be below
-the appropriate threshold. Let $j\opt$ be the smallest index $j$
-for which $\theta \le t_{j\opt}$, and consider
+the appropriate threshold. Let $j\opt$ be the \newtext{largest} index $j$
+for which $\theta \newtext{\ge} t_{j\opt}$, and consider
 the index sets $I_{j\opt}$, $I_{j\opt + 1}$, and so on.
 The event $\theta\init_n \ge t_{j\opt} + \frac{2 n \epsilon}{m}$ may
 occur only if for each of the $n/m$ observations in the set
 $I_{j\opt + 1}$, we have $U_i \ge \frac{n \epsilon}{m}$. Thus,
-\begin{equation*}
+\begin{align*}
+  P_\theta\left(\theta_n\init \ge \theta + \frac{2 n \epsilon}{m}
+  \right) \le
   P_\theta\left(\theta_n\init \ge t_{j\opt} + \frac{2 n \epsilon}{m}
   \right)
   \le \left(1 - \frac{n \epsilon}{m}\right)^\frac{n}{m}
   \le \exp\left(-\frac{n^2\epsilon}{m^2}\right).
-\end{equation*}
+\end{align*}
 Setting the number of bins $m = \sqrt{n}$,
 the resolution $\epsilon = 2 \log n / n$, we obtain
 $P_\theta(\theta_n\init \ge t_{j\opt} + 4 \log n / \sqrt{n})
 \le n^{-2}$. Thus we have
-\begin{equation}
+\begin{align}
   \label{eqn:quality-of-initial-estimate}
   \sup_{|\theta| \le \log n} P_\theta\left(|\theta_n\init - \theta| \ge
   \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^2}.
-\end{equation}
+\end{align}
 
 The second stage estimator follows roughly the same strategy, except that
 the resolution of the bins is tighter. In particular, let us assume that
@@ -93,7 +95,7 @@ thresholds $t_j = -\frac{16 \log n}{\sqrt{n}} + \frac{32 (j - 1) \log n}{m
 these intervals.  Then following exactly the same reasoning as above, we
 assign indices $I_j = \{\frac{n(j - 1)}{m} + 1, \ldots, \frac{n j}{m}\}$ and
 for $i \in I_j$, set $B_i = 1$ if $X_i \ge t_j$. We define $\theta_n$ to be
-the maximal threshold $t_j$ for which $B_i = 0$ for all observations $X_i
+the \newtext{minimal} threshold $t_j$ for which $B_i = 0$ for all observations $X_i
 \in I_j$. Then following precisely the reasoning above, we have (on the
 event that $|\theta_n\init - \theta| \le \frac{8 \log n}{\sqrt{n}}$)
 \begin{equation*}

@@ -3,7 +3,7 @@
 
 The estimation algorithm~\eqref{eq:sgd_alg} is a special
 case of the stochastic gradient procedures in the papers
-\cite{PolyakJu92, polyak1990new}.
+\cite{polyak1992acceleration, polyak1990new}.
 We rely on several of their results. Throughout this proof,
 we assume without loss of generality that the median
 $\theta = \mbox{med}(P) = 0$.
@@ -13,9 +13,9 @@ $\theta = \mbox{med}(P) = 0$.
 
 Consider the following simplified version of
 \cite[Thm. 4]{polyak1992acceleration}:
-\begin{corollary}{\cite[Thms. 3 \& 4]{PolyakJu92}}
+\begin{corollary}{\cite[Thms. 3 \& 4]{polyak1992acceleration}}
   \label{corollary:polyak-juditsky}
-  Let $\varphi : \R \to \R$ and $\{Z_i\}$ be i.i.d.\ random
+  Let $\varphi : \R \to \R$ and $\{Z_i\}$ be i.i.d.\ \newtext{zero-mean} random
   variables, and
   \begin{equation*}
   X_i = \theta + Z_i.
@@ -37,14 +37,14 @@ Consider the following simplified version of
   \item \label{item:zero-gradient}
     The function $\psi(x) \defeq \ex{ \varphi(x+Z_1)}$
     satisfies $\psi(0) = 0$ and
-    $x\psi(x) > 0$ for $x\neq 0$.  Moreover, $\psi$ is differentiable
+    $x\psi(x) > 0$ for $x\neq 0$. Moreover, $\psi$ is differentiable
     at 0 with $\psi'(0) > 0$ and there exists
-    $K_2$ and $0 < \lambda \leq 1$ such that
+    $K_2$, $0 < \lambda \leq 1$, \newtext{and $r>0$}, such that
     \begin{equation}
       \label{eqn:local-hessian-psi}
         \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}
     \end{equation}
-    \newtext{for all $|x|<r$ for some $r>0$ small enough. }
+    \newtext{for all $|x|<r$. }
   \item The function 
     $\chi(x) \defeq \ex{\varphi^2(x+Z_1)}$ is continuous at zero. 
   \end{enumerate}
@@ -190,20 +190,21 @@ more general than we need; we defer proof to Sec.~\ref{sec:proof-qmd}.
 \end{lemma}
 
 By the assumption in Theorem~\ref{thm:sgd} that the density $f$
-is Lipschitz continuous, \newtext{$\sqrt{f}$ is Lipschitz continuous hence absolutely continuous}. We see that the location family
+is Lipschitz continuous, \newtext{$f$ is absolutely continuous hence 
+$\sqrt{f}$ is absolutely continuous}. We see that the location family
 $\{P_\theta\}_{\theta \in \R}$ defined by $dP_\theta(x) = f(x - \theta)$
 satisfies the conditions of Lemma~\ref{lemma:qmd}.
 
 It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\theta$ with the limiting distribution $\Ncal(0,(4f(0)^2)^{-1})$}:
 \begin{lemma}
   \label{lemma:sgd-median-regular}
-  Let $h_n \to h \in \R$, and define $P_n = P_{\theta + h_n / \sqrt{n}}^n$.
+  Let $h_n \to h \in \R$, and define $P_{n,h} = P_{\theta + h_n / \sqrt{n}}^n$.
   Then 
   \begin{align}
     \label{eqn:sgd-median-regular}
     \newtext{
     \sqrt{n}\left( \bar{\theta}_n - \theta \right)
-    \mathop{\cd}_{P_n}
+    \mathop{\cd}_{P_{n,h}}
     \normal\left( h,\frac{1}{4 f(0)^2}\right).
     }
   \end{align}
@@ -348,7 +349,7 @@ Corollary~\ref{corollary:polyak-mse} to obtain}
 \ex{(\bar{\theta}_n - \theta)^2} = \frac{1}{4nf(0)^2} + o(n^{-1}).
 \end{align*}
 \newtext{
-From here, existence of the second moment of $\pi$ implies \eqref{eq:thm:sgd_3}. }
+From here, existence of the second moment of $\pi$ implies \eqref{eq:adaptive_3}.}
 %Theorem~\ref{thm:sgd}\eqref{item:sgd-ms-convergence}.}
 
 %and a finite approximation to the prior measure $\pi$ to obtain
@@ -369,8 +370,8 @@ From here, existence of the second moment of $\pi$ implies \eqref{eq:thm:sgd_3}.
   Corollary~\ref{corollary:normal-expansion}\eqref{item:regularity}}
 
 The proof of part~\eqref{item:regularity} requires two additional lemmas of
-Polyak and Juditsky~\cite{PolyakJu92}.
-\begin{lem}[\cite{PolyakJu92}, Lemma 2]
+Polyak and Juditsky~\cite{polyak1992acceleration}.
+\begin{lem}[\cite{polyak1992acceleration}, Lemma 2]
   \label{lemma:polyak-expansion}
   Define the process $\Delta_i^1 = \Delta_{i-1}^1
   - \gamma_i (A \Delta_{i-1}^1 + \xi_i)$ for $i = 1, 2, \ldots$.
@@ -390,7 +391,7 @@ Polyak and Juditsky~\cite{PolyakJu92}.
   \frac{1}{n} \sum_{i=1}^{n-1} |w_i^n| = 0$.
 \end{lem} 
 
-\begin{lem}[\cite{PolyakJu92}]
+\begin{lem}[\cite{polyak1992acceleration}]
   \label{lemma:converging-power-sum}
   Under the conditions of Corollary~\ref{corollary:normal-expansion},
   with probability 1,
@@ -403,7 +404,7 @@ Lemma~\ref{lemma:converging-power-sum} follows from the proof of Theorem 2
 in \cite[page 851]{polyak1992acceleration}.
 
 We separate the proof of part~\eqref{item:regularity} into two lemmas, which
-mirror the proofs of Polyak and Juditsky~\cite{PolyakJu92}; together they
+mirror the proofs of Polyak and Juditsky~\cite{polyak1992acceleration}; together they
 immediately give the result.
 
 \begin{lemma}
@@ -517,9 +518,19 @@ We then have the following asymptotic equivalence.
   and~\eqref{eqn:additional-local-smooth}, and $\E[\varepsilon_i \mid
     \mc{F}_{i-1}] = 0$ for all $i$ by definition of $\psi(x) = \E[\varphi(x
     + Z)]$ and that $\psi(0) = 0$.  We now control the expectations of these
-  quantities. For $R < \infty$, define the stopping time $\tau_R \defeq \inf
+  quantities. 
+  \newtext{
+  As in the proof of Theorems~2 and~4 in \cite{polyak1992acceleration}, the Robbins-Siegmund Theorem \cite{robbins1971convergence} applies to the increment of $|\Delta_t|^2$ implies that for every 
+  $\epsilon>0$ there exists some $R>0$ such that
+  \begin{align}
+  \label{eq:sup_delta}
+  \Prob\left(\sup_i |\Delta_i| \le R \right) \ge 1-\epsilon.
+  \end{align} 
+  Define the the stopping time $\tau_R \defeq \inf
   \{i : |\Delta_i| > R\}$, which satisfies $\{\tau_R \le i\} \in \mc{F}_i$
-  for each $i$.  Then using~\cite[Eq.~(A14)]{PolyakJu92}, we have
+  for each $i$. 
+  }
+  Then using~\cite[Eq.~(A14)]{polyak1992acceleration}, we have
   \begin{equation*}
     \E[\Delta_i^2 \indic{\tau_R > i}] \le K \gamma_i,
   \end{equation*}
@@ -534,7 +545,14 @@ We then have the following asymptotic equivalence.
     \varepsilon_i^2 \indic{\tau_R > i} < \infty
     ~ \mbox{a.s.}
   \end{equation*}
-  by Condition~\eqref{eqn:lazy-gamma}. \newtext{As Lemma~\ref{lemma:converging-power-sum} implies in particular that $\{\Delta_i\}$ is a.s. bounded, with probability 1 there exists some (random) $R < \infty$ such that $\tau_R = \infty$.} We obtain that 
+  by Condition~\eqref{eqn:lazy-gamma}. Since
+  \begin{align*}
+\left\{ \sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda}}{\sqrt{i}} < \infty \subset \left\{ \sup_i |\Delta_i| \leq R \right\} \cap \left\{ \sum_{i=0}^\infty  \right\}
+ \right\},
+  \end{align*}
+  \newtext{it follows from \eqref{eq:sup_delta} and by the arbitrary choice of $\epsilon$ that}
+  %\newtext{As it follows from \cite[Eq.~(A11)]{polyak1992acceleration} that $\Prob\left( \sup |\Delta_t| < \infty  \right)=1$}, we obtain
+  %\newtext{As Lemma~\ref{lemma:converging-power-sum} implies in particular that $\{\Delta_i\}$ is a.s. bounded, with probability 1 there exists some (random) $R < \infty$ such that $\tau_R = \infty$.} We obtain that 
   \begin{equation*}
     \sum_{i = 1}^\infty \frac{1}{i}
     \varepsilon_i^2  < \infty

@@ -18,22 +18,22 @@ which is important for our Taylor expansions to come.
   \label{lemma:derivative-bounds}
   Let Assumption~\ref{assumption:detection-regions}\eqref{item:lipschitz-density} hold. Then for any $A = \cup_{i = 1}^k
   [a_i, b_i]$ and $h \in \R$,
-  \begin{equation*}
+  \begin{align}
     \left|P_{\theta + h}(A) - P_\theta(A) - \dPtheta(A) h \right| \leq 
     k \cdot \lip(f) h^2,
-  \end{equation*}
-  where
-  \begin{equation}
-    \dPtheta(A) = \sum_{i = 1}^k f(a_i - \theta) - f(b_i - \theta).
     \label{eqn:expansion-dPtheta}
-  \end{equation}
+  \end{align}
+  where
+  \begin{align*}
+    \dPtheta(A) = \sum_{i = 1}^k f(a_i - \theta) - f(b_i - \theta).
+  \end{align*}
   Additionally, we have the bounds
-  \begin{equation}
+  \begin{align}
     \label{eqn:bound-density-diffs}
     |f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}
     ~~ \mbox{and} ~~
     |\dPtheta(A)| \le 2 \sqrt{k \lip(f)}.
-  \end{equation}
+  \end{align}
 \end{lemma}
 \noindent
 See Section~\ref{sec:proof-derivative-bounds} for a proof.
@@ -188,8 +188,11 @@ the integral~\eqref{eqn:interval-length-thing} becomes
   + \frac{f(b)^2}{L}
   - \frac{f(b)^2}{2L},
 \end{align*}
-so that $\sqrt{f(a)^2 + f(b)^2} \le \sqrt{2 \lip(f) P([a, b])}$.  In sum,
-we have demonstrated that always the first
+so that 
+\begin{align*}
+\newtext{\frac{f(a) + f(b)}{\sqrt{2}} \le} \sqrt{f(a)^2 + f(b)^2} \le \sqrt{2 \lip(f) P([a, b])},
+\end{align*}
+\newtext{where the left inequality follows from concavity of $\sqrt{\cdot}$.} In sum, we have demonstrated that always the first
 bound~\eqref{eqn:bound-density-diffs} holds.
 To show the second inequality in expression~\eqref{eqn:bound-density-diffs},
 note that
@@ -205,13 +208,13 @@ intervals. By a Taylor approximation and concavity of
 $\sqrt{\cdot}$, we have
 \begin{equation*}
   \sqrt{a} + \frac{b}{2 \sqrt{a}} -
-  \frac{b^2}{4\sqrt{a}}
+  \frac{b^2}{4a^{\newtext{3/2}}}
   \le \sqrt{a + b} \le \sqrt{a}
   + \frac{b}{2 \sqrt{a}}
 \end{equation*}
 for any $a > 0$ and $|b| \le 3a/4$. Consequently,
 recalling that $\score_\theta(A) = \dPtheta(A) / P_\theta(A)$,
-for any $h \in \R$ and $A = \cup_{i = 1}^k \{[t_i^-, t_i^+]\}$ the
+for any $h \in \R$ and $A = \cup_{i = 1}^k [t_i^-, t_i^+]$ the
 union of $k$ intervals, the expansion~\eqref{eqn:expansion-dPtheta} yields
 \begin{equation*}
   \left(\sqrt{P_{\theta + h}(A)} -
