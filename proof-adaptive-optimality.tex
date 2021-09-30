@@ -220,14 +220,14 @@ In particular,
   %
   Since we assumed that $\partial c(x)$ is injective,
   equality~\eqref{eq:gradient_zero} holds if and only if $y_1 = \ldots
-  = y_N$. In this case, $g(y_1,\ldots,y_N) = \eta_\delta(x_{i^*})$ if $N$ is
+  = y_N$. In this case, $g(y_1,\ldots,y_N) = \eta_\delta(x^*)$ if $N$ is
   even. If $N$ is odd and $y_1 = \ldots = y_N > x^*$, then
   \begin{align*}
-    & g(y_1,\ldots,y_N) = \frac{\left| f(y_1)-f(x_{i^*})  \right|^{2+\delta}} { 
-      \left|  F(y_1) - F(x_{i^*}) \right|^{1+ \delta} 
-      \left| 1 - (F(y_1) -F(x_{i^*})) \right|^{1+ \delta} } 
+    & g(y_1,\ldots,y_N) = \frac{\left| f(y_1)-f(x^*)  \right|^{2+\delta}} { 
+      \left|  F(y_1) - F(x^*) \right|^{1+ \delta} 
+      \left| 1 - (F(y_1) -F(x^*)) \right|^{1+ \delta} } 
   \end{align*} 
-  which is bounded from above by $\eta_\delta(x_{i^*})$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
+  which is bounded from above by $\eta_\delta(x^*)$ by the induction hypothesis. The case where $N$ is odd and $-x^* \leq y_1 = \ldots = y_N$ is similar. 
   %
   We now consider the possibility that the maximum of $g(y_1,\ldots,y_N)$ is attained at the boundaries of $A_N(x^*,k)$. At boundary points for which $y_i = y_{i+1}$ for some $i$, the contribution of $y_i$ and $y_{i+1}$ to $g(y_1,\ldots,y_N)$ is zero and the induction assumption for $n=N-1$ implies that 
   \begin{equation*}
@@ -237,25 +237,25 @@ In particular,
   \begin{itemize}
   \item[(i)]  $y_N = -\infty$. 
   \item[(ii)] $y_1 = \infty$.
-  \item[(iii)] $y_k = x_{i^*}$.
-  \item[(iv)] $y_{k+1} = -x_{i^*}$. 
+  \item[(iii)] $y_k = x^*$.
+  \item[(iv)] $y_{k+1} = -x^*$. 
   \end{itemize}
   For case (i), 
   \begin{align*}
-    g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
-    {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
+    g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
+    {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
   \end{align*}
-  which is smaller than $\eta_\delta(x_{i^*})$ by the induction hypothesis. Similarly, under case (ii),
+  which is smaller than $\eta_\delta(x^*)$ by the induction hypothesis. Similarly, under case (ii),
   \begin{align*}
     & g(y_1,\ldots,y_N) \to 
-    \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x_{i^*}) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-         {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x_{i^*}) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
+    \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+         {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
          \\
-         & = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x_{i^*}) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-           { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
-             \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x_{i^*}) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
+         & = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x^*) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+           { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
+             \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
   \end{align*}
-  which is smaller than $\eta_{\delta}(x_{i^*})$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x_{i^*}$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $N-2$ variables hence this case is handled by the induction hypothesis. 
+  which is smaller than $\eta_{\delta}(x^*)$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x^*$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $N-2$ variables hence this case is handled by the induction hypothesis. 
   %
   Finally, under case (iv), set 
   \begin{equation*}

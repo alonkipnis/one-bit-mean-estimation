@@ -1,0 +1,429 @@
+\documentclass[journal, 12pt]{article}
+\usepackage{fullpage}
+\onecolumn
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[cmex10]{amsmath}
+\usepackage[font=itshape]{quoting}
+\usepackage{url}
+
+\usepackage{macros}
+
+\newcommand{\redit}[1]{\textcolor{red}{#1}}
+\newcommand{\bitem}{\begin{itemize}}
+\newcommand{\eitem}{\end{itemize}}
+
+\newenvironment{response}
+{\color{blue}   
+\vspace{2ex}
+}
+
+\newenvironment{review}
+    {
+%    \it
+    \vspace{2ex}
+    }
+
+\title{Response to review IT-21-0014: Mean estimation from one-bit measurements
+}
+
+\author{Alon Kipnis and John Duchi}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{response}
+%Dear Associate Editor Tyagi,\\
+
+We thank the Associate Editor (AE) and the referees for their thoughtful and thorough review, which we have found very helpful and prompted quite a few improvements. \\
+
+Below we provide a detailed response to the reviewers' comments. The original comments of the reviewers are in {\color{black}black} while our response is in {\color{blue}blue}. In the manuscript, we also indicate in blue significant changes from the previous version. \\ 
+
+\end{response}
+
+\subsection*{Summary of the Review by AE Tyagi}
+The first reviewer has asked further clarification about the proofs. I, too, think that more details about the proof are needed. The second reviewer has raised questions concerning extensions to more general settings, perhaps requiring further elaboration on the limitation of the approach. Since both reviewers have requested revision, I think it is important that the authors address their concerns in a rebuttal and provide the required details.
+
+\begin{response}
+Thank you for handling the paper and for obtaining two excellent reviews. We addressed all reviewers' comments as explained below, with particular attention to the proofs and the extension to more general settings. 
+\end{response}
+
+\subsection*{Response to comments by Reviewer 1}
+\begin{review}
+(1) My main concern is with Theorem 3(ii) -- if I understand correctly, the proof given does not quite prove the statement. In particular, the statement says that the limiting distribution is normal with mean 0, whereas the proof (Lemma 14) says that it is normal with mean h. If the mean indeed depends on h, then the estimator is not regular (Definition 1) and so the statement about the estimator attaining local asymptotic minimaxity in Theorem 3(ii) becomes dubious.
+\end{review}
+
+\begin{response}
+We greatly appreciate the reviewer's overall through work and in particular for bringing the issue with the proof of Theorem 3 to our attention. As it turns out, one of the equations in the proof was incorrect because it indicated a location shift by $h$ in both sides of the equation instead of only in one side as per the definition of a regular estimator. As it turns out, an easy fix to this issue in our case is obtained by changing Lemma 14 to the following from.
+\setcounter{thm}{13}
+\begin{lemma} 
+  Let $h_n \to h \in \R$, and define $P_{n,h} = P_{\theta + h_n / \sqrt{n}}^n$.
+  Then 
+  \begin{align}
+    \sqrt{n}\left( \bar{\theta}_n - \theta \right)
+    \mathop{\cd}_{P_{n,h}}
+    \normal\left( h,\frac{1}{4 f(0)^2}\right).
+  \end{align}
+\end{lemma}
+%The new notation is in accordance with \cite[Ch. 7]{van2000asymptotic}. 
+\end{response}
+
+\begin{review}
+(2) I think there are problems with the example in Appendix VII that demonstrates fast convergence in the case of uniform distribution. The initial estimate $\theta^{init}$ is set to be the maximal threshold for which $B_i$ = 0 for all observations corresponding to that threshold. But the way $B_i$ is defined, wouldn't this maximal threshold always be the very last threshold in the interval $[-n \epsilon, n \epsilon]$? If, instead, we interchange the roles of $0$ and $1$ in the defining $B_i$, then we might be on to something. But then, what confuses me is the statement: ``we always have $\theta^{init} \geq \theta - (2n\epsilon)/m$''; which is not true (since $\theta$ is the median of the distribution, and not the left-end point). Ok, this can be salvaged by saying that $\theta^{init}$ is estimate of the left-end point (i.e. $\theta - 1$). But then again, the confusion arises in the next line: ``The event $\theta^{init} \geq t_j* + (2n\epsilon)/m$ may occur only if for each of the $n/m$ observations in the set $I_{j^\star+1}...$''. Why ``only if''? It may well be that we observe both $0$ and $1$ for observations in $I_{j^\star+1}$ and observe only $0$'s in $I_{j^\star+2}$; this would also make the event ``$\theta^{init} \geq t_j^\star + (2n\epsilon)/m$'' happen.
+\end{review}
+
+\begin{response}
+We thank Reviewer 1 for pointing on the problems with this example. As it turns out, the original example were missing the important ingredient of comparing our communication-limited estimator to the maximum of the samples within a bin. We have carefully went through this example and revised to add the missing part and resolve all other issues.  
+\end{response}
+
+\begin{review}
+\begin{enumerate}
+\item  Section III A, page 8: Extra braces in the indicator function in the definition of $B_i$ and the line after that.
+\begin{response}
+Fixed. 
+\end{response}
+
+\item Section III B, page 9, equation (7): Why is it $O(1/n)$? In the proof (Appendix VII A), $D*$ has $o(1/n)$; so after multiplication by $n$, we get $o(1)$. Could you clarify what $o(1/n)$ is hiding that makes it $O(1/n)$ in (7) instead of merely $o(1)$?
+\begin{response}
+Thank you for this comment. It made us realized that there was a mistake in the proof and we should replace $o(1/n)$ with $O(n^{-2})$. The $O(n^{-2})$ term is the remainder in the first order taylor expansion of $D^\star$ in $1/n$. 
+\end{response}
+
+
+\item Section IV B, page 13, line 3: It says $B_i$ a.s. converges to $F(\theta_0 - \theta)$. Shouldn't it say $E[B_i] = F(\theta_0 - \theta)$?
+\begin{response} It should. We fixed this issue. 
+\end{response}
+
+\item Section IV B, page 14, line just above title of section V: Should be "density" and not "desnity".
+\begin{response} Fixed.
+\end{response}
+
+\item Section V, page 14, line below the definition of $P_{\theta}(A)$: Extra braces around $[t_i^-,t_i^+]$ not required.
+\begin{response} We agree. We removed the extra braces.
+\end{response}
+
+\item Section V, page 15, Assumption A2(ii): The subscript in $A_n$ and $k_n$ should be "$i$" and not "$n$".
+\begin{response} Fixed.
+\end{response}
+
+\item Section V A, page 17, line 3: In "...ML estimator attains the local asymptotic MSE of Theorem 2", it should be "Theorem 6" instead of "Theorem 2".
+\begin{response} Fixed.
+\end{response}
+
+\item Section V B, page 17, second line in the subsection: In "...density of the threshold values that maximizes the worst-case information $\inf_\theta \kappa(\theta) = \kappa_\lambda(\theta)$...", it seems to say that "$\inf_\theta \kappa(\theta) = \kappa_\lambda(\theta)$", whereas I think what the authors mean is "$\kappa(\theta) = \kappa_\lambda(\theta)$". Better phrasing required.
+\end{enumerate}
+
+\begin{response}
+We thank the reviewer for bringing it to our attention that the here notation is unclear. We rewritten the relevant part as follows. 
+\begin{quote}
+    We conclude this section by considering the \newtext{distribution} of the threshold values
+that maximizes the worst-case information $\inf_\theta \kappa(\theta)
+= \kappa_\lambda(\theta)$ where $\kappa_\lambda(\theta)
+= \int \eta(t - \theta) \lambda(dt)$.
+The \newtext{optimal distribution $\lambda^\star$} solves the
+optimization problem
+\begin{align*}
+  \begin{split}
+    \mathrm{maximize} \quad &  \inf_{\theta \in \Theta} \int \eta(t-\theta) \lambda(dt)
+    \\ 
+    \mathrm{subject~to} 
+    \quad & \lambda(dt)\geq 0,\quad \int \lambda(dt) \leq 1. 
+  \end{split}
+\end{align*}
+\end{quote}
+\end{response}
+
+\begin{enumerate}
+    \item Appendix VII, page 20, line after equation (19): Instead of $\sqrt{2 \log n}$, should it be $(8 \log n)$?
+\begin{response}
+Yes. Thank you for catching this. 
+\end{response}
+
+\item Appendix VIII, page 22, second line of Lemma 10: Should say "Assumption A1" instead of "Assumption 1".
+\begin{response}
+Fixed.  
+\end{response}
+
+\item Appendix VIII, page 23, proof of Lemma 10, line after equation defining A: It says "$t_1^+ \leq t_k^+ \leq \infty$", which is technically true, but it might be better to insert ellipsis and write "$t_1^+ \leq ... \leq t_k^+ \leq \infty$".
+
+\begin{response}
+We agree and fixed this according to the Reviewer's suggestion. 
+\end{response}
+
+\item Appendix VIII, page 23, equation (25): Should be inequality "$\leq$" instead of "$=$".
+\begin{response}
+Fixed. 
+\end{response}
+
+\item Appendix VIII, page 24: Line 1 and the corresponding block of equation seem superfluous. I think the whole thing ought to be removed.
+
+\begin{response}
+We agree. We removed this part.
+\end{response}
+
+\item Appendix VIII A, page 25, equation (29): First term in the denominator should have $x*$ and not $x*_i$.
+
+\begin{response}
+Fixed. 
+\end{response}
+
+\item Appendix VIII A, page 25, definition of $A_N(x*,k)$: Insert ellipsis and write "$y_1 \geq ... \geq y_k$" instead of just "$y_1 \geq y_k$".
+\begin{response}
+Fixed. 
+\end{response}
+
+\item Appendix IX A, page 28, Corollary 12: Does it not require $Z_i$ to be a mean 0 random variable? Reference [48] has that assumption, but Corollary 12 does not mention it.
+
+
+\begin{response}
+We thank the reviewer for pointing on this issue. We added the assumption that the $\{Z_i\}$ are zero-mean. 
+\end{response}
+
+\item Appendix IX A, page 29, Corollary 12: In condition (iii), it seems equation (33) needs to hold only in a small neighborhood of 0, but it doesn't mention that.
+
+\begin{response}
+The reviewer is correct here. We changed Condition (iii) in Corollary 12 as follows.
+
+\begin{quote}
+    The function $\psi(x) \defeq \ex{ \varphi(x+Z_1)}$
+    satisfies $\psi(0) = 0$ and
+    $x\psi(x) > 0$ for $x\neq 0$. Moreover, $\psi$ is differentiable
+    at 0 with $\psi'(0) > 0$ and there exists
+    $K_2$, $0 < \lambda \leq 1$, \newtext{and $r>0$}, such that
+    \begin{equation}
+      \label{eqn:local-hessian-psi}
+        \left| \psi(x) - \psi'(0)x \right|\leq K_2 |x|^{1+\lambda}
+    \end{equation}
+    \newtext{for all $|x|<r$. }
+\end{quote}
+\end{response}
+
+\item Appendix IX A, page 29, Corollary 12, line after condition (iv): It says "...for b n V = ...". What is "b n" here?
+
+\begin{response}
+``b n" was redundant here. We removed it. 
+\end{response}
+
+
+\item Appendix IX B, page 30, Definition 3: In the LHS of the equation, the summation is over "i", but there is no "i" in the summand. I think it should be "$(X_i)$" instead of "$(X_1,...,X_n)$".
+\begin{response}
+We agree and have fixed this issue.
+\end{response}
+
+\item Appendix IX B, page 30, after Lemma 13: When stating that the location family satisfies conditions of Lemma 12, it might be useful to state that square root of a Lipschitz function is absolutely continuous (I think?).
+
+\begin{response}
+We thank the reviewer for this suggestion. We changed the statement as follows:
+\begin{quote}
+    By the assumption in Theorem~3 that the density $f$
+is Lipschitz continuous,  \newtext{$f$ is absolutely continuous hence 
+$\sqrt{f}$ is absolutely continuous}.
+\end{quote}
+\end{response}
+
+\item Appendix IX B, page 31, line after equation (37): the quantity "delta-bar" should have subscript "n" instead of "i".
+\begin{response}
+Fixed.
+\end{response}
+
+\item Appendix IX B, page 31, Corollary 15, condition (ii): In the definition of the Fisher information $I_h$, the expectation should have subscript "h" instead of "theta".
+\begin{response}
+Fixed.
+\end{response}
+
+\item Appendix IX C, page 32, last line of Appendix IX C: Could you clarify what you mean by "a finite approximation to the prior measure $\pi$"?
+
+\begin{response}
+We revised this part in a way that we no longer rely on a finite approximation to the prior measure $\pi$. Instead, prove the result for a fixed $\theta$ and rely on an additional requirement saying that the second moment of $\pi$ exists.
+\end{response}
+
+\item Appendix IX D, page 32, first line of Lemma 17: For the quantity "delta" the superscript on the LHS is "1" (which is correct), but on the RHS, the first term has superscript "i" (should be "1") and the second term has no superscript (should have superscript "1").
+\begin{response}
+We fixed this issue by changing the two terms on the RHS to match the LHS. 
+\end{response}
+
+
+\item Appendix IX D, page 34, proof of Lemma 20: It says "As with probability 1 there exists some (random) R...". Why "(random)"?
+
+\begin{response}
+This comment made us realized that this part of the proof was somewhat unclear. We revised this part so that we do not use a random $R$. The revised part is as follows. 
+\begin{quote}
+\newtext{
+\setcounter{equation}{45}
+  As in the proof of Theorems~2 and~4 in \cite{polyak1992acceleration}, the Robbins-Siegmund Theorem applies to the increment of $|\Delta_t|^2$ implies that for every 
+  $\epsilon>0$ there exists some $R>0$ such that
+  \begin{align}
+  \label{eq:sup_delta}
+  \Prob\left(\sup_i |\Delta_i| \le R \right) \ge 1-\epsilon.
+  \end{align} 
+  Define the the stopping time $\tau_R \defeq \inf
+  \{i : |\Delta_i| > R\}$, which satisfies $\{\tau_R \le i\} \in \mc{F}_i$
+  for each $i$. 
+  }
+  Then using~\cite[Eq.~(A14)]{polyak1992acceleration}, we have
+  \begin{equation*}
+    \E[\Delta_i^2 \indic{\tau_R > i}] \le K \gamma_i,
+  \end{equation*}
+  and so inequality~(45) gives that
+  \begin{equation*}
+    \E\bigg[\sum_{i = 1}^\infty \frac{1}{i}
+      |\varepsilon_i|^2 \indic{\tau_R > i} \bigg]
+    \le K \sum_{i = 1}^\infty \frac{\gamma_i^\lambda}{i}
+    < \infty
+    ~~ \mbox{so} ~~
+    \sum_{i = 1}^\infty \frac{1}{i}
+    \varepsilon_i^2 \indic{\tau_R > i} < \infty
+    ~ \mbox{a.s.}
+  \end{equation*}
+  \newtext{it follows from \eqref{eq:sup_delta} and by the arbitrary choice of $\epsilon$ that}
+  \begin{equation*}
+    \sum_{i = 1}^\infty \frac{1}{i}
+    \varepsilon_i^2  < \infty
+    ~ \mbox{a.s.}.
+  \end{equation*}
+\end{quote}
+\end{response}
+
+\item Appendix IX E, page 35: Insert "by" in the statement "and so Jensen's inequality...".
+\begin{response}
+Done. 
+\end{response}
+
+\item Appendix IX E, page 36, line 1: Insert "of" in the statement "...the variant dominated convergence theorem...".
+\begin{response}
+Done. 
+\end{response}
+
+\item Appendix X, page 36, first line of Lemma 21: Remove extra braces in the definition of A (i.e., it should just be "$[a_i,b_i]$", instead of "$\{[a_i,b_i]\}$".
+\begin{response}
+Done. 
+\end{response}
+
+\item Appendix X B, page 38: In the first equation,  the lower bound on $\sqrt{a+b}$ seems wrong. E.g., for $a = 1/4, b = 1/8$, the LHS is bigger than $\sqrt{a+b}$.
+
+\begin{response}
+Thank you for catching this! The power of $a$ in the denominator of the third term on the LHS
+should be $3/2$ rather than $1/2$. The correct inequality is:
+\begin{quote}
+\begin{align*}
+  \sqrt{a} + \frac{b}{2 \sqrt{a}} -
+  \frac{b^2}{4a^{\newtext{3/2}}}
+  \le \sqrt{a + b} \le \sqrt{a}
+  + \frac{b}{2 \sqrt{a}}
+\end{align*}
+for any $a > 0$ and $|b| \le 3a/4$.
+\end{quote}
+We verified that the proof is now correct. 
+\end{response}
+
+\item Appendix XI, page 41, line 1: In the definition of $A_i$, the union should be over the index "k" (and not "i").
+\begin{response}
+Fixed.
+\end{response}
+
+\item Appendix XI, page 41, line 1: There should be a "$\leq$" sign (instead of a comma) between $t_{i,K}^-$ and $t_{i,K}^+$.
+\begin{response}
+Fixed.
+\end{response}
+
+\item Appendix XI, page 41, 4th line from the end: It should be "$\theta \in \Xi$" (instead of "$\theta \in \Theta$").
+\begin{response}
+Fixed.
+\end{response}
+
+\item Appendix XI, page 41, 4th line from the end: It should be "card$(S_n(\theta,\epsilon)) \to n$" (instead of "$S_n(\theta,\epsilon) \to 1$").
+\begin{response}
+Fixed.
+\end{response}
+
+\item References, page 44: [48] and [53] are exactly the same reference.
+\end{enumerate}
+
+\begin{response}
+We removed one of the references.
+\end{response}
+
+\end{review}
+
+\subsection*{Response to comments by Reviewer 2}
+%My main comments are below.
+\begin{itemize}
+    \item For the lower bound on non-adaptive estimators, is it possible to characterize the worst-case gap between the efficiency of a non- adaptive estimator and the best rate for an adaptive estimator (possibly in terms of the diameter of the parameter space or variance of the density)? This will give a more quantitative view of the separation between adaptive and non-adaptive estimators.
+    
+    \begin{response}
+    We thank the Reviewer for raising this interesting point. We should first clarify that our results in the distributed encoding setting provides the asymptotic relative efficiency only when the estimator is based on thresholds detectors, in which case this efficiency depends on the density of the thresholds. 
+    Under this setting, it appears to us that Fig. 6 provides a characterization of the efficiency gap similarly to the one proposed by the reviewer, at least in the special case in which the samples are normally distributed and the threshold density is either uniform or obtained as the solution of the optimization problem (17). 
+    
+    The Reviewer's comment made us realize that we initially did not explain well that our results in Section V-C yields the exact efficiency gap under distributed threshold encoding. To improve this point, we added the following sentence to the caption of Fig. 6. 
+    \begin{quote}
+The line $\pi/2$ is the optimal relative efficiency, attained under adaptive encoding for any $\sigma$ uniformly over the parameter space.
+    \end{quote}
+
+    \end{response}
+\item The setting of one-dimensional distribution and one-bit messages is a bit limited. How does the technique of the paper generalize to higher dimensions or higher communication budget (more bits from each user)? The result will be stronger if more general results can be provided.
+
+\begin{response}
+We agree that the extension of the setting of the paper to higher dimensions is an excellent point for discussion and probably for a future work. We thank the reviewer for proposing it. 
+
+Arguably, there are several ways to generalize our setting to higher dimension and higher communication budgets. Many of these generalizations falls under the settings discussed in 
+\cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}, although these references do not yield the asymptotic relative efficiency (ARE) but only characterization of the way the error scales in the communication bit-budget and the dimension. It is still unclear whether we can extend our methods to derive the ARE for any dimension and bit budget, but anyway such extension is not straightforward. Consequently, we decided to leave this extension as a future work. 
+%characterizing the way the error scales with the number of bits and the dimension and not on the exact asymptotic efficiency. 
+%
+%Indeed, it seems challenging to derive the exact efficiency in higher dimensions and communication bit budgets. To illustrates a possible source for this challenge, consider a known symmetric base distribution $F$ over $\reals^k$ and the problem of estimating the shift $\theta \in \reals^k$ of a sequence of samples from the shifted $F$ with $b$ bits per round of communication. The following estimation and quantization scheme is proposed to outperform a naive tenderized scheme: construct a $b$-bit optimal vector quantizer matching to $F$. Namely, dissect $\reals^k$ into $b$ regions in a way that the MSE obtained between a sample from $F$ and the center of mass of $F$ over the region where the sample falls is minimal across all possible dissections. The Lloyd algorithms provides an iterative method of approximating such optimal quantizer. The estimation-encoding scheme is as follows: Given an estimate $\theta_{i-1}$, and an expected error $\sigma_{i-1}$, and a new observation $X_i \in \reals^k$, send the index of the region in $\reals^k$ where $X_i/\sigma_{i-1}$ falls. The estimation $\theta_i$ is the center of mass of this region. This method is expected to...
+Consequently, we added the following paragraph to the Conclusions: 
+\begin{quote}
+    Natural extensions of the setting of this work are situations when the communication bit-budget $b$ is larger than one and when each sample is a $d$-dimensional vector. Fundamental bounds for this general case follows from several recent works (e.g. \cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}), which imply that in the adaptive and distributed cases the MSE scales in the regular parametric rate of $1/n$ when $b$ and $d$ are held fixed in the sample size $n$. Nevertheless, the coefficient of the $1/n$ term corresponding to the ARE is still unknown; deriving the ARE for general $b$ and $d$ is left as a future challenge.
+\end{quote}
+
+\end{response}
+
+\item First line of page 4: asyptotic --> asymptotic.
+
+\begin{response}
+Thank you. We have fixed this typo. 
+\end{response}
+\item Beginning of Section III.A: The indicator function is not properly displayed.
+
+\begin{response}
+Thank you. We resolved this issue. 
+\end{response}
+\end{itemize}
+
+
+\iffalse
+\subsection*{Draft}
+
+\begin{response}
+We thank the Reviewer for raising this excellent point for discussion...
+
+We thank the Reviewer for this question. 
+
+Thanks for your query, which gives us a chance to clarify our views of the situation. 
+
+We agree that the optimality of the phase diagram of Higher Criticism we derive in our paper is an excellent point for discussion and wish to thank the reviewer for bringing it. 
+
+it appears that the Reviewer proposes a very interesting non-parametric test for homogeneity. 
+
+We are grateful for the Reviewer for pointing on this vagueness in our setting and the connection between our setting and the multinomial setting. The Reviewer is correct that 
+
+We thank the Reviewer for bringing it to our attention that this point requires clarification. 
+We thank the reviewer for raising this interesting point regarding an information theoretic lower bound. 
+%
+This is an excellent question.
+
+We apologize for our delay in publishing this proof.
+
+Thank you for this comment. 
+
+We agree with the Reviewer that it is interesting in principle to consider simulations of other distributions aside from the uniform baseline. 
+\end{response}
+\fi
+
+\bibliographystyle{plain}
+\bibliography{onebit}  
+
+\end{document}

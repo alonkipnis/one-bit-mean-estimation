@@ -43,41 +43,54 @@ threshold $j$ corresponds to observations $I_j \defeq \{\frac{n (j - 1)}{m}
 \in I_j$, we set
 \begin{equation*}
   B_i = \begin{cases}
-    1 & \mbox{if~} X_i \ge t_j \\
+    1 & \mbox{if~} X_i \newtext{- 1} \ge t_j \\
     0 & \mbox{otherwise}.
   \end{cases}
 \end{equation*}
-Then we simply set $\theta_n\init$ to be the \newtext{minimal} threshold for which
-$B_i = 0$ for all observations $X_i$ corresponding to that threshold.
+Then we simply set $\theta\init_n$ to be the \newtext{minimal} threshold for which
+$B_i = 0$ for all observations $X_i$ corresponding to that threshold. \newtext{Denote by $j^*$ the index of the threshold corresponding to $\theta\init_n$.}
 
-Let us now consider the probability that $\theta_n\init$ is substantially
-wrong. For notational simplicity, let $U_i = (1 + X_i - \theta) / 2$, so that
-the $U_i$ are uniform on $[0, 1]$.
-First, note that we always have $\theta_n\init \ge \theta
-- \frac{2 n \epsilon}{m}$, because no observations will be below
-the appropriate threshold. Let $j\opt$ be the \newtext{largest} index $j$
-for which $\theta \newtext{\ge} t_{j\opt}$, and consider
-the index sets $I_{j\opt}$, $I_{j\opt + 1}$, and so on.
-The event $\theta\init_n \ge t_{j\opt} + \frac{2 n \epsilon}{m}$ may
-occur only if for each of the $n/m$ observations in the set
-$I_{j\opt + 1}$, we have $U_i \ge \frac{n \epsilon}{m}$. Thus,
+\newtext{Let us now consider the probability that $\theta_n\init$ is substantially wrong. Set $\theta_M \equiv \max_{i \in I_j^*} X_i - 1$. Note that we always have $\theta\init_n \ge \theta_M$ because no observations will be above
+$t_j^*+1$, and that $\theta\init_n \le \theta_M + 2n\epsilon/m$. 
+ In addition, 
 \begin{align*}
-  P_\theta\left(\theta_n\init \ge \theta + \frac{2 n \epsilon}{m}
-  \right) \le
-  P_\theta\left(\theta_n\init \ge t_{j\opt} + \frac{2 n \epsilon}{m}
-  \right)
-  \le \left(1 - \frac{n \epsilon}{m}\right)^\frac{n}{m}
-  \le \exp\left(-\frac{n^2\epsilon}{m^2}\right).
+P_\theta\left( \left| \theta_M - \theta \right| \ge \frac{2n\epsilon}{m} \right) = \left(1 - \frac{2 n \epsilon}{m} \right)^{n/m}.
 \end{align*}
-Setting the number of bins $m = \sqrt{n}$,
-the resolution $\epsilon = 2 \log n / n$, we obtain
-$P_\theta(\theta_n\init \ge t_{j\opt} + 4 \log n / \sqrt{n})
-\le n^{-2}$. Thus we have
+Putting it all together using the triangle inequality, we have
+\begin{align*}
+  P_\theta\left( \left| \theta\init_n - \theta \right| \ge \frac{4n\epsilon}{m} \right) \le \left(1 - \frac{2 n \epsilon}{m} \right)^{n/m} \le e^{-2 \frac{n^2}{m^2} \epsilon}
+  .
+\end{align*}
+%For notational simplicity, let $U_i = (1 + X_i - \theta) / 2$, so that the $U_i$ are uniform on $[0, 1]$. First, note that we always have $\theta_n\init \ge \theta - \frac{2 n \epsilon}{m}$, because no observations will be below
+% the appropriate threshold. Let $j\opt$ be the \newtext{largest} index $j$
+% for which $\theta \newtext{\ge} t_{j\opt}$, and consider
+%the index sets $I_{j\opt}$, $I_{j\opt + 1}$, and so on.
+%The event $\theta\init_n \ge t_{j\opt} + \frac{2 n \epsilon}{m}$ may
+%occur only if for each of the $n/m$ observations in the set
+%$I_{j\opt + 1}$, we have $U_i \ge \frac{n \epsilon}{m}$. Thus,
+%\begin{align*}
+%  P_\theta\left(\theta_n\init \ge \theta + \frac{2 n \epsilon}{m}
+%  \right) \le
+%  P_\theta\left(\theta_n\init \ge t_{j\opt} + \frac{2 n \epsilon}{m}
+%  \right)
+%  \le \left(1 - \frac{n \epsilon}{m}\right)^\frac{n}{m}
+%  \le \exp\left(-\frac{n^2\epsilon}{m^2}\right).
+%\end{align*}
+Therefore, setting the number of bins $m = \sqrt{n}$ and
+the resolution $\epsilon = 2 \log n / n$, 
 \begin{align}
   \label{eqn:quality-of-initial-estimate}
   \sup_{|\theta| \le \log n} P_\theta\left(|\theta_n\init - \theta| \ge
-  \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^2}.
+  \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^4}.
 \end{align}
+}
+%$P_\theta(\theta_n\init \ge t_{j\opt} + 4 \log n / \sqrt{n})
+%\le n^{-2}$. Thus we have
+%\begin{align}
+%  \label{eqn:quality-of-initial-estimate}
+%  \sup_{|\theta| \le \log n} P_\theta\left(|\theta_n\init - \theta| \ge
+%  \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^2}.
+%\end{align}
 
 The second stage estimator follows roughly the same strategy, except that
 the resolution of the bins is tighter. In particular, let us assume that
@@ -94,7 +107,7 @@ thresholds $t_j = -\frac{16 \log n}{\sqrt{n}} + \frac{32 (j - 1) \log n}{m
   \sqrt{n}}$; let $\epsilon_n = \frac{32 \log n}{m \sqrt{n}}$ be the width of
 these intervals.  Then following exactly the same reasoning as above, we
 assign indices $I_j = \{\frac{n(j - 1)}{m} + 1, \ldots, \frac{n j}{m}\}$ and
-for $i \in I_j$, set $B_i = 1$ if $X_i \ge t_j$. We define $\theta_n$ to be
+for $i \in I_j$, set $B_i = 1$ if $X_i \newtext{- 1} \ge t_j$. We define $\theta_n$ to be
 the \newtext{minimal} threshold $t_j$ for which $B_i = 0$ for all observations $X_i
 \in I_j$. Then following precisely the reasoning above, we have (on the
 event that $|\theta_n\init - \theta| \le \frac{8 \log n}{\sqrt{n}}$)
@@ -124,7 +137,7 @@ n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\st
 \end{equation}
 Consider the distributed encoding setting (iii) in the case where $f(x) = \Ncal(0,\sigma^2)$ and the prior on $\Theta$ is $\pi = \Ncal(0,\sigma_\theta^2)$. The Gaussian CEO problem of \cite{viswanathan1997quadratic} with a unit bitrate $r_1=\ldots = r_n =1$ at each terminal and blocklength $k=1$ reduces to our distributed setting (iii). Since $D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describes the MSE in the CEO setting under an optimal allocation of the sum-rate $r = n$ among $n$ encoders, it provides a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering the limit $n\rightarrow \infty$ in \eqref{eq:ceo_optimal_sumrate2}, we see that 
 \[
-D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + o(n^{-1}) =  \frac{4\sigma^2}{3n} + o(n^{-1}). 
+D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + O(n^{-2}) =  \frac{4\sigma^2}{3n} + O(n^{-2}). 
 \]
 This implies Proposition~\ref{prop:CEO}. 
 %We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the MSE in the CEO setting while enforcing the condition $r_1=\ldots = r_n = 1$. Indeed, an upper bound for the CEO MSE under the condition $r_1=\ldots = r_n = 1$ follows from \cite{KipnisRini2019}, and leads to
