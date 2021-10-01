@@ -135,10 +135,20 @@ For the special case where $r = n$ and $L=n$, we have
 \begin{equation} \label{eq:ceo_optimal_sumrate2}
 n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
 \end{equation}
-Consider the distributed encoding setting (iii) in the case where $f(x) = \Ncal(0,\sigma^2)$ and the prior on $\Theta$ is $\pi = \Ncal(0,\sigma_\theta^2)$. The Gaussian CEO problem of \cite{viswanathan1997quadratic} with a unit bitrate $r_1=\ldots = r_n =1$ at each terminal and blocklength $k=1$ reduces to our distributed setting (iii). Since $D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describes the MSE in the CEO setting under an optimal allocation of the sum-rate $r = n$ among $n$ encoders, it provides a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. By considering the limit $n\rightarrow \infty$ in \eqref{eq:ceo_optimal_sumrate2}, we see that 
-\[
-D^\star = \frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + O(n^{-2}) =  \frac{4\sigma^2}{3n} + O(n^{-2}). 
-\]
+Consider the distributed encoding setting (iii) in the case where $f(x) = \Ncal(0,\sigma^2)$ and the prior on $\Theta$ is $\pi = \Ncal(0,\sigma_\theta^2)$. The Gaussian CEO problem of \cite{viswanathan1997quadratic} with a unit bitrate $r_1=\ldots = r_n =1$ at each terminal and blocklength $k=1$ reduces to our distributed setting (iii). Since $D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describes the MSE in the CEO setting under an optimal allocation of the sum-rate $r = n$ among $n$ encoders, it provides a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting. 
+\newtext{By noting that $1/D^\star$ grows no faster than a polynomial in $n$ \cite{viswanathan1997quadratic}, we rely on the expansion
+\begin{align*}
+\left(\frac{\sigma_{\theta}^2}{D^\star}\right)^{1/n} 
+= 1 + \frac{\log \left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{n}+\frac{\log^2\left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{2 n^2}+O\left(n^{-3}\right),
+\end{align*}
+to obtain that, in limit $n\rightarrow \infty$, \eqref{eq:ceo_optimal_sumrate2} behaves as 
+\begin{align*}
+D^\star = %\frac{ 4\sigma^2 }{3n + 4 \sigma^2 / \sigma_\theta^2 } + O(n^{-2}) =  \frac{4\sigma^2}{3n} + O(n^{-2}). 
+\frac{4 \sigma^2}{3 n}
++ \frac{16 \sigma^2}{9 n^2 \sigma_{\theta}^2 }-\frac{4 \sigma^2 \log \left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{9 n^2}
++O(n^{-3}).
+\end{align*}
+}
 This implies Proposition~\ref{prop:CEO}. 
 %We note that although the lower bound \eqref{eq:ceo_bound} was derived assuming the optimal allocation of $n$ bits per observation among the encoders, this bound cannot be tightened by considering the MSE in the CEO setting while enforcing the condition $r_1=\ldots = r_n = 1$. Indeed, an upper bound for the CEO MSE under the condition $r_1=\ldots = r_n = 1$ follows from \cite{KipnisRini2019}, and leads to
 %\[

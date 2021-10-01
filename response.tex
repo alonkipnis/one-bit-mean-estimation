@@ -91,7 +91,7 @@ Fixed.
 \item Section III B, page 9, equation (7): Why is it $O(1/n)$? In the proof (Appendix VII A), $D*$ has $o(1/n)$; so after multiplication by $n$, we get $o(1)$. Could you clarify what $o(1/n)$ is hiding that makes it $O(1/n)$ in (7) instead of merely $o(1)$?
 
 \begin{response}
-Thank you for this comment. It made us realized that there was a mistake in the proof and we should replace $o(1/n)$ with $O(n^{-2})$. The $O(n^{-2})$ term is the remainder in the first order taylor expansion of $D^\star$ in $1/n$. 
+Thank you for this comment. It made us realized that there was a mistake in the proof and we should have replaced the $o(1/n)$ term with $O(n^{-2})$. We now provide a more detailed derivation of the expansion of $D^\star$ as $n\to \infty$ that provides the second order term. 
 \end{response}
 
 
