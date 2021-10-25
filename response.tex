@@ -59,7 +59,7 @@ Thank you for handling the paper and for obtaining two excellent reviews. We add
 \end{review}
 
 \begin{response}
-We greatly appreciate the reviewer's overall through work and in particular for bringing the issue with the proof of Theorem 3 to our attention. As it turns out, one of the equations in the proof was incorrect because it indicated a location shift by $h$ in both sides of the equation instead of only in one side as per the definition of a regular estimator. As it turns out, an easy fix to this issue in our case is obtained by changing Lemma 14 to the following from.
+We greatly appreciate the reviewer's overall through work and in particular for bringing the issue with the proof of Theorem 3 to our attention. As it turns out, one of the equations in the proof was incorrect because it indicated a location shift by $h$ in both sides of the equation instead of only in one side as per the definition of a regular estimator. We fixed this issue by changing Lemma 14 to the following from.
 \setcounter{thm}{13}
 \begin{lemma} 
   Let $h_n \to h \in \R$, and define $P_{n,h} = P_{\theta + h_n / \sqrt{n}}^n$.
@@ -78,7 +78,10 @@ We greatly appreciate the reviewer's overall through work and in particular for 
 \end{review}
 
 \begin{response}
-We thank Reviewer 1 for pointing on the problems with this example. As it turns out, the original example were missing the important ingredient of comparing our communication-limited estimator to the maximum of the samples within a bin. We have carefully went through this example and revised to add the missing part and resolve all other issues.  
+We thank Reviewer 1 for pointing on the problems with this example which indeed was missing a key ingredient: a comparison between our communication-limited estimator to the maximum of the samples within a bin. We have carefully went through this example and revised to add the missing part and resolve all other issues.  
+
+We refer the reviewer to the revised manuscript for reviewing these changes; we highlighted in blue the parts that went through significant changes. 
+
 \end{response}
 
 \begin{review}
@@ -91,12 +94,37 @@ Fixed.
 \item Section III B, page 9, equation (7): Why is it $O(1/n)$? In the proof (Appendix VII A), $D*$ has $o(1/n)$; so after multiplication by $n$, we get $o(1)$. Could you clarify what $o(1/n)$ is hiding that makes it $O(1/n)$ in (7) instead of merely $o(1)$?
 
 \begin{response}
-Thank you for this comment. It made us realized that there was a mistake in the proof and we should have replaced the $o(1/n)$ term with $O(n^{-2})$. We now provide a more detailed derivation of the expansion of $D^\star$ as $n\to \infty$ that provides the second order term. 
+Thank you for this comment. It made us realized that there was a mistake in the proof of Proposition~1: we should have replaced the $o(1/n)$ term with $O(n^{-2})$. We now provide a more detailed derivation of the expansion of $D^\star$ as $n\to \infty$ that provides the second order term. The relevant part is as follows.
+
+\begin{quote}
+Denote by $D^\star$ the optimal MSE in the Gaussian CEO with $L$ observers and under a total sum-rate $r = r_1 + \ldots +r_L$. An expression for $D^\star$ as a function of $r$ is give as \cite[Eq. 10]{chen2004upper}:
+\begin{equation} \label{eq:ceo_optimal_sumrate}
+r = \frac{1}{2} \log^+ \left[ \frac{\sigma_\theta^2}{D^\star} \left( \frac{D^\star L}{ D^\star L - \sigma^2 + D^\star \sigma^2 / \sigma_\theta^2 }\right)^L  \right].
+\end{equation}
+For the special case where $r = n$ and $L=n$, we have
+\begin{equation} \label{eq:ceo_optimal_sumrate2}
+n = \frac{1}{2} \log_2 \left[ \frac{\sigma_\theta^2}{D^\star} \left(\frac{ D^\star n }{D^\star n - \sigma^2 + D^\star \sigma^2/\sigma_\theta^2 }  \right)^n  \right].
+\end{equation}
+Consider the distributed encoding setting (iii) in the case where $f(x) = \Ncal(0,\sigma^2)$ and the prior on $\Theta$ is $\pi = \Ncal(0,\sigma_\theta^2)$. The Gaussian CEO problem of \cite{viswanathan1997quadratic} with a unit bitrate $r_1=\ldots = r_n =1$ at each terminal and blocklength $k=1$ reduces to our distributed setting (iii). Since $D^\star$ satisfying \eqref{eq:ceo_optimal_sumrate2} describes the MSE in the CEO setting under an optimal allocation of the sum-rate $r = n$ among $n$ encoders, it provides a lower bound to the minimal MSE in estimating $\theta$ in the distributed setting.
+
+By noting that $1/D^\star$ grows no faster than a polynomial in $n$ \cite{viswanathan1997quadratic}, we rely on the expansion
+\begin{align*}
+\left(\frac{\sigma_{\theta}^2}{D^\star}\right)^{1/n} 
+= 1 + \frac{\log \left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{n}+\frac{\log^2\left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{2 n^2}+O\left(n^{-3}\right),
+\end{align*}
+to obtain that, in limit $n\rightarrow \infty$, \eqref{eq:ceo_optimal_sumrate2} behaves as 
+\begin{align*}
+D^\star = 
+\frac{4 \sigma^2}{3 n}
++ \frac{16 \sigma^2}{9 n^2 \sigma_{\theta}^2 }-\frac{4 \sigma^2 \log \left(\frac{\sigma_{\theta}^2}{D^\star}\right)}{9 n^2}
++O(n^{-3}).
+\end{align*}
+\end{quote}
 \end{response}
 
 
 \item Section IV B, page 13, line 3: It says $B_i$ a.s. converges to $F(\theta_0 - \theta)$. Shouldn't it say $E[B_i] = F(\theta_0 - \theta)$?
-\begin{response} It should. We fixed this issue. 
+\begin{response} Thank you. It should say $E[B_i] = F(\theta_0 - \theta)$. We fixed this issue. 
 \end{response}
 
 \item Section IV B, page 14, line just above title of section V: Should be "density" and not "desnity".
@@ -119,7 +147,7 @@ Thank you for this comment. It made us realized that there was a mistake in the 
 \end{enumerate}
 
 \begin{response}
-We thank the reviewer for bringing it to our attention that the here notation is unclear. We rewritten the relevant part as follows. 
+We thank the reviewer for bringing it to our attention that the notation here is unclear. We rewritten the relevant part as follows. 
 \begin{quote}
     We conclude this section by considering the \newtext{distribution} of the threshold values
 that maximizes the worst-case information $\inf_\theta \kappa(\theta)
@@ -152,7 +180,7 @@ Fixed.
 \item Appendix VIII, page 23, proof of Lemma 10, line after equation defining A: It says "$t_1^+ \leq t_k^+ \leq \infty$", which is technically true, but it might be better to insert ellipsis and write "$t_1^+ \leq ... \leq t_k^+ \leq \infty$".
 
 \begin{response}
-We agree and fixed this according to the Reviewer's suggestion. 
+We agree. We have fixed this isssue according to the Reviewer's suggestion. 
 \end{response}
 
 \item Appendix VIII, page 23, equation (25): Should be inequality "$\leq$" instead of "$=$".
@@ -239,7 +267,8 @@ Fixed.
 \item Appendix IX C, page 32, last line of Appendix IX C: Could you clarify what you mean by "a finite approximation to the prior measure $\pi$"?
 
 \begin{response}
-We revised this part in a way that we no longer rely on a finite approximation to the prior measure $\pi$. Instead, prove the result for a fixed $\theta$ and rely on an additional requirement saying that the second moment of $\pi$ exists.
+We added the assumption that $\pi$ has a finite second moment and revised this part accordingly without 
+using a finite approximation to the prior measure $\pi$. 
 \end{response}
 
 \item Appendix IX D, page 32, first line of Lemma 17: For the quantity "delta" the superscript on the LHS is "1" (which is correct), but on the RHS, the first term has superscript "i" (should be "1") and the second term has no superscript (should have superscript "1").
@@ -359,10 +388,64 @@ We removed one of the references.
     We thank the Reviewer for raising this interesting point. We should first clarify that our results in the distributed encoding setting provides the asymptotic relative efficiency only when the estimator is based on thresholds detectors, in which case this efficiency depends on the density of the thresholds. 
     Under this setting, it appears to us that Fig. 6 provides a characterization of the efficiency gap similarly to the one proposed by the reviewer, at least in the special case in which the samples are normally distributed and the threshold density is either uniform or obtained as the solution of the optimization problem (17). 
     
-    The Reviewer's comment made us realize that we initially did not explain well that our results in Section V-C yields the exact efficiency gap under distributed threshold encoding. To improve this point, we added the following sentence to the caption of Fig. 6. 
+    The Reviewer's comment made us realize that we initially did not explain well that our results in Section V-C yields the exact efficiency gap under distributed threshold encoding. To improve this point, we revised Figure 6 as follows. 
     \begin{quote}
-The line $\pi/2$ is the optimal relative efficiency, attained under adaptive encoding for any $\sigma$ uniformly over the parameter space.
-    \end{quote}
+\begin{figure}[h!]
+  %%%%% COMMENTED TIKZ PICTURE %%%%%
+  \begin{center}
+\begin{tikzpicture}[scale = 1]
+\begin{axis}[
+width=8cm, height=6cm,
+xmin=.03,
+xmax=2.5, 
+xmode = log,
+restrict y to domain = 0:100,
+ymin = 0,
+ymax = 1,
+samples=1, 
+xlabel= {$\sigma$},
+%xtick={-0.5,0,0.5},
+%xticklabels={-$$, 0, $b$},
+ytick={0,0.637,1},
+yticklabels={0,$\frac{2}{\pi}$,1},
+ylabel = {\scriptsize Relative Efficiency},
+line width=1.0pt,
+mark size=1.5pt,
+ymajorgrids,
+xmajorgrids,
+legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
+]
+\addplot[color = red, smooth,
+line width=1.0pt,
+%mark size=1.5pt,mark=x,
+] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{\scriptsize optimal threshold density};
+
+\addplot[color = black!35!green, dashed, line width=1.0pt,
+        %mark size=1.5pt, mark=^
+        ]
+ plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{\scriptsize uniform threshold desnity};
+
+
+\addplot[color = black, smooth, dotted, line width = 1pt] 
+coordinates {
+            (0.03, .637) (10, .637)
+            };
+\addlegendentry{\scriptsize attained in the adaptive case};
+%\draw[->] (axis cs:0.1,.5) -- node[below, align=center] {\scriptsize ARE attained in \\ \scriptsize the adaptive case} (axis cs:0.1, .63);
+\end{axis}
+\end{tikzpicture}
+
+\setcounter{figure}{5}
+\caption{
+\newtext{
+Minimax relative efficiency under distributed encoding. ARE versus $\sigma$ for $f(x)$ the standard normal density with variance $\sigma^2$ and parameter space $\Theta = [-1/2,1/2]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$ of (19). 
+The line $\pi/2$ is attained under adaptive encoding uniformly over the parameter space for any $\sigma$.}}
+\end{center}
+\end{figure}
+
+\end{quote}
 
     \end{response}
 \item The setting of one-dimensional distribution and one-bit messages is a bit limited. How does the technique of the paper generalize to higher dimensions or higher communication budget (more bits from each user)? The result will be stronger if more general results can be provided.
@@ -371,18 +454,18 @@ The line $\pi/2$ is the optimal relative efficiency, attained under adaptive enc
 We agree that the extension of the setting of the paper to higher dimensions is an excellent point for discussion and probably for a future work. We thank the reviewer for proposing it. 
 
 Arguably, there are several ways to generalize our setting to higher dimension and higher communication budgets. Many of these generalizations falls under the settings discussed in 
-\cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}, although these references do not yield the asymptotic relative efficiency (ARE) but only characterization of the way the error scales in the communication bit-budget and the dimension. It is still unclear whether we can extend our methods to derive the ARE for any dimension and bit budget, but anyway such extension is not straightforward. Consequently, we decided to leave this extension as a future work. 
+\cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}, although these references do not yield the asymptotic relative efficiency (ARE) but only characterization of the way the error scales in the communication bit-budget and the dimension. It is still unclear whether we can extend our methods to derive the ARE for any dimension and bit budget, but anyway such extension is not straightforward so we decided to leave this extension as a future work. 
 %characterizing the way the error scales with the number of bits and the dimension and not on the exact asymptotic efficiency. 
 %
 %Indeed, it seems challenging to derive the exact efficiency in higher dimensions and communication bit budgets. To illustrates a possible source for this challenge, consider a known symmetric base distribution $F$ over $\reals^k$ and the problem of estimating the shift $\theta \in \reals^k$ of a sequence of samples from the shifted $F$ with $b$ bits per round of communication. The following estimation and quantization scheme is proposed to outperform a naive tenderized scheme: construct a $b$-bit optimal vector quantizer matching to $F$. Namely, dissect $\reals^k$ into $b$ regions in a way that the MSE obtained between a sample from $F$ and the center of mass of $F$ over the region where the sample falls is minimal across all possible dissections. The Lloyd algorithms provides an iterative method of approximating such optimal quantizer. The estimation-encoding scheme is as follows: Given an estimate $\theta_{i-1}$, and an expected error $\sigma_{i-1}$, and a new observation $X_i \in \reals^k$, send the index of the region in $\reals^k$ where $X_i/\sigma_{i-1}$ falls. The estimation $\theta_i$ is the center of mass of this region. This method is expected to...
 Consequently, we added the following paragraph to the Conclusions: 
 \begin{quote}
-    Natural extensions of the setting of this work are situations when the communication bit-budget $b$ is larger than one and when each sample is a $d$-dimensional vector. Fundamental bounds for this general case follows from several recent works (e.g. \cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}), which imply that in the adaptive and distributed cases the MSE scales in the regular parametric rate of $1/n$ when $b$ and $d$ are held fixed in the sample size $n$. Nevertheless, the coefficient of the $1/n$ term corresponding to the ARE is still unknown; deriving the ARE for general $b$ and $d$ is left as a future challenge.
+    Natural extensions of the setting of this work include situations when the communication bit-budget $b$ is larger than one and when each sample is a $d$-dimensional vector. Rough lower bounds on the MSE for this general case follows from several recent works (e.g. \cite{zhang2013information,shamir2014fundamental,braverman2016communication,han2018geometric,barnes2020lower}), that in particular imply that in some cases the MSE scales in the regular parametric rate of $1/n$ when $b$ and $d$ are held fixed in the sample size $n$. Nevertheless, the coefficient of the leading scaling term corresponding to the ARE is still unknown; deriving the ARE for general $b$ and $d$ is left as a future challenge.
 \end{quote}
 
 \end{response}
 
-\item First line of page 4: asyptotic --> asymptotic.
+\item First line of page 4: asyptotic $\to$ asymptotic.
 
 \begin{response}
 Thank you. We have fixed this typo. 

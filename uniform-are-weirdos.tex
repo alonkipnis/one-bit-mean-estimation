@@ -77,11 +77,11 @@ Putting it all together using the triangle inequality, we have
 %  \le \exp\left(-\frac{n^2\epsilon}{m^2}\right).
 %\end{align*}
 Therefore, setting the number of bins $m = \sqrt{n}$ and
-the resolution $\epsilon = 2 \log n / n$, 
+the resolution $\epsilon = \log n / n$, 
 \begin{align}
   \label{eqn:quality-of-initial-estimate}
   \sup_{|\theta| \le \log n} P_\theta\left(|\theta_n\init - \theta| \ge
-  \frac{8 \log n}{\sqrt{n}}\right) \le \frac{1}{n^4}.
+  \frac{4 \log n}{\sqrt{n}}\right) \le \frac{1}{n^2}.
 \end{align}
 }
 %$P_\theta(\theta_n\init \ge t_{j\opt} + 4 \log n / \sqrt{n})

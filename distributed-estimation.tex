@@ -82,14 +82,14 @@ a local asymptotic minimax lower bound on the efficiency of
 See Appendix~\ref{sec:proof-non-adaptive-minimax} for a proof.
 
 Theorem~\ref{theorem:non-adaptive-minimax} shows that the limiting variance
-term $\kappa(\theta)$ provides strong lower bounds on the efficiency of any
-non-adaptive estimator, and moreover, that these bounds necessarily depend
-on $\theta$. This suggests that attaining any type of good (uniform)
-efficiency with non-adaptive estimators will be challenging.  As a
+term $\kappa(\theta)$ provides a strong lower bound on the efficiency of any
+non-adaptive estimator, and moreover, that this bound necessarily depends
+on $\theta$. As a
 particular consequence, for the squared error $L(x) = x^2$, for any $\delta
 > 0$ and $\theta$, there exists a $c < \infty$ such that $\sup_{|\tau -
   \theta| \le c / \sqrt{n}} \E_\tau[(\theta_n - \tau)^2] \ge \frac{(1 -
-  \delta)}{n \kappa(\theta)} + o(1/n)$.
+  \delta)}{n \kappa(\theta)} + o(1/n)$. Consequently, attaining any type of good (uniform)
+efficiency with non-adaptive estimators will be challenging. 
 
 Yet, Theorem~\ref{theorem:non-adaptive-minimax}
 limits non-adaptive strategies in stronger ways.
@@ -129,7 +129,7 @@ See Appendix~\ref{proof:thm:non_existence} for a proof.
 
 We now consider a restricted case where each detection region is a
 half-open interval, i.e., the $i$th message is obtained by comparing $X_i$
-against a single threshold. Under the adaptive signal acquisition,
+against a single threshold. Under the adaptive signal acquisition setting,
 this is sufficient for asymptotic optimality;
 in non-adaptive settings, it is not sufficient, though we may characterize
 a few additional optimality results.
@@ -214,7 +214,7 @@ $\eta(x)$ attains its maximum at the origin, so we conclude that
 \end{equation*}
 Moreover, this upper bound on $\kappa(\theta)$ is attained only when
 $\lambda$ is the point mass at $\theta$. Since $\theta$ is \emph{a priori}
-unknown, we conclude that estimation in the distributed setting using
+unknown, estimation in the distributed setting using
 threshold detection is strictly suboptimal compared to the adaptive
 setting; the ability to choose the thresholds $t_i$
 adaptively conditional on previous messages is necessary for optimal
@@ -287,6 +287,7 @@ The continuous curve (red) is the ARE for each $\theta \in [-1/2,1/2]$ under the
 \begin{tikzpicture}[scale = 1]
 \begin{axis}[
 width=8cm, height=6cm,
+xmin=.03,
 xmax=2.5, 
 xmode = log,
 restrict y to domain = 0:100,
@@ -297,7 +298,7 @@ xlabel= {$\sigma$},
 %xtick={-0.5,0,0.5},
 %xticklabels={-$$, 0, $b$},
 ytick={0,0.637,1},
-yticklabels={0,$2/\pi$,1},
+yticklabels={0,$\frac{2}{\pi}$,1},
 ylabel = {\scriptsize Relative Efficiency},
 line width=1.0pt,
 mark size=1.5pt,
@@ -305,16 +306,30 @@ ymajorgrids,
 xmajorgrids,
 legend style= {at={(1,1)},anchor=north east,draw=black,fill=white,align=left}
 ]
-\addplot[color = red, smooth, line width = 1pt] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
-\addlegendentry{optimal threshold density};
+\addplot[color = red, smooth,
+line width=1.0pt,
+%mark size=1.5pt,mark=x,
+] plot table [x = x, y = y, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{\scriptsize optimal threshold density};
 
-\addplot[color = black!35!green, smooth, dashed, line width = 1pt] plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
-\addlegendentry{uniform threshold desnity};
+\addplot[color = black!35!green, dashed, line width=1.0pt,
+        %mark size=1.5pt, mark=^
+        ]
+ plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
+\addlegendentry{\scriptsize uniform threshold desnity};
+
+
+\addplot[color = black, smooth, dotted, line width = 1pt] 
+coordinates {
+            (0.03, .637) (10, .637)
+            };
+\addlegendentry{\scriptsize attained in the adaptive case};
+%\draw[->] (axis cs:0.1,.5) -- node[below, align=center] {\scriptsize ARE attained in \\ \scriptsize the adaptive case} (axis cs:0.1, .63);
 \end{axis}
 \end{tikzpicture}
 \caption{\label{fig:minimax_ARE} 
-Minimax relative efficiency under distributed encoding. ARE versus $\sigma$ for $f(x)$ the standard normal density with variance $\sigma^2$ and $\Theta = [-1/2,1/2]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$ of \eqref{eq:uniform_risk}. \newtext{
-The line $\pi/2$ is the optimal relative efficiency, attained under adaptive encoding for any $\sigma$ uniformly over the parameter space.}}
+Minimax relative efficiency under distributed encoding. ARE versus $\sigma$ for $f(x)$ the standard normal density with variance $\sigma^2$ and parameter space $\Theta = [-1/2,1/2]$. The dashed curve (green) is the ARE under a uniform threshold density over $\Theta$ given by $K_{\unif}\sigma^2$ of \eqref{eq:uniform_risk}. \newtext{
+The line $\pi/2$ is attained under adaptive encoding uniformly over the parameter space for any $\sigma$.}}
 \end{center}
 \end{figure}
 
