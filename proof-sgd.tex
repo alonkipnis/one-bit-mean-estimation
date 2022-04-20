@@ -221,12 +221,12 @@ It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\th
     Let the conditions of Corollary~\ref{corollary:polyak-juditsky} hold,
     meaning that $\theta_i = \theta_{i-1} + \gamma_i \varphi(X_i -
     \theta_{i-1})$ for $X_i = \theta + Z_i$, where $\{Z_i\}$ are i.i.d.\ with
-    $\E[\varphi(Z)] = 0$. Additionally assume the local smoothness
+   $\E[Z_1]=0$ and  $\E[\varphi(Z_1)] = 0$. Additionally assume the local smoothness
     condition that there exist $0 < \lambda \le 1$ and $K < \infty$ such
     that
     \begin{equation}
       \label{eqn:additional-local-smooth}
-      \E[|\varphi(x + Z_1) - \varphi(Z)|^2]
+      \E[|\varphi(x + Z_1) - \varphi(Z_1)|^2]
       \le K (|x|^\lambda + x^2).
     \end{equation}
     Set $\Delta_i \defeq \theta_i - \theta$ and $\bar{\Delta}_n \defeq \frac{1}{n}
@@ -256,7 +256,7 @@ It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\th
 
   We now verify that the setting of Theorem~\ref{thm:sgd}
   (and Lemma~\ref{lemma:sgd-median-regular}) satisfies the
-  conditions of Corollary~\ref{corollary:polyak-juditsky}. First, we have
+  conditions of Corollary~\ref{corollary:normal-expansion}. First, we have
   the obvious fact that
   \begin{equation*}
     |\sgn(z) - \sgn(x + z)|
@@ -518,45 +518,45 @@ We then have the following asymptotic equivalence.
   and~\eqref{eqn:additional-local-smooth}, and $\E[\varepsilon_i \mid
     \mc{F}_{i-1}] = 0$ for all $i$ by definition of $\psi(x) = \E[\varphi(x
     + Z)]$ and that $\psi(0) = 0$.  We now control the expectations of these
-  quantities. 
-  \newtext{
-  As in the proof of Theorems~2 and~4 in \cite{polyak1992acceleration}, the Robbins-Siegmund Theorem \cite{robbins1971convergence} applies to the increment of $|\Delta_t|^2$ implies that for every 
-  $\epsilon>0$ there exists some $R>0$ such that
-  \begin{align}
-  \label{eq:sup_delta}
-  \Prob\left(\sup_i |\Delta_i| \le R \right) \ge 1-\epsilon.
-  \end{align} 
-  Define the the stopping time $\tau_R \defeq \inf
+  quantities. For $R<\infty$, define the the stopping time $\tau_R \defeq \inf
   \{i : |\Delta_i| > R\}$, which satisfies $\{\tau_R \le i\} \in \mc{F}_i$
-  for each $i$. 
-  }
-  Then using~\cite[Eq.~(A14)]{polyak1992acceleration}, we have
+  for each $i$. Then using~\cite[Eq.~(A13-A14)]{polyak1992acceleration}, we have
   \begin{equation*}
     \E[\Delta_i^2 \indic{\tau_R > i}] \le K \gamma_i,
   \end{equation*}
   and so inequality~\eqref{eqn:bound-psi-error-expectations} gives that
   \begin{equation*}
     \E\bigg[\sum_{i = 1}^\infty \frac{1}{i}
-      |\varepsilon_i|^2 \indic{\tau_R > i} \bigg]
+      |\varepsilon_i|^2 \indic{\tau_R > n} \bigg]
     \le K \sum_{i = 1}^\infty \frac{\gamma_i^\lambda}{i}
     < \infty
     ~~ \mbox{so} ~~
     \sum_{i = 1}^\infty \frac{1}{i}
-    \varepsilon_i^2 \indic{\tau_R > i} < \infty
+    \epsilon_i^2 \indic{\tau_R > n} < \infty
     ~ \mbox{a.s.}
   \end{equation*}
-  by Condition~\eqref{eqn:lazy-gamma}. Since
-  \begin{align*}
-\left\{ \sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda}}{\sqrt{i}} < \infty \subset \left\{ \sup_i |\Delta_i| \leq R \right\} \cap \left\{ \sum_{i=0}^\infty  \right\}
- \right\},
-  \end{align*}
-  \newtext{it follows from \eqref{eq:sup_delta} and by the arbitrary choice of $\epsilon$ that}
+by Condition~\eqref{eqn:lazy-gamma}. 
+%  
+%  Since
+%  \begin{align*}
+%\left\{ \sup_i |\Delta_i| \leq R \right\} \cap \left\{ \sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda} \indic{\tau_T > n} }{\sqrt{i}} < \infty  \right\}  
+%\subset \left\{ \sum_{i=1}^\infty \frac{|\Delta_i|^{1+\lambda}}{\sqrt{i}} < \infty  \right\}
+%  \end{align*}
+%it follows from \eqref{eq:sup_delta} and by the arbitrary choice of $\epsilon$ that
   %\newtext{As it follows from \cite[Eq.~(A11)]{polyak1992acceleration} that $\Prob\left( \sup |\Delta_t| < \infty  \right)=1$}, we obtain
-  %\newtext{As Lemma~\ref{lemma:converging-power-sum} implies in particular that $\{\Delta_i\}$ is a.s. bounded, with probability 1 there exists some (random) $R < \infty$ such that $\tau_R = \infty$.} We obtain that 
-  \begin{equation*}
+%As Lemma~\ref{lemma:converging-power-sum} implies in particular that $\{\Delta_i\}$ is a.s. bounded, 
+ As in the proof of Theorems~2 and~4 in \cite{polyak1992acceleration}, the Robbins-Siegmund Theorem \cite{robbins1971convergence} applied to the increment of $|\Delta_t|^2$ implies that for every 
+  $\epsilon>0$ there exists some $R'>0$ such that
+  \begin{align}
+  \label{eq:sup_delta}
+  \Prob\left(\sup_i |\Delta_i| \le R' \right) \ge 1-\epsilon.
+  \end{align} 
+Consequently, there exists some $R'' < \infty$ such that $\tau_{R''} = \infty$. 
+We obtain that 
+ \begin{equation*}
     \sum_{i = 1}^\infty \frac{1}{i}
     \varepsilon_i^2  < \infty
-    ~ \mbox{a.s.}.
+    ~~ \mbox{a.s.}.
   \end{equation*}
   Applying the square integrable martingale convergence
   theorem of \cite[Ex.~5.3.35]{Dembo16}, we have

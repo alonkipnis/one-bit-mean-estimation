@@ -23,16 +23,16 @@ B_i = \indic{X_i<\theta_0},
 \]
 where $\indic{A}$ is the indicator of the event $A$. We have
 \[
-P_n \defeq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta_0 - \theta),  
+\bar{B}_n \defeq\frac{1}{n} \sum_{i=1}^n B_i \overset{a.s.}{\rightarrow} F(\theta_0 - \theta),  
 \]
 so that 
 \begin{equation}
 \label{eq:estimator_naive}
-{\theta}_n = \theta_0 - F^{-1}\left( P_n \right)
+{\theta}_n = \theta_0 - F^{-1}\left( \bar{B}_n \right)
 \end{equation}
 is a consistent estimator for $\theta$ in the distributed setting of
 Figure~\ref{fig:setup}-(iii), where we note that $F$ is invertible over the
-support of $f$. As the variance of $P_n$ is
+support of $f$. As the variance of $\bar{B}_n$ is
 $F(\theta_0-\theta)\left(1-F(\theta_0-\theta)\right)$, a delta method
 calculation~\cite[Ch.~23]{VanDerVaart98} implies that ${\theta}_n$ is
 asymptotically normal with variance

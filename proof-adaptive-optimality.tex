@@ -117,7 +117,7 @@ of Theorems~\ref{thm:adpative_lower_bound} and
     \eta_\delta(x) \triangleq  \eta^{1+\delta}(x)/f^\delta(x)
     = \frac{  \left( f(x) \right)^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}}
   \end{equation*}
-  is non-increasing in $|x|$. Then for any $x_1 \ge \ldots \ge x_n \in \R^n$,
+  is non-increasing in $|x|$. Then for any $x_1 \ge \ldots \ge x_n \in \R$,
   \begin{equation}
     \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} } {\left|
       \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{k=1}^n
@@ -242,12 +242,14 @@ In particular,
   \end{itemize}
   For case (i), 
   \begin{align*}
-    g(y_1,\ldots,y_N) \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
+    & g(y_1,\ldots,y_N) \\
+    &  \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
     {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
   \end{align*}
   which is smaller than $\eta_\delta(x^*)$ by the induction hypothesis. Similarly, under case (ii),
   \begin{align*}
-    & g(y_1,\ldots,y_N) \to 
+    & g(y_1,\ldots,y_N) \\
+    & \to 
     \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
          {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
          \\

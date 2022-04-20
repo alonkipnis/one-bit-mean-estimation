@@ -147,11 +147,12 @@ Assume now that each $B_i$ is of the form
 where $t_i\in\mathbb R$ is the \emph{threshold} of the $i$th encoder. In
 other words, the detection region of $B_i$ is $A_i = (t_i,\infty)$ and
 $\mathbb P(X_i \in A_i) = F \left( B_i(t_i-\theta) \right)$. It follows that
-\begin{equation}
+\begin{align}
   L_n(A_1,\ldots,A_n;\theta)
-  = \frac{1}{n} \sum_{i=1}^n \frac{ \left(f(t_i-\theta) \right)^2 }{F\left(t_i-\theta \right) F\left(\theta - t_i \right) }  = \frac{1}{n} \sum_{i=1}^n \eta(t_i - \theta).
+  & = \frac{1}{n} \sum_{i=1}^n \frac{ \left(f(t_i-\theta) \right)^2 }{F\left(t_i-\theta \right) F\left(\theta - t_i \right) } \\
+  & = \frac{1}{n} \sum_{i=1}^n \eta(t_i - \theta).
   \label{eq:Ln_threshold}
-\end{equation}
+\end{align}
 A natural condition for the existence of the limit \eqref{eq:Ln_threshold}
 as $n\to \infty$ is that the empirical distribution of the threshold values
 converges to a probability measure. Specifically, for an interval $I \subset
@@ -274,7 +275,7 @@ $\Theta$,
   \begin{center}
 \input{Figs/opt_thr_den.tex}
 \caption{\label{fig:minimax_support}
-Optimal threshold density under distributed encoding. The threshold density $\lambda^\star(dt)$ (blue) that maximizes the asymptotic relative efficiency for $f(x)$ the normal desnity with variance $\sigma^2$ and $\Theta= [-1/2,1/2]$. 
+Optimal threshold density under distributed encoding. The threshold density $\lambda^\star(dt)$ (blue) that maximizes the asymptotic relative efficiency for $f(x)$ the normal density with variance $\sigma^2$ and $\Theta= [-1/2,1/2]$. 
 %
 The continuous curve (red) is the ARE for each $\theta \in [-1/2,1/2]$ under the optimal density, hence the minimax ARE is the minimal value of this curve. The dashed curve (green) is the ARE when the threshold values are uniformly distributed over $[-1/2,1/2]$; its minimal value is $\kappa_{\unif}$ \eqref{eq:uniform_risk}. }
 \end{center}
@@ -316,7 +317,7 @@ line width=1.0pt,
         %mark size=1.5pt, mark=^
         ]
  plot table [x = x, y = z, col sep=comma] {./Figs/minmax_ARE_b0.5.csv};
-\addlegendentry{\scriptsize uniform threshold desnity};
+\addlegendentry{\scriptsize uniform threshold density};
 
 
 \addplot[color = black, smooth, dotted, line width = 1pt] 

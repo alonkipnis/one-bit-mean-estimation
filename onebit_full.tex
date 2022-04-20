@@ -1,5 +1,5 @@
 %% \documentclass[11pt]{article}
-\documentclass[letterpaper, 11pt, draftcls]{IEEEtran}      % Use this line for a4 paper
+\documentclass[letterpaper, 11pt]{IEEEtran}      % Use this line for a4 paper
 
 %LatexiDiff ignore tikz:
 % $: latexdiff -c "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" old.tex new.tex > diff.tex
@@ -17,25 +17,23 @@
 % See the \addtolength command later in the file to balance the column lengths
 % on the last page of the document
 
-\onecolumn
 
 \usepackage{macros}
 
 \author{
     \IEEEauthorblockN{
-Alon Kipnis\IEEEauthorrefmark{1} and   
-    John C. Duchi\IEEEauthorrefmark{1}\IEEEauthorrefmark{2}  \\}
-    \IEEEauthorblockA{\IEEEauthorrefmark{1}Stanford University, Department of Statistics \\}
-    \IEEEauthorblockA{\IEEEauthorrefmark{2}Stanford University, Department of Electrical Engineering. }
+Alon Kipnis and   
+    John C. Duchi }
 
-\thanks{This paper was presented in part at the 55th Annual Allerton Conference on Communication, Control, and Computing (Allerton) \cite{KipnisAllerton2017}.
+\thanks{
+Alon Kipnis is with the School of Computer Science at Reichman University, Herzliya, Israel (kipnisal@stanford.edu).} 
+\thanks{J. Duchi is with the Department of Statistics and Department of Electrical Engineering at Stanford University, Stanford, CA, 94035 (jduchi@stanford.edu).}
+\thanks{Copyright (c) 2017 IEEE. Personal use of this material is permitted.  However, permission to use this material for any other purposes must be obtained from the IEEE by sending a request to pubs-permissions@ieee.org.}
+\thanks{This paper was presented in part at the 55th Annual Allerton Conference on Communication, Control, and Computing (Allerton) \cite{KipnisAllerton2017}. }
+\thanks{
+The work of A. Kipnis was supported in part by funding from the NSF under Grant No.~DMS-1418362 and DMS-1407813, and by a fellowship from the Koret Foundation.}
 }
-}
 
-
-%% \renewenvironment{figure}{%
-%%   \ignorespaces
-%% }{}
 
 \title{\LARGE \bf Mean Estimation from One-Bit Measurements}
 
@@ -60,10 +58,6 @@ Alon Kipnis\IEEEauthorrefmark{1} and
 \input{distributed-estimation}
 
 \input{conclusions}
-
-\section*{Acknowledgments}
-%% \textbf{WRITE THIS SECTION}
-The work of A. Kipnis was supported in part by funding from the NSF under Grant No.~DMS-1418362 and DMS-1407813, and by a fellowship from the Koret Foundation. 
 
 \onecolumn 
 
