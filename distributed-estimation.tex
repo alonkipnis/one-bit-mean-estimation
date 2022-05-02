@@ -47,9 +47,6 @@ We then make the following assumption.
       \frac{1}{n} \cdot \max_{i \le n} \frac{k_i^3}{P_\theta(A_i)^4
         (1 - P_\theta(A_i))^4} \to 0.
     \end{equation*}
-    %% Each set $A_n$ is a finite union of at most $K < \infty$ intervals
-    %% (which may include $\pm \infty$), and
-    %% $0 < \inf_n P_\theta(A_n) \le \sup_n P_\theta(A_n) < 1$.
   \item \label{item:limit-variance}
     The limit
     \begin{equation}
@@ -59,8 +56,14 @@ We then make the following assumption.
     exists and is finite.
   \end{enumerate}
 \end{assumption}
+Roughly speaking, \eqref{item:finite-intervals} above holds whenever the intervals consisting each $A_i$ are appropriately seperated. For example, it applies when each set $A_i$ is a half-bounded interval $(t_i,\infty)$ with $\min\{P_\theta((t_i,\infty)), P_\theta((-\infty,t_i])\} = \omega(1/n)$ as we dicscuss in more detail below. More generally, suppose that $A_i = \cup_{j=1}^{k_i}[t_{i,j}^-, t_{i,j}^+]$ and let 
+\begin{align*}
+c_n^+ & =  \min_{i \le n} \min_{j \leq k_i}  F(t^+_{i,j} - \theta) - F(t^-_{i,j}- \theta) \\
+c_n^- & = \min_{i \le n} \min_{j \leq k_i}  F(t^-_{i,j+1}- \theta)  - F(t^+_{i,j}- \theta),
+\end{align*}
+with $t^-_{i,k_i+1} = \infty$. Then Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals} holds whenever $\max_{i \le n} k_i^3 (c_n^- c_n^+)^4 = o(n)$. 
 
-Under this assumption, we have the following theorem, which provides
+Under Assumption~\ref{assumption:detection-regions}, we have the following theorem, which provides
 a local asymptotic minimax lower bound on the efficiency of
 \emph{any} non-adaptive estimator.
 \begin{theorem}
