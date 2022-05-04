@@ -111,13 +111,13 @@ for $i \in I_j$, set $B_i = 1$ if $X_i \newtext{- 1} \ge t_j$. We define $\theta
 the \newtext{minimal} threshold $t_j$ for which $B_i = 0$ for all observations $X_i
 \in I_j$. Then following precisely the reasoning above, we have (on the
 event that $|\theta_n\init - \theta| \le \frac{8 \log n}{\sqrt{n}}$)
-\begin{equation*}
-  P_\theta(|\theta_n - \theta|
+\begin{align*}
+  & P_\theta(|\theta_n - \theta|
   \ge 2 \epsilon_n)
   \le (1 - \epsilon_n)^\frac{n}{m}
-  \le \exp\left(-\frac{n \epsilon_n}{m}\right)
-  = \exp\left(-\frac{32 \sqrt{n} \log n}{m^2}\right).
-\end{equation*}
+  \le \exp\left(-\frac{n \epsilon_n}{m}\right) \\
+  & \quad = \exp\left(-\frac{32 \sqrt{n} \log n}{m^2}\right).
+\end{align*}
 Set $m = 4 n^{1/4}$ to obtain the claimed
 result~\eqref{eqn:uniforms-are-easy}.
 

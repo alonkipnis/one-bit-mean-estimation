@@ -15,7 +15,7 @@ Consider the following simplified version of
 \cite[Thm. 4]{polyak1992acceleration}:
 \begin{corollary}{\cite[Thms. 3 \& 4]{polyak1992acceleration}}
   \label{corollary:polyak-juditsky}
-  Let $\varphi : \R \to \R$ and $\{Z_i\}$ be i.i.d.\ \newtext{zero-mean} random
+  Let $\varphi : \R \to \R$ and $\{Z_i\}$ be i.i.d.\ zero-mean random
   variables, and
   \begin{equation*}
   X_i = \theta + Z_i.
@@ -71,21 +71,19 @@ Using that $P$ has a density $f$ near its median, it follows that $\psi'(x)
 conditions in Corollary~\ref{corollary:polyak-juditsky} hold for $\lambda =
 1$. Condition~(i) is obvious, and the convexity of $|\cdot|$ gives most of
 condition~(iii) excepting inequality~\eqref{eqn:local-hessian-psi}. For
-that, note that as $f$ is Lipschitz near 0 with constant $\lip_0(f)$, we
+that, note that as $f$ is Lipschitz near $0$ with constant $\lip_0(f)$, we 
 have for small $x$ that
-% AK: Here I changed \pm to \leq and \geq
-\begin{equation*}
-  \psi(x) = 2 \int_0^x f(-t) dt
-  \leq 2 \int_0^x \left[f(0) + \lip_0(f) t \right] dt
-  = 2 f(0) x + \lip_0(f) x^2
-  = \psi'(0) x + \lip_0(f) x^2,
-\end{equation*}
-\begin{equation*}
-  \psi(x) = 2 \int_0^x f(-t) dt
+\begin{align*}
+  \psi(x) & = 2 \int_0^x f(-t) dt
+  \leq 2 \int_0^x \left[f(0) + \lip_0(f) t \right] dt \\
+  & = 2 f(0) x + \lip_0(f) x^2 = \psi'(0) x + \lip_0(f) x^2,
+\end{align*}
+\begin{align*}
+  \psi(x) & = 2 \int_0^x f(-t) dt
   \geq 2 \int_0^x \left[f(0) - \lip_0(f) t \right] dt
-  = 2 f(0) x - \lip_0(f) x^2
-  = \psi'(0) x - \lip_0(f) x^2,
-\end{equation*}
+  \\
+  & = 2 f(0) x - \lip_0(f) x^2 = \psi'(0) x - \lip_0(f) x^2,
+\end{align*}
 so that condition~(iii) holds.
 As evidently $\chi(0) / \psi'(0)^2 = \frac{1}{4 f(0)^2}$,
 Corollary~\ref{corollary:polyak-juditsky} gives
@@ -154,13 +152,12 @@ $\{P_\theta\}$ that is LAN (Def.~\ref{definition:lan}) at $\theta$, if $T_n$
 is a regular estimator (Def.~\ref{definition:regular-estimator}) at $\theta$
 with limiting distribution $Q$, then for any bounded, symmetric,
 quasi-convex loss $L$ and $c < \infty$,
-\begin{equation}
-  \label{eqn:limit-law-regular}
+\begin{align}
   \limsup_n \sup_{\norm{h} \le c}
-  \E_{P_{\theta + h/\sqrt{n}}}
-  \left[L(\sqrt{n}(T_n - \theta - h / \sqrt{n}))\right]
-  = \E[L(W)] ~~ \mbox{for~}W \sim Q
-\end{equation}
+  & \E_{P_{\theta + h/\sqrt{n}}}
+  \left[L(\sqrt{n}(T_n - \theta - h / \sqrt{n}))\right] \nonumber \\
+  & = \E[L(W)] ~~ \mbox{for~}W \sim Q \label{eqn:limit-law-regular}
+\end{align}
 (see Beran~\cite{beran1995role}, Eq.~(4.2)).
 %
 Thus, we show two results: first,
@@ -225,7 +222,7 @@ It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\th
     condition that there exist $0 < \lambda \le 1$ and $K < \infty$ such
     that
     \begin{equation}
-      \label{eqn:additional-local-smooth}
+      \label{eqn:additional-local-smooth} 
       \E[|\varphi(x + Z_1) - \varphi(Z_1)|^2]
       \le K (|x|^\lambda + x^2).
     \end{equation}
@@ -266,22 +263,22 @@ It remains to show that the average $\bar{\theta}_n$ is regular \newtext{at $\th
   for $\varphi(z) = \sgn(z)$, and $Z = X - \theta$ distributed with
   density $f$, we have
   \begin{align*}
-    \ex{ \left| \varphi(Z) - \varphi(x + Z) \right| }
-    \leq 2 \Prob\left( |Z_1| \le |x|  \right)
-    = 2 \int_{-|x|}^{|x|} f(t) dt
+    & \ex{ \left| \varphi(Z) - \varphi(x + Z) \right| }
+    \leq 2 \Prob\left( |Z_1| \le |x|  \right) \\
+    & \quad = 2 \int_{-|x|}^{|x|} f(t) dt
     \le 4 f(0)|x| + 2 \int_{-|x|}^{|x|}
-    \lip(f) t dt
-    = 4 f(0) |x| + 2 \lip(f) x^2
+    \lip(f) t dt \\
+     & \quad = 4 f(0) |x| + 2 \lip(f) x^2
   \end{align*}
   where $\lip(f)$ is the Lipschitz constant of $f$.
 \newtext{It follows that condition~\eqref{eqn:additional-local-smooth} holds.}  
    %For large $x$ we always have  $\E[|\varphi(Z) - \varphi(x + Z)|] \le 2$, so that condition~\eqref{eqn:additional-local-smooth} holds.
   In addition, we have
   \begin{align*}
-\newtext{ \E_p[\varphi(Z_1) \score_0(Z_1)] } & = 
+& \newtext{ \E_p[\varphi(Z_1) \score_0(Z_1)] } = 
     \int_{\R} \varphi(x) f'(x ) dx
     = \int_{\R} \sgn(x) f'(x ) dx\\
-     &  =
+     & \quad  =
     \int_0^\infty f'(x ) dx
     - \int_{-\infty}^0 f'(x ) dx
     = -2 f(0) = -\psi'(0).
@@ -411,11 +408,10 @@ immediately give the result.
   The expansion~\eqref{eq:normal_expansion_lem} holds for the process
   $\bar{\Delta}^1_n$ defined by the iteration
   \begin{align}
-    \label{eqn:polyak-expansion_lem1_alg}
     & \Delta_i^1  = \Delta_{i-1}^1 - \gamma_i \psi'(0) \Delta_{i-1}^1 - \gamma_i \varphi(Z_i), \qquad
-    \Delta_0^1 = \Delta_0\\
+    \Delta_0^1 = \Delta_0 \nonumber\\
     & \bar{\Delta}^1_n = \frac{1}{n}\sum_{i=0}^{n-1} \Delta^1_i.
-    \nonumber
+    \label{eqn:polyak-expansion_lem1_alg}
   \end{align}
 \end{lemma}
 \begin{proof}
@@ -428,9 +424,9 @@ immediately give the result.
   in Eq.~\eqref{eqn:polyak-expansion}. In addition,
   by independence and that the $\xi_i$ are mean-zero, we have
   \begin{align*}
-    \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 }
-    & = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
-    & = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0
+    & \ex{ \left( \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} w_i^n \xi_i \right)^2 } \\
+     & \quad = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \xi_i^2} + \frac{1}{n}  \sum_{i\neq j}^n w_i^n w_j^n \ex{ \xi_i \xi_j} \\
+    & \quad = \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \ex{ \varphi(Z_i)^2} = \chi(0) \frac{1}{n}  \sum_{i=1}^n (w_i^n)^2 \to 0
   \end{align*}
   by Lemma~\ref{lemma:polyak-expansion}.
   Thus, the expansion~\eqref{eqn:polyak-expansion} in
@@ -453,25 +449,27 @@ We then have the following asymptotic equivalence.
   From the recursions~\eqref{eq:Polyak_Juditsky_alg} and
   \eqref{eqn:polyak-expansion_lem1_alg}, the difference $\delta_i = \Delta_i
   - \Delta_i^1$ satisfies
-  \begin{equation*}
-  \delta_i = \delta_{i-1} - \gamma_i \psi'(0) \delta_{i-1} + \gamma_i \left( \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i) \right),
-  \end{equation*}
+  \begin{align*}
+  & \delta_i = \delta_{i-1} - \gamma_i \psi'(0) \delta_{i-1}  \\
+  & \qquad + \gamma_i \left( \psi'(0) \Delta_{i-1}  + \varphi(Z_i) - \varphi(\Delta_{i-1} + Z_i) \right),
+  \end{align*}
   where $\delta_0 = 0$. Applying Lemma~\ref{lemma:polyak-expansion} with the
   choices $\xi_i = \psi'(0) \Delta_{i-1} + \varphi(Z_i) -
   \varphi(\Delta_{i-1} + Z_i)$ yields
   \begin{align}
-    \sqrt{n}\bar{\delta}_n
-    & = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
+    & \sqrt{n}\bar{\delta}_n
+    = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
     \left( \frac{1}{\psi'(0)} + w_i^n \right)  \xi_i  \nonumber \\
-    & = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
+    & \quad = \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1}
     \left( \frac{1}{\psi'(0)} + w_i^n \right)
     \left( \psi'(0) \Delta_{i-1}  - \psi(\Delta_{i-1}) \right)
     \label{eq:PJ_proof1} \\
     & \qquad ~ + 
     \frac{1}{\sqrt{n}} \sum_{i=1}^{n-1} \left( \frac{1}{\psi'(0)}
-    + w_i^n \right)
+    + w_i^n \right) \label{eq:PJ_proof2} \\
+    & \qquad \qquad \times 
     \left( \psi(\Delta_{i-1})  + \varphi(Z_i) - \varphi(\Delta_{i-1}+Z_i)
-    \right) \label{eq:PJ_proof2}
+    \right) \nonumber 
   \end{align}
   For the term \eqref{eq:PJ_proof1},
   the assumption~\eqref{eqn:local-hessian-psi} that
@@ -500,14 +498,14 @@ We then have the following asymptotic equivalence.
   theorem~\cite[Exercise~5.3.35]{Dembo16}. Noting that
   $\Delta_i \in \mc{F}_i$, we have
   \begin{align}
-    \E[\epsilon_i^2 \mid \mc{F}_{i-1}]
-    & = \E[(\psi(\Delta_{i-1}) + \varphi(Z_i)
+    & \E[\epsilon_i^2 \mid \mc{F}_{i-1}] \nonumber \\
+    & \quad = \E[(\psi(\Delta_{i-1}) + \varphi(Z_i)
       - \varphi(\Delta_{i-1} + Z_i))^2 \mid \mc{F}_{i-1}]
     \nonumber \\
-    & \le 2 \psi(\Delta_{i-1})^2
+    & \quad  \le 2 \psi(\Delta_{i-1})^2
     + 2 \E[(\varphi(\Delta_{i-1} + Z_i) - \varphi(Z_i))^2 \mid \mc{F}_{i-1}]
     \nonumber \\
-    & \le
+    & \quad \le
     K \left[|\Delta_{i-1}|^{1 + \lambda}
       + |\Delta_{i-1}|^\lambda
       + \Delta_{i-1}^2 \right],
@@ -525,16 +523,17 @@ We then have the following asymptotic equivalence.
     \E[\Delta_i^2 \indic{\tau_R > i}] \le K \gamma_i,
   \end{equation*}
   and so inequality~\eqref{eqn:bound-psi-error-expectations} gives that
-  \begin{equation*}
-    \E\bigg[\sum_{i = 1}^\infty \frac{1}{i}
+  \begin{align*}
+    & \E\bigg[\sum_{i = 1}^\infty \frac{1}{i}
       |\varepsilon_i|^2 \indic{\tau_R > n} \bigg]
     \le K \sum_{i = 1}^\infty \frac{\gamma_i^\lambda}{i}
-    < \infty
+    < \infty \\
+    & 
     ~~ \mbox{so} ~~
     \sum_{i = 1}^\infty \frac{1}{i}
     \epsilon_i^2 \indic{\tau_R > n} < \infty
     ~ \mbox{a.s.}
-  \end{equation*}
+  \end{align*}
 by Condition~\eqref{eqn:lazy-gamma}. 
 %  
 %  Since
@@ -609,17 +608,20 @@ $\score_h(z) = \frac{p'(z - h)}{p(z - h)}$,
 and the asymptotic expansion Definitions~\ref{definition:qmd}
 and~\ref{definition:lan} combined
 with the preceding display, give the joint convergence
-\begin{equation*}
-  \left(\sqrt{n} \bar{\Delta}_n, \sum_{i=1}^n \log \frac{P_{h_n/\sqrt{n}}}{P_0}(Z_i)
-  \right)
-  \cd \normal \left( \left(0,-\frac{h^2}{2} I_0 \right),
-  \begin{pmatrix}
+\begin{align*}
+  & \left(\sqrt{n} \bar{\Delta}_n, \sum_{i=1}^n \log \frac{P_{h_n/\sqrt{n}}}{P_0}(Z_i)
+  \right) \cd \normal \left(\mu, \Sigma \right), \\
+\end{align*}  
+where
+\begin{align*}
+  \mu & = \left(0,-\frac{h^2}{2} I_0 \right), ~~~\mbox{and} \\
+  \Sigma & = \begin{pmatrix}
     \frac{\chi(0)}{\psi'(0)^2} & \frac{-h}{ \psi'(0)}
     \E_p[\varphi(Z_1) \score_0(Z_1)] \\
     \frac{-h}{ \psi'(0)} \E_p[\varphi(Z_1) \score_0(Z_1)]
     & h^2 I_0
-  \end{pmatrix}  \right).
-\end{equation*}
+  \end{pmatrix}.
+\end{align*}
 Le Cam's third lemma \cite[Exm. 6.7]{VanDerVaart98} then implies the
 convergence
 \begin{equation*}
@@ -649,16 +651,16 @@ and so By Jensen's inequality (or Cauchy-Schwartz) we have
   \le \int_0^1 h^\top \dot{s}_{\theta + t h}(x)
   \dot{s}_{\theta + t h}(x) ^\top h dt.
 \end{equation*}
-Thus for any $h_t$ we have
+Thus, for any $h_t$ we have
 \begin{align*}
-  \int \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}\right)^2
-  d\mu(x)
-  & \le \int \int_0^1 (h_t^\top \dot{s}_{\theta + u t h_t})^2 du
+  & \int \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}\right)^2
+  d\mu(x) \\
+  & \qquad \le \int \int_0^1 (h_t^\top \dot{s}_{\theta + u t h_t})^2 du
   d\mu \\
-  & = \int_0^1 h_t^\top \int
+  & \qquad  = \int_0^1 h_t^\top \int
   \dot{s}_{\theta + u t h_t}\dot{s}_{\theta + u t h_t}^\top
-  d\mu(x) h_t  du
-  = \frac{1}{4} h_t^\top \left(\int_0^1 I_{\theta + u t h_t} du\right) h_t.
+  d\mu(x) h_t  du \\
+  & \qquad = \frac{1}{4} h_t^\top \left(\int_0^1 I_{\theta + u t h_t} du\right) h_t.
 \end{align*}
 By continuity, as $h_t \to h$ and $t \to 0$ the assumed continuity
 of $\theta \mapsto I_\theta$ gives that the final display converges
@@ -673,14 +675,14 @@ Now, we note that
 for all $x$ excepting a $\mu$-null set, and the
 variant of the dominated convergence theorem in
 \cite[Prop.~2.29]{VanDerVaart98} implies that
-\begin{equation*}
-  \lim_{t \to 0}
+\begin{align*}
+  & \lim_{t \to 0} 
   \frac{1}{t^2}
   \int \left(s_{\theta + t h_t}(x) - s_\theta(x)
-  - t h^\top \dot{s}_\theta(x)\right)^2 d\mu(x)
-  = \lim_{t \to 0}
+  - t h^\top \dot{s}_\theta(x)\right)^2 d\mu(x) \\
+  & ~~ = \lim_{t \to 0}
   \int \left(\frac{s_{\theta + t h_t}(x) - s_\theta(x)}{t}
   - h^\top \dot{s}_\theta(x)\right)^2 d\mu(x)
   = 0,
-\end{equation*}
+\end{align*}
 completing the proof.

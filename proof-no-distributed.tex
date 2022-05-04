@@ -26,18 +26,21 @@ $\epsilon$-ball around $\theta$ contains an endpoint of one of the intervals
 defining $A_i$.
 %
 We now claim that 
-if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. Indeed, for such $\theta$ we have
+if $\theta \in \Xi$ then $\card(S_n(\theta, \epsilon))/n \to 1$. 
+Indeed, for such $\theta$ we have
 \begin{align}
 & L_n(A_1,\ldots,A_n; \theta) \nonumber \\
 & = \frac{1}{n} \sum_{i \in S_n(\epsilon,\theta)}  
-\frac{ \left(\sum_{k=1}^{K}  f(\theta - t^+_{i,k})- f(\theta - t^-_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
+\frac{ \left(\sum_{k=1}^{K}  f(\theta - t^+_{i,k})- f(\theta - t^-_{i,k}) \right)^2}{ \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)} \nonumber \\
+& \qquad \times \frac{1} {\left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
 & 
-+ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(t^+_{i,k}-\theta) - f(t^-_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right) \left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
-& \overset{(a)}{\leq}
++ \frac{1}{n}\sum_{i \notin S_n(\epsilon,\theta) } \frac{ \left(\sum_{k=1}^{K}  f(t^+_{i,k}-\theta) - f(t^-_{i,k}-\theta) \right)^2} { \sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)} \nonumber \\
+& \qquad \times \frac{1} {\left(1-\sum_{k=1}^{K} \left( F(\theta - t^+_{i,k})- F(\theta - t^-_{i,k}) \right)\right)} \nonumber \\
+& \le
 \frac{\card\left(S_n(\theta,\epsilon)\right)}{n} \eta(0) + \frac{n-\card\left(S_n(\theta,\epsilon) \right) }{n} \eta(\epsilon) 
  \label{eq:non_existence_proof1}
 \end{align}
-where $(a)$ follows from Lemma~\ref{lem:bound_intervals_delta} with $\delta =0$, and the fact that for $i \in S_n(\theta, \epsilon)$, 
+where the last transition follows from Lemma~\ref{lem:bound_intervals_delta} with $\delta =0$ and the fact that for $i \in S_n(\theta, \epsilon)$, 
 \begin{equation*}
 \max\left\{ \max_k \eta(t^+_{i,k}-\theta) , \max_k \eta(t^-_{i,k}-\theta)  \right\} \leq \eta(\epsilon) < \eta(0). 
 \end{equation*}

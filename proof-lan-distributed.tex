@@ -29,10 +29,11 @@ which is important for our Taylor expansions to come.
   \end{align*}
   Additionally, we have the bounds
   \begin{align}
-    \label{eqn:bound-density-diffs}
-    |f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}
+    & \label{eqn:bound-density-diffs}
+    |f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])} \\
+    & 
     ~~ \mbox{and} ~~
-    |\dPtheta(A)| \le 2 \sqrt{k \lip(f)}.
+    |\dPtheta(A)| \le 2 \sqrt{k \lip(f)}. \nonumber
   \end{align}
 \end{lemma}
 \noindent
@@ -46,15 +47,14 @@ The second lemma provides the local asymptotic normality we require.
   and~\eqref{item:finite-intervals} hold, and let $B_i = \indic{X_i \in
     A_i}$.  Let $h_n \to h \in \R$. Then for any $\theta \in
   \mbox{int}\Theta$,
-  \begin{equation*}
-    \sum_{i = 1}^n \log \frac{P_{\theta + h_n/\sqrt{n}}(B_i)}{
-      P_\theta(B_i)}
-    = \frac{h}{\sqrt{n}}
-    \sum_{i = 1}^n \score_\theta(B_i)
-    - \frac{h^2}{4n} \sum_{i = 1}^n \var(\score_\theta(B_i))
-    - \frac{h^2}{4n} \sum_{i = 1}^n \score_\theta(B_i)^2
+  \begin{align*}
+    & \sum_{i = 1}^n \log \frac{P_{\theta + h_n/\sqrt{n}}(B_i)}{
+      P_\theta(B_i)} \\
+    & \qquad = \frac{h}{\sqrt{n}}
+    \sum_{i = 1}^n \score_\theta(B_i) - \frac{h^2}{4n} \sum_{i = 1}^n \var(\score_\theta(B_i)) \\
+    & \qquad \qquad - \frac{h^2}{4n} \sum_{i = 1}^n \score_\theta(B_i)^2
     + o_P(1).
-  \end{equation*}
+  \end{align*}
   If additionally
   Assumption~\ref{assumption:detection-regions}\eqref{item:limit-variance}
   holds, then
@@ -94,11 +94,11 @@ so that the family $\{P_\theta\}$ is locally asymptotically normal
 We now recall the familiar H\'{a}jek-Le-Cam local asymptotic minimax
 result~\cite[Thm.~8.11]{VanDerVaart98}: if the family
 $\{P_\theta\}$ is LAN with precision $\kappa(\theta)$, then
-\begin{equation*}
-  \liminf_{c \to \infty} \liminf_n \sup_{\norm{\tau - \theta} \le
-    c / \sqrt{n}} \E_\tau\left[L(\sqrt{n}(\theta_n - \tau))\right]
-  \ge \E[L(Z / \sqrt{\kappa(\theta)})]
-\end{equation*}
+\begin{align*}
+  \liminf_{c \to \infty} & \liminf_n \sup_{\norm{\tau - \theta} \le
+    c / \sqrt{n}} \E_\tau\left[L(\sqrt{n}(\theta_n - \tau))\right] \\
+  & \qquad  \ge \E[L(Z / \sqrt{\kappa(\theta)})]
+\end{align*}
 for any symmetric quasi-convex loss $L$, where $Z \sim \normal(0, 1)$.
 This immediately gives Theorem~\ref{theorem:non-adaptive-minimax}.
 
@@ -131,27 +131,26 @@ that $A = [a, b]$. Then as $f$ is Lipschitz (and hence absolutely
 continuous and a.e.\ differentiable with $\linf{f'} \le \lip(f)$),
 we have
 \begin{align*}
-  P_{\theta + h}(A)
+  & P_{\theta + h}(A)
   - P_\theta(A)
-  & = \int_a^b (f(z - \theta - h) - f(z - \theta)) dz \\
-  & = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
-  & = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
-  & = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
-  & \lesseqgtr \int_0^h (f(a - \theta) - f(b - \theta)) du
+   = \int_a^b (f(z - \theta - h) - f(z - \theta)) dz \\
+  & \qquad = -\int_a^b \int_0^h f'(z - \theta - u) du dz \\
+  & \qquad = -\int_0^h \int_a^b f'(z - \theta - u) dz du \\
+  & \qquad = \int_0^h f(a - \theta - u) - f(b - \theta - u) du \\
+  & \qquad \lesseqgtr \int_0^h (f(a - \theta) - f(b - \theta)) du
   \pm 2 \int_0^h \lip(f) u du \\
-  & = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
+  & \qquad = \left[f(a - \theta) - f(b - \theta)\right] h \pm \lip(f) h^2.
 \end{align*}
 This gives the first two claims of the lemma.
 
 For the second, we require a bit more work.
 Let $L = \lip(f)$ for shorthand. Let $a < b$.
 Then we always have
-\begin{equation}
+\begin{align}
   \label{eqn:interval-length-thing}
-  P([a, b])
-  \ge \int_a^b f(z) dz
-  \ge \int_a^b \max\{f(b) - L (b - z), f(a) - L(z - a), 0\} dz.
-\end{equation}
+  & P([a, b]) \ge \int_a^b f(z) dz \\
+  & \quad \ge \int_a^b \max\{f(b) - L (b - z), f(a) - L(z - a), 0\} dz. \nonumber
+\end{align}
 If $f(a) + f(b) \ge L (b - a)$, then the point $\hat{z} =
 \frac{a + b}{2} - \frac{f(b) - f(a)}{2L}$ satisfies both $f(b) - L(b -
 \hat{z}) \ge 0$ and $f(a) - L(\hat{z} - a) \ge 0$. The
@@ -161,19 +160,19 @@ integral~\eqref{eqn:interval-length-thing} then becomes
     (f(a) - L (z - a) dz)
     + \int_{\hat{z}}^b
     (f(b) - L (b - z)) dz} \\
-  & = \frac{f(a) + f(b)}{2}
+  & = \medmath{\frac{f(a) + f(b)}{2}
   \left(\frac{b - a}{2}\right)
   - L \left(\frac{b - a}{2} \right)^2
-  + \frac{(f(b) - f(a))^2}{4L},
+  + \frac{(f(b) - f(a))^2}{4L}},
 \end{align*}
 and using the assumption that $\frac{f(a) + f(b)}{2} \ge L(b - a)$,
 we obtain
 \begin{align*}
   \frac{(f(b) - f(a))^2}{4L}
-  & \le \frac{f(b) + f(b)}{2} \frac{b - a}{2}
-  - L \left(\frac{b - a}{2}\right)^2
-  + \frac{(f(b) - f(a))^2}{4L}
-  \le P([a, b]).
+  & \le \frac{f(b) + f(b)}{2} \frac{b - a}{2} \\
+  & \qquad - L \left(\frac{b - a}{2}\right)^2
+  + \frac{(f(b) - f(a))^2}{4L} \\
+  & \le P([a, b]).
 \end{align*}
 That is, $|f(b) - f(a)| \le 2 \sqrt{\lip(f) P([a, b])}$.
 In the converse case that $f(a) + f(b) \le L(b - a)$, then
@@ -181,8 +180,8 @@ the integral~\eqref{eqn:interval-length-thing} becomes
 \begin{align*}
   P([a, b])
   & \ge \int_a^{a + \frac{f(a)}{L}}
-  (f(a) - L (z - a)) dz
-  + \int_{b - \frac{f(b)}{L}}^b (f(b) - L (b - z)) dz \\
+  (f(a) - L (z - a)) dz \\
+  & \qquad + \int_{b - \frac{f(b)}{L}}^b (f(b) - L (b - z)) dz \\
   & = \frac{f(a)^2}{L}
   - \frac{f(a)^2}{2L}
   + \frac{f(b)^2}{L}
@@ -216,16 +215,16 @@ for any $a > 0$ and $|b| \le 3a/4$. Consequently,
 recalling that $\score_\theta(A) = \dPtheta(A) / P_\theta(A)$,
 for any $h \in \R$ and $A = \cup_{i = 1}^k [t_i^-, t_i^+]$ the
 union of $k$ intervals, the expansion~\eqref{eqn:expansion-dPtheta} yields
-\begin{equation*}
-  \left(\sqrt{P_{\theta + h}(A)} -
+\begin{align*}
+  & \left(\sqrt{P_{\theta + h}(A)} -
   \sqrt{P_\theta(A)} - \half h \score_\theta(A) \sqrt{P_\theta(A)}
-  \right)^2
-  \le
+  \right)^2 \\
+  & \quad \le
   \left(
   \frac{k \lip(f)}{2 \sqrt{P_\theta(A)}} h^2
   + \frac{(|\dPtheta(A) h| + h^2 \lip(f))^2}{P_\theta(A)^{3/2}}
   \right)^2,
-\end{equation*}
+\end{align*}
 valid for $h$ such that
 $|\dPtheta(A) h| \le P_\theta(A) / 4$ and
 $k h^2 \lip^2(f) \le P_\theta(A) / 4$.
@@ -235,14 +234,14 @@ there exists a numerical constant $C < \infty$ such that
 \begin{subequations}
   \label{eqn:h-fourth}
   \begin{align}
-    \nonumber \left(\sqrt{P_{\theta + h}(A)} -
+    & \nonumber \left(\sqrt{P_{\theta + h}(A)} -
     \sqrt{P_\theta(A)} - \half
-    h \score_\theta(A) \sqrt{P_\theta(A)}\right)^2
-    & \le
+    h \score_\theta(A) \sqrt{P_\theta(A)}\right)^2 \\
+    & \nonumber \quad \le
     \left(\frac{h^2 k \cdot \lip(f)}{2 \sqrt{P_\theta(A)}}
     + \frac{(|\dPtheta(A) h| + k h^2 \lip(f))^2}{
       P_\theta(A)^{3/2}}\right)^2 \\
-    & \le \frac{C}{P_\theta(A)} \left[k^2 \lip^2(f)
+    & \quad \le \frac{C}{P_\theta(A)} \left[k^2 \lip^2(f)
       + \score_\theta(A)^2
       + \frac{k^4 h^4 \lip^4(f)}{P_\theta(A)^2}
       \right] \cdot h^4,
@@ -250,16 +249,16 @@ there exists a numerical constant $C < \infty$ such that
   valid whenever $|\dPtheta(A) h|
   \le P_\theta(A) / 4$ and $k h^2 \lip^2(f) \le P_\theta(A) / 4$,
   and similarly, we have
-  \begin{equation}
-    \left(\sqrt{P_{\theta + h}(A^c)} -
+  \begin{align}
+    & \left(\sqrt{P_{\theta + h}(A^c)} -
     \sqrt{P_\theta(A^c)} - \half
-    h \score_\theta(A^c) \sqrt{P_\theta(A^c)}\right)^2
-    \le \frac{C}{P_\theta(A^c)}
+    h \score_\theta(A^c) \sqrt{P_\theta(A^c)}\right)^2 \nonumber \\
+    & ~~ \le \frac{C}{P_\theta(A^c)}
     \left[k^2 \lip^2(f)
       + \score_\theta(A^c)^2
       + \frac{k^4 h^4 \lip^4(f)}{P_\theta(A^c)^2}
-      \right] \cdot h^4.
-  \end{equation}
+      \right] \cdot h^4. 
+  \end{align}
 \end{subequations}
 That is, the family $\{P_\theta\}$ with bit observations $B_n$ satisfies a
 uniform type of quadratic-mean differentiability
@@ -276,47 +275,46 @@ are with $P$-probability 1 well-defined, and by the
 inequalities~\eqref{eqn:h-fourth}, we have
 that
 \begin{align}
-  \lefteqn{\var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
-    \le 
-    C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
+\label{eqn:var-wni-expansion}
+  & \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right) \\
+    & \quad \le C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
       + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
-    \cdot \frac{h_n^4}{n^2}
-    + C \frac{k^4 \lip^4(f)}{
+    \cdot \frac{h_n^4}{n^2} \nonumber \\
+    & \qquad + C \frac{k^4 \lip^4(f)}{
       P_\theta(A_i)^3 P_\theta(A_i^c)^3}
-    \frac{h_n^8}{n^4}} \nonumber \\
-  & \qquad\qquad\qquad\qquad\qquad \le 
+    \frac{h_n^8}{n^4} \nonumber \\
+  & \quad \le 
   C \frac{k_i^2 \lip^2(f) + \score_\theta(A_i)^2
   + \score_\theta(A_i^c)^2}{P_\theta(A_i) P_\theta(A_i^c)}
-  \cdot \frac{h_n^4}{n^2}
-  + C \frac{k^4 \lip^4(f)}{
+  \cdot \frac{h_n^4}{n^2} \\
+  & \qquad + C \frac{k^4 \lip^4(f)}{
     P_\theta(A_i)^3 P_\theta(A_i^c)^3}
   \frac{h_n^8}{n^4}
-  \label{eqn:var-wni-expansion}
 \end{align}
 whenever
-\begin{equation*}
-  \frac{h}{\sqrt{n}} \max\{\score_\theta(A_i),
+\begin{align*}
+  & \frac{h}{\sqrt{n}} \max\{\score_\theta(A_i),
   \score_\theta(A_i^c)\}
-  \le \frac{1}{4}
-  ~~ \mbox{and} ~~
+  \le \frac{1}{4} \\
+  & ~~ \mbox{and} ~~
   \frac{k_i h_n^2}{n} \lip^2(f)
   \le \frac{\min\{P_\theta(A_i), P_\theta(A_i^c)\}}{4}
-\end{equation*}
+\end{align*}
 Now, we use
 Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals},
 coupled with Lemma~\ref{lemma:derivative-bounds} to show that the summed
 variances converge to zero.  Indeed, Lemma~\ref{lemma:derivative-bounds} and
 inequality~\eqref{eqn:var-wni-expansion} give that
-\begin{equation*}
-  \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
-  \le C \cdot
+\begin{align*}
+  & \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+   \le C \cdot
   \left[\frac{k_i^2}{P_\theta(A_i) P_\theta(A_i^c)}
-    \frac{1}{n}
-    + \frac{k_i}{P_\theta(A_i) P_\theta(A_i^c)}
+    \frac{1}{n} \right. \\
+    & \left. \qquad + \frac{k_i}{P_\theta(A_i) P_\theta(A_i^c)}
     \frac{1}{n}
     + \frac{k_i^4}{P_\theta(A_i)^3 P_\theta(A_i^c)^3}
     \frac{1}{n^3}\right] \frac{1}{n},
-\end{equation*}
+\end{align*}
 where $C < \infty$ depends only on $\lip(f)$ and $h_n$ (both of which are
 uniformly bounded) whenever
 \begin{equation*}
@@ -325,50 +323,49 @@ uniformly bounded) whenever
 \end{equation*}
 Assumption~\ref{assumption:detection-regions}\eqref{item:finite-intervals}
 thus implies that $\E[\score_\theta(B_i)] = 0$ and
-\begin{equation}
-  \label{eqn:summed-variances-to-zero}
-  \var\left(\sum_{i = 1}^n W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+\begin{align}
+  & \var\left(\sum_{i = 1}^n W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
+  \right) \nonumber \\
+  & \qquad = \sum_{i = 1}^n \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
   \right)
-  = \sum_{i = 1}^n \var\left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)
-  \right)
-  \to 0.
-\end{equation}
+  \to 0. \label{eqn:summed-variances-to-zero}
+\end{align}
 
 We now control the expectation of the $W_{n,i}$. Defining $\mu_i$ to be the
 induced counting measure on $B_i = \indic{X_i \in A_i}$,
 \begin{align*}
-  \sum_{i = 1}^n \E[W_{n,i}]
-  & = 2\sum_{i = 1}^n
-  \left(\int \sqrt{p_n(b)} \sqrt{p(b)} d\mu_i(b) - 1 \right)
-  = -\sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}\right)^2
+  & \sum_{i = 1}^n \E[W_{n,i}]
+  = 2\sum_{i = 1}^n
+  \left(\int \sqrt{p_n(b)} \sqrt{p(b)} d\mu_i(b) - 1 \right) \\
+  & \quad = -\sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}\right)^2
   d\mu_i(b) \\
-  & = -\frac{h_n^2}{4 n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
+  & \quad = -\frac{h_n^2}{4 n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2] \\
+  & \qquad 
   - \sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}
   - \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}\right)^2 d\mu_i(b) \\
-  & \qquad \qquad ~
+  & \qquad \medmath{
   - \sum_{i = 1}^n \int \left(\sqrt{p_n(b)} - \sqrt{p(b)}
   - \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}\right)
-  \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}d\mu_i(b) \\
+  \frac{h_n}{\sqrt{n}} \score_\theta(b) \sqrt{p(b)}d\mu_i(b)} \\
   & = -\bigg(\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]\bigg)
   - o(1)
 \end{align*}
 uniformly in $h$, with a derivation completely paralleling that above.
 Therefore, we obtain
-\begin{equation*}
-  \sum_{i = 1}^n W_{n,i}
-  = \sum_{i = 1}^n \left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
-  + \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
-  = -\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
+\begin{align*}
+   \sum_{i = 1}^n W_{n,i} & = \sum_{i = 1}^n \left(W_{n,i} - \frac{h_n}{\sqrt{n}} \score_\theta(B_i)\right)
+  + \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i) \\
+  & = -\frac{h^2}{4n} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
   + \frac{h}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
   + o_P(1),
-\end{equation*}
+\end{align*}
 where we have used that $h_n \to h$.
 
 Now, we write the log-likelihood ratio. We have
 \begin{align*}
-  \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
-  & = 2 \sum_{i = 1}^n \log\left(1 + \half W_{n,i}\right) \\
-  & = \sum_{i = 1}^n W_{n,i}
+  & \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
+  = 2 \sum_{i = 1}^n \log\left(1 + \half W_{n,i}\right) \\
+  & \qquad  = \sum_{i = 1}^n W_{n,i}
   - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2
   + \half \sum_{i = 1}^n W_{n,i}^2 R(W_{n,i})
 \end{align*}
@@ -376,15 +373,15 @@ where the remainder $|R(W_{n,i})| \le |W_{n,i}|$ for $|W_{n,i}| \le 1$.
 Using the Taylor expansions of $\sqrt{\cdot}$ and
 Lemma~\ref{lemma:derivative-bounds}, we have
 \begin{align}
-  \nonumber
-  \left| \half W_{n,i} \right|
-  & \leq \half \left| \score_\theta(B_i) \right|
-  \frac{h_n}{\sqrt{n}}
-  + \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
+  &\left| \half W_{n,i} \right|
+   \leq \half \left| \score_\theta(B_i) \right|
+  \frac{h_n}{\sqrt{n}} \nonumber \\
+  & \qquad + \left|\frac{h_n^2}{n} \frac{k_i \lip(f)}{p(B_i)}
   + \frac{h_n^2}{n} \score_\theta(B_i)^2
-  + \frac{ h_n^4}{n^2} \frac{k_i^2 \lip(f)^2}{p(B_i)^2}\right| \\
-  & = \half \score_\theta(B_i)
-  \frac{h_n}{\sqrt{n}} +
+  + \frac{ h_n^4}{n^2} \frac{k_i^2 \lip(f)^2}{p(B_i)^2}\right| \nonumber \\
+  & \quad = \half \score_\theta(B_i)
+  \frac{h_n}{\sqrt{n}} \nonumber \\
+  & \qquad + 
   C \left|\frac{\sqrt{k_i}}{\sqrt{n} p(B_i)}
   + \frac{k_i}{n p(B_i)}
   + \frac{\sqrt{k_i}}{p(B_i)^2 n}
@@ -402,33 +399,32 @@ C \left|\frac{\sqrt{k_i}}{\sqrt{n} p(B_i)}
   \right| \to 0. 
 \]
 Consequently $\max_i W_{n,i} \to 0$, so that
-\begin{equation}
+\begin{align}
   \label{eqn:almost-at-the-end}
   \sum_{i = 1}^n \log \frac{p_n(B_i)}{p(B_i)}
-  = \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
-  - \frac{1}{4} \sum_{i = 1}^n \E[\score_\theta(B_i)^2]
-  - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1).
-\end{equation}
+  & = \frac{h_n}{\sqrt{n}} \sum_{i = 1}^n \score_\theta(B_i)
+  - \frac{1}{4} \sum_{i = 1}^n \E[\score_\theta(B_i)^2] \\
+  & \qquad - \frac{1}{4} \sum_{i = 1}^n W_{n,i}^2 + o_P(1). \nonumber
+\end{align}
 
 It remains to compute $\E[W_{n,i}^2]$. Using the bounds
 that $|\score_\theta(B_i)| \le C \sqrt{k_i} / p(B_i)$ from
-Lemma~\ref{lemma:derivative-bounds},
-the
-expansion~\eqref{eqn:max-wni-zero}
-yields
+Lemma~\ref{lemma:derivative-bounds}, the 
+expansion~\eqref{eqn:max-wni-zero} yields
 \begin{align*}
   \lefteqn{\left|\E\left[W_{n,i}^2 - \frac{h_n^2}{2n} \score_\theta(B_i)^2\right]
     \right|} \\
   &
   \le \frac{C}{n} \left[
     \frac{k_i^{3/2}}{p(A_i)(1 - p(A_i)) \sqrt{n}}
-    + \frac{k_i^{3/2}}{p(A_i)^2 (1 - p(A_i))^2 \sqrt{n}}
-    + \frac{k_i^2}{p(A_i)(1 - p(A_i))} \frac{1}{n^{3/2}}
+    + \frac{k_i^{3/2}}{p(A_i)^2 (1 - p(A_i))^2 \sqrt{n}} \right. \\
+    & \left. ~~ \qquad + \frac{k_i^2}{p(A_i)(1 - p(A_i))} \frac{1}{n^{3/2}}
     \right] \\
-  & \qquad ~ +
+  & \quad \quad +
   \frac{C}{n}
   \left[\frac{k_i^2}{p(A_i)(1 - p(A_i))} \frac{1}{n}
-    + \frac{k_i}{p(A_i)^3(1 - p(A_i))^3} \frac{1}{n}
+    + \frac{k_i}{p(A_i)^3(1 - p(A_i))^3} \frac{1}{n} \right. \\
+    & \left. ~~ \qquad 
     + \frac{k_i^4}{p(A_i)^3 (1 - p(A_i))^3} \frac{1}{n^3} \right],
 \end{align*}
 where $C$ depends only on $h$ and $\lip(f)$.

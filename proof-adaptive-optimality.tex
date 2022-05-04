@@ -6,12 +6,12 @@ We begin with two technical lemmas.
   Let $f$ be a log-concave and symmetric density function
   for which Assumption~\ref{assump:failure_rate} holds. For any $x_1 \geq
   \ldots \geq x_n \in \R$,
-  \begin{equation}
-    \frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^2 }{
-      \left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } 
-    \leq  4f(0)^2.
+  \begin{align}
+    & \frac{ \left| \sum_{k=1}^n (-1)^{k+1} f(x_k) \right|^2 }{
+      \left( \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) \left(1- \sum_{k=1}^n (-1)^{k+1} F(x_k) \right) } \nonumber
+     \\ & \qquad \leq  4f(0)^2.
     \label{eq:lem_bound_intervals}
-  \end{equation}
+  \end{align}
 \end{lem}
 \begin{lem} \label{lem:fisher_bound}
   Let $X$ be a random variable with a symmetric, log-concave, and
@@ -118,19 +118,21 @@ of Theorems~\ref{thm:adpative_lower_bound} and
     = \frac{  \left( f(x) \right)^{2+\delta}}{\left(F(x)(1-F(x))\right)^{1+\delta}}
   \end{equation*}
   is non-increasing in $|x|$. Then for any $x_1 \ge \ldots \ge x_n \in \R$,
-  \begin{equation}
-    \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} } {\left|
+  \begin{align}
+    & \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} } {\left|
       \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{k=1}^n
-      (-1)^{i+1} F(x_i) \right|^{1+\delta} } \leq \max_{i} \eta_\delta(x_i).
+      (-1)^{i+1} F(x_i) \right|^{1+\delta} } \nonumber \\
+      & \qquad \leq \max_{i} \eta_\delta(x_i).
     \label{eq:lem_bound_intervals_delta}
-  \end{equation}
+  \end{align}
 \end{lem}
 In particular, 
-\begin{equation*}
-\frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} }
+\begin{align*}
+& \frac{ \left| \sum_{i=1}^n (-1)^{i+1} f(x_i) \right|^{2+\delta} }
 {\left| \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} \left|1- \sum_{i=1}^n (-1)^{i+1} F(x_i) \right|^{1+\delta} } 
-\leq \eta_\delta(0) = 4^{1+\delta} f^{2+\delta}(0).
-\end{equation*}
+\\ 
+& \qquad \leq \eta_\delta(0) = 4^{1+\delta} f^{2+\delta}(0).
+\end{align*}
 
 \begin{proof-of-lemma}[\ref{lem:bound_intervals_delta}]
   Denote 
@@ -142,9 +144,9 @@ In particular,
   \end{equation*}
   where $s_i \triangleq (-1)^{i+1}$. We use induction on $n \in \N$ to show that 
   \begin{align}
-    \label{eq:lemm:interval_bounds:to_show}
-    \frac{ \left| \delta_n(x_1,\ldots,x_n) \right|^{2+\delta}} 
-         {\left|\Delta_n(x_1,\ldots,x_n)\left(1- \Delta_n(x_1,\ldots,x_n) \right) \right|^{1+\delta} } \leq \max_{i}\eta_{\delta}(x_i).
+    & \frac{\left| \delta_n(x_1,\ldots,x_n) \right|^{2+\delta}} 
+         {\left|\Delta_n(x_1,\ldots,x_n)\left(1- \Delta_n(x_1,\ldots,x_n) \right) \right|^{1+\delta} } \nonumber \\
+         & \qquad \leq \max_{i}\eta_{\delta}(x_i). \label{eq:lemm:interval_bounds:to_show}
   \end{align}
   Since 
   \begin{equation*}
@@ -161,20 +163,22 @@ In particular,
   %For simplicity, we also assume that $s_{i^*} = 1$ and note that the case $s_{i^*} = -1$ is obtained using identical arguments. 
   Set $x^* = x_{i^*}$ and let $k=i^*-1$. Consider the function
   \begin{align}
-    & g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \\
-    &  \triangleq  \frac{\left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) )\right|^{2+\delta}}{
-      \left|\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  (1 -\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)  \right|^{1+\delta}
-    } \label{eq:g_def}.
+    & g(y_1,\ldots,y_N) \triangleq g(y_1,\ldots,y_N|x^*,k) \label{eq:g_def} \\
+    &  \triangleq  \frac{ \left| \delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N) \right|^{2+\delta}}{
+     \left|\Delta_{N+1}(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N)\right|}
+    \nonumber \\
+    & \times \frac{1}{\left|1 -\Delta_{N+1}\left(y_1,\ldots,y_k,x^*,y_{k+1}\ldots,y_N\right) \right|^{1+\delta}} \nonumber
   \end{align}
   The LHS of \eqref{eq:lemm:interval_bounds:to_show} is obtained by taking $y_i=x_{k_i}$ where $k_i$ is the $i$th element in $\{1,\ldots,N+1\}\setminus \{i^*\}$. It is therefore enough to prove that 
   \begin{equation*}
     \max_{(y_1,\ldots,y_N) \in A_N(x^*,k) } g(y_1,\ldots,y_N) \leq \eta_{\delta}(x^*),
   \end{equation*}
   where 
-  \begin{equation*}
-    A_N(x^*,k) \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, : \, y_1 \ge \ldots \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
+  \begin{align*}
+    A_N(x^*,k) & \triangleq \left\{ (y_1,\ldots,y_N) \in \R^N\, \right. \\
+    & \left. \qquad  : \, y_1 \ge \ldots \ge y_k \ge x^* \ge -x^* \ge y_{k+1} \ldots \ge y_N
     \right\}.
-  \end{equation*}
+  \end{align*}
   %
   Since $f(x)$ is log-concave and symmetric, we may write $f(x) = e^{c(x)}$
   where $c(x)$ is concave, symmetric, and superdifferentiable on the interior
@@ -197,7 +201,8 @@ In particular,
   The maximal value of $g(y_1,\ldots,y_N)$ is attained for the same
   $(y_1,\ldots,y_N) \in A_N(x^*,k)$ that maximizes
   \begin{align*}
-    \log(g)(y_1,\ldots, y_N) =  (2+\delta) \log \left( \delta_N  \right)  - (1+\delta) \log \left( \Delta_N  \right) - (1+\delta) \log \left(1 - \Delta_N \right),
+    & \log(g)(y_1,\ldots, y_N) \\
+    &  =  (2+\delta) \log \left( \delta_N  \right)  - (1+\delta) \log \left( \Delta_N  \right) - (1+\delta) \log \left(1 - \Delta_N \right),
   \end{align*}
   where in the last display and henceforth we suppress the arguments
   $y_1,\ldots,y_k,x^*,y_{k+1},\ldots, y_N$ of the functions $\delta_N$ and
@@ -215,15 +220,17 @@ In particular,
   We conclude that the gradient of $\log(g)$ vanishes if and only if
   \begin{equation}
     \label{eq:gradient_zero}
-    c'(y_i) = \frac{f'(y_i)}{f(y_i)} = \frac{1+\delta}{2+\delta} \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N } \right),\quad i=1,\ldots,N.
+    c'(y_i) = \frac{f'(y_i)}{f(y_i)} = \frac{1+\delta}{2+\delta} \frac{\delta_N}{2} \left( \frac{1}{\Delta_N} - \frac{1}{1-\Delta_N } \right),
   \end{equation}
+  for $i=1,\ldots,N$.
   %
   Since we assumed that $\partial c(x)$ is injective,
   equality~\eqref{eq:gradient_zero} holds if and only if $y_1 = \ldots
   = y_N$. In this case, $g(y_1,\ldots,y_N) = \eta_\delta(x^*)$ if $N$ is
   even. If $N$ is odd and $y_1 = \ldots = y_N > x^*$, then
   \begin{align*}
-    & g(y_1,\ldots,y_N) = \frac{\left| f(y_1)-f(x^*)  \right|^{2+\delta}} { 
+    & g(y_1,\ldots,y_N) \\
+    & \quad = \frac{\left| f(y_1)-f(x^*)  \right|^{2+\delta}} { 
       \left|  F(y_1) - F(x^*) \right|^{1+ \delta} 
       \left| 1 - (F(y_1) -F(x^*)) \right|^{1+ \delta} } 
   \end{align*} 
@@ -244,18 +251,23 @@ In particular,
   \begin{align*}
     & g(y_1,\ldots,y_N) \\
     &  \to \frac{ \left| \sum_{i=1}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N-1} s_i f(y_i) \right|^{2+\delta}} 
-    {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}\left|1- \left( \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right)  \right|^{1+\delta} },
+    {\left| \sum_{i=1}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}} \\
+    & \medmath{ \times \frac{1}{\left|1- \sum_{i=1}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N-1} s_i F(y_i) \right|^{1+\delta}}},
   \end{align*}
   which is smaller than $\eta_\delta(x^*)$ by the induction hypothesis. Similarly, under case (ii),
   \begin{align*}
     & g(y_1,\ldots,y_N) \\
-    & \to 
+    & \to \medmath{
     \frac{ \left| \sum_{i=2}^{k} s_i f(y_i) + s_{i^*} f(x^*) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-         {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}\left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta} },
+         {\left| 1+ \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}} }
          \\
-         & = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x^*) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-           { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} 
-             \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} }
+         & \medmath{ \times \frac{1}{
+         \left|-\left( \sum_{i=2}^{k} s_i F(y_i) + s_{i^*} F(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right)  \right|^{1+\delta}}}
+         \\
+         & ~ \medmath{ = \frac{ \left| -\sum_{i=2}^{k} s_i f(y_i) - s_{i^*} f(x^*) + \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
+           { \left|1 - \left(-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right) \right|^{1+\delta} } }\\
+          & \medmath{ \times \frac{1}{ 
+             \left|-\sum_{i=2}^{k} s_i F(y_i) - s_{i^*} F(x^*) + \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} } },
   \end{align*}
   which is smaller than $\eta_{\delta}(x^*)$ by the induction hypothesis. Under case (iii), the terms in $\delta_N$ and $\Delta_N$ corresponding to $y_k$ and $x^*$ cancel each other. As a result,  $g(y_1,\ldots,y_N)$ reduces to an expression with $N-2$ variables hence this case is handled by the induction hypothesis. 
   %
@@ -275,10 +287,11 @@ In particular,
     & g(y_1,\ldots,y_N) =\nonumber  \\ 
     & =
     \frac{ \left| \sum_{i=1}^{k-1} s_i f(y_i) - \sum_{i=k+1}^{N} s_i f(y_i) \right|^{2+\delta}} 
-         {\left| \sum_{i=1}^{k-1} s_i F(y_i) + d(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta} \left|1- \sum_{i=1}^{k-1} s_i F(y_i) - d(x^*) + \sum_{i=k+1}^{N} s_i F(y_i)   \right|^{1+\delta} }, \\
+         {\left| \sum_{i=1}^{k-1} s_i F(y_i) + d(x^*) - \sum_{i=k+1}^{N} s_i F(y_i) \right|^{1+\delta}} \\
+         & \frac{1}{\left|1- \sum_{i=1}^{k-1} s_i F(y_i) - d(x^*) + \sum_{i=k+1}^{N} s_i F(y_i)   \right|^{1+\delta} }, \\
          & = \frac{ \left| \sigma \right|^{2+\delta}} 
-         {\left| \Sigma+d \right|^{1+\delta} \left|1- \Sigma - d \right|^{1+\delta} }  =  
-         \frac{ \left| \sigma \right|^{2+\delta}} 
+         {\left| \Sigma+d \right|^{1+\delta} \left|1- \Sigma - d \right|^{1+\delta} } \\
+         & = \frac{ \left| \sigma \right|^{2+\delta}} 
               {\left| \Sigma \right|^{1+\delta} \left|1- \Sigma \right|^{1+\delta} }  \left| \frac{\Sigma(1-\Sigma) } { \Sigma(1-\Sigma) + d(1-2\Sigma)-d^2} \right|^{1+\delta}. 
   \end{align*}
   By the induction hypothesis,
